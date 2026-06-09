@@ -601,7 +601,7 @@ def auto_research_topic(topic: str) -> str:
     try:
         result = subprocess.run(
             ["hermes", "chat", "-q", prompt, "-Q"],
-            capture_output=True, text=True, timeout=120,
+            capture_output=True, text=True, timeout=300,
             cwd=str(HERMES_HOME),
         )
         if result.returncode == 0 and result.stdout.strip():
