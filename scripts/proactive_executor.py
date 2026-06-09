@@ -625,6 +625,514 @@ def auto_research_topic(topic: str) -> str:
     return research_result
 
 
+# ── Part 3d: Skill Auto-Evolution (bead hermes-0kh.4) ──────────────
+
+def _normalize_pattern(text: str) -> str:
+    """Extract a concise pattern key from text for grouping similar issues."""
+    import re
+    text = re.sub(r"\s+", " ", text).strip()
+    # Extract known exception/error types
+    exc_match = re.search(r"(\w+Error|\w+Exception|\w+Warning)", text)
+    if exc_match:
+        return f"exception:{exc_match.group(1)}"
+    # Check for common error categories
+    tl = text.lower()
+    if "timeout" in tl:
+        return "error:timeout"
+    if "not found" in tl or "filenotfound" in tl.replace(" ", ""):
+        return "error:not_found"
+    if "permission" in tl or "denied" in tl:
+        return "error:permission"
+    if "connection" in tl or "refused" in tl:
+        return "error:connection"
+    if "import" in tl and ("error" in tl or "fail" in tl):
+        return "error:import"
+    if "syntax" in tl:
+        return "error:syntax"
+    if "indentation" in tl:
+        return "error:indentation"
+    if "traceback" in tl or "trace back" in tl:
+        return "error:traceback"
+    if "exit code" in tl or "returncode" in tl:
+        return "error:exit_code"
+    # Hash-based fallback for unique-ish patterns
+    key = text[:60].lower().strip()
+    if len(key) < 10:
+        return ""
+    return f"pattern:{hash(key) % 10000:04d}"
+
+
+def _detect_patterns() -> list[dict]:
+    """
+    Read error logs, knowledge gap tasks, and fix history.
+    Group similar errors/issues into patterns.
+
+    Sources:
+      - Knowledge Cube error entries (outcome=error/failed/failure)
+      - fix_results.json fix history
+      - suggested_fixes.json LLM suggestions
+      - Cron job error logs
+      - gap_fills.json filled gaps
+      - agent_decisions.json action results
+
+    Returns:
+        List of dicts with keys:
+          pattern_text, occurrence_count, source_files, last_seen, domain
+    """
+    patterns_dict: dict[str, dict] = {}
+
+    # ── Source 1: Knowledge Cube error entries ──
+    try:
+        conn = db_connect(KNOWLEDGE_CUBE_DB)
+        if conn is not None:
+            cur = conn.cursor()
+            cur.execute("PRAGMA table_info(experiences)")
+            cols = {row[1] for row in cur.fetchall()}
+            if "outcome" in cols and "raw_text" in cols:
+                cur.execute(
+                    "SELECT raw_text, axis_domain, ts, outcome "
+                    "FROM experiences "
+                    "WHERE LOWER(outcome) IN ('error','failed','failure') "
+                    "ORDER BY ts DESC"
+                )
+                for row in cur.fetchall():
+                    text = str(row[0] or "")[:200]
+                    domain = str(row[1] or "unknown")
+                    ts = str(row[2] or "")
+                    pkey = _normalize_pattern(text) or f"error:{domain}"
+                    if pkey not in patterns_dict:
+                        patterns_dict[pkey] = {
+                            "pattern_text": text or f"Error in domain '{domain}'",
+                            "occurrence_count": 0,
+                            "source_files": [f"knowledge_cube.db (domain:{domain})"],
+                            "last_seen": ts,
+                            "domain": domain,
+                        }
+                    patterns_dict[pkey]["occurrence_count"] += 1
+                    if ts and ts > patterns_dict[pkey]["last_seen"]:
+                        patterns_dict[pkey]["last_seen"] = ts
+            conn.close()
+    except Exception as e:
+        report(f"  [DETECT] KC error query: {e}")
+
+    # ── Source 2: Fix results ──
+    try:
+        if FIX_RESULTS_PATH.exists():
+            with open(FIX_RESULTS_PATH, encoding="utf-8") as f:
+                data = json.load(f)
+            results = data.get("results", []) if isinstance(data, dict) else data
+            for r in results:
+                fix_name = r.get("fix_name", "unknown")
+                details = r.get("details", "")
+                ts = r.get("timestamp", "")
+                pkey = f"fix:{fix_name}"
+                if pkey not in patterns_dict:
+                    patterns_dict[pkey] = {
+                        "pattern_text": f"Fix pattern: {fix_name} — {details[:100]}",
+                        "occurrence_count": 0,
+                        "source_files": ["fix_results.json"],
+                        "last_seen": ts,
+                        "domain": "bugfix",
+                    }
+                patterns_dict[pkey]["occurrence_count"] += 1
+                if ts and ts > patterns_dict[pkey]["last_seen"]:
+                    patterns_dict[pkey]["last_seen"] = ts
+    except Exception as e:
+        report(f"  [DETECT] Fix results: {e}")
+
+    # ── Source 3: Suggested fixes ──
+    try:
+        if SUGGESTED_FIXES_FILE.exists():
+            with open(SUGGESTED_FIXES_FILE, encoding="utf-8") as f:
+                sf_data = json.load(f)
+            fixes = sf_data.get("fixes", [])
+            for fix in fixes:
+                desc = fix.get("description", "")
+                ftype = fix.get("fix_type", "unknown")
+                target = fix.get("target_file", "")
+                pkey = (
+                    f"suggested:{ftype}:{target[:50]}"
+                    if target
+                    else f"suggested:{ftype}"
+                )
+                if pkey not in patterns_dict:
+                    patterns_dict[pkey] = {
+                        "pattern_text": f"Suggested {ftype}: {desc[:150]}",
+                        "occurrence_count": 0,
+                        "source_files": [
+                            (
+                                f"suggested_fixes.json -> {target}"
+                                if target
+                                else "suggested_fixes.json"
+                            )
+                        ],
+                        "last_seen": sf_data.get("created_at", ""),
+                        "domain": "bugfix",
+                    }
+                patterns_dict[pkey]["occurrence_count"] += 1
+    except Exception as e:
+        report(f"  [DETECT] Suggested fixes: {e}")
+
+    # ── Source 4: Cron error logs ──
+    try:
+        if CRON_JOBS_FILE.exists():
+            with open(CRON_JOBS_FILE, encoding="utf-8") as f:
+                cron_data = json.load(f)
+            jobs = cron_data.get("jobs", [])
+            for job in jobs:
+                error = job.get("last_error", "")
+                status = job.get("last_status", "")
+                name = job.get("name", "unknown")
+                last_run = job.get("last_run_at", "")
+                if status == "error" and error:
+                    pkey = f"cron:{name}"
+                    if pkey not in patterns_dict:
+                        patterns_dict[pkey] = {
+                            "pattern_text": f"Cron job '{name}' error: {error[:200]}",
+                            "occurrence_count": 0,
+                            "source_files": [f"cron/jobs.json (job:{name})"],
+                            "last_seen": last_run,
+                            "domain": "devops",
+                        }
+                    patterns_dict[pkey]["occurrence_count"] += 1
+                    # Also derive a more general pattern from error text
+                    error_key = _normalize_pattern(error[:200])
+                    if error_key and error_key != pkey:
+                        if error_key not in patterns_dict:
+                            patterns_dict[error_key] = {
+                                "pattern_text": (
+                                    f"Cron error pattern: {error[:150]}"
+                                ),
+                                "occurrence_count": 0,
+                                "source_files": [f"cron/jobs.json (job:{name})"],
+                                "last_seen": last_run,
+                                "domain": "devops",
+                            }
+                        patterns_dict[error_key]["occurrence_count"] += 1
+    except Exception as e:
+        report(f"  [DETECT] Cron errors: {e}")
+
+    # ── Source 5: Gap fills ──
+    try:
+        gap_fills_file = HERMES_HOME / "cache" / "gap_fills.json"
+        if gap_fills_file.exists():
+            with open(gap_fills_file, encoding="utf-8") as f:
+                for line in f:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    try:
+                        entry = json.loads(line)
+                    except json.JSONDecodeError:
+                        continue
+                    for r in entry.get("results", []):
+                        gap = r.get("gap", {})
+                        domain = gap.get("domain", "unknown")
+                        pkey = f"gap_fill:{domain}"
+                        if pkey not in patterns_dict:
+                            patterns_dict[pkey] = {
+                                "pattern_text": (
+                                    f"Knowledge gap filled in domain '{domain}'"
+                                ),
+                                "occurrence_count": 0,
+                                "source_files": ["gap_fills.json"],
+                                "last_seen": r.get("filled_at", ""),
+                                "domain": domain,
+                            }
+                        patterns_dict[pkey]["occurrence_count"] += 1
+    except Exception as e:
+        report(f"  [DETECT] Gap fills: {e}")
+
+    # ── Source 6: Agent decisions (action results) ──
+    try:
+        ad_file = HERMES_HOME / "cache" / "agent_decisions.json"
+        if ad_file.exists():
+            with open(ad_file, encoding="utf-8") as f:
+                ad_data = json.load(f)
+            for dec in ad_data.get("decisions", []):
+                action_id = dec.get("action_id", "unknown")
+                title = dec.get("title", "")
+                ts = dec.get("timestamp", "")
+                pkey = f"agent_action:{action_id}"
+                if pkey not in patterns_dict:
+                    patterns_dict[pkey] = {
+                        "pattern_text": f"Agent action '{action_id}': {title}",
+                        "occurrence_count": 0,
+                        "source_files": ["agent_decisions.json"],
+                        "last_seen": ts,
+                        "domain": "automation",
+                    }
+                patterns_dict[pkey]["occurrence_count"] += 1
+                if ts and ts > patterns_dict[pkey]["last_seen"]:
+                    patterns_dict[pkey]["last_seen"] = ts
+    except Exception as e:
+        report(f"  [DETECT] Agent decisions: {e}")
+
+    # Convert to list, sort by occurrence_count descending
+    result = list(patterns_dict.values())
+    result.sort(key=lambda x: -x["occurrence_count"])
+    return result
+
+
+def _generate_skill_name(pattern: dict) -> str:
+    """Generate a URL-safe, human-readable skill name from a pattern dict."""
+    domain = pattern.get("domain", "unknown")
+    text = pattern.get("pattern_text", "")
+
+    import re
+    # Try to extract exception type or key error indicator
+    error_types = re.findall(r"(\w+Error|\w+Exception)", text)
+    if error_types:
+        base = error_types[0].lower().replace("error", "").replace("exception", "")
+        base = re.sub(r"[^a-z0-9]", "", base)
+        if base:
+            return f"{domain}-{base}-patterns"
+
+    text_lower = text.lower()
+    categories = [
+        ("timeout", "timeout"),
+        ("import", "import"),
+        ("permission", "permission"),
+        ("denied", "permission"),
+        ("connection", "connection"),
+        ("indentation", "indentation"),
+        ("syntax", "syntax"),
+        ("traceback", "traceback"),
+        ("exit code", "exit-code"),
+    ]
+    for keyword, cat in categories:
+        if keyword in text_lower:
+            return f"{domain}-{cat}-patterns"
+
+    # Fall back to domain-specific name
+    return f"{domain}-auto-patterns"
+
+
+def _count_patterns_in_content(content: str) -> int:
+    """Count how many pattern entries exist in an existing SKILL.md content."""
+    import re
+    return len(re.findall(r"^### Pattern \d+", content, re.MULTILINE))
+
+
+def _build_skill_md(
+    name: str,
+    domain: str,
+    pattern: dict,
+    existing_content: str = "",
+    is_update: bool = False,
+) -> str:
+    """
+    Build SKILL.md content with YAML frontmatter and pattern documentation.
+
+    For new skills: full template.
+    For updates: appends new pattern entry and refreshes stats.
+    """
+    now_str = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M")
+    count = pattern["occurrence_count"]
+    pattern_text = pattern["pattern_text"]
+    source_files = pattern.get("source_files", [])
+    last_seen = pattern.get("last_seen", "unknown")
+
+    if is_update and existing_content:
+        # ── Append new pattern to existing content ──
+        existing_pattern_count = _count_patterns_in_content(existing_content)
+        new_pattern_num = existing_pattern_count + 1
+
+        append_block = f"""
+### Pattern {new_pattern_num}
+```
+PATTERN: {count} occurrences found.
+Source: {', '.join(source_files)}
+Last seen: {last_seen}
+Description: {pattern_text[:200]}
+```
+"""
+        # Update or add statistics section
+        import re as _re
+        updated = existing_content.rstrip()
+
+        # Refresh or add update timestamp
+        if "- Updated:" not in updated and "- Обновлён:" not in updated:
+            # Add after Created line
+            updated = _re.sub(
+                r"(- (?:Создан|Created):[^\n]+)",
+                f"\\1\n- Updated: {now_str}",
+                updated,
+            )
+        else:
+            # Refresh existing update timestamp
+            updated = _re.sub(
+                r"(- (?:Updated|Обновлён):).*",
+                f"\\1 {now_str}",
+                updated,
+            )
+
+        # Append new pattern block
+        updated += append_block
+
+        # Trim to prevent unbounded growth — keep max 100 pattern entries
+        lines = updated.split("\n")
+        header_indices = [
+            i for i, l in enumerate(lines)
+            if l.strip().startswith("### Pattern ")
+        ]
+        if len(header_indices) > 100:
+            # Keep first 50 and last 50
+            keep_first = 50
+            keep_last = 50
+            first_trim = header_indices[keep_first]
+            last_trim = header_indices[-keep_last]
+            if last_trim > first_trim:
+                trimmed_count = len(header_indices) - keep_first - keep_last
+                summary = (
+                    f"\n_[{trimmed_count} older patterns trimmed — "
+                    f"see Knowledge Cube for full history]_"
+                )
+                lines = lines[:first_trim] + [summary] + lines[last_trim:]
+                updated = "\n".join(lines)
+
+        return updated
+
+    # ── Fresh SKILL.md for new skill ──
+    description = (
+        f"Auto-generated skill from pattern detection — "
+        f"{count} occurrences in domain '{domain}'"
+    )
+    content = f"""---
+name: {name}
+description: "{description}"
+category: auto-generated
+---
+
+# {name.title().replace('-', ' ')}
+
+Auto-generated by Skill Auto-Evolution Engine from {count} detected occurrences in domain '{domain}'.
+
+## Detected Pattern
+
+```
+PATTERN: {count} occurrences found.
+Source: {', '.join(source_files)}
+Last seen: {last_seen}
+Description: {pattern_text[:200]}
+```
+
+## How to Use
+
+1. When encountering similar issues, reference this skill for known solutions
+2. The pattern has been seen **{count} times**, indicating a recurring scenario
+3. Check the Knowledge Cube domain '{domain}' for additional context
+4. Verify the fix approach before applying to avoid regressions
+
+## Statistics
+
+- Domain: {domain}
+- Occurrences: {count}
+- Created: {now_str}
+- Source: Skill Auto-Evolution Engine
+
+## Related Domains
+
+_Automatically populated on next run._
+"""
+    return content
+
+
+def auto_evolve_skills() -> list[dict]:
+    """
+    Auto-create or update skills when patterns are discovered.
+
+    1. Detects patterns from error logs, Knowledge Cube, and task history
+    2. Only creates skills for patterns seen 3+ times
+    3. Generates SKILL.md with proper YAML frontmatter (name, description, category)
+    4. Creates skill directory under skills/ with SKILL.md
+    5. Updates existing skills with matching patterns instead of duplicating
+    6. Returns list of created/updated skills
+
+    Returns:
+        List of dicts with keys: name, action ('created'|'updated'|'skipped'),
+        path, pattern_text, occurrence_count
+    """
+    results: list[dict] = []
+    patterns = _detect_patterns()
+
+    # Only auto-create skills for patterns seen 3+ times
+    qualifying = [p for p in patterns if p["occurrence_count"] >= 3]
+
+    if not qualifying:
+        report(
+            "  [SKILL-EVOLVE] No qualifying patterns "
+            "(need 3+ occurrences for auto-skill creation)"
+        )
+        return results
+
+    report(
+        f"  [SKILL-EVOLVE] Found {len(qualifying)} qualifying "
+        f"pattern(s) (3+ occurrences):"
+    )
+    for p in qualifying:
+        report(f"    [{p['occurrence_count']}x] {p['pattern_text'][:80]}")
+
+    # Ensure skills/ subdirectories exist
+    skills_auto_dir = HERMES_HOME / "skills" / "auto-generated"
+    skills_auto_dir.mkdir(parents=True, exist_ok=True)
+
+    for pattern in qualifying:
+        domain = pattern.get("domain", "unknown")
+        count = pattern["occurrence_count"]
+        pattern_text = pattern["pattern_text"]
+
+        # Generate skill name
+        skill_name = _generate_skill_name(pattern)
+        skill_dir = skills_auto_dir / skill_name
+
+        # ── Check if skill already exists ──
+        skill_md_path = skill_dir / "SKILL.md"
+        if skill_dir.exists() and skill_md_path.exists():
+            # Read existing content
+            existing = skill_md_path.read_text(encoding="utf-8")
+
+            # Deduplicate: skip if this exact pattern text is already documented
+            if pattern_text[:80] in existing:
+                report(
+                    f"  [SKILL-EVOLVE] Pattern already documented in "
+                    f"'{skill_name}' — skipping duplicate"
+                )
+                results.append({
+                    "name": skill_name,
+                    "action": "skipped",
+                    "path": str(skill_md_path),
+                    "pattern_text": pattern_text,
+                    "occurrence_count": count,
+                })
+                continue
+
+            # Update existing skill: append new pattern
+            sk_content = _build_skill_md(
+                skill_name, domain, pattern, existing, is_update=True
+            )
+            action = "updated"
+        else:
+            # Create new skill directory
+            skill_dir.mkdir(parents=True, exist_ok=True)
+            sk_content = _build_skill_md(skill_name, domain, pattern)
+            action = "created"
+
+        # Write SKILL.md
+        skill_md_path.write_text(sk_content, encoding="utf-8")
+
+        report(f"  [SKILL-EVOLVE] {action.upper()} skill '{skill_name}' ({count}x occurrence)")
+        results.append({
+            "name": skill_name,
+            "action": action,
+            "path": str(skill_md_path),
+            "pattern_text": pattern_text,
+            "occurrence_count": count,
+        })
+
+    return results
+
+
 # ── Part 3: Fix Actions ────────────────────────────────────────────
 
 def fix_knowledge_gaps(kc_info: dict[str, Any], healing_state: dict) -> bool:
@@ -2139,6 +2647,29 @@ def main() -> int:
             )
     else:
         report("  [KC-GAP] No gap-filling tasks generated (all domains adequately populated)")
+
+    # ── Phase 4c: Skill Auto-Evolution (bead hermes-0kh.4) ──
+    # bd comments add hermes-0kh.4 "LEARNED: Added auto_evolve_skills() which detects patterns from Knowledge Cube errors, fix history, cron errors, gap fills, and agent decisions. Groups similar issues using _normalize_pattern() and only creates/updates skills for patterns seen 3+ times. Skills created in skills/auto-generated/ with proper SKILL.md YAML frontmatter (name, description, category). Existing skills are updated (not duplicated) when matching patterns found. Returns list of created/updated/skipped skills."
+    report("\n[Phase 4c] Skill Auto-Evolution")
+    report("-" * 40)
+    evolved = auto_evolve_skills()
+    if evolved:
+        created = [e for e in evolved if e["action"] == "created"]
+        updated = [e for e in evolved if e["action"] == "updated"]
+        skipped = [e for e in evolved if e["action"] == "skipped"]
+        if created:
+            report(f"  [SKILL-EVOLVE] Created {len(created)} new skill(s):")
+            for s in created:
+                report(f"    + {s['name']} ({s['occurrence_count']}x) -> {s['path']}")
+            fixes_applied += len(created)
+        if updated:
+            report(f"  [SKILL-EVOLVE] Updated {len(updated)} existing skill(s):")
+            for s in updated:
+                report(f"    ~ {s['name']} (+{s['occurrence_count']}x)")
+        if skipped:
+            report(f"  [SKILL-EVOLVE] Skipped {len(skipped)} duplicate(s)")
+    else:
+        report("  [SKILL-EVOLVE] No skills created/updated (no qualifying patterns)")
 
     # ── Update state ──
     elapsed = time.time() - start
