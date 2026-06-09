@@ -600,7 +600,7 @@ def auto_research_topic(topic: str) -> str:
     )
     try:
         result = subprocess.run(
-            ["hermes", "prompt", prompt, "--json"],
+            ["hermes", "chat", "-q", prompt, "-Q"],
             capture_output=True, text=True, timeout=120,
             cwd=str(HERMES_HOME),
         )
@@ -1984,23 +1984,29 @@ def analyze_with_llm(issues: list[dict[str, Any]]) -> list[dict[str, Any]]:
             "'investigation' when more info is needed."
         )
         result = subprocess.run(
-            ["hermes", "prompt", prompt, "--json"],
+            ["hermes", "chat", "-q", prompt, "-Q"],
             capture_output=True, text=True, timeout=120,
             cwd=str(HERMES_HOME),
         )
         if result.returncode == 0 and result.stdout.strip():
             try:
-                analysis = json.loads(result.stdout)
-                # Handle various response formats
-                if isinstance(analysis, list):
-                    fixes = analysis
-                elif isinstance(analysis, dict):
-                    fixes = analysis.get("fixes", analysis.get("suggestions", []))
-                else:
-                    fixes = []
+                # Try to parse JSON from the plain text response
+                analysis_text = result.stdout.strip()
+                # Check if response starts with { or [ (JSON)
+                import re as _json_re
+                json_match = _json_re.search(r'(\[.*?\]|\{.*\})', analysis_text, _json_re.DOTALL)
+                if json_match:
+                    analysis = json.loads(json_match.group(1))
+                    # Handle various response formats
+                    if isinstance(analysis, list):
+                        fixes = analysis
+                    elif isinstance(analysis, dict):
+                        fixes = analysis.get("fixes", analysis.get("suggestions", []))
+                    else:
+                        fixes = []
 
-                if fixes:
-                    suggested_fixes = fixes
+                    if fixes:
+                        suggested_fixes = fixes
                     # Cache the result
                     cache_entry = {
                         "timestamp": datetime.now(timezone.utc).isoformat(),
