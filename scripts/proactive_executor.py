@@ -386,6 +386,245 @@ def store_generated_tasks(tasks: list[dict[str, Any]]) -> int:
     return inserted
 
 
+# ── Part 3c: Knowledge Gap Task Generation (bead hermes-0kh.3) ─────
+
+def generate_knowledge_tasks() -> list[dict]:
+    """
+    Read the Knowledge Cube to find domain gaps (white spots with <10
+    entries), use LLM analysis to determine what content to generate
+    for each gap, and return up to 3 gap-filling tasks.
+
+    Tasks are stored in knowledge_gap_tasks.json state file.
+
+    Returns:
+        List of task dicts with keys: domain, gap_description,
+        suggested_action, priority, created_at
+    """
+    tasks: list[dict] = []
+    now = datetime.now(timezone.utc).isoformat()
+
+    # ── Step 1: Read Knowledge Cube stats ──
+    stats = None
+    try:
+        # Try direct import (same-directory)
+        import sys as _sys_mod
+        _scripts_dir = str(HERMES_HOME / "scripts")
+        if _scripts_dir not in _sys_mod.path:
+            _sys_mod.path.insert(0, _scripts_dir)
+        from knowledge_cube import get_cube_stats  # type: ignore
+        stats = get_cube_stats()
+    except ImportError:
+        # Fallback: subprocess call to knowledge_cube.py stats
+        try:
+            kc_script = HERMES_HOME / "scripts" / "knowledge_cube.py"
+            result = subprocess.run(
+                [sys.executable, str(kc_script), "stats"],
+                capture_output=True, text=True, timeout=30,
+            )
+            if result.returncode == 0 and result.stdout.strip():
+                stats = json.loads(result.stdout)
+            else:
+                report(
+                    f"  [KC-GAP] subprocess error (exit={result.returncode}): "
+                    f"{result.stderr[:200]}"
+                )
+        except (subprocess.TimeoutExpired, json.JSONDecodeError, OSError) as e:
+            report(f"  [WARN] Could not query Knowledge Cube: {e}")
+    except Exception as e:
+        report(f"  [WARN] Knowledge Cube query failed: {e}")
+
+    if not stats or "domains" not in stats:
+        report("  [KC-GAP] Knowledge Cube stats unavailable — skipping gap analysis")
+        return tasks
+
+    domains: dict[str, int] = stats.get("domains", {})
+    if not domains:
+        report("  [KC-GAP] No domains found in Knowledge Cube")
+        return tasks
+
+    # ── Step 2: Find white spots (domains with <10 entries) ──
+    white_spots: dict[str, int] = {d: c for d, c in domains.items() if c < 10}
+
+    # Check for completely missing expected domains
+    expected_domains = [
+        "coding", "research", "devops", "data", "creative",
+        "communication", "file_ops", "browser", "system", "architecture",
+        "design", "testing", "security", "automation", "documentation",
+        "analysis", "planning", "monitoring", "optimization", "learning",
+    ]
+    for d in expected_domains:
+        if d not in domains:
+            white_spots[d] = 0
+
+    if not white_spots:
+        report("  [KC-GAP] No domain gaps found (all domains >= 10 entries)")
+        return tasks
+
+    report(f"  [KC-GAP] Found {len(white_spots)} domain gaps (white spots):")
+    for d, c in sorted(white_spots.items(), key=lambda x: x[1]):
+        report(f"    {d}: {c} entries")
+
+    # ── Step 3: Use LLM analysis to determine content for each gap ──
+    gap_issues = []
+    for domain, count in sorted(white_spots.items(), key=lambda x: x[1]):
+        gap_issues.append({
+            "type": "knowledge_gap",
+            "domain": domain,
+            "count": count,
+            "description": (
+                f"Domain '{domain}' has only {count} entries "
+                f"(threshold: 10) — needs content generation to fill gap"
+            ),
+        })
+
+    llm_tasks = analyze_with_llm(gap_issues)
+
+    if llm_tasks:
+        # Use LLM suggestions to build tasks
+        for suggestion in llm_tasks[:3]:
+            tasks.append({
+                "domain": suggestion.get("target_file", "unknown"),
+                "gap_description": suggestion.get(
+                    "description", "Knowledge gap needs content"
+                ),
+                "suggested_action": suggestion.get(
+                    "patch_or_action", "research and document"
+                ),
+                "priority": max(1, min(5, int(
+                    (suggestion.get("confidence", 0.5) or 0.5) * 10
+                ))),
+                "created_at": now,
+            })
+
+    # Always build heuristic fallback tasks from white spots (max 3)
+    if not tasks:
+        sorted_spots = sorted(white_spots.items(), key=lambda x: x[1])
+        for domain, count in sorted_spots[:3]:
+            priority = 3 if count == 0 else 2 if count < 5 else 1
+            tasks.append({
+                "domain": domain,
+                "gap_description": (
+                    f"Domain '{domain}' has only {count} entries "
+                    f"— underpopulated area needs exploration"
+                ),
+                "suggested_action": f"Research and generate content for {domain} domain",
+                "priority": priority,
+                "created_at": now,
+            })
+
+    # ── Step 4: Store to knowledge_gap_tasks.json state file ──
+    try:
+        state_dir = HERMES_HOME / "data"
+        state_dir.mkdir(parents=True, exist_ok=True)
+        state_path = state_dir / "knowledge_gap_tasks.json"
+        existing: list[dict] = []
+        if state_path.exists():
+            with open(state_path, encoding="utf-8") as f:
+                existing = json.load(f)
+        if not isinstance(existing, list):
+            existing = []
+        existing.extend(tasks)
+        existing = existing[-100:]  # keep last 100 entries
+        with open(state_path, "w", encoding="utf-8") as f:
+            json.dump(existing, f, indent=2, default=str)
+        report(f"  [KC-GAP] Logged {len(tasks)} tasks to {state_path}")
+    except (OSError, json.JSONDecodeError) as e:
+        report(f"  [WARN] Could not write knowledge_gap_tasks.json: {e}")
+
+    return tasks
+
+
+def auto_research_topic(topic: str) -> str:
+    """
+    If a topic has a knowledge gap in the Knowledge Cube, call web
+    search (via Hermes agent) to fill it.
+
+    This is what would have prevented the 'report without design
+    research' problem — the system proactively checks whether it knows
+    enough about a topic before generating output.
+
+    Args:
+        topic: The topic to research
+
+    Returns:
+        Research result text, or empty string if unavailable
+    """
+    report(f"  [RESEARCH] Auto-researching topic: {topic}")
+
+    # Check if topic maps to a domain with a knowledge gap
+    topic_domain = "unknown"
+    domain_count = 0
+    try:
+        import sys as _sys_mod
+        _scripts_dir = str(HERMES_HOME / "scripts")
+        if _scripts_dir not in _sys_mod.path:
+            _sys_mod.path.insert(0, _scripts_dir)
+        from knowledge_cube import get_cube_stats, classify_domain  # type: ignore
+
+        stats = get_cube_stats()
+        domains: dict[str, int] = stats.get("domains", {})
+
+        # Classify the topic to a domain
+        topic_domain = classify_domain(topic)
+        domain_count = domains.get(topic_domain, 0)
+
+        if domain_count >= 10:
+            report(
+                f"  [RESEARCH] Domain '{topic_domain}' already has "
+                f"{domain_count} entries — no gap to fill"
+            )
+            return ""
+
+        report(
+            f"  [RESEARCH] Topic '{topic}' maps to domain "
+            f"'{topic_domain}' ({domain_count} entries, "
+            f"below threshold 10)"
+        )
+    except ImportError:
+        report("  [RESEARCH] Cannot access Knowledge Cube — proceeding anyway")
+    except Exception as e:
+        report(f"  [RESEARCH] KC check error: {e}")
+
+    # ── Call web search via Hermes agent ──
+    research_result = ""
+    prompt = (
+        f"Research the following topic thoroughly and provide a "
+        f"comprehensive summary:\n\n"
+        f"TOPIC: {topic}\n"
+        f"DOMAIN: {topic_domain}\n\n"
+        f"Search the web for the latest information on this topic. "
+        f"Provide a structured report with key findings, concepts, "
+        f"practices, and actionable knowledge that can be used to "
+        f"fill a knowledge gap in the Knowledge Cube. "
+        f"Format as plain text."
+    )
+    try:
+        result = subprocess.run(
+            ["hermes", "prompt", prompt, "--json"],
+            capture_output=True, text=True, timeout=120,
+            cwd=str(HERMES_HOME),
+        )
+        if result.returncode == 0 and result.stdout.strip():
+            research_result = result.stdout.strip()
+            report(
+                f"  [RESEARCH] Got research result "
+                f"({len(research_result)} chars)"
+            )
+        else:
+            report(
+                f"  [RESEARCH] Hermes call empty or failed "
+                f"(exit={result.returncode})"
+            )
+    except FileNotFoundError:
+        report("  [RESEARCH] 'hermes' command not found")
+    except subprocess.TimeoutExpired:
+        report("  [RESEARCH] Hermes call timed out after 120s")
+    except Exception as e:
+        report(f"  [RESEARCH] Error: {e}")
+
+    return research_result
+
+
 # ── Part 3: Fix Actions ────────────────────────────────────────────
 
 def fix_knowledge_gaps(kc_info: dict[str, Any], healing_state: dict) -> bool:
@@ -1887,6 +2126,19 @@ def main() -> int:
 
     if tasks_inserted > 0:
         fixes_applied += 1
+
+    # ── Phase 4b: KC Gap Task Generation (bead hermes-0kh.3) ──
+    # bd comments add hermes-0kh.3 "LEARNED: Added generate_knowledge_tasks() which reads KC domain stats to find white spots (<10 entries), uses LLM analysis to determine content to generate for each gap, returns up to 3 gap-filling tasks logged to data/knowledge_gap_tasks.json. Also added auto_research_topic(topic) which checks if a topic has a knowledge gap and calls web search via Hermes agent to fill it — prevents the 'report without research' problem."
+    knowledge_tasks = generate_knowledge_tasks()
+    if knowledge_tasks:
+        report(f"  [KC-GAP] {len(knowledge_tasks)} gap-filling task(s) generated:")
+        for t in knowledge_tasks:
+            report(
+                f"    [{t['domain']}] (priority={t['priority']}) "
+                f"{t['gap_description']}"
+            )
+    else:
+        report("  [KC-GAP] No gap-filling tasks generated (all domains adequately populated)")
 
     # ── Update state ──
     elapsed = time.time() - start
