@@ -16,6 +16,7 @@ This directory contains the main operational scripts. Most are standalone Python
 - **Core modules**: `core_engine.py`, `event_evolution.py`, `hermes_hooks.py`, `auto_recall.py`
 - **Knowledge Cube**: `knowledge_cube.py`, `cube_feeder.py`, `cube_categorizer.py`, `knowledge_brain.py`
 - **Autonomous agent**: `autonomous_agent.py` — main decision loop
+- **Proactive executor**: `proactive_executor.py` — self-healing, white-spot detection, knowledge gap filling, skill auto-evolution, LLM analysis, fix verification feedback loop
 - **Cron scripts**: `*_cron.py` files — run on schedule via `cron/jobs.json`
 - **Telegram**: `telegram_bridge.py`, `tg_client.py` — Telegram integration
 - **Utilities**: `utilities/` — helper scripts, fixes, launchers
@@ -34,6 +35,7 @@ This directory contains the main operational scripts. Most are standalone Python
 | `auto_recall.py` | Knowledge Cube recall/search |
 | `autonomous_agent.py` | Main autonomous decision loop |
 | `knowledge_cube.py` | Knowledge Cube operations |
+| `proactive_executor.py` | Self-healing, white-spot detection, knowledge gap filling, skill auto-evolution |
 | `openrouter_client.py` | LLM API client |
 | `posting/` | Social media posting scripts |
 | `utilities/` | Helper scripts, fixes |
