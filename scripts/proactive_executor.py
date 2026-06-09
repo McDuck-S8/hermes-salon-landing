@@ -1000,13 +1000,16 @@ def report_fix_success_rate() -> None:
 
 def analyze_with_llm(issues: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """
-    Prepare issues for LLM analysis. Writes pending_analysis.json and checks
-    for cached results from both llm_analysis_cache.json and suggested_fixes.json.
-    Returns suggested_fixes list (may be empty if no cached analysis is available yet).
+    Analyze issues using Hermes LLM via subprocess call.
 
-    This is the LLM integration point — when the LLM Analyst cron job picks up
-    pending_analysis.json, it calls an LLM and writes results to suggested_fixes.json.
-    This function reads those results.
+    Takes detected issues, calls hermes agent via subprocess with a prompt
+    to analyze the issue, caches results for 1 hour (file-based, JSON),
+    and returns actionable fix suggestions.
+
+    Falls back to pending_analysis.json (for LLM Analyst service) if
+    direct subprocess call is unavailable or fails.
+
+    Returns suggested_fixes list (may be empty if no analysis available).
     """
     suggested_fixes: list[dict[str, Any]] = []
 
@@ -1034,25 +1037,24 @@ def analyze_with_llm(issues: list[dict[str, Any]]) -> list[dict[str, Any]]:
         try:
             with open(SUGGESTED_FIXES_FILE, encoding="utf-8") as f:
                 sf_data = json.load(f)
-            
+
             # Check for timestamp staleness (older than 1 hour)
             created_at = sf_data.get("created_at", "")
             if created_at:
                 try:
-                    from datetime import datetime, timezone
                     created_dt = datetime.fromisoformat(created_at.replace("Z", "+00:00"))
                     age = (datetime.now(timezone.utc) - created_dt).total_seconds()
                     if age > 3600:  # 1 hour
                         report(f"  [LLM] suggested_fixes.json is stale ({int(age)}s old), skipping")
                         SUGGESTED_FIXES_FILE.unlink(missing_ok=True)
-                        # Fall through to write new pending analysis
+                        # Fall through to direct LLM call
                     else:
                         # New format: unified diff patch
                         patch = sf_data.get("patch", "")
                         if patch and "--- a/" in patch and "+++ b/" in patch:
                             report(f"  [LLM] Using suggested_fixes.json (unified diff)")
                             return [{"fix_type": "patch", "patch_or_action": patch, "confidence": 0.8}]
-                        
+
                         # Legacy format: fixes array
                         fixes = sf_data.get("fixes", [])
                         if fixes:
@@ -1063,7 +1065,7 @@ def analyze_with_llm(issues: list[dict[str, Any]]) -> list[dict[str, Any]]:
         except (OSError, json.JSONDecodeError) as e:
             report(f"  [LLM] Could not read suggested_fixes.json: {e}")
 
-    # Check 2: llm_analysis_cache.json (legacy cache)
+    # Check 2: llm_analysis_cache.json (local subprocess cache)
     if LLM_ANALYSIS_CACHE.exists():
         try:
             with open(LLM_ANALYSIS_CACHE, encoding="utf-8") as f:
@@ -1084,7 +1086,72 @@ def analyze_with_llm(issues: list[dict[str, Any]]) -> list[dict[str, Any]]:
         except (OSError, json.JSONDecodeError) as e:
             report(f"  [LLM] Could not read cache: {e}")
 
-    # Write issues to pending_analysis.json for LLM Analyst to pick up
+    # ── Direct Hermes subprocess call ──────────────────────────────
+    report(f"  [LLM] Calling Hermes agent for analysis of {len(issues_summary)} issue(s)...")
+    try:
+        prompt = (
+            "You are a system diagnostics AI. Analyze the following system issues and "
+            "suggest actionable fixes.\n\n"
+            "Issues:\n" + issues_json + "\n\n"
+            "Respond with a JSON object in exactly this format:\n"
+            '{"fixes": [{"fix_type": "patch|command|investigation", '
+            '"description": "what this fix does", '
+            '"patch_or_action": "unified diff or shell command", '
+            '"target_file": "relative/path/to/file.py", '
+            '"confidence": 0.8}]}\n\n'
+            "Only include fixes that are safe, idempotent, and directly address the issues. "
+            "Use fix_type='patch' for file edits, 'command' for shell commands, "
+            "'investigation' when more info is needed."
+        )
+        result = subprocess.run(
+            ["hermes", "prompt", prompt, "--json"],
+            capture_output=True, text=True, timeout=120,
+            cwd=str(HERMES_HOME),
+        )
+        if result.returncode == 0 and result.stdout.strip():
+            try:
+                analysis = json.loads(result.stdout)
+                # Handle various response formats
+                if isinstance(analysis, list):
+                    fixes = analysis
+                elif isinstance(analysis, dict):
+                    fixes = analysis.get("fixes", analysis.get("suggestions", []))
+                else:
+                    fixes = []
+
+                if fixes:
+                    suggested_fixes = fixes
+                    # Cache the result
+                    cache_entry = {
+                        "timestamp": datetime.now(timezone.utc).isoformat(),
+                        "issues_count": len(issues_summary),
+                        "suggested_fixes": suggested_fixes,
+                    }
+                    with open(LLM_ANALYSIS_CACHE, "w", encoding="utf-8") as f:
+                        json.dump(cache_entry, f, indent=2)
+                    report(
+                        f"  [LLM] Direct analysis complete: "
+                        f"{len(suggested_fixes)} suggestion(s) (cached for {LLM_CACHE_TTL}s)"
+                    )
+                    return suggested_fixes
+                else:
+                    report("  [LLM] Hermes response had no fix suggestions in expected format")
+            except json.JSONDecodeError as e:
+                report(f"  [LLM] Could not parse Hermes response as JSON: {e}")
+                report(f"  [LLM] Raw response (first 500 chars): {result.stdout[:500]}")
+        else:
+            report(
+                f"  [LLM] Hermes call failed (exit={result.returncode}): "
+                f"{(result.stderr or '')[:200]}"
+            )
+    except FileNotFoundError:
+        report("  [LLM] 'hermes' command not found — falling back to pending_analysis.json")
+    except subprocess.TimeoutExpired:
+        report("  [LLM] Hermes call timed out after 120s")
+    except Exception as e:
+        report(f"  [LLM] Error calling Hermes: {e}")
+
+    # ── Fallback: write pending_analysis.json for LLM Analyst service ──
     try:
         pending = {
             "created_at": datetime.now(timezone.utc).isoformat(),
@@ -1094,8 +1161,7 @@ def analyze_with_llm(issues: list[dict[str, Any]]) -> list[dict[str, Any]]:
         }
         with open(PENDING_ANALYSIS_FILE, "w", encoding="utf-8") as f:
             json.dump(pending, f, indent=2)
-        report(f"  [LLM] {len(issues_summary)} issues written to pending_analysis.json")
-        report(f"  [LLM] Awaiting LLM Analyst service to process...")
+        report(f"  [LLM] {len(issues_summary)} issues written to pending_analysis.json (for LLM Analyst service)")
     except OSError as e:
         report(f"  [LLM] Could not write pending analysis: {e}")
 
