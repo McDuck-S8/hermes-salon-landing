@@ -35,6 +35,7 @@ LLM_ANALYSIS_CACHE = HERMES_HOME / "cache" / "llm_analysis_cache.json"
 PENDING_ANALYSIS_FILE = HERMES_HOME / "cache" / "pending_analysis.json"
 SUGGESTED_FIXES_FILE = HERMES_HOME / "cache" / "suggested_fixes.json"
 LLM_CACHE_TTL = 3600  # 1 hour
+VERIFICATION_STATE_FILE = HERMES_HOME / 'data' / 'verification_state.json'
 
 REPORT_LINES: list[str] = []
 
@@ -789,8 +790,65 @@ def run_vacuum_if_needed() -> bool:
 
 # ── Fix Feedback Loop ──────────────────────────────────────────────
 
+# ── Verification State File helpers ────────────────────────────────
+
+def _load_verification_state() -> dict:
+    """Load the verification state file (fix_success_rate tracker)."""
+    try:
+        HERMES_HOME.joinpath("data").mkdir(parents=True, exist_ok=True)
+        if VERIFICATION_STATE_FILE.exists():
+            with open(VERIFICATION_STATE_FILE, encoding="utf-8") as f:
+                return json.load(f)
+        return {"fix_success_rate": {}, "total_fixes": 0, "verified_fixes": 0, "history": []}
+    except (OSError, json.JSONDecodeError) as e:
+        report(f"  [WARN] Could not load verification state: {e}")
+        return {"fix_success_rate": {}, "total_fixes": 0, "verified_fixes": 0, "history": []}
+
+
+def _save_verification_state(state: dict) -> None:
+    """Save the verification state to the state file."""
+    try:
+        HERMES_HOME.joinpath("data").mkdir(parents=True, exist_ok=True)
+        with open(VERIFICATION_STATE_FILE, "w", encoding="utf-8") as f:
+            json.dump(state, f, indent=2, default=str)
+    except OSError as e:
+        report(f"  [WARN] Could not save verification state: {e}")
+
+
+def _update_fix_success_rate(fix_name: str, verified: bool) -> None:
+    """
+    Update the fix_success_rate tracker in the verification state file.
+    Tracks per-fix-type success rates and overall success over time.
+    """
+    state = _load_verification_state()
+    state["total_fixes"] = state.get("total_fixes", 0) + 1
+    if verified:
+        state["verified_fixes"] = state.get("verified_fixes", 0) + 1
+
+    # Per-fix-type tracking
+    rate = state.setdefault("fix_success_rate", {})
+    if fix_name not in rate:
+        rate[fix_name] = {"total": 0, "verified": 0}
+    rate[fix_name]["total"] += 1
+    if verified:
+        rate[fix_name]["verified"] += 1
+
+    # Append to history (keep last 500 entries)
+    history = state.setdefault("history", [])
+    history.append({
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "fix_name": fix_name,
+        "verified": verified,
+    })
+    state["history"] = history[-500:]
+
+    _save_verification_state(state)
+
+
+# ── Fix Result Recording ──────────────────────────────────────────
+
 def record_fix_result(fix_name: str, verified: bool, details: str = "") -> None:
-    """Append a fix result entry to cache/fix_results.json."""
+    """Append a fix result entry to cache/fix_results.json and update verification state."""
     entry = {
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "fix_name": fix_name,
@@ -815,14 +873,19 @@ def record_fix_result(fix_name: str, verified: bool, details: str = "") -> None:
     except (OSError, json.JSONDecodeError) as e:
         report(f"  [WARN] Could not record fix result: {e}")
 
+    # Also update the verification state file
+    _update_fix_success_rate(fix_name, verified)
 
-def verify_fix(fix_name: str, fix_applied: bool) -> bool:
+
+# ── Internal Verification Logic (by name) ─────────────────────────
+
+def _verify_fix_by_name(fix_name: str, fix_applied: bool) -> tuple[bool, str]:
     """
-    After a fix is applied, re-run the check that was failing to confirm
-    it actually worked. Returns True if verified, False otherwise.
+    Core verification logic. Checks if a fix actually resolved the issue
+    by re-reading the relevant state. Returns (verified, details).
     """
     if not fix_applied:
-        return False
+        return False, "Fix was not applied"
 
     verified = False
     details = ""
@@ -951,10 +1014,73 @@ def verify_fix(fix_name: str, fix_applied: bool) -> bool:
         verified = True
         details = "No specific verification for this fix type"
 
+    return verified, details
+
+
+def verify_fix(fix_result: dict) -> dict:
+    """
+    After a fix is applied, check if the issue is actually resolved.
+    Closes the feedback loop by re-reading relevant state
+    (file content, health check result, DB state, etc.).
+
+    Args:
+        fix_result: Dict with at minimum:
+            - fix_name (str): The name/key of the fix that was applied
+            - fix_applied (bool): Whether the fix was actually applied
+          Optionally:
+            - target_file (str): File that was modified
+
+    Returns:
+        Dict with:
+            - verified (bool): True if fix resolved the issue
+            - message (str): Human-readable status
+            - details (str): Detailed verification info
+    """
+    fix_name = fix_result.get("fix_name", "unknown")
+    fix_applied = fix_result.get("fix_applied", False)
+    target_file = fix_result.get("target_file", "")
+
+    verified, details = _verify_fix_by_name(fix_name, fix_applied)
+
+    message = "Fix resolved the issue" if verified else "Fix did NOT resolve the issue"
+
+    result = {
+        "verified": verified,
+        "message": message,
+        "details": details,
+    }
+
     status = "VERIFIED" if verified else "NOT VERIFIED"
     report(f"  [VERIFY] {fix_name}: {status} — {details}")
+
+    # Record to both fix_results.json and verification state file
     record_fix_result(fix_name, verified, details)
-    return verified
+
+    if not verified:
+        report(f"  [VERIFY] Fix '{fix_name}' failed verification — marking as failed (no auto-retry)")
+        # Log to report for analysis
+        report(f"  [VERIFY] Target: {target_file or 'N/A'} | Details: {details}")
+
+    # Report per-fix success rate from state file
+    state = _load_verification_state()
+    rate = state.get("fix_success_rate", {})
+    if fix_name in rate:
+        sub = rate[fix_name]
+        sub_rate = (sub["verified"] / sub["total"] * 100) if sub["total"] > 0 else 0
+        report(f"  [VERIFY] Historical rate for '{fix_name}': {sub['verified']}/{sub['total']} ({sub_rate:.0f}%)")
+
+    return result
+
+
+# ── Legacy verify_fix (backward compatible wrapper) ───────────────
+
+def verify_fix_legacy(fix_name: str, fix_applied: bool) -> bool:
+    """
+    Legacy wrapper that returns a bool for backward compatibility.
+    Uses the new verify_fix internally and extracts the 'verified' flag.
+    """
+    result = verify_fix({"fix_name": fix_name, "fix_applied": fix_applied})
+    return result["verified"]
 
 
 def report_fix_success_rate() -> None:
@@ -994,6 +1120,13 @@ def report_fix_success_rate() -> None:
     for name, counts in sorted(fix_counts.items()):
         sub_rate = (counts["verified"] / counts["total"] * 100) if counts["total"] > 0 else 0
         report(f"    {name}: {counts['verified']}/{counts['total']} ({sub_rate:.0f}%)")
+    # Also report overall rate from verification state file
+    state = _load_verification_state()
+    total = state.get("total_fixes", 0)
+    verified_total = state.get("verified_fixes", 0)
+    if total > 0:
+        overall = (verified_total / total * 100) if total > 0 else 0
+        report(f"  State file: {verified_total}/{total} verified ({overall:.0f}%) across all runs")
 
 
 # ── LLM Analysis ──────────────────────────────────────────────────
@@ -1675,40 +1808,70 @@ def main() -> int:
     report("\n[Phase 3] Applying Fixes")
     report("-" * 40)
 
+    # Track fix results for Phase 3.5 verification reporting
+    phase3_fixes: list[dict] = []
+
     if kc["total"] > 0 and kc["gaps"]:
         if fix_knowledge_gaps(kc, healing_state):
             fixes_applied += 1
-            if verify_fix("knowledge_gaps", True):
+            result = verify_fix({"fix_name": "knowledge_gaps", "fix_applied": True})
+            if result["verified"]:
                 fixes_verified += 1
+            phase3_fixes.append(result)
 
     # Fix 2: System-watcher gap alert
     if fix_system_watcher(errors, healing_state):
         fixes_applied += 1
-        if verify_fix("system_watcher", True):
+        result = verify_fix({"fix_name": "system_watcher", "fix_applied": True})
+        if result["verified"]:
             fixes_verified += 1
+        phase3_fixes.append(result)
 
     # Fix 3: Telegram delivery chat_id
     if fix_telegram_delivery(errors):
         fixes_applied += 1
-        if verify_fix("telegram_delivery", True):
+        result = verify_fix({"fix_name": "telegram_delivery", "fix_applied": True})
+        if result["verified"]:
             fixes_verified += 1
+        phase3_fixes.append(result)
 
     # Fix 4: API health (if docker available)
     if fix_api_health(errors):
         fixes_applied += 1
-        if verify_fix("health_check", True):
+        result = verify_fix({"fix_name": "health_check", "fix_applied": True})
+        if result["verified"]:
             fixes_verified += 1
+        phase3_fixes.append(result)
 
     # Fix 5: Clean stale proactive_actions
     if clean_stale_proactive_actions():
         fixes_applied += 1
-        if verify_fix("clean_stale", True):
+        result = verify_fix({"fix_name": "clean_stale", "fix_applied": True})
+        if result["verified"]:
             fixes_verified += 1
+        phase3_fixes.append(result)
 
     # Fix 6: Lightweight DB maintenance
     run_vacuum_if_needed()
 
+    # ── Phase 3.5: Verification Phase ──
+    report("\n[Phase 3.5] Fix Verification Phase")
+    report("-" * 40)
+    if phase3_fixes:
+        verified_count = sum(1 for r in phase3_fixes if r["verified"])
+        failed_count = sum(1 for r in phase3_fixes if not r["verified"])
+        report(f"  Fixes applied this run: {len(phase3_fixes)}")
+        report(f"  Verified: {verified_count} | Failed: {failed_count}")
+        for r in phase3_fixes:
+            status_icon = "✓" if r["verified"] else "✗"
+            report(f"  [{status_icon}] {r.get('details', 'no details')}")
+        if failed_count > 0:
+            report("  [WARN] Some fix(es) not verified — check fix_results.json for details")
+    else:
+        report("  No fixes applied this run — nothing to verify")
+
     # ── Phase 4: Knowledge-Driven Task Generation ──
+    # bd comments add hermes-0kh.2 "LEARNED: Added verify_fix(fix_result: dict) -> dict with VERIFICATION_STATE_FILE tracking. Post-fix verification re-reads relevant state (DB queries, environment vars, port checks) and writes to data/verification_state.json with per-fix success rates. Phase 3.5 provides explicit verification summary between fix application (Phase 3) and task generation (Phase 4). Failed verifications are logged and marked as failed without auto-retry."
     report("\n[Phase 4] Knowledge-Driven Task Generation")
     report("-" * 40)
 
