@@ -21,6 +21,7 @@ This directory contains the main operational scripts. Most are standalone Python
 - **Telegram**: `telegram_bridge.py`, `tg_client.py` — Telegram integration
 - **Utilities**: `utilities/` — helper scripts, fixes, launchers
 - **Archive**: `_archive/` — deprecated scripts, keep for reference
+- **Proactive DOER**: `proactive_doer.py` — autonomous cron-run fix executor; cleans stale locks, repairs broken JSON, restarts failed jobs, clears stale cache. Runs every 15 min.
 
 ## Verification
 - Run `python scripts/health_check.py` to verify system health
