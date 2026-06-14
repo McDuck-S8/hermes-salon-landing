@@ -48,12 +48,35 @@ def load_pending():
 
 
 def build_prompt(issues):
-    p = 'Analyze these code issues. Return ONLY a unified diff patch (--- a/ and +++ b/ format).\n'
-    p += 'The patch must be a valid unified diff that can be applied with `git apply`.\n'
-    p += 'If multiple fixes needed, combine them in one diff.\n\n'
+    p = 'You are fixing a Hermes AI agent system. Issues are either:\n'
+    p += '  1) KNOWLEDGE GAPS — domains with few entries in the Knowledge Cube\n'
+    p += '  2) CRON ERRORS — cron jobs that failed (script errors, timeouts, path issues)\n\n'
+    p += 'For each issue, output a JSON array of fixes. Each fix is a dict:\n'
+    p += '{\n'
+    p += '  "fix_type": "command" | "investigation",\n'
+    p += '  "description": "what this fix does",\n'
+    p += '  "patch_or_action": "shell command to run",\n'
+    p += '  "confidence": 0.0-1.0,\n'
+    p += '  "target_file": "relevant file if any"\n'
+    p += '}\n\n'
+    p += 'AVAILABLE SCRIPTS (use these commands only):\n'
+    p += '  python scripts/explore_domain.py <domain_name>\n'
+    p += '  python scripts/knowledge_gap_filler.py --domain <domain_name>\n'
+    p += '  python scripts/cube_feeder.py --domain <domain_name>\n'
+    p += '  python scripts/explore_white_spot.py\n'
+    p += '  python scripts/dimension_discovery.py\n'
+    p += '  python scripts/auto_tagger_v2.py\n\n'
+    p += 'RULES:\n'
+    p += '- For KNOWLEDGE GAPS: fix_type="command", use explore_domain.py or knowledge_gap_filler.py\n'
+    p += '- For CRON ERRORS like "Script not found": fix_type="investigation"\n'
+    p += '  — the script path was fixed, suggest waiting for next cron cycle\n'
+    p += '- NEVER generate placeholder content like "entry1, entry2"\n'
+    p += '- NEVER suggest patching files that do not exist\n'
+    p += '- NEVER suggest auto_recall.py or non-existent flags\n'
+    p += '- Return ONLY valid JSON array, no markdown, no extra text\n\n'
     for i, issue in enumerate(issues[:MAX_ISSUES]):
         p += f'--- Issue {i+1} ---\n{json.dumps(issue, default=str)}\n'
-    p += '\nReturn ONLY the unified diff, no markdown, no explanation.'
+    p += '\nReturn ONLY the JSON array.'
     return p
 
 
@@ -75,21 +98,27 @@ def call_api(prompt, model):
     return None
 
 
-def extract_unified_diff(text):
-    """Extract unified diff from LLM response."""
-    # Look for unified diff markers
-    if '--- a/' in text and '+++ b/' in text and '@@' in text:
-        # Find the diff boundaries
-        lines = text.split('\n')
-        diff_lines = []
-        in_diff = False
-        for line in lines:
-            if line.startswith('--- a/') or line.startswith('diff '):
-                in_diff = True
-            if in_diff:
-                diff_lines.append(line)
-        if diff_lines:
-            return '\n'.join(diff_lines)
+def extract_json_fixes(text):
+    """Extract JSON fixes array from LLM response."""
+    import re
+    # Try to find a JSON array in the response
+    json_match = re.search(r'\[[\s\S]*\]', text)
+    if json_match:
+        try:
+            fixes = json.loads(json_match.group(0))
+            if isinstance(fixes, list):
+                return fixes
+        except json.JSONDecodeError:
+            pass
+    # Try JSON object with fixes key
+    obj_match = re.search(r'\{"fixes":[\s\S]*\}', text)
+    if obj_match:
+        try:
+            data = json.loads(obj_match.group(0))
+            if isinstance(data, dict) and "fixes" in data:
+                return data["fixes"]
+        except json.JSONDecodeError:
+            pass
     return None
 
 
@@ -110,19 +139,19 @@ def main():
         print(f"[llm-analyst] Trying {model}")
         response = call_api(build_prompt(issues), model)
         if response:
-            diff = extract_unified_diff(response)
-            if diff:
+            fixes = extract_json_fixes(response)
+            if fixes:
                 data = {
                     "created_at": datetime.now(timezone.utc).isoformat(),
                     "issues_analyzed": len(issues),
-                    "patch": diff,
+                    "fixes": fixes,
                     "model_used": model
                 }
                 tmp = FIXES_FILE.with_suffix('.tmp')
                 with open(tmp, 'w', encoding='utf-8') as f:
                     json.dump(data, f, indent=2, default=str)
                 tmp.replace(FIXES_FILE)
-                print(f"[llm-analyst] Wrote unified diff from {model}")
+                print(f"[llm-analyst] Wrote {len(fixes)} fix suggestions from {model}")
                 # Clear pending analysis
                 try:
                     PENDING_FILE.unlink()

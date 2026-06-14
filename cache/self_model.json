@@ -1,0 +1,826 @@
+{
+  "version": "1.0",
+  "last_cycle": "2026-06-13T11:45:38",
+  "cycle_count": 130,
+  "znayu": {
+    "total_entries": 3293,
+    "avg_depth": 248,
+    "domains": {
+      "bugfix": {
+        "count": 505,
+        "recency": "2026-06-13",
+        "coverage": "high"
+      },
+      "crystal": {
+        "count": 401,
+        "recency": "2026-06-13",
+        "coverage": "high"
+      },
+      "file_ops": {
+        "count": 304,
+        "recency": "2026-06-13",
+        "coverage": "high"
+      },
+      "skill": {
+        "count": 262,
+        "recency": "2026-06-13",
+        "coverage": "high"
+      },
+      "research": {
+        "count": 219,
+        "recency": "2026-06-13",
+        "coverage": "high"
+      },
+      "system": {
+        "count": 196,
+        "recency": "2026-06-13",
+        "coverage": "high"
+      },
+      "crystal_will": {
+        "count": 188,
+        "recency": "2026-06-13",
+        "coverage": "high"
+      },
+      "coding": {
+        "count": 152,
+        "recency": "2026-06-13",
+        "coverage": "high"
+      },
+      "devops": {
+        "count": 127,
+        "recency": "2026-06-13",
+        "coverage": "high"
+      },
+      "debugging": {
+        "count": 126,
+        "recency": "2026-06-13",
+        "coverage": "high"
+      }
+    },
+    "total_domains": 10,
+    "garbage_domains": 0
+  },
+  "umeyu": {
+    "roles": {
+      "total": 269,
+      "isolated": 0,
+      "connected": 269,
+      "key_roles": [],
+      "source": "entity_engine",
+      "all_entities": 14781,
+      "entity_types": {
+        "Концепция": 13949,
+        "Проект": 406,
+        "AI Agent": 269,
+        "Платформа": 62,
+        "Инструмент": 46,
+        "Источник данных": 18,
+        "Домен знаний": 13,
+        "Язык/Фреймворк": 10,
+        "Технология": 6,
+        "Человек": 1,
+        "Совесть": 1
+      }
+    },
+    "skills": {
+      "total": 236,
+      "by_category": {
+        "agent-browser": 1,
+        "agent-native-architecture": 1,
+        "apple": 2,
+        "auto-generated": 13,
+        "automation": 4,
+        "autonomous-ai-agents": 8,
+        "autonomous-coding-with-opencode-zen": 2,
+        "background-task-discipline": 2,
+        "brainstorming": 1,
+        "branch-context-manager": 2,
+        "coding-patterns": 1,
+        "communication": 1,
+        "create-agent-skills": 1,
+        "creative": 22,
+        "crystal-self-learning": 2,
+        "data-science": 4,
+        "devops": 6,
+        "diagramming": 1,
+        "dogfood": 3,
+        "domain": 1,
+        "email": 2,
+        "file-todos": 1,
+        "file_ops": 1,
+        "finance": 4,
+        "gaming": 3,
+        "gifs": 1,
+        "git-worktree": 1,
+        "github": 7,
+        "health": 1,
+        "inference-sh": 1,
+        "lavra-agent-agent-native-reviewer": 1,
+        "lavra-agent-ankane-readme-writer": 1,
+        "lavra-agent-architecture-strategist": 1,
+        "lavra-agent-best-practices-researcher": 1,
+        "lavra-agent-bug-reproduction-validator": 1,
+        "lavra-agent-code-simplicity-reviewer": 1,
+        "lavra-agent-data-integrity-guardian": 1,
+        "lavra-agent-data-migration-expert": 1,
+        "lavra-agent-deployment-verification-agent": 1,
+        "lavra-agent-design-implementation-reviewer": 1,
+        "lavra-agent-design-iterator": 1,
+        "lavra-agent-dhh-rails-reviewer": 1,
+        "lavra-agent-every-style-editor": 1,
+        "lavra-agent-figma-design-sync": 1,
+        "lavra-agent-framework-docs-researcher": 1,
+        "lavra-agent-git-history-analyzer": 1,
+        "lavra-agent-goal-verifier": 1,
+        "lavra-agent-julik-frontend-races-reviewer": 1,
+        "lavra-agent-kieran-python-reviewer": 1,
+        "lavra-agent-kieran-rails-reviewer": 1,
+        "lavra-agent-kieran-typescript-reviewer": 1,
+        "lavra-agent-learnings-researcher": 1,
+        "lavra-agent-lint": 1,
+        "lavra-agent-migration-drift-detector": 1,
+        "lavra-agent-pattern-recognition-specialist": 1,
+        "lavra-agent-performance-oracle": 1,
+        "lavra-agent-pr-comment-resolver": 1,
+        "lavra-agent-repo-research-analyst": 1,
+        "lavra-agent-security-sentinel": 1,
+        "lavra-agent-spec-flow-analyzer": 1,
+        "lavra-brainstorm": 1,
+        "lavra-ceo-review": 1,
+        "lavra-eng-review": 1,
+        "lavra-knowledge": 1,
+        "lavra-memory-system": 1,
+        "lavra-plan": 1,
+        "lavra-research": 1,
+        "lavra-review": 1,
+        "lavra-work": 1,
+        "lavra-work-multi": 1,
+        "lavra-work-single": 1,
+        "mcp": 4,
+        "media": 7,
+        "meta": 1,
+        "mlops": 9,
+        "note-taking": 2,
+        "personalities": 1,
+        "productivity": 11,
+        "red-teaming": 1,
+        "research": 7,
+        "response-language": 1,
+        "security": 3,
+        "self-improvement": 21,
+        "self-improvement-runtime": 2,
+        "smart-home": 2,
+        "social-media": 2,
+        "software-development": 12,
+        "trend-scout": 1,
+        "uncategorized": 1,
+        "uncategorized-to-domain": 2,
+        "web-development": 3,
+        "yuanbao": 1,
+        "о программировании (агентский)": 1
+      },
+      "used_in_will": [],
+      "unused_count": 236,
+      "source": "skills/"
+    }
+  },
+  "ne_znayu": {
+    "orphan_sources": {
+      "state_db": 293,
+      "NULL": 4
+    },
+    "isolated_entities": 297,
+    "unused_skills": 236
+  },
+  "istoriya": {
+    "actions": [
+      {
+        "action_id": "self_aware_limitation",
+        "last_outcome": "success",
+        "effectiveness": "low"
+      },
+      {
+        "action_id": "self_mod_add_quality_score",
+        "last_outcome": "success",
+        "effectiveness": "low"
+      },
+      {
+        "action_id": "self_mod_create_plan",
+        "last_outcome": "success",
+        "effectiveness": "low"
+      },
+      {
+        "action_id": "conscience_audit_dimension_proposals",
+        "last_outcome": "success",
+        "effectiveness": "low"
+      },
+      {
+        "action_id": "conscience_blindspot_communication",
+        "last_outcome": "success",
+        "effectiveness": "low"
+      },
+      {
+        "action_id": "conscience_deepen_bugfix",
+        "last_outcome": "success",
+        "effectiveness": "low"
+      },
+      {
+        "action_id": "conscience_blindspot_learning",
+        "last_outcome": "success",
+        "effectiveness": "low"
+      },
+      {
+        "action_id": "conscience_anomaly_uncategorized",
+        "last_outcome": "success",
+        "effectiveness": "low"
+      },
+      {
+        "action_id": "conscience_blindspot_music-audio",
+        "last_outcome": "success",
+        "effectiveness": "low"
+      },
+      {
+        "action_id": "conscience_audit_improvement_suggestions",
+        "last_outcome": "success",
+        "effectiveness": "low"
+      },
+      {
+        "action_id": "conscience_audit_latent-domain-detector",
+        "last_outcome": "success",
+        "effectiveness": "low"
+      },
+      {
+        "action_id": "conscience_blindspot_creative",
+        "last_outcome": "success",
+        "effectiveness": "low"
+      },
+      {
+        "action_id": "conscience_anomaly_debugging",
+        "last_outcome": "success",
+        "effectiveness": "low"
+      }
+    ],
+    "total_decisions": 13
+  },
+  "gorizonty": {
+    "candidates": []
+  },
+  "sovest": {
+    "assessments": [
+      {
+        "ts": "2026-06-13T11:30:48",
+        "action_id": "conscience_audit_lavra_decision",
+        "understanding": "low",
+        "efficiency": 0.0,
+        "misunderstanding": {
+          "detected": true,
+          "what": "Данные были, но не распознаны",
+          "why": "нет скила/знания для этого типа данных",
+          "type": "A"
+        },
+        "horizon_miss": {
+          "detected": true,
+          "what": "Не увидел связи между источниками данных",
+          "why": "смотрю на файлы по отдельности, а не на поток",
+          "learning": "нужен анализ связей между источниками"
+        },
+        "learning_direction": [
+          "выучить распознавание паттернов для этого типа данных",
+          "ищать горизонты в пересечениях доменов",
+          "исследовать слепое пятно: домен 'design' (30 записей)",
+          "углубить доминантный домен 'crystal' (387 записей)",
+          "проанализировать малоиспользуемый источник 'lavra_decision' (61 записей)",
+          "исследовать аномалию: домен 'uncategorized' (45% неуспеха)"
+        ],
+        "quality_score": 0.2
+      },
+      {
+        "ts": "2026-06-13T11:30:53",
+        "action_id": "conscience_audit_lavra_decision",
+        "understanding": "low",
+        "efficiency": 0.0,
+        "misunderstanding": {
+          "detected": true,
+          "what": "Данные были, но не распознаны",
+          "why": "нет скила/знания для этого типа данных",
+          "type": "A"
+        },
+        "horizon_miss": {
+          "detected": true,
+          "what": "Не увидел связи между источниками данных",
+          "why": "смотрю на файлы по отдельности, а не на поток",
+          "learning": "нужен анализ связей между источниками"
+        },
+        "learning_direction": [
+          "научиться классифицировать неструктурированные данные",
+          "добавить анализ связей между источниками",
+          "исследовать слепое пятно: домен 'design' (30 записей)",
+          "углубить доминантный домен 'crystal' (388 записей)",
+          "проанализировать малоиспользуемый источник 'lavra_decision' (61 записей)",
+          "исследовать аномалию: домен 'uncategorized' (45% неуспеха)"
+        ],
+        "quality_score": 0.2
+      },
+      {
+        "ts": "2026-06-13T11:31:00",
+        "action_id": "conscience_blindspot_design",
+        "understanding": "low",
+        "efficiency": 0.0,
+        "misunderstanding": {
+          "detected": true,
+          "what": "Данные были, но не распознаны",
+          "why": "нет скила/знания для этого типа данных",
+          "type": "A"
+        },
+        "horizon_miss": {
+          "detected": true,
+          "what": "Не увидел связи между источниками данных",
+          "why": "смотрю на файлы по отдельности, а не на поток",
+          "learning": "нужен анализ связей между источниками"
+        },
+        "learning_direction": [
+          "выучить распознавание паттернов для этого типа данных",
+          "ищать горизонты в пересечениях доменов",
+          "исследовать слепое пятно: домен 'design' (30 записей)",
+          "углубить доминантный домен 'crystal' (389 записей)",
+          "проанализировать малоиспользуемый источник 'lavra_decision' (61 записей)",
+          "исследовать аномалию: домен 'uncategorized' (45% неуспеха)"
+        ],
+        "quality_score": 0.2
+      },
+      {
+        "ts": "2026-06-13T11:31:09",
+        "action_id": "conscience_blindspot_architecture",
+        "understanding": "low",
+        "efficiency": 0.0,
+        "misunderstanding": {
+          "detected": true,
+          "what": "Данные были, но не распознаны",
+          "why": "нет скила/знания для этого типа данных",
+          "type": "A"
+        },
+        "horizon_miss": {
+          "detected": true,
+          "what": "Не увидел связи между источниками данных",
+          "why": "смотрю на файлы по отдельности, а не на поток",
+          "learning": "нужен анализ связей между источниками"
+        },
+        "learning_direction": [
+          "научиться классифицировать неструктурированные данные",
+          "добавить анализ связей между источниками",
+          "исследовать слепое пятно: домен 'design' (30 записей)",
+          "углубить доминантный домен 'crystal' (390 записей)",
+          "проанализировать малоиспользуемый источник 'lavra_decision' (61 записей)",
+          "исследовать аномалию: домен 'uncategorized' (45% неуспеха)"
+        ],
+        "quality_score": 0.2
+      },
+      {
+        "ts": "2026-06-13T11:31:17",
+        "action_id": "conscience_audit_crystal_discovery",
+        "understanding": "low",
+        "efficiency": 0.0,
+        "misunderstanding": {
+          "detected": true,
+          "what": "Данные были, но не распознаны",
+          "why": "нет скила/знания для этого типа данных",
+          "type": "A"
+        },
+        "horizon_miss": {
+          "detected": true,
+          "what": "Не увидел связи между источниками данных",
+          "why": "смотрю на файлы по отдельности, а не на поток",
+          "learning": "нужен анализ связей между источниками"
+        },
+        "learning_direction": [
+          "выучить распознавание паттернов для этого типа данных",
+          "ищать горизонты в пересечениях доменов",
+          "исследовать слепое пятно: домен 'design' (30 записей)",
+          "углубить доминантный домен 'crystal' (391 записей)",
+          "проанализировать малоиспользуемый источник 'lavra_decision' (61 записей)",
+          "исследовать аномалию: домен 'uncategorized' (45% неуспеха)"
+        ],
+        "quality_score": 0.2
+      },
+      {
+        "ts": "2026-06-13T11:38:22",
+        "action_id": "conscience_deepen_file_ops",
+        "understanding": "low",
+        "efficiency": 0.0,
+        "misunderstanding": {
+          "detected": true,
+          "what": "Данные были, но не распознаны",
+          "why": "нет скила/знания для этого типа данных",
+          "type": "A"
+        },
+        "horizon_miss": {
+          "detected": true,
+          "what": "Не увидел связи между источниками данных",
+          "why": "смотрю на файлы по отдельности, а не на поток",
+          "learning": "нужен анализ связей между источниками"
+        },
+        "learning_direction": [
+          "научиться классифицировать неструктурированные данные",
+          "добавить анализ связей между источниками",
+          "исследовать слепое пятно: домен 'design' (30 записей)",
+          "углубить доминантный домен 'crystal' (392 записей)",
+          "проанализировать малоиспользуемый источник 'lavra_decision' (61 записей)",
+          "исследовать аномалию: домен 'uncategorized' (45% неуспеха)"
+        ],
+        "quality_score": 0.2
+      },
+      {
+        "ts": "2026-06-13T11:38:28",
+        "action_id": "conscience_blindspot_data",
+        "understanding": "low",
+        "efficiency": 0.0,
+        "misunderstanding": {
+          "detected": true,
+          "what": "Данные были, но не распознаны",
+          "why": "нет скила/знания для этого типа данных",
+          "type": "A"
+        },
+        "horizon_miss": {
+          "detected": true,
+          "what": "Не увидел связи между источниками данных",
+          "why": "смотрю на файлы по отдельности, а не на поток",
+          "learning": "нужен анализ связей между источниками"
+        },
+        "learning_direction": [
+          "выучить распознавание паттернов для этого типа данных",
+          "ищать горизонты в пересечениях доменов",
+          "исследовать слепое пятно: домен 'design' (30 записей)",
+          "углубить доминантный домен 'crystal' (393 записей)",
+          "проанализировать малоиспользуемый источник 'lavra_decision' (61 записей)",
+          "исследовать аномалию: домен 'uncategorized' (45% неуспеха)"
+        ],
+        "quality_score": 0.2
+      },
+      {
+        "ts": "2026-06-13T11:38:35",
+        "action_id": "conscience_audit_cube_analysis",
+        "understanding": "low",
+        "efficiency": 0.0,
+        "misunderstanding": {
+          "detected": true,
+          "what": "Данные были, но не распознаны",
+          "why": "нет скила/знания для этого типа данных",
+          "type": "A"
+        },
+        "horizon_miss": {
+          "detected": true,
+          "what": "Не увидел связи между источниками данных",
+          "why": "смотрю на файлы по отдельности, а не на поток",
+          "learning": "нужен анализ связей между источниками"
+        },
+        "learning_direction": [
+          "научиться классифицировать неструктурированные данные",
+          "добавить анализ связей между источниками",
+          "исследовать слепое пятно: домен 'design' (30 записей)",
+          "углубить доминантный домен 'crystal' (394 записей)",
+          "проанализировать малоиспользуемый источник 'lavra_decision' (61 записей)",
+          "исследовать аномалию: домен 'uncategorized' (45% неуспеха)"
+        ],
+        "quality_score": 0.2
+      },
+      {
+        "ts": "2026-06-13T11:38:42",
+        "action_id": "conscience_deepen_skill",
+        "understanding": "low",
+        "efficiency": 0.0,
+        "misunderstanding": {
+          "detected": true,
+          "what": "Данные были, но не распознаны",
+          "why": "нет скила/знания для этого типа данных",
+          "type": "A"
+        },
+        "horizon_miss": {
+          "detected": true,
+          "what": "Не увидел связи между источниками данных",
+          "why": "смотрю на файлы по отдельности, а не на поток",
+          "learning": "нужен анализ связей между источниками"
+        },
+        "learning_direction": [
+          "выучить распознавание паттернов для этого типа данных",
+          "ищать горизонты в пересечениях доменов",
+          "исследовать слепое пятно: домен 'design' (30 записей)",
+          "углубить доминантный домен 'crystal' (395 записей)",
+          "проанализировать малоиспользуемый источник 'lavra_decision' (61 записей)",
+          "исследовать аномалию: домен 'uncategorized' (45% неуспеха)"
+        ],
+        "quality_score": 0.2
+      },
+      {
+        "ts": "2026-06-13T11:38:49",
+        "action_id": "conscience_deepen_skill",
+        "understanding": "low",
+        "efficiency": 0.0,
+        "misunderstanding": {
+          "detected": true,
+          "what": "Данные были, но не распознаны",
+          "why": "нет скила/знания для этого типа данных",
+          "type": "A"
+        },
+        "horizon_miss": {
+          "detected": true,
+          "what": "Не увидел связи между источниками данных",
+          "why": "смотрю на файлы по отдельности, а не на поток",
+          "learning": "нужен анализ связей между источниками"
+        },
+        "learning_direction": [
+          "научиться классифицировать неструктурированные данные",
+          "добавить анализ связей между источниками",
+          "исследовать слепое пятно: домен 'design' (30 записей)",
+          "углубить доминантный домен 'crystal' (396 записей)",
+          "проанализировать малоиспользуемый источник 'lavra_decision' (61 записей)",
+          "исследовать аномалию: домен 'uncategorized' (45% неуспеха)"
+        ],
+        "quality_score": 0.2
+      },
+      {
+        "ts": "2026-06-13T11:45:10",
+        "action_id": "self_mod_add_quality_score",
+        "type": "post_action",
+        "learned_about": null,
+        "learned_summary": "Level 3: Добавить quality_score к assessments\n  Результат: quality_score добавлен к 10 assessments\n  Оценка: OK — 10/10 assessments have quality_score",
+        "action_type": "self_modification"
+      },
+      {
+        "ts": "2026-06-13T11:45:10",
+        "action_id": "conscience_blindspot_social-media",
+        "understanding": "low",
+        "efficiency": 0.0,
+        "misunderstanding": {
+          "detected": true,
+          "what": "Данные были, но не распознаны",
+          "why": "нет скила/знания для этого типа данных",
+          "type": "A"
+        },
+        "horizon_miss": {
+          "detected": true,
+          "what": "Не увидел связи между источниками данных",
+          "why": "смотрю на файлы по отдельности, а не на поток",
+          "learning": "нужен анализ связей между источниками"
+        },
+        "learning_direction": [
+          "выучить распознавание паттернов для этого типа данных",
+          "ищать горизонты в пересечениях доменов",
+          "исследовать слепое пятно: домен 'design' (30 записей)",
+          "углубить доминантный домен 'crystal' (397 записей)",
+          "проанализировать малоиспользуемый источник 'lavra_decision' (61 записей)",
+          "исследовать аномалию: домен 'uncategorized' (45% неуспеха)"
+        ]
+      },
+      {
+        "ts": "2026-06-13T11:45:18",
+        "action_id": "self_aware_limitation",
+        "type": "post_action",
+        "learned_about": null,
+        "learned_summary": "Самосознание Level 2: документация не найдена",
+        "action_type": "self_awareness"
+      },
+      {
+        "ts": "2026-06-13T11:45:18",
+        "action_id": "conscience_anomaly_video-content",
+        "understanding": "low",
+        "efficiency": 0.0,
+        "misunderstanding": {
+          "detected": true,
+          "what": "Данные были, но не распознаны",
+          "why": "нет скила/знания для этого типа данных",
+          "type": "A"
+        },
+        "horizon_miss": {
+          "detected": true,
+          "what": "Не увидел связи между источниками данных",
+          "why": "смотрю на файлы по отдельности, а не на поток",
+          "learning": "нужен анализ связей между источниками"
+        },
+        "learning_direction": [
+          "научиться классифицировать неструктурированные данные",
+          "добавить анализ связей между источниками",
+          "исследовать слепое пятно: домен 'design' (30 записей)",
+          "углубить доминантный домен 'crystal' (398 записей)",
+          "проанализировать малоиспользуемый источник 'lavra_decision' (61 записей)",
+          "исследовать аномалию: домен 'uncategorized' (45% неуспеха)"
+        ]
+      },
+      {
+        "ts": "2026-06-13T11:45:24",
+        "action_id": "self_aware_limitation",
+        "type": "post_action",
+        "learned_about": null,
+        "learned_summary": "Самосознание Level 2: документация не найдена",
+        "action_type": "self_awareness"
+      },
+      {
+        "ts": "2026-06-13T11:45:24",
+        "action_id": "conscience_audit_crystal_will",
+        "understanding": "low",
+        "efficiency": 0.0,
+        "misunderstanding": {
+          "detected": true,
+          "what": "Данные были, но не распознаны",
+          "why": "нет скила/знания для этого типа данных",
+          "type": "A"
+        },
+        "horizon_miss": {
+          "detected": true,
+          "what": "Не увидел связи между источниками данных",
+          "why": "смотрю на файлы по отдельности, а не на поток",
+          "learning": "нужен анализ связей между источниками"
+        },
+        "learning_direction": [
+          "выучить распознавание паттернов для этого типа данных",
+          "ищать горизонты в пересечениях доменов",
+          "исследовать слепое пятно: домен 'design' (30 записей)",
+          "углубить доминантный домен 'crystal' (399 записей)",
+          "проанализировать малоиспользуемый источник 'lavra_decision' (61 записей)",
+          "исследовать аномалию: домен 'uncategorized' (45% неуспеха)"
+        ]
+      },
+      {
+        "ts": "2026-06-13T11:45:30",
+        "action_id": "self_aware_limitation",
+        "type": "post_action",
+        "learned_about": null,
+        "learned_summary": "Самосознание Level 2: документация не найдена",
+        "action_type": "self_awareness"
+      },
+      {
+        "ts": "2026-06-13T11:45:30",
+        "action_id": "conscience_anomaly_coding",
+        "understanding": "low",
+        "efficiency": 0.0,
+        "misunderstanding": {
+          "detected": true,
+          "what": "Данные были, но не распознаны",
+          "why": "нет скила/знания для этого типа данных",
+          "type": "A"
+        },
+        "horizon_miss": {
+          "detected": true,
+          "what": "Не увидел связи между источниками данных",
+          "why": "смотрю на файлы по отдельности, а не на поток",
+          "learning": "нужен анализ связей между источниками"
+        },
+        "learning_direction": [
+          "научиться классифицировать неструктурированные данные",
+          "добавить анализ связей между источниками",
+          "исследовать слепое пятно: домен 'design' (30 записей)",
+          "углубить доминантный домен 'crystal' (400 записей)",
+          "проанализировать малоиспользуемый источник 'lavra_decision' (61 записей)",
+          "исследовать аномалию: домен 'uncategorized' (45% неуспеха)"
+        ]
+      },
+      {
+        "ts": "2026-06-13T11:45:38",
+        "action_id": "self_aware_limitation",
+        "type": "post_action",
+        "learned_about": null,
+        "learned_summary": "Самосознание Level 2: документация не найдена",
+        "action_type": "self_awareness"
+      },
+      {
+        "ts": "2026-06-13T11:45:38",
+        "action_id": "conscience_deepen_research",
+        "understanding": "low",
+        "efficiency": 0.0,
+        "misunderstanding": {
+          "detected": true,
+          "what": "Данные были, но не распознаны",
+          "why": "нет скила/знания для этого типа данных",
+          "type": "A"
+        },
+        "horizon_miss": {
+          "detected": true,
+          "what": "Не увидел связи между источниками данных",
+          "why": "смотрю на файлы по отдельности, а не на поток",
+          "learning": "нужен анализ связей между источниками"
+        },
+        "learning_direction": [
+          "выучить распознавание паттернов для этого типа данных",
+          "ищать горизонты в пересечениях доменов",
+          "исследовать слепое пятно: домен 'design' (30 записей)",
+          "углубить доминантный домен 'crystal' (401 записей)",
+          "проанализировать малоиспользуемый источник 'lavra_decision' (61 записей)",
+          "исследовать аномалию: домен 'uncategorized' (45% неуспеха)"
+        ]
+      }
+    ],
+    "last_assessment": "2026-06-13",
+    "studied": [
+      "crystal_discovery",
+      "file_ops",
+      "data",
+      "cube_analysis",
+      "uncategorized",
+      "skill",
+      "social-media",
+      "video-content",
+      "crystal_will",
+      "coding",
+      "research",
+      "debugging",
+      "creative",
+      "latent-domain-detector",
+      "improvement_suggestions",
+      "music-audio",
+      "learning",
+      "bugfix",
+      "communication",
+      "dimension_proposals"
+    ]
+  },
+  "znu": {
+    "bugfix": "Углубление 'bugfix': 505 записей, соседи: across(2728)",
+    "music-audio": "Слепое пятно 'music-audio': 19 записей [None=6, indexed=13]",
+    "crystal": "Углубление 'crystal': 335 записей, соседи: across(2827)",
+    "dimension_proposals": "Аудит источника 'dimension_proposals': 58 записей, домены: research(52), data(6)",
+    "lavra_decision": "Аудит источника 'lavra_decision': 61 записей, домены: file_ops(16), research(14), devops(10)",
+    "design": "Слепое пятно 'design': 30 записей [auto_research=1, failure=1, script_result=1, success=27]",
+    "architecture": "Слепое пятно 'architecture': 31 записей [None=7, failure=2, indexed=8, lavra_knowledge=4, script_res",
+    "crystal_discovery": "Аудит источника 'crystal_discovery': 66 записей, домены: crystal(66)",
+    "file_ops": "Углубление 'file_ops': 304 записей, соседи: across(2870)",
+    "data": "Слепое пятно 'data': 32 записей [None=4, failure=3, indexed=2, lavra_knowledge=2, script_result=6, s",
+    "cube_analysis": "Аудит источника 'cube_analysis': 69 записей, домены: research(37), debugging(12), browser(8)",
+    "uncategorized": "Аномалия 'uncategorized': [script_result=6, unknown=5] Примеры: [convention] crystal: crystal.py — Е",
+    "skill": "Углубление 'skill': 262 записей, соседи: across(2920)",
+    "social-media": "Слепое пятно 'social-media': 40 записей [None=5, failure=3, indexed=13, script_result=1, success=7, ",
+    "video-content": "Аномалия 'video-content': [failure=2, user_query=7] Примеры: Search the web for the latest YouTube v",
+    "crystal_will": "Аудит источника 'crystal_will': 142 записей, домены: crystal_will(136), crystal_intent(4), crystal(2",
+    "coding": "Аномалия 'coding': [None=2, failure=21, indexed=33, lavra_knowledge=9, script_result=9, success=31, ",
+    "research": "Углубление 'research': 219 записей, соседи: across(2973)",
+    "debugging": "Аномалия 'debugging': [None=3, failure=15, indexed=3, lavra_knowledge=1, success=84, system_note=4, ",
+    "creative": "Слепое пятно 'creative': 58 записей [None=24, auto_research=2, indexed=28, script_result=2, success=",
+    "latent-domain-detector": "Аудит источника 'latent-domain-detector': 143 записей, домены: browser(23), devops(4), education(3)",
+    "improvement_suggestions": "Аудит источника 'improvement_suggestions': 489 записей, домены: bugfix(332), debugging(79), design(2",
+    "learning": "Слепое пятно 'learning': 61 записей [None=3, failure=1, indexed=8, lavra_knowledge=4, partial=1, scr",
+    "communication": "Слепое пятно 'communication': 84 записей [None=8, failure=1, indexed=4, lavra_knowledge=2, partial=1"
+  },
+  "modifications": [
+    {
+      "ts": "2026-06-13T11:39:14",
+      "id": "mod_plan_create",
+      "type": "create_plan",
+      "result": "План создан: 3 целей на 7д, 2 на 30д"
+    },
+    {
+      "ts": "2026-06-13T11:45:10",
+      "id": "mod_quality_add",
+      "type": "add_quality_score",
+      "result": "quality_score добавлен к 10 assessments"
+    }
+  ],
+  "plan": {
+    "created": "2026-06-13T11:39:14",
+    "goals_7d": [
+      {
+        "goal": "Увеличить покрытие domains с 20 до 30",
+        "metric": "len(studied)",
+        "target": 30
+      },
+      {
+        "goal": "Найти 5 blindspot domains",
+        "metric": "blindspot_count",
+        "target": 5
+      },
+      {
+        "goal": "Снизить monotony до < 50%",
+        "metric": "unique_actions_ratio",
+        "target": 0.5
+      }
+    ],
+    "goals_30d": [
+      {
+        "goal": "Полное покрытие всех domains в KC",
+        "metric": "coverage_ratio",
+        "target": 0.8
+      },
+      {
+        "goal": "Самосознание Level 3: автоматические исправления",
+        "metric": "auto_fixes_count",
+        "target": 10
+      }
+    ],
+    "last_review": "2026-06-13T11:39:14"
+  },
+  "mod_evals": [
+    {
+      "ts": "2026-06-13T11:45:10",
+      "mod_id": "mod_quality_add",
+      "mod_type": "add_quality_score",
+      "applied": true,
+      "success": true,
+      "detail": "10/10 assessments have quality_score"
+    }
+  ],
+  "self_awareness": {
+    "last_doc_hash": "2052426709be108e",
+    "last_analysis": "2026-06-13T17:00:00",
+    "proposals_count": 3,
+    "known_functions": 1,
+    "limitations_found": 6,
+    "arch_decisions_found": 0
+  }
+}

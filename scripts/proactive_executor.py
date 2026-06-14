@@ -476,8 +476,17 @@ def generate_knowledge_tasks() -> list[dict]:
                 f"(threshold: 10) — needs content generation to fill gap"
             ),
         })
+        if len(gap_issues) >= 10:
+            report(f"  [KC-GAP] Capping at 10 issues (out of {len(white_spots)} white spots) to avoid LLM timeout")
+            break
 
-    llm_tasks = analyze_with_llm(gap_issues)
+    # Skip LLM analysis if total elapsed time is already high
+    # (inherited APPROX_START_TIME from caller context, or just proceed)
+    llm_tasks = []
+    if gap_issues:
+        llm_tasks = analyze_with_llm(gap_issues)
+    else:
+        llm_tasks = []
 
     if llm_tasks:
         # Use LLM suggestions to build tasks
@@ -1983,9 +1992,11 @@ def analyze_with_llm(issues: list[dict[str, Any]]) -> list[dict[str, Any]]:
             "Use fix_type='patch' for file edits, 'command' for shell commands, "
             "'investigation' when more info is needed."
         )
+        # NOTE: Short timeout so the script still finishes within cron's 120s budget.
+        # On timeout the function falls back to pending_analysis.json.
         result = subprocess.run(
             ["hermes", "chat", "-q", prompt, "-Q"],
-            capture_output=True, text=True, timeout=120,
+            capture_output=True, text=True, timeout=45,
             cwd=str(HERMES_HOME),
         )
         if result.returncode == 0 and result.stdout.strip():
@@ -2032,8 +2043,8 @@ def analyze_with_llm(issues: list[dict[str, Any]]) -> list[dict[str, Any]]:
             )
     except FileNotFoundError:
         report("  [LLM] 'hermes' command not found — falling back to pending_analysis.json")
-    except subprocess.TimeoutExpired:
-        report("  [LLM] Hermes call timed out after 120s")
+    except subprocess.TimeoutExpired as te:
+        report(f"  [LLM] Hermes call timed out after {te.timeout}s")
     except Exception as e:
         report(f"  [LLM] Error calling Hermes: {e}")
 
@@ -2202,6 +2213,11 @@ def apply_llm_suggested_fixes(suggested_fixes: list[dict[str, Any]]) -> dict[str
                     "python scripts/auto_tagger.py",
                     "python scripts/auto_categorize.py",
                     "python scripts/graph_explorer.py",
+                    "python scripts/knowledge_gap_filler.py",
+                    "python scripts/cube_feeder.py",
+                    "python scripts/explore_white_spot.py",
+                    "python scripts/dimension_discovery.py",
+                    "python scripts/auto_tagger_v2.py",
                     "python -m py_compile",
                     "python -m pytest",
                     "git status",
@@ -2499,22 +2515,54 @@ def main() -> int:
     # ── Phase 2.5: LLM Analysis ──
     report("\n[Phase 2.5] LLM Analysis")
     report("-" * 40)
-    # Combine issues from knowledge gaps and cron errors
-    llm_issues = []
-    # Add knowledge gaps as issues
-    for gap in kc.get("gaps", []):
-        llm_issues.append({"description": gap, "type": "knowledge_gap"})
-    # Add cron errors
-    for err in errors:
-        llm_issues.append({
-            "name": err.get("name"),
-            "error": err.get("error"),
-            "consecutive_fails": err.get("consecutive_fails"),
-            "script": err.get("script"),
-            "id": err.get("id"),
-        })
-    # Run LLM analysis (returns cached suggestions or writes pending)
-    suggested_fixes = analyze_with_llm(llm_issues)
+
+    elapsed_so_far = time.time() - start
+    if elapsed_so_far > 60:
+        report(f"  [LLM] Skipping LLM subprocess call — {elapsed_so_far:.0f}s already elapsed, writing pending_analysis.json directly")
+        llm_issues = []
+        for gap in kc.get("gaps", []):
+            llm_issues.append({"description": gap, "type": "knowledge_gap"})
+        for err in errors:
+            llm_issues.append({
+                "name": err.get("name"),
+                "error": err.get("error"),
+                "consecutive_fails": err.get("consecutive_fails"),
+                "script": err.get("script"),
+                "id": err.get("id"),
+            })
+        # Direct fallback: write pending_analysis.json, skip subprocess call
+        if llm_issues:
+            try:
+                pending = {
+                    "created_at": datetime.now(timezone.utc).isoformat(),
+                    "issue_count": len(llm_issues),
+                    "issues": llm_issues,
+                    "issues_raw": json.dumps(llm_issues, indent=2, default=str),
+                }
+                PENDING_ANALYSIS_FILE.parent.mkdir(parents=True, exist_ok=True)
+                with open(PENDING_ANALYSIS_FILE, "w", encoding="utf-8") as f:
+                    json.dump(pending, f, indent=2)
+                report(f"  [LLM] {len(llm_issues)} issues written to pending_analysis.json (LLM subprocess skipped due to time budget)")
+            except OSError as e:
+                report(f"  [LLM] Could not write pending analysis: {e}")
+        suggested_fixes = []
+    else:
+        # Combine issues from knowledge gaps and cron errors
+        llm_issues = []
+        # Add knowledge gaps as issues
+        for gap in kc.get("gaps", []):
+            llm_issues.append({"description": gap, "type": "knowledge_gap"})
+        # Add cron errors
+        for err in errors:
+            llm_issues.append({
+                "name": err.get("name"),
+                "error": err.get("error"),
+                "consecutive_fails": err.get("consecutive_fails"),
+                "script": err.get("script"),
+                "id": err.get("id"),
+            })
+        # Run LLM analysis (returns cached suggestions or writes pending)
+        suggested_fixes = analyze_with_llm(llm_issues)
     llm_fixes_applied = 0
     llm_fixes_verified = 0
     if suggested_fixes:

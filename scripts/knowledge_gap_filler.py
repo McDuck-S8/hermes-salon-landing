@@ -226,9 +226,43 @@ def mark_cluster_filled(cluster_id):
     conn.close()
 
 
-def main():
+def main(filter_domain=None):
     print(f"[GapFiller] {datetime.now().isoformat()} — starting")
     gaps = find_gaps()
+
+    # Apply domain filter
+    if filter_domain:
+        gaps = [g for g in gaps if g["domain"] == filter_domain]
+        # If no gaps found for this domain, the domain may not exist yet
+        # Generate a fresh entry for it
+        if not gaps:
+            print(f"[GapFiller] Domain '{filter_domain}' has no entries — generating fresh knowledge")
+            gap = {
+                "type": "new_domain",
+                "domain": filter_domain,
+                "count": 0,
+                "text": f"Empty domain '{filter_domain}' needs initial knowledge",
+            }
+            entry = fill_gap(gap)
+            if entry:
+                ok = write_to_kc(entry)
+                if ok:
+                    print(f"[GapFiller] -> Created initial entry for '{filter_domain}': {entry['content'][:80]}")
+                    # Log result
+                    FIXES_LOG.parent.mkdir(parents=True, exist_ok=True)
+                    log = {
+                        "timestamp": datetime.now(timezone.utc).isoformat(),
+                        "gaps_found": 1,
+                        "filled": 1,
+                        "results": [{"gap": gap, "entry": entry, "filled_at": datetime.now(timezone.utc).isoformat()}],
+                    }
+                    with open(FIXES_LOG, "a", encoding="utf-8") as f:
+                        f.write(json.dumps(log, default=str) + "\n")
+                else:
+                    print(f"[GapFiller] -> Write failed for '{filter_domain}'")
+            else:
+                print(f"[GapFiller] -> LLM returned nothing for '{filter_domain}'")
+            return
 
     if not gaps:
         print("[GapFiller] No gaps found. All clear.")
@@ -281,4 +315,12 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    import argparse
+    parser = argparse.ArgumentParser(description="Fill knowledge gaps in Knowledge Cube")
+    parser.add_argument("--domain", type=str, default=None,
+                        help="Only fill gaps in this specific domain")
+    args = parser.parse_args()
+    _filter_domain = args.domain
+    if _filter_domain:
+        print(f"[GapFiller] Filtering to domain: {_filter_domain}")
+    main(filter_domain=_filter_domain)
