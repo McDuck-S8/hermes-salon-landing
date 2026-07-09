@@ -15,8 +15,126 @@
     
     <!-- TikTok Pixel -->
     <script>
-        !function (w, d, t) { w.TiktokAnalyticsObject=t; var ttq=w[t]=w[t]||[]; ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"]; ttq.setAndDefer=function(t,e){ttq[t]=ttq[t]||function(){(ttq.queue=ttq.queue||[]).push([t,e])}}; ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<e.length;n++)ttq.setAndDefer(e[n][0],e[n][1])}; ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js"; ttq._i=ttq._i||{}; ttq._i[e]=[]; ttq._i[e]._u=i; var o=d.createElement("script"); o.async=!0; o.src=i; var s=d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(o,s); ttq.instance(e); ttq.load(e,n); ttq._i[e]._loaded=!0}; var ttq=w[t]=w[t]||[]; ttq.load("YOUR_TT_PIXEL_ID"); ttq.page();}(window, document, 'ttq');
-    </script>
+            (function(){
+                let time = 15 * 60;
+                const minEl = document.getElementById('timer-min');
+                const secEl = document.getElementById('timer-sec');
+                const timer = setInterval(() => {
+                    time--;
+                    const m = Math.floor(time / 60).toString().padStart(2, '0');
+                    const s = (time % 60).toString().padStart(2, '0');
+                    if (minEl) minEl.textContent = m;
+                    if (secEl) secEl.textContent = s;
+                    if (time <= 0) {
+                        clearInterval(timer);
+                        if (minEl) minEl.textContent = '00';
+                        if (secEl) secEl.textContent = '00';
+                        document.getElementById('urgency-badge').innerHTML = '<span class="urgency-text">Акция завершена — напишите нам для индивидуального предложения</span>';
+                    }
+                }, 1000);
+
+                document.addEventListener('DOMContentLoaded', function() {
+                    const form = document.getElementById('bookingForm');
+                    const messageDiv = document.getElementById('formMessage');
+                    const dateSelect = document.getElementById('date');
+                    const timeSelect = document.getElementById('time');
+                    const phoneInput = document.getElementById('phone');
+
+                    // Generate dates for next 30 days (excluding weekends if needed)
+                    function populateDates() {
+                        const today = new Date();
+                        for (let i = 0; i < 30; i++) {
+                            const d = new Date(today);
+                            d.setDate(today.getDate() + i);
+                            // Skip Sundays (optional - salon might be closed)
+                            // if (d.getDay() === 0) continue;
+                            const value = d.toISOString().split('T')[0];
+                            const label = d.toLocaleDateString('ru-RU', { weekday: 'short', day: 'numeric', month: 'short' });
+                            const opt = document.createElement('option');
+                            opt.value = value;
+                            opt.textContent = label;
+                            dateSelect.appendChild(opt);
+                        }
+                    }
+
+                    // Generate time slots 9:00-20:30 every 30 min
+                    function populateTimes(dateStr) {
+                        timeSelect.innerHTML = '<option value="">Выберите время</option>';
+                        if (!dateStr) return;
+                        const selectedDate = new Date(dateStr + 'T00:00:00');
+                        const dayOfWeek = selectedDate.getDay();
+                        // Example: Sunday closed
+                        if (dayOfWeek === 0) {
+                            const opt = document.createElement('option');
+                            opt.value = '';
+                            opt.textContent = 'В воскресенье салон закрыт';
+                            opt.disabled = true;
+                            timeSelect.appendChild(opt);
+                            return;
+                        }
+                        // Simulated booked slots (in real app, fetch from API)
+                        const booked = ['10:00', '14:30', '18:00'];
+                        for (let h = 9; h <= 20; h++) {
+                            for (let m = 0; m < 60; m += 30) {
+                                if (h === 20 && m === 30) break;
+                                const slot = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}`;
+                                const opt = document.createElement('option');
+                                opt.value = slot;
+                                opt.textContent = slot;
+                                if (booked.includes(slot)) {
+                                    opt.disabled = true;
+                                    opt.textContent += ' (занято)';
+                                }
+                                timeSelect.appendChild(opt);
+                            }
+                        }
+                    }
+
+                    populateDates();
+                    dateSelect.addEventListener('change', () => populateTimes(dateSelect.value));
+
+                    form.addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        const name = document.getElementById('name').value.trim();
+                        const phone = document.getElementById('phone').value.trim();
+                        const service = document.getElementById('service').value;
+                        const date = dateSelect.value;
+                        const time = timeSelect.value;
+
+                        if (!name || !phone || !service || !date || !time) {
+                            messageDiv.className = 'form-message error';
+                            messageDiv.textContent = 'Пожалуйста, заполните все обязательные поля, включая дату и время.';
+                            return;
+                        }
+
+                        fbq('track', 'Lead', { content_name: service, value: 0.01, currency: 'RUB' });
+                        ttq.track('CompleteRegistration', { content_name: service });
+                        gtag('event', 'generate_lead', { service: service });
+
+                        const formData = { name, phone, service, date, time, message: document.getElementById('message').value.trim() };
+                        console.log('Form submitted:', formData);
+
+                        messageDiv.className = 'form-message success';
+                        messageDiv.textContent = 'Спасибо! Мы перезвоним вам в течение 15 минут для подтверждения записи и применения скидки 20%.';
+                        form.reset();
+                        timeSelect.innerHTML = '<option value="">Сначала выберите дату</option>';
+                        setTimeout(() => { messageDiv.className = 'form-message'; }, 5000);
+                    });
+
+                    phoneInput.addEventListener('input', function(e) {
+                        let value = e.target.value.replace(/\D/g, '');
+                        if (value.length > 0) {
+                            let formatted = '+7 (';
+                            if (value.length > 1) { formatted += value.substring(1, 4); }
+                            if (value.length >= 4) { formatted += ') '; formatted += value.substring(4, 7); }
+                            if (value.length >= 7) { formatted += '-'; formatted += value.substring(7, 9); }
+                            if (value.length >= 9) { formatted += '-'; formatted += value.substring(9, 11); }
+                            e.target.value = formatted;
+                        }
+                    });
+                });
+            })();
+        </script>
     
     <!-- GA4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
@@ -136,18 +254,6 @@
         #countdown-timer span { background: #2c1810; color: #fff; padding: 4px 8px; border-radius: 6px; font-family: 'Courier New', monospace; font-weight: 700; min-width: 32px; text-align: center; }
         #countdown-timer .separator { background: transparent; color: #e65100; animation: blink 1s infinite; }
         @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
-        
-        /* Date picker styling */
-        .date-group { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .date-group input { width: 100%; }
-        @media (max-width: 480px) { .date-group { grid-template-columns: 1fr; } }
-        
-        .time-slots { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
-        .time-slot { padding: 10px 16px; background: rgba(255,255,255,0.05); border: 2px solid rgba(255,255,255,0.1); border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 14px; color: #e0d0c8; }
-        .time-slot:hover { border-color: #e8c9b5; background: rgba(232,201,181,0.1); }
-        .time-slot.selected { border-color: #e8c9b5; background: #e8c9b5; color: #2c1810; font-weight: 600; }
-        .time-slot.unavailable { opacity: 0.4; cursor: not-allowed; text-decoration: line-through; }
-        .selected-time-input { display: none; }
     </style>
 </head>
 <body>
@@ -179,10 +285,10 @@
             <h2 class="section-title">Почему 2000+ клиентов выбирают нас</h2>
             <p class="section-subtitle">Чёткие преимущества, а не пустые обещания</p>
             <div class="benefits-grid">
-                <div class="benefit-card"><div class="icon">✨</div><h3>Топ-мастера с опытом 10+ лет</h3><p>Сертифицированные профи с обучением за рубежом ежегодно. 50+ наград профильных чемпионатов. <strong>Получаете</strong> результат, который <strong>преобразует</strong> ваш образ. <strong>Экономите</strong> время и деньги на исправлениях.</p></div>
-                <div class="benefit-card"><div class="icon">💎</div><h3>Только премиум косметика</h3><p>Профессиональные линии: Wella, Olaplex, Kerastase, Moroccanoil, OPI. Никаких масс-маркет аналогов. <strong>Получаете</strong> стойкий эффект на 4+ месяца. <strong>Исключаете</strong> потребность в частой коррекции.</p></div>
-                <div class="benefit-card"><div class="icon">⚡</div><h3>Видимый результат за 1 визит</h3><p>Кератиновое выпрямление держится 4+ месяца. Окрашивание без перегорания — 8 недель насыщенного цвета. <strong>Улучшаете</strong> состояние волос с первого раза. <strong>Поднимаете</strong> уверенность в образе.</p></div>
-                <div class="benefit-card"><div class="icon">🛡️</div><h3>Гарантия результата 14 дней</h3><p>Не понравилось — переделаем бесплатно. Не помогло — вернём 100% денег за 14 дней. Без вопросов. <strong>Получаете</strong> полную уверенность или деньги назад. <strong>Снижаете</strong> риск до нуля.</p></div>
+                <div class="benefit-card"><div class="icon">✨</div><h3>Топ-мастера с опытом 10+ лет</h3><p>Сертифицированные профи, обучаются за рубежом каждый год. 50+ наград чемпионатов. <strong>Вы выглядите по-новому уже после первого визита</strong> — никаких «привыкните через неделю».</p></div>
+                <div class="benefit-card"><div class="icon">💎</div><h3>Только премиум косметика</h3><p>Wella, Olaplex, Kerastase, Moroccanoil, OPI — никаких масс-маркет аналогов. <strong>Эффект держится до 4 месяцев без обновления</strong>: цвет не выгорает, кератин не смывается, маникюр не сколачивается.</p></div>
+                <div class="benefit-card"><div class="icon">⚡</div><h3>Видимый результат за 1 визит</h3><p>Кератин держит 4+ месяца, окрашивание — 8 недель насыщенного цвета. <strong>Уверенность в себе после каждого визита</strong>: заходите с проблемой, выходите с результатом.</p></div>
+                <div class="benefit-card"><div class="icon">🛡️</div><h3>Гарантия результата 14 дней</h3><p>Не понравилось — переделаем бесплатно. Не помогло — вернём 100% денег за 14 дней. Без вопросов и бюрократии. <strong>Спите спокойно — риск нулевой</strong>.</p></div>
             </div>
         </div>
     </section>
@@ -274,8 +380,8 @@
                         <div class="form-group"><label for="name">Ваше имя</label><input type="text" id="name" name="name" placeholder="Иван Иванов" required></div>
                         <div class="form-group"><label for="phone">Телефон</label><input type="tel" id="phone" name="phone" placeholder="+7 (___) ___-__-__" required></div>
                         <div class="form-group"><label for="service">Услуга</label><select id="service" name="service" required><option value="">Выберите услугу</option><option value="стрижка">Стрижка (от 800₽)</option><option value="окрашивание">Окрашивание (от 3000₽)</option><option value="маникюр">Маникюр (от 1200₽)</option><option value="педикюр">Педикюр (от 1500₽)</option><option value="ламинирование ресниц">Ламинирование ресниц (от 2000₽)</option><option value="макияж">Макияж (от 2500₽)</option></select></div>
-                        <div class="form-group"><label for="date">Дата визита</label><input type="date" id="date" name="date" required min=""></div>
-                        <div class="form-group"><label>Удобное время (выберите слот)</label><div class="time-slots" id="timeSlots"></div><input type="hidden" id="selectedTime" name="time" class="selected-time-input"></div>
+                        <div class="form-group"><label for="date">Дата визита</label><select id="date" name="date" required><option value="">Выберите дату</option></select></div>
+                                                <div class="form-group"><label for="time">Удобное время</label><select id="time" name="time" required><option value="">Сначала выберите дату</option></select></div>
                         <div class="form-group"><label for="message">Пожелания</label><textarea id="message" name="message" placeholder="Например: хочу конкретного мастера, аллергия на компоненты..." rows="3"></textarea></div>
                         <button type="submit" class="btn btn-light" style="width: 100%;">Отправить заявку и получить -20%</button>
                     </form>
