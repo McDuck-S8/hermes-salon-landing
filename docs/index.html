@@ -550,14 +550,13 @@ section {
   width: 40px;
   height: 40px;
   border-radius: 100px;
-  overflow: hidden;
+  background: var(--accent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 600 13px/1 var(--font-body);
   flex-shrink: 0;
-}
-
-.testimonial-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 .testimonial-name {
@@ -679,21 +678,36 @@ section {
   gap: 16px;
 }
 
+.form-message {
+  font: 400 14px/1.4 var(--font-body);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+  display: none;
+}
+.form-message.error {
+  display: block;
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+.form-message.success {
+  display: block;
+  background: #f0fdf4;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
 .submit-btn {
   width: 100%;
-  height: 48px;
+  padding: 14px 32px;
   background: var(--accent);
   color: #fff;
   border: none;
-  border-radius: 100px;
-  font-family: var(--font-body);
-  font-size: 0.9375rem;
-  font-weight: 500;
+  border-radius: var(--radius-sm);
+  font: 500 15px/1.4 var(--font-body);
   cursor: pointer;
-  transition: background 0.2s, transform 0.15s;
-  margin-top: 8px;
+  transition: background 0.2s;
 }
-
 .submit-btn:hover {
   background: var(--accent-hover);
 }
@@ -820,7 +834,7 @@ footer {
     <a href="#booking" class="hero-cta">Записаться</a>
   </div>
   <div class="hero-image">
-    <img src="https://placehold.co/800x900/B76E79/FFFFFF?text=+&font=raleway" alt="Интерьер салона красоты" loading="eager" style="width:100%;height:100%;object-fit:cover;background:#F5F5F7;">
+    <img src="https://images.pexels.com/photos/7750114/pexels-photo-7750114.jpeg?auto=compress&cs=tinysrgb&w=800&h=900&fit=crop" alt="Интерьер салона красоты" loading="eager" style="width:100%;height:100%;object-fit:cover;background:#F5F5F7;">
   </div>
 </section>
 
@@ -838,7 +852,7 @@ footer {
         <p class="service-price">от 3 500 &#8381;</p>
       </div>
       <div class="service-image">
-        <img src="https://placehold.co/400x400/E8D5D8/1D1D1F?text=%D0%A4%D0%BE%D1%82%D0%BE+%D1%81%D0%B0%D0%BB%D0%BE%D0%BD%D0%B0&font=raleway" alt="Стрижка" loading="lazy" style="width:100%;height:100%;object-fit:cover;">
+        <img src="https://images.pexels.com/photos/3992875/pexels-photo-3992875.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Стрижка" loading="lazy" style="width:100%;height:100%;object-fit:cover;">
       </div>
     </div>
     <div class="service-card reveal">
@@ -865,7 +879,7 @@ footer {
 <section id="about" class="about">
   <div class="section-inner about-grid">
     <div class="about-image reveal">
-      <img src="https://placehold.co/600x500/B76E79/FFFFFF?text=+&font=raleway" alt="Интерьер студии" loading="lazy" style="width:100%;height:100%;object-fit:cover;">
+      <img src="https://images.pexels.com/photos/3736520/pexels-photo-3736520.jpeg?auto=compress&cs=tinysrgb&w=600&h=500&fit=crop" alt="Интерьер студии" loading="lazy" style="width:100%;height:100%;object-fit:cover;">
     </div>
     <div class="reveal">
       <h2 class="section-title">Пространство, где рождается ваш образ</h2>
@@ -887,16 +901,16 @@ footer {
   </div>
   <div class="gallery-track">
     <div class="gallery-item reveal">
-      <img src="https://placehold.co/400x600/E8D5D8/1D1D1F?text=%D0%A4%D0%BE%D1%82%D0%BE+1&font=raleway" alt="Окрашивание волос" loading="lazy">
+      <img src="https://images.pexels.com/photos/8834077/pexels-photo-8834077.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop" alt="Окрашивание волос" loading="lazy">
     </div>
     <div class="gallery-item reveal">
-      <img src="https://placehold.co/400x500/E8D5D8/1D1D1F?text=%D0%A4%D0%BE%D1%82%D0%BE+2&font=raleway" alt="Стрижка" loading="lazy">
+      <img src="https://images.pexels.com/photos/3997997/pexels-photo-3997997.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop" alt="Стрижка" loading="lazy">
     </div>
     <div class="gallery-item reveal">
-      <img src="https://placehold.co/400x600/E8D5D8/1D1D1F?text=%D0%A4%D0%BE%D1%82%D0%BE+3&font=raleway" alt="Прическа" loading="lazy">
+      <img src="https://images.pexels.com/photos/5069605/pexels-photo-5069605.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop" alt="Прическа" loading="lazy">
     </div>
     <div class="gallery-item reveal">
-      <img src="https://placehold.co/400x700/E8D5D8/1D1D1F?text=%D0%A4%D0%BE%D1%82%D0%BE+4&font=raleway" alt="Укладка" loading="lazy">
+      <img src="https://images.pexels.com/photos/4974566/pexels-photo-4974566.jpeg?auto=compress&cs=tinysrgb&w=400&h=700&fit=crop" alt="Укладка" loading="lazy">
     </div>
   </div>
 </section>
@@ -909,9 +923,7 @@ footer {
     <div class="testimonial-card reveal">
       <p class="testimonial-text">Хожу к Марии уже два года. Каждый раз ухожу с ощущением, что меня не просто подстригли, а сделали настроение. Это дорогого стоит.</p>
       <div class="testimonial-author">
-        <div class="testimonial-avatar">
-          <img src="https://placehold.co/80x80/B76E79/FFFFFF?text=+&font=raleway" alt="" loading="lazy">
-        </div>
+        <div class="testimonial-avatar">ЕК</div>
         <div>
           <div class="testimonial-name">Екатерина</div>
           <div class="testimonial-role">постоянный гость</div>
@@ -921,9 +933,7 @@ footer {
     <div class="testimonial-card reveal">
       <p class="testimonial-text">Сделали сложное окрашивание после неудачного опыта в другом месте. Результат превзошел ожидания. Волосы живые, цвет натуральный.</p>
       <div class="testimonial-author">
-        <div class="testimonial-avatar">
-          <img src="https://placehold.co/80x80/B76E79/FFFFFF?text=+&font=raleway" alt="" loading="lazy">
-        </div>
+        <div class="testimonial-avatar">ОЛ</div>
         <div>
           <div class="testimonial-name">Ольга</div>
           <div class="testimonial-role">гость студии</div>
@@ -933,9 +943,7 @@ footer {
     <div class="testimonial-card reveal">
       <p class="testimonial-text">Атмосфера в студии невероятная. Чувствуешь себя не в салоне, а в гостях у подруги, которая гениально делает прически.</p>
       <div class="testimonial-author">
-        <div class="testimonial-avatar">
-          <img src="https://placehold.co/80x80/B76E79/FFFFFF?text=+&font=raleway" alt="" loading="lazy">
-        </div>
+        <div class="testimonial-avatar">ДМ</div>
         <div>
           <div class="testimonial-name">Дмитрий</div>
           <div class="testimonial-role">гость студии</div>
@@ -963,7 +971,7 @@ footer {
         <span>+7 (495) 123-45-67</span>
       </div>
     </div>
-    <form class="booking-form reveal">
+    <form class="booking-form reveal" id="bookingForm">
       <div class="form-group">
         <label for="name">Имя</label>
         <input type="text" id="name" placeholder="Анна" required>
@@ -975,20 +983,35 @@ footer {
         </div>
         <div class="form-group">
           <label for="service">Услуга</label>
-          <select id="service">
-            <option value="">Выберите</option>
+          <select id="service" required>
+            <option value="">Выберите услугу</option>
             <option>Стрижка</option>
             <option>Окрашивание</option>
-            <option>Уход</option>
+            <option>Уход за волосами</option>
             <option>Брови и ресницы</option>
             <option>Другое</option>
           </select>
         </div>
       </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="date">Дата визита</label>
+          <select id="date" required>
+            <option value="">Выберите дату</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="time">Удобное время</label>
+          <select id="time" required>
+            <option value="">Сначала выберите дату</option>
+          </select>
+        </div>
+      </div>
       <div class="form-group">
         <label for="comment">Комментарий</label>
-        <textarea id="comment" placeholder="Пожелания, удобное время..." rows="3"></textarea>
+        <textarea id="comment" placeholder="Пожелания..." rows="3"></textarea>
       </div>
+      <div id="formMessage" class="form-message"></div>
       <button type="submit" class="submit-btn">Отправить заявку</button>
     </form>
   </div>
@@ -1017,7 +1040,6 @@ const toggle = document.getElementById('themeToggle');
 const html = document.documentElement;
 const savedTheme = localStorage.getItem('theme');
 if (savedTheme) html.setAttribute('data-theme', savedTheme);
-
 toggle.addEventListener('click', () => {
   const current = html.getAttribute('data-theme');
   const next = current === 'light' ? 'dark' : 'light';
@@ -1025,7 +1047,7 @@ toggle.addEventListener('click', () => {
   localStorage.setItem('theme', next);
 });
 
-// Scroll reveal (IntersectionObserver)
+// Scroll reveal
 const revealEls = document.querySelectorAll('.reveal');
 if (revealEls.length) {
   const observer = new IntersectionObserver(
@@ -1040,6 +1062,92 @@ if (revealEls.length) {
     { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
   );
   revealEls.forEach((el) => observer.observe(el));
+}
+
+// Date selector
+const dateSelect = document.getElementById('date');
+const timeSelect = document.getElementById('time');
+if (dateSelect && timeSelect) {
+  const today = new Date();
+  for (let i = 0; i < 30; i++) {
+    const d = new Date(today);
+    d.setDate(today.getDate() + i);
+    const opt = document.createElement('option');
+    opt.value = d.toISOString().split('T')[0];
+    opt.textContent = d.toLocaleDateString('ru-RU', {
+      weekday: 'short', day: 'numeric', month: 'short'
+    });
+    dateSelect.appendChild(opt);
+  }
+
+  dateSelect.addEventListener('change', () => {
+    timeSelect.innerHTML = '<option value="">Выберите время</option>';
+    if (!dateSelect.value) return;
+    const day = new Date(dateSelect.value + 'T00:00:00').getDay();
+    if (day === 0) {
+      const o = document.createElement('option');
+      o.textContent = 'Воскресенье - выходной';
+      o.disabled = true;
+      timeSelect.appendChild(o);
+      return;
+    }
+    const booked = ['10:00', '14:30', '18:00'];
+    for (let h = 9; h <= 20; h++) {
+      for (let m = 0; m < 60; m += 30) {
+        if (h === 20 && m === 30) break;
+        const slot = h.toString().padStart(2,'0') + ':' + m.toString().padStart(2,'0');
+        const o = document.createElement('option');
+        o.value = slot;
+        o.textContent = booked.includes(slot) ? slot + ' (занято)' : slot;
+        if (booked.includes(slot)) o.disabled = true;
+        timeSelect.appendChild(o);
+      }
+    }
+  });
+}
+
+// Form submit
+const form = document.getElementById('bookingForm');
+const formMsg = document.getElementById('formMessage');
+if (form) {
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const service = document.getElementById('service').value;
+    const date = dateSelect ? dateSelect.value : '';
+    const time = timeSelect ? timeSelect.value : '';
+    if (!name || !phone || !service || !date || !time) {
+      formMsg.className = 'form-message error';
+      formMsg.textContent = 'Заполните все обязательные поля.';
+      return;
+    }
+    formMsg.className = 'form-message success';
+    formMsg.textContent = 'Спасибо! Мы перезвоним в течение 15 минут для подтверждения.';
+    console.log({name, phone, service, date, time, comment: document.getElementById('comment').value.trim()});
+    form.reset();
+    if (timeSelect) timeSelect.innerHTML = '<option value="">Сначала выберите дату</option>';
+    setTimeout(() => { formMsg.className = 'form-message'; }, 5000);
+  });
+}
+
+// Phone mask
+const phoneInput = document.getElementById('phone');
+if (phoneInput) {
+  phoneInput.addEventListener('input', function() {
+    let v = this.value.replace(/\D/g, '');
+    if (v.length > 0) {
+      let f = '+7 (';
+      if (v.length > 1) { f += v.substring(1, 4); } else { f += v.substring(1); this.value = f; return; }
+      f += ') ';
+      if (v.length > 4) { f += v.substring(4, 7); } else { f += v.substring(4); this.value = f; return; }
+      f += '-';
+      if (v.length > 7) { f += v.substring(7, 9); } else { f += v.substring(7); this.value = f; return; }
+      f += '-';
+      f += v.substring(9, 11);
+      this.value = f;
+    }
+  });
 }
 </script>
 </body>
