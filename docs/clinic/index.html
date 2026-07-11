@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediCare — Медицинский центр</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="#" class="logo">🏥 MediCare</a>
+            <nav class="nav"><a href="#services">Услуги</a><a href="#doctors">Врачи</a><a href="#reviews">Отзывы</a><a href="#contact">Контакты</a></nav>
+            <a href="tel:+799****6789" class="btn btn-primary btn-sm">Записаться</a>
+            <button class="nav-toggle" aria-label="Меню"><span></span><span></span><span></span></button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Ваше здоровье —<br>наш приоритет</h1>
+                <p class="hero-subtitle">Современный медицинский центр с опытными врачами</p>
+                <div class="hero-cta">
+                    <a href="#contact" class="btn btn-primary">Записаться на приём</a>
+                    <a href="#services" class="btn btn-outline">Наши услуги</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <div class="container">
+            <h2>Наши услуги</h2>
+            <div class="services-grid">
+                <div class="service-card"><span class="icon">🩺</span><h3>Терапия</h3><p>Общая диагностика и лечение</p><p class="price">от 2 000 ₽</p></div>
+                <div class="service-card"><span class="icon">🦷</span><h3>Стоматология</h3><p>Лечение, имплантация, отбеливание</p><p class="price">от 3 000 ₽</p></div>
+                <div class="service-card"><span class="icon">👁️</span><h3>Офтальмология</h3><p>Диагностика и лечение зрения</p><p class="price">от 2 500 ₽</p></div>
+                <div class="service-card"><span class="icon">❤️</span><h3>Кардиология</h3><p>Обследование сердечно-сосудистой системы</p><p class="price">от 4 000 ₽</p></div>
+                <div class="service-card"><span class="icon">🧠</span><h3>Неврология</h3><p>Диагностика и лечение нервной системы</p><p class="price">от 3 500 ₽</p></div>
+                <div class="service-card"><span class="icon">🧴</span><h3>Дерматология</h3><p>Лечение кожи, аллергий</p><p class="price">от 2 000 ₽</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="doctors" class="doctors">
+        <div class="container">
+            <h2>Наши врачи</h2>
+            <div class="doctors-grid">
+                <div class="doctor-card"><div class="doctor-avatar" style="background:linear-gradient(135deg,#0a7b83,#0d9ba3);">👨‍⚕️</div><h3>Иванов Алексей Петрович</h3><p class="specialty">Терапевт, стаж 15 лет</p></div>
+                <div class="doctor-card"><div class="doctor-avatar" style="background:linear-gradient(135deg,#0a7b83,#0d9ba3);">👩‍⚕️</div><h3>Петрова Мария Сергеевна</h3><p class="specialty">Кардиолог, стаж 12 лет</p></div>
+                <div class="doctor-card"><div class="doctor-avatar" style="background:linear-gradient(135deg,#0a7b83,#0d9ba3);">👨‍⚕️</div><h3>Сидоров Дмитрий Александрович</h3><p class="specialty">Невролог, стаж 18 лет</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="reviews" class="reviews">
+        <div class="container">
+            <h2>Отзывы пациентов</h2>
+            <div class="reviews-grid">
+                <div class="review-card"><div class="stars">★★★★★</div><p>"Врачи профессионалы. Лечусь здесь всей семьей."</p><p class="author">— Елена М.</p></div>
+                <div class="review-card"><div class="stars">★★★★★</div><p>"Современное оборудование и внимательный персонал."</p><p class="author">— Ольга Р.</p></div>
+                <div class="review-card"><div class="stars">★★★★★</div><p>"Быстрая запись, минимум ожидания."</p><p class="author">— Игорь К.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Контакты</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-item"><span>📍</span><div><strong>Адрес</strong><br>ул. Здоровья, 10</div></div>
+                    <div class="contact-item"><span>📞</span><div><strong>Телефон</strong><br><a href="tel:+799****6789">+7 (999) 345-67-89</a></div></div>
+                    <div class="contact-item"><span>🕐</span><div><strong>Режим работы</strong><br>Пн-Пт: 8:00-20:00<br>Сб: 9:00-15:00</div></div>
+                </div>
+                <form class="contact-form" onsubmit="event.preventDefault();alert('Заявка принята! Перезвоним для уточнения времени.');this.reset();">
+                    <input type="text" placeholder="Ваше имя" required>
+                    <input type="tel" placeholder="Телефон" required>
+                    <select><option>Выберите специалиста</option><option>Терапевт</option><option>Стоматолог</option><option>Офтальмолог</option><option>Кардиолог</option><option>Невролог</option><option>Дерматолог</option></select>
+                    <button type="submit" class="btn btn-primary">Записаться</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer"><div class="container"><p>&copy; 2026 MediCare. Все права защищены.</p></div></footer>
+    <script src="js/main.js"></script>
+</body>
+</html>

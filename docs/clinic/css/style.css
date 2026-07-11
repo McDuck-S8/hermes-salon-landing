@@ -1,0 +1,41 @@
+:root{--bg:#f8fafb;--surface:#fff;--accent:#0a7b83;--text:#1a1a2e;--muted:#6c757d;--radius:8px;--shadow:0 4px 20px rgba(0,0,0,.06)}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:'Lato',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+.header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);padding:14px 0;box-shadow:var(--shadow)}
+.header .container{display:flex;align-items:center;gap:24px}
+.logo{font-size:20px;font-weight:700;color:var(--accent);text-decoration:none}
+.nav{display:flex;gap:24px}.nav a{text-decoration:none;color:var(--text);font-weight:500;transition:color .3s;font-size:15px}.nav a:hover{color:var(--accent)}
+.header .btn{margin-left:auto}.nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:4px}.nav-toggle span{display:block;width:24px;height:2px;background:var(--text);margin:5px 0;transition:.3s}
+.hero{padding:160px 0 100px;background:linear-gradient(135deg,#0a7b83 0%,#0d9ba3 50%,#e8f5f7 100%);color:#fff;text-align:center}
+.hero h1{font-size:clamp(32px,5vw,52px);font-weight:700;margin-bottom:20px;line-height:1.15}
+.hero-subtitle{font-size:20px;opacity:.9;margin-bottom:40px;max-width:500px;margin-left:auto;margin-right:auto}
+.hero-cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-block;padding:14px 32px;border-radius:var(--radius);font-weight:600;text-decoration:none;cursor:pointer;transition:all .3s;border:2px solid transparent;font-size:16px}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}.btn-primary:hover{background:#085f65;border-color:#085f65}
+.btn-outline{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}.btn-outline:hover{border-color:#fff;background:rgba(255,255,255,.15)}
+.btn-sm{padding:10px 24px;font-size:14px}
+.services,.doctors,.reviews,.contact{padding:100px 0}.services{background:var(--surface)}
+h2{font-size:clamp(28px,4vw,40px);text-align:center;margin-bottom:56px;color:var(--accent)}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+.service-card{background:var(--bg);padding:32px;border-radius:var(--radius);text-align:center;transition:all .3s;border:1px solid #e8f0f2}
+.service-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}.service-card .icon{font-size:40px;margin-bottom:16px;display:block}
+.service-card h3{font-size:18px;margin-bottom:8px;color:var(--accent)}.service-card p{color:var(--muted);font-size:14px;margin-bottom:8px}
+.price{color:var(--accent);font-weight:700!important;font-size:18px!important}
+.doctors{background:var(--bg)}.doctors-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+.doctor-card{background:var(--surface);padding:32px;border-radius:var(--radius);text-align:center;box-shadow:var(--shadow)}
+.doctor-avatar{width:100px;height:100px;border-radius:50%;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;font-size:40px;color:#fff}
+.doctor-card h3{font-size:18px;margin-bottom:8px}.specialty{color:var(--muted);font-size:14px}
+.reviews{background:var(--surface)}.reviews-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+.review-card{background:var(--bg);padding:32px;border-radius:var(--radius);border:1px solid #e8f0f2}
+.stars{color:#f5a623;font-size:18px;margin-bottom:12px}.review-card p{color:var(--muted);font-style:italic;margin-bottom:12px;font-size:15px}
+.author{font-weight:600;color:var(--accent);font-style:normal!important;font-size:14px!important}
+.contact{background:var(--bg)}.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.contact-item{display:flex;gap:16px;margin-bottom:24px}.contact-item span{font-size:24px}
+.contact-item strong{color:var(--accent);display:block;margin-bottom:4px}.contact-item a{color:var(--accent);text-decoration:none}
+.contact-form{display:flex;flex-direction:column;gap:16px}
+.contact-form input,.contact-form select{padding:14px 16px;border:1px solid #dee2e6;border-radius:var(--radius);font-size:16px;transition:border-color .3s;background:#fff}
+.contact-form input:focus,.contact-form select:focus{outline:none;border-color:var(--accent)}
+.footer{padding:32px 0;text-align:center;color:var(--muted);border-top:1px solid #e8f0f2;font-size:14px}
+@media(max-width:768px){.nav{display:none}.header .btn{display:none}.nav-toggle{display:block}
+.nav.active{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:#fff;padding:24px;gap:16px;box-shadow:var(--shadow)}
+.contact-grid{grid-template-columns:1fr}}

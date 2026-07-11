@@ -1,81 +1,93 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="ru" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hermes Studio — портфоліо</title>
+<title>Hermes Studio — портфолио</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+:root{--bg:#f7f7f8;--surface:#fff;--border:#eaeaea;--text:#1a1a1a;--muted:#888;--accent:#6c5ce7;--accent-hover:#5a4bd1;--accent-bg:#f0edff;--card-border:#eee;--card-hover:#d4ccff;--shadow:rgba(108,92,231,.08);--logo-center:#888;--cat-hover:#eeeef0;--tag-muted:#bbb;--footer-border:#eaeaea;--empty:#aaa;--nav-btn-bg:#f0f0f2;--nav-btn:#555}
+[data-theme=dark]{--bg:#121216;--surface:#1c1c22;--border:#2a2a32;--text:#e8e8ee;--muted:#88889a;--accent:#8b7cf7;--accent-hover:#9d8fff;--accent-bg:#2a2645;--card-border:#2a2a32;--card-hover:#3a3670;--shadow:rgba(139,124,247,.12);--logo-center:#666;--cat-hover:#2a2a32;--tag-muted:#555;--footer-border:#2a2a32;--empty:#555;--nav-btn-bg:#2a2a32;--nav-btn:#aaa}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Inter',-apple-system,sans-serif;background:#f7f7f8;color:#1a1a1a}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);transition:background .2s,color .2s;min-height:100vh}
 
 /* HEADER */
-header{background:#fff;border-bottom:1px solid #eaeaea;position:sticky;top:0;z-index:100}
-.header-inner{max-width:1320px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
-.logo{font-weight:800;font-size:20px;letter-spacing:-.5px;text-decoration:none;color:#1a1a1a}
-.logo span{color:#888;font-weight:400}
-.logo em{font-style:normal;color:#6c5ce7}
-.header-info{display:flex;align-items:center;gap:16px;font-size:13px;color:#888}
-.header-info strong{color:#1a1a1a;font-weight:600}
+header{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;backdrop-filter:blur(12px);background:rgba(255,255,255,.85)}
+[data-theme=dark] header{background:rgba(28,28,34,.9)}
+.header-inner{max-width:1320px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{font-weight:800;font-size:20px;letter-spacing:-.5px;text-decoration:none;color:var(--text)}
+.logo span{color:var(--logo-center);font-weight:400}
+.logo em{font-style:normal;color:var(--accent)}
+
+/* HEADER RIGHT */
+.header-right{display:flex;align-items:center;gap:8px}
+.lang-btn,.theme-btn{padding:6px 10px;border:1px solid var(--border);border-radius:6px;background:var(--nav-btn-bg);color:var(--nav-btn);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;font-family:inherit;line-height:1}
+.lang-btn:hover,.theme-btn:hover{border-color:var(--accent);color:var(--accent)}
+.lang-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.lang-btn{min-width:32px;text-align:center;text-transform:uppercase}
+.theme-btn{font-size:16px;padding:6px 8px;line-height:1}
+
+/* HERO */
+.hero{max-width:1320px;margin:0 auto;padding:40px 24px 0}
+.hero-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:4px}
+.hero h1{font-size:32px;font-weight:800;letter-spacing:-1px}
+.hero .sub{font-size:15px;color:var(--muted);line-height:1.5;max-width:500px}
 
 /* LAYOUT */
-.layout{max-width:1320px;margin:0 auto;padding:24px;display:grid;grid-template-columns:220px 1fr;gap:32px}
+.layout{max-width:1320px;margin:0 auto;padding:24px;display:grid;grid-template-columns:200px 1fr;gap:28px}
 
 /* SIDEBAR */
-.sidebar{position:sticky;top:90px;align-self:start}
-.sidebar h3{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#999;margin-bottom:12px;font-weight:600}
+.sidebar{position:sticky;top:85px;align-self:start}
+.sidebar h3{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:12px;font-weight:600}
 .cat-list{list-style:none}
 .cat-list li{margin-bottom:2px}
-.cat-list a{display:block;padding:8px 12px;border-radius:8px;font-size:14px;font-weight:500;color:#555;text-decoration:none;transition:all .15s}
-.cat-list a:hover{background:#eeeef0;color:#1a1a1a}
-.cat-list a.active{background:#6c5ce7;color:#fff;font-weight:600}
-.cat-list .count{float:right;color:#bbb;font-size:12px;font-weight:400}
-.cat-list a.active .count{color:rgba(255,255,255,.6)}
+.cat-list a{display:block;padding:8px 12px;border-radius:8px;font-size:14px;font-weight:500;color:var(--muted);text-decoration:none;transition:all .15s;cursor:pointer}
+.cat-list a:hover{background:var(--cat-hover);color:var(--text)}
+.cat-list a.active{background:var(--accent);color:#fff;font-weight:600}
+.cat-list .count{float:right;color:var(--tag-muted);font-size:12px;font-weight:400}
+.cat-list a.active .count{color:rgba(255,255,255,.5)}
 
 /* MAIN */
-.main{min-height:60vh}
-.section-title{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px}
-.section-title h2{font-size:20px;font-weight:700}
-.section-title .all-link{font-size:13px;color:#6c5ce7;text-decoration:none;font-weight:500}
+.main{min-height:50vh}
+.section-title{display:none;align-items:baseline;justify-content:space-between;margin-bottom:16px}
+.section-title.show{display:flex}
+.section-title h2{font-size:18px;font-weight:700}
+.section-title .all-link{font-size:13px;color:var(--accent);text-decoration:none;font-weight:500;cursor:pointer}
 .section-title .all-link:hover{text-decoration:underline}
 
 /* PROJECT GRID */
-.project-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:48px}
-.project-card{background:#fff;border-radius:12px;overflow:hidden;border:1px solid #eee;transition:all .2s;text-decoration:none;color:inherit;display:block}
-.project-card:hover{border-color:#d4ccff;box-shadow:0 4px 20px rgba(108,92,231,.08);transform:translateY(-2px)}
-.project-card .thumb{width:100%;height:180px;object-fit:cover;display:block;background:#f0f0f2}
+.project-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:40px}
+.project-card{background:var(--surface);border-radius:12px;overflow:hidden;border:1px solid var(--card-border);transition:all .2s;text-decoration:none;color:inherit;display:block}
+.project-card:hover{border-color:var(--card-hover);box-shadow:0 4px 20px var(--shadow);transform:translateY(-2px)}
+.project-card .thumb{width:100%;height:170px;object-fit:cover;display:block;background:var(--cat-hover)}
 .project-card .info{padding:14px 16px 16px}
-.project-card .cat-tag{display:inline-block;font-size:11px;font-weight:600;color:#6c5ce7;background:#f0edff;padding:2px 8px;border-radius:100px;margin-bottom:6px}
-.project-card h3{font-size:16px;font-weight:600;margin-bottom:4px;line-height:1.3}
-.project-card .desc{font-size:13px;color:#888;line-height:1.5;margin-bottom:10px}
-.project-card .meta{font-size:12px;color:#aaa;margin-bottom:10px}
-.project-card .btn{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;background:#6c5ce7;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;transition:background .15s}
-.project-card .btn:hover{background:#5a4bd1}
+.project-card .cat-tag{display:inline-block;font-size:11px;font-weight:600;color:var(--accent);background:var(--accent-bg);padding:2px 8px;border-radius:100px;margin-bottom:6px}
+.project-card h3{font-size:15px;font-weight:600;margin-bottom:4px;line-height:1.3}
+.project-card .desc{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:8px}
+.project-card .meta{font-size:12px;color:var(--tag-muted);margin-bottom:10px}
+.project-card .btn{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;background:var(--accent);color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;transition:background .15s}
+.project-card .btn:hover{background:var(--accent-hover)}
 
-/* HERO SECTION */
-.hero{max-width:1320px;margin:0 auto;padding:40px 24px 0}
-.hero h1{font-size:36px;font-weight:800;letter-spacing:-1px;margin-bottom:8px}
-.hero p{font-size:16px;color:#888;max-width:500px;line-height:1.5}
+/* EMPTY */
+.empty-state{text-align:center;padding:60px 20px;color:var(--empty);font-size:14px;display:none}
+.empty-state.show{display:block}
 
 /* FOOTER */
-footer{max-width:1320px;margin:0 auto;padding:32px 24px;border-top:1px solid #eaeaea;color:#bbb;font-size:13px;text-align:center}
-
-/* EMPTY STATE */
-.empty-state{display:none;text-align:center;padding:80px 20px;color:#aaa}
-.empty-state.show{display:block}
+footer{max-width:1320px;margin:0 auto;padding:32px 24px;border-top:1px solid var(--footer-border);color:var(--tag-muted);font-size:13px;text-align:center}
 
 @media(max-width:768px){
 .layout{grid-template-columns:1fr;padding:16px}
-.sidebar{position:static;margin-bottom:8px}
+.sidebar{position:static;margin-bottom:4px}
 .sidebar h3{display:none}
-.cat-list{display:flex;gap:4px;overflow-x:auto;padding-bottom:8px}
+.cat-list{display:flex;gap:4px;overflow-x:auto;padding-bottom:8px;flex-wrap:nowrap}
 .cat-list li{flex-shrink:0}
-.cat-list a{padding:6px 14px;font-size:13px}
+.cat-list a{padding:6px 14px;font-size:13px;white-space:nowrap}
 .project-grid{grid-template-columns:1fr}
-.hero h1{font-size:26px}
-.header-info{display:none}
+.hero h1{font-size:24px}
+.hero .sub{font-size:14px}
+.header-inner{flex-wrap:wrap}
 }
 </style>
 </head>
@@ -83,96 +95,146 @@ footer{max-width:1320px;margin:0 auto;padding:32px 24px;border-top:1px solid #ea
 
 <header>
 <div class="header-inner">
-<a href="/" class="logo">Hermes <span>//</span> <em>Studio</em></a>
-<div class="header-info">
-<span>2 проєкти</span>
-<span>·</span>
-<span>працюємо <strong>2024—2026</strong></span>
+<a href="./" class="logo">Hermes <span>//</span> <em>Studio</em></a>
+<div class="header-right">
+<button class="lang-btn active" data-lang="ru">RU</button>
+<button class="lang-btn" data-lang="uk">UA</button>
+<button class="lang-btn" data-lang="en">EN</button>
+<button class="theme-btn" id="themeToggle" title="Toggle theme">🌙</button>
 </div>
 </div>
 </header>
 
 <section class="hero">
-<h1>Веб-проєкти</h1>
-<p>Кожен сайт — окремий бізнес з власним стилем. Обирайте категорію, щоб побачити роботи за напрямком.</p>
+<div class="hero-top">
+<h1 data-i18n="title">Веб-проєкти</h1>
+<span style="font-size:14px;color:var(--muted)">7 проєктів · 5 категорій</span>
+</div>
+<p class="sub" data-i18n="subtitle">Кожен сайт — окремий бізнес з власним стилем. Обирайте категорію, щоб побачити роботи за напрямком.</p>
 </section>
 
 <div class="layout">
 
 <aside class="sidebar">
-<h3>Категорії</h3>
+<h3 data-i18n="categories">Категорії</h3>
 <ul class="cat-list" id="catList">
-<li><a href="#" class="active" data-cat="all">Усі проєкти <span class="count">2</span></a></li>
-<li><a href="#" data-cat="salon">Салон краси <span class="count">2</span></a></li>
-<li><a href="#" data-cat="cafe">Кафе <span class="count">0</span></a></li>
-<li><a href="#" data-cat="auto">Авто <span class="count">0</span></a></li>
+<li><a class="active" data-cat="all" data-i18n="all"><span data-i18n="all">Усі проєкти</span> <span class="count">7</span></a></li>
+<li><a data-cat="salon"><span data-i18n="cat_salon">Салон краси</span> <span class="count">3</span></a></li>
+<li><a data-cat="cafe"><span data-i18n="cat_cafe">Кафе</span> <span class="count">1</span></a></li>
+<li><a data-cat="auto"><span data-i18n="cat_auto">Авто</span> <span class="count">1</span></a></li>
+<li><a data-cat="clinic"><span data-i18n="cat_clinic">Медицина</span> <span class="count">1</span></a></li>
+<li><a data-cat="funeral"><span data-i18n="cat_funeral">Ритуальні</span> <span class="count">1</span></a></li>
 </ul>
 </aside>
 
-<main class="main">
-
-<!-- FARGO -->
-<section class="project-section" data-cat="salon">
-<div class="section-title">
-<h2>Салон краси</h2>
-</div>
-<div class="project-grid">
-<a href="https://mcduck-s8.github.io/hermes-salon-landing/fargo/index.html" class="project-card" target="_blank">
-<img class="thumb" src="https://images.pexels.com/photos/3992875/pexels-photo-3992875.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop" alt="" loading="lazy">
-<div class="info">
-<span class="cat-tag">Салон краси</span>
-<h3>Fargo — салон краси на Позняках</h3>
-<p class="desc">Повноцінний сайт: прайс (10 категорій, 119+ позицій), галерея, форма запису з вибором дати/часу, 2 адреси, Google Maps, акції.</p>
-<div class="meta">Київ · 2026</div>
-<span class="btn">↗ Відкрити сайт</span>
-</div>
-</a>
-
-<a href="https://mcduck-s8.github.io/hermes-salon-landing/old-salon/index.html" class="project-card" target="_blank">
-<img class="thumb" src="https://images.pexels.com/photos/7750114/pexels-photo-7750114.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop" alt="" loading="lazy">
-<div class="info">
-<span class="cat-tag">Салон краси</span>
-<h3>MÉLANGE — студія краси</h3>
-<p class="desc">Лендінг з послугами, галереєю робіт, відгуками клієнтів, формою запису, темною темою та мобільною версією.</p>
-<div class="meta">Москва · 2026</div>
-<span class="btn">↗ Відкрити сайт</span>
-</div>
-</a>
-</div>
-</section>
-
-<!-- EMPTY CATEGORIES -->
-<section class="project-section" data-cat="cafe" style="display:none">
-<div class="section-title"><h2>Кафе</h2></div>
-<div class="empty-state show">Тут поки що пусто. Скоро з'явиться перший проєкт.</div>
-</section>
-
-<section class="project-section" data-cat="auto" style="display:none">
-<div class="section-title"><h2>Авто</h2></div>
-<div class="empty-state show">Тут поки що пусто. Скоро з'явиться перший проєкт.</div>
-</section>
+<main class="main" id="projects">
 
 </main>
 </div>
 
-<footer>Hermes Studio · нові проєкти додаються в міру створення</footer>
+<footer data-i18n="footer">Hermes Studio · нові проєкти додаються в міру створення</footer>
 
 <script>
-const cats = document.querySelectorAll('.cat-list a');
-const sections = document.querySelectorAll('.project-section');
+const LANG = {
+ru:{title:'Веб-проекты',subtitle:'Каждый сайт — отдельный бизнес с собственным стилем. Выберите категорию, чтобы увидеть работы по направлению.',categories:'Категории',all:'Все проекты',cat_salon:'Салон красоты',cat_cafe:'Кафе',cat_auto:'Авто',cat_clinic:'Медицина',cat_funeral:'Ритуальные',footer:'Hermes Studio · новые проекты добавляются по мере создания',empty:'Здесь пока пусто. Скоро появится первый проект.'},
+uk:{title:'Веб-проєкти',subtitle:'Кожен сайт — окремий бізнес з власним стилем. Оберіть категорію, щоб побачити роботи за напрямком.',categories:'Категорії',all:'Усі проєкти',cat_salon:'Салон краси',cat_cafe:'Кафе',cat_auto:'Авто',cat_clinic:'Медицина',cat_funeral:'Ритуальні',footer:'Hermes Studio · нові проєкти додаються в міру створення',empty:'Тут поки що пусто. Скоро з\'явиться перший проєкт.'},
+en:{title:'Web Projects',subtitle:'Every site is a separate business with its own style. Choose a category to see work by direction.',categories:'Categories',all:'All Projects',cat_salon:'Beauty Salon',cat_cafe:'Café',cat_auto:'Auto Service',cat_clinic:'Clinic',cat_funeral:'Funeral',footer:'Hermes Studio · new projects added as they are created',empty:'Nothing here yet. First project coming soon.'}
+};
 
-cats.forEach(a => {
-a.addEventListener('click', e => {
+const PROJECTS = [
+{id:'fargo',cat:'salon',url:'fargo/',img:'https://images.pexels.com/photos/3992875/pexels-photo-3992875.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Fargo — салон красоты на Позняках',uk:'Fargo — салон краси на Позняках',en:'Fargo — Beauty Salon in Poznyaky'},desc:{ru:'Полноценный сайт: прайс (10 категорий, 119+ позиций), галерея, форма записи с выбором даты/времени, 2 адреса, Google Maps, акции.',uk:'Повноцінний сайт: прайс (10 категорій, 119+ позицій), галерея, форма запису з вибором дати/часу, 2 адреси, Google Maps, акції.',en:'Full website: price list (10 categories, 119+ items), gallery, booking form with date/time picker, 2 locations, Google Maps, promotions.'},meta:{ru:'Киев · 2026',uk:'Київ · 2026',en:'Kyiv · 2026'}},
+{id:'melange',cat:'salon',url:'old-salon/',img:'https://images.pexels.com/photos/7750114/pexels-photo-7750114.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'MÉLANGE — студия красоты',uk:'MÉLANGE — студія краси',en:'MÉLANGE — Beauty Studio'},desc:{ru:'Лендинг с услугами, галереей работ, отзывами клиентов, формой записи, темной темой и мобильной версией.',uk:'Лендінг з послугами, галереєю робіт, відгуками клієнтів, формою запису, темною темою та мобільною версією.',en:'Landing page with services, portfolio gallery, client reviews, booking form, dark mode, and mobile version.'},meta:{ru:'Москва · 2026',uk:'Москва · 2026',en:'Moscow · 2026'}},
+{id:'aurum',cat:'salon',url:'salon/',img:'https://images.pexels.com/photos/5069603/pexels-photo-5069603.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Aurum — Премиум салон красоты',uk:'Aurum — Преміум салон краси',en:'Aurum — Premium Beauty Salon'},desc:{ru:'Премиальный салон с темной темой и золотыми акцентами. Студийный дизайн, анимация, услуги, контакты.',uk:'Преміальний салон з темною темою та золотими акцентами. Студійний дизайн, анімація, послуги, контакти.',en:'Premium salon with dark theme and gold accents. Studio-grade design, animations, services, contact.'},meta:{ru:'2026',uk:'2026',en:'2026'}},
+{id:'patisserie',cat:'cafe',url:'bakery/',img:'https://images.pexels.com/photos/1857157/pexels-photo-1857157.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'La Pâtisserie — Кондитерская & Кафе',uk:'La Pâtisserie — Кондитерська & Кафе',en:'La Pâtisserie — Bakery & Café'},desc:{ru:'Сайт кондитерской с меню десертов, галереей, формой заказа и тёплым дизайном в природных тонах.',uk:'Сайт кондитерської з меню десертів, галереєю, формою замовлення та теплим дизайном у природних тонах.',en:'Bakery website with dessert menu, gallery, order form, and warm earthy design.'},meta:{ru:'2026',uk:'2026',en:'2026'}},
+{id:'autopro',cat:'auto',url:'auto/',img:'https://images.pexels.com/photos/3807320/pexels-photo-3807320.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'AutoPro — Автосервис',uk:'AutoPro — Автосервіс',en:'AutoPro — Auto Service'},desc:{ru:'Сайт автосервиса: услуги, запись онлайн, отзывы, контакты. Современный индустриальный дизайн.',uk:'Сайт автосервісу: послуги, запис онлайн, відгуки, контакти. Сучасний індустріальний дизайн.',en:'Auto service website: services, online booking, reviews, contacts. Modern industrial design.'},meta:{ru:'2026',uk:'2026',en:'2026'}},
+{id:'medicare',cat:'clinic',url:'clinic/',img:'https://images.pexels.com/photos/40568/medical-appointment-doctor-healthcare-40568.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'MediCare — Медицинский центр',uk:'MediCare — Медичний центр',en:'MediCare — Medical Center'},desc:{ru:'Сайт медцентра: направления, врачи, запись на приём, контакты. Чистый минималистичный дизайн.',uk:'Сайт медцентру: напрямки, лікарі, запис на прийом, контакти. Чистий мінімалістичний дизайн.',en:'Medical center website: departments, doctors, appointment booking, contacts. Clean minimalist design.'},meta:{ru:'2026',uk:'2026',en:'2026'}},
+{id:'tihiy',cat:'funeral',url:'funeral/',img:'https://images.pexels.com/photos/7241361/pexels-photo-7241361.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Тихий Дом — Ритуальные услуги',uk:'Тихий Дім — Ритуальні послуги',en:'Eternal Rest — Funeral Services'},desc:{ru:'Сайт ритуальной службы: услуги, церемонии, контакты. Сдержанный тактичный дизайн.',uk:'Сайт ритуальної служби: послуги, церемонії, контакти. Стриманий тактовний дизайн.',en:'Funeral services website: services, ceremonies, contacts. Reserved tactful design.'},meta:{ru:'2026',uk:'2026',en:'2026'}}
+];
+
+let currentLang = 'ru';
+let currentCat = 'all';
+let theme = localStorage.getItem('theme') || 'light';
+
+// Theme
+document.documentElement.setAttribute('data-theme',theme);
+document.getElementById('themeToggle').textContent = theme === 'dark' ? '☀️' : '🌙';
+document.getElementById('themeToggle').addEventListener('click',()=>{
+theme = theme === 'dark' ? 'light' : 'dark';
+document.documentElement.setAttribute('data-theme',theme);
+localStorage.setItem('theme',theme);
+document.getElementById('themeToggle').textContent = theme === 'dark' ? '☀️' : '🌙';
+});
+
+// Translate page
+function translate(lang){
+currentLang = lang;
+document.querySelectorAll('[data-i18n]').forEach(el=>{
+const key = el.dataset.i18n;
+const parts = key.split('.');
+if(parts.length === 1 && LANG[lang][key]){
+el.textContent = LANG[lang][key];
+} else if(parts.length > 1){
+// handle nested if needed
+}
+});
+document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
+renderProjects();
+}
+
+// Render projects
+function renderProjects(){
+const main = document.getElementById('projects');
+const filtered = currentCat === 'all' ? PROJECTS : PROJECTS.filter(p=>p.cat===currentCat);
+if(!filtered.length){
+main.innerHTML = `<div class="empty-state show">${LANG[currentLang].empty}</div>`;
+return;
+}
+// Group by category
+const groups = {};
+filtered.forEach(p=>{
+if(!groups[p.cat]) groups[p.cat] = [];
+groups[p.cat].push(p);
+});
+let html = '';
+for(const[cat,items] of Object.entries(groups)){
+const catName = LANG[currentLang]['cat_'+cat] || cat;
+html += `<section class="project-section" data-cat="${cat}">`;
+html += `<div class="section-title show"><h2>${catName}</h2></div>`;
+html += `<div class="project-grid">`;
+items.forEach(p=>{
+html += `<a href="${p.url}" class="project-card" target="_blank">`;
+html += `<img class="thumb" src="${p.img}" alt="" loading="lazy">`;
+html += `<div class="info">`;
+html += `<span class="cat-tag">${catName}</span>`;
+html += `<h3>${p.name[currentLang]}</h3>`;
+html += `<p class="desc">${p.desc[currentLang]}</p>`;
+html += `<div class="meta">${p.meta[currentLang]}</div>`;
+html += `<span class="btn">↗ ${currentLang === 'en' ? 'Open site' : 'Відкрити сайт'}</span>`;
+html += `</div></a>`;
+});
+html += `</div></section>`;
+}
+main.innerHTML = html;
+}
+
+// Category filter
+document.getElementById('catList').addEventListener('click',e=>{
+const a = e.target.closest('a');
+if(!a) return;
 e.preventDefault();
-cats.forEach(x => x.classList.remove('active'));
+document.querySelectorAll('.cat-list a').forEach(x=>x.classList.remove('active'));
 a.classList.add('active');
-const cat = a.dataset.cat;
-sections.forEach(s => {
-s.style.display = (cat === 'all' || s.dataset.cat === cat) ? '' : 'none';
+currentCat = a.dataset.cat;
+renderProjects();
 });
-});
-});
-</script>
 
+// Language buttons
+document.querySelectorAll('.lang-btn').forEach(btn=>{
+btn.addEventListener('click',()=>translate(btn.dataset.lang));
+});
+
+// Init
+translate('ru');
+</script>
 </body>
 </html>
