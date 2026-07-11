@@ -74,51 +74,52 @@ footer a{padding:10px 20px;font-size:13px}
 let syncing = false;
 const oldFrame = document.getElementById('oldFrame');
 const newFrame = document.getElementById('newFrame');
-let oldDoc = null, newDoc = null;
+let oldWin = null, newWin = null;
 
-function getDoc(iframe){
-try{return iframe.contentDocument || iframe.contentWindow.document}catch(e){return null}
-}
+function getWin(f){ try{ return f.contentWindow }catch(e){ return null } }
 
 function setupScrollSync(){
-oldDoc = getDoc(oldFrame);
-newDoc = getDoc(newFrame);
-if(!oldDoc || !newDoc) return;
+oldWin = getWin(oldFrame);
+newWin = getWin(newFrame);
+if(!oldWin || !newWin) return;
+if(!oldWin.document.body || !newWin.document.body) return;
 
-const syncScroll = (source, target) => {
-source.addEventListener('scroll', () => {
+const sync = (sourceWin, targetWin) => {
+sourceWin.addEventListener('scroll', () => {
 if(syncing) return;
 syncing = true;
-const ratio = source.scrollTop / (source.scrollHeight - source.clientHeight);
-target.scrollTop = ratio * (target.scrollHeight - target.clientHeight);
+const se = sourceWin.document.scrollingElement || sourceWin.document.documentElement;
+const te = targetWin.document.scrollingElement || targetWin.document.documentElement;
+const ratio = se.scrollTop / (se.scrollHeight - se.clientHeight);
+te.scrollTop = ratio * (te.scrollHeight - te.clientHeight);
 requestAnimationFrame(() => { syncing = false; });
 }, {passive: true});
 };
 
-syncScroll(oldDoc, newDoc);
-syncScroll(newDoc, oldDoc);
+sync(oldWin, newWin);
+sync(newWin, oldWin);
 }
 
-// Wait for both iframes to load
 let loaded = 0;
 function onLoad(){
 loaded++;
 if(loaded === 2) setupScrollSync();
 }
-
 oldFrame.addEventListener('load', onLoad);
 newFrame.addEventListener('load', onLoad);
 
-// Fallback: retry setup periodically (in case iframe from external domain is slow)
 let attempts = 0;
 const retry = setInterval(() => {
 attempts++;
-if(oldDoc && newDoc){ clearInterval(retry); return; }
-oldDoc = getDoc(oldFrame);
-newDoc = getDoc(newFrame);
-if(oldDoc && newDoc){ setupScrollSync(); clearInterval(retry); }
-if(attempts > 20) clearInterval(retry);
-}, 500);
+if(oldWin && newWin){ clearInterval(retry); return; }
+oldWin = getWin(oldFrame);
+newWin = getWin(newFrame);
+if(oldWin && newWin && oldWin.document.body && newWin.document.body){
+setupScrollSync();
+clearInterval(retry);
+}
+if(attempts > 30) clearInterval(retry);
+}, 300);
 })();
 </script>
 
