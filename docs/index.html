@@ -1,136 +1,174 @@
 <!DOCTYPE html>
-<html lang="uk" data-theme="light">
+<html lang="uk">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hermes — портфоліо веб-проектів</title>
+<title>Hermes Studio — портфоліо</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Inter',-apple-system,sans-serif;background:#fafafa;color:#1a1a1a;min-height:100vh}
-.container{max-width:1280px;margin:0 auto;padding:0 24px}
+body{font-family:'Inter',-apple-system,sans-serif;background:#f7f7f8;color:#1a1a1a}
 
 /* HEADER */
-header{background:#fff;border-bottom:1px solid #eee;padding:20px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(10px);background:rgba(255,255,255,.92)}
-header .container{display:flex;align-items:center;justify-content:space-between}
-.logo{font-weight:700;font-size:22px;letter-spacing:-.5px;color:#1a1a1a}
-.logo span{color:#888}
+header{background:#fff;border-bottom:1px solid #eaeaea;position:sticky;top:0;z-index:100}
+.header-inner{max-width:1320px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-weight:800;font-size:20px;letter-spacing:-.5px;text-decoration:none;color:#1a1a1a}
+.logo span{color:#888;font-weight:400}
 .logo em{font-style:normal;color:#6c5ce7}
-nav a{text-decoration:none;color:#666;font-size:14px;font-weight:500;transition:color .2s;margin-left:24px}
-nav a:hover{color:#6c5ce7}
+.header-info{display:flex;align-items:center;gap:16px;font-size:13px;color:#888}
+.header-info strong{color:#1a1a1a;font-weight:600}
 
-/* HERO SECTION */
-.hero{text-align:center;padding:80px 0 48px}
-.hero h1{font-size:42px;font-weight:700;letter-spacing:-1.5px;margin-bottom:12px}
-.hero p{font-size:18px;color:#666;max-width:560px;margin:0 auto;line-height:1.6}
-.hero .count{color:#6c5ce7;font-weight:600}
+/* LAYOUT */
+.layout{max-width:1320px;margin:0 auto;padding:24px;display:grid;grid-template-columns:220px 1fr;gap:32px}
 
-/* FILTERS */
-.filters{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:48px;padding:0 24px}
-.filter-btn{padding:8px 20px;border:1.5px solid #e0e0e0;border-radius:100px;background:#fff;font-size:14px;font-weight:500;color:#555;cursor:pointer;transition:all .2s;font-family:inherit}
-.filter-btn:hover{border-color:#6c5ce7;color:#6c5ce7}
-.filter-btn.active{background:#6c5ce7;border-color:#6c5ce7;color:#fff}
+/* SIDEBAR */
+.sidebar{position:sticky;top:90px;align-self:start}
+.sidebar h3{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#999;margin-bottom:12px;font-weight:600}
+.cat-list{list-style:none}
+.cat-list li{margin-bottom:2px}
+.cat-list a{display:block;padding:8px 12px;border-radius:8px;font-size:14px;font-weight:500;color:#555;text-decoration:none;transition:all .15s}
+.cat-list a:hover{background:#eeeef0;color:#1a1a1a}
+.cat-list a.active{background:#6c5ce7;color:#fff;font-weight:600}
+.cat-list .count{float:right;color:#bbb;font-size:12px;font-weight:400}
+.cat-list a.active .count{color:rgba(255,255,255,.6)}
+
+/* MAIN */
+.main{min-height:60vh}
+.section-title{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px}
+.section-title h2{font-size:20px;font-weight:700}
+.section-title .all-link{font-size:13px;color:#6c5ce7;text-decoration:none;font-weight:500}
+.section-title .all-link:hover{text-decoration:underline}
 
 /* PROJECT GRID */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:24px;padding-bottom:80px}
-.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04);transition:all .3s ease;cursor:pointer;border:1px solid #f0f0f0}
-.card:hover{box-shadow:0 8px 30px rgba(0,0,0,.08);transform:translateY(-4px);border-color:#e8e0ff}
-.card-img{width:100%;height:220px;object-fit:cover;display:block;background:#f5f5f5}
-.card-body{padding:20px}
-.card-body h3{font-size:18px;font-weight:600;margin-bottom:6px}
-.card-body .category{display:inline-block;font-size:12px;font-weight:600;color:#6c5ce7;background:#f0edff;padding:3px 10px;border-radius:100px;margin-bottom:8px}
-.card-body .desc{font-size:14px;color:#777;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.card{text-decoration:none;color:inherit;display:block}
-.card-hover{position:relative}
-.card-hover .overlay{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(108,92,231,.85);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;border-radius:0}
-.card:hover .overlay{opacity:1}
-.overlay span{color:#fff;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px}
+.project-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:48px}
+.project-card{background:#fff;border-radius:12px;overflow:hidden;border:1px solid #eee;transition:all .2s;text-decoration:none;color:inherit;display:block}
+.project-card:hover{border-color:#d4ccff;box-shadow:0 4px 20px rgba(108,92,231,.08);transform:translateY(-2px)}
+.project-card .thumb{width:100%;height:180px;object-fit:cover;display:block;background:#f0f0f2}
+.project-card .info{padding:14px 16px 16px}
+.project-card .cat-tag{display:inline-block;font-size:11px;font-weight:600;color:#6c5ce7;background:#f0edff;padding:2px 8px;border-radius:100px;margin-bottom:6px}
+.project-card h3{font-size:16px;font-weight:600;margin-bottom:4px;line-height:1.3}
+.project-card .desc{font-size:13px;color:#888;line-height:1.5;margin-bottom:10px}
+.project-card .meta{font-size:12px;color:#aaa;margin-bottom:10px}
+.project-card .btn{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;background:#6c5ce7;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;transition:background .15s}
+.project-card .btn:hover{background:#5a4bd1}
+
+/* HERO SECTION */
+.hero{max-width:1320px;margin:0 auto;padding:40px 24px 0}
+.hero h1{font-size:36px;font-weight:800;letter-spacing:-1px;margin-bottom:8px}
+.hero p{font-size:16px;color:#888;max-width:500px;line-height:1.5}
 
 /* FOOTER */
-footer{text-align:center;padding:32px 0 48px;border-top:1px solid #eee;color:#999;font-size:14px}
+footer{max-width:1320px;margin:0 auto;padding:32px 24px;border-top:1px solid #eaeaea;color:#bbb;font-size:13px;text-align:center}
 
-@media(max-width:640px){
-.hero h1{font-size:28px}
-.hero{padding:48px 0 32px}
-.grid{grid-template-columns:1fr}
-header .container{flex-direction:column;gap:12px}
-nav a{margin:0 12px}
+/* EMPTY STATE */
+.empty-state{display:none;text-align:center;padding:80px 20px;color:#aaa}
+.empty-state.show{display:block}
+
+@media(max-width:768px){
+.layout{grid-template-columns:1fr;padding:16px}
+.sidebar{position:static;margin-bottom:8px}
+.sidebar h3{display:none}
+.cat-list{display:flex;gap:4px;overflow-x:auto;padding-bottom:8px}
+.cat-list li{flex-shrink:0}
+.cat-list a{padding:6px 14px;font-size:13px}
+.project-grid{grid-template-columns:1fr}
+.hero h1{font-size:26px}
+.header-info{display:none}
 }
 </style>
 </head>
 <body>
 
 <header>
-<div class="container">
+<div class="header-inner">
 <a href="/" class="logo">Hermes <span>//</span> <em>Studio</em></a>
-<nav>
-<a href="/">Портфоліо</a>
-</nav>
+<div class="header-info">
+<span>2 проєкти</span>
+<span>·</span>
+<span>працюємо <strong>2024—2026</strong></span>
+</div>
 </div>
 </header>
 
 <section class="hero">
-<div class="container">
-<h1>Веб-проекти, зроблені з увагою</h1>
-<p>Кожен сайт — це окремий бізнес з власним стилем. Обирайте категорію, щоб побачити роботи за напрямком.</p>
-<p class="count" style="margin-top:8px">2 проєкти · зростаємо</p>
+<h1>Веб-проєкти</h1>
+<p>Кожен сайт — окремий бізнес з власним стилем. Обирайте категорію, щоб побачити роботи за напрямком.</p>
+</section>
+
+<div class="layout">
+
+<aside class="sidebar">
+<h3>Категорії</h3>
+<ul class="cat-list" id="catList">
+<li><a href="#" class="active" data-cat="all">Усі проєкти <span class="count">2</span></a></li>
+<li><a href="#" data-cat="salon">Салон краси <span class="count">2</span></a></li>
+<li><a href="#" data-cat="cafe">Кафе <span class="count">0</span></a></li>
+<li><a href="#" data-cat="auto">Авто <span class="count">0</span></a></li>
+</ul>
+</aside>
+
+<main class="main">
+
+<!-- FARGO -->
+<section class="project-section" data-cat="salon">
+<div class="section-title">
+<h2>Салон краси</h2>
+</div>
+<div class="project-grid">
+<a href="https://mcduck-s8.github.io/hermes-salon-landing/fargo/index.html" class="project-card" target="_blank">
+<img class="thumb" src="https://images.pexels.com/photos/3992875/pexels-photo-3992875.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop" alt="" loading="lazy">
+<div class="info">
+<span class="cat-tag">Салон краси</span>
+<h3>Fargo — салон краси на Позняках</h3>
+<p class="desc">Повноцінний сайт: прайс (10 категорій, 119+ позицій), галерея, форма запису з вибором дати/часу, 2 адреси, Google Maps, акції.</p>
+<div class="meta">Київ · 2026</div>
+<span class="btn">↗ Відкрити сайт</span>
+</div>
+</a>
+
+<a href="https://mcduck-s8.github.io/hermes-salon-landing/old-salon/index.html" class="project-card" target="_blank">
+<img class="thumb" src="https://images.pexels.com/photos/7750114/pexels-photo-7750114.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop" alt="" loading="lazy">
+<div class="info">
+<span class="cat-tag">Салон краси</span>
+<h3>MÉLANGE — студія краси</h3>
+<p class="desc">Лендінг з послугами, галереєю робіт, відгуками клієнтів, формою запису, темною темою та мобільною версією.</p>
+<div class="meta">Москва · 2026</div>
+<span class="btn">↗ Відкрити сайт</span>
+</div>
+</a>
 </div>
 </section>
 
-<div class="filters" id="filters">
-<button class="filter-btn active" data-filter="all">Усі</button>
-<button class="filter-btn" data-filter="salon">Салон краси</button>
+<!-- EMPTY CATEGORIES -->
+<section class="project-section" data-cat="cafe" style="display:none">
+<div class="section-title"><h2>Кафе</h2></div>
+<div class="empty-state show">Тут поки що пусто. Скоро з'явиться перший проєкт.</div>
+</section>
+
+<section class="project-section" data-cat="auto" style="display:none">
+<div class="section-title"><h2>Авто</h2></div>
+<div class="empty-state show">Тут поки що пусто. Скоро з'явиться перший проєкт.</div>
+</section>
+
+</main>
 </div>
 
-<div class="container">
-<div class="grid" id="grid">
-<!-- FARGO -->
-<a href="https://mcduck-s8.github.io/hermes-salon-landing/fargo/index.html" class="card" data-category="salon" target="_blank">
-<div class="card-hover">
-<img class="card-img" src="https://images.pexels.com/photos/3992875/pexels-photo-3992875.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop" alt="Fargo salon preview" loading="lazy">
-<div class="overlay"><span>↗ Відкрити сайт</span></div>
-</div>
-<div class="card-body">
-<span class="category">Салон краси</span>
-<h3>Fargo — салон краси на Позняках</h3>
-<p class="desc">Повноцінний сайт з прайсом, галереєю, формою запису, вибором дати/часу та Google Maps. Київ, 2 адреси.</p>
-</div>
-</a>
-
-<!-- OLD SALON -->
-<a href="https://mcduck-s8.github.io/hermes-salon-landing/old-salon/index.html" class="card" data-category="salon" target="_blank">
-<div class="card-hover">
-<img class="card-img" src="https://images.pexels.com/photos/7750114/pexels-photo-7750114.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop" alt="MÉLANGE salon preview" loading="lazy">
-<div class="overlay"><span>↗ Відкрити сайт</span></div>
-</div>
-<div class="card-body">
-<span class="category">Салон краси</span>
-<h3>MÉLANGE — студія краси</h3>
-<p class="desc">Лендінг з послугами, галереєю робіт, відгуками, формою запису та темною темою. Москва.</p>
-</div>
-</a>
-</div>
-</div>
-
-<footer>
-<div class="container">
-Hermes Studio · проекти додаються в міру створення
-</div>
-</footer>
+<footer>Hermes Studio · нові проєкти додаються в міру створення</footer>
 
 <script>
-const buttons = document.querySelectorAll('.filter-btn');
-const cards = document.querySelectorAll('.card');
+const cats = document.querySelectorAll('.cat-list a');
+const sections = document.querySelectorAll('.project-section');
 
-buttons.forEach(btn => {
-btn.addEventListener('click', () => {
-buttons.forEach(b => b.classList.remove('active'));
-btn.classList.add('active');
-const filter = btn.dataset.filter;
-cards.forEach(card => {
-card.style.display = (filter === 'all' || card.dataset.category === filter) ? 'block' : 'none';
+cats.forEach(a => {
+a.addEventListener('click', e => {
+e.preventDefault();
+cats.forEach(x => x.classList.remove('active'));
+a.classList.add('active');
+const cat = a.dataset.cat;
+sections.forEach(s => {
+s.style.display = (cat === 'all' || s.dataset.cat === cat) ? '' : 'none';
 });
 });
 });
