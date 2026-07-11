@@ -654,7 +654,7 @@ section{padding:clamp(60px,10vh,100px) 0;position:relative}
     <div class="slots-grid reveal">
       <div class="slot-card">
         <h3 data-service="Стрижка жіноча">💇‍♀️ Стрижка, укладка, полірування</h3>
-        <div class="slot-date">📅 11 липня (субота)</div>
+        <div class="slot-date">📅 11 липня (субота) — Княжий</div>
         <div class="slot-times">
           <span class="slot-time">10:30</span>
           <span class="slot-time">16:00</span>
@@ -965,13 +965,15 @@ document.querySelector('.slots-grid')?.addEventListener('click', function(e) {
   while (dateEl && !dateEl.classList.contains('slot-date')) {
     dateEl = dateEl.previousElementSibling;
   }
-  const dateText = dateEl ? dateEl.textContent.replace('📅 ','').trim() : '';
+  const dateTextRaw = dateEl ? dateEl.textContent.replace('📅 ','').trim() : '';
+  // Strip salon suffix for dropdown matching (e.g. "12 липня (неділя) — Княжий" → "12 липня (неділя)")
+  const dateText = dateTextRaw.replace(/\s*—\s*(Княжий|Ахматової)$/, '').trim();
   const time = el.textContent.trim();
 
   // Determine salon from date text
   let salon = '';
-  if (dateText.includes('— Княжий')) salon = 'Княжий Затон, 2/30';
-  else if (dateText.includes('— Ахматової')) salon = 'Анни Ахматової, 30';
+  if (dateTextRaw.includes('— Княжий')) salon = 'Княжий Затон, 2/30';
+  else if (dateTextRaw.includes('— Ахматової')) salon = 'Анни Ахматової, 30';
 
   // Fill form fields
   const svc = document.getElementById('service');
@@ -1017,7 +1019,7 @@ document.querySelector('.slots-grid')?.addEventListener('click', function(e) {
       const d = new Date(today);
       d.setDate(today.getDate() + i);
       const day = d.getDay();
-      if (day === 0) continue; // skip Sundays — salon closed
+      // if (day === 0) continue; // Sundays included — slot data has Sunday times
       const label = `${d.getDate()} ${months[d.getMonth()+1]} (${days[day]})`;
       const opt = document.createElement('option');
       opt.textContent = label;
