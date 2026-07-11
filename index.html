@@ -1,1043 +1,417 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fargo — салон краси на Позняках</title>
-<meta name="description" content="Салон краси Fargo на Позняках. Стрижки, фарбування, манікюр, педикюр, масаж, макіяж. Два салони: Княжий Затон, 2/30 та Анни Ахматової, 30.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-/* ═══ RESET & BASE ═══ */
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:#f7f4f0;color:#1a1814;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-img{max-width:100%;height:auto;display:block}
-a{color:inherit;text-decoration:none}
-button{cursor:pointer;border:none;background:none;font:inherit}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLAM Beauty Salon — Салон красоты премиум-класса | Запись онлайн</title>
+    <meta name="description" content="Премиум салон красоты GLAM: стрижки, окрашивание, маникюр, ламинирование ресниц, макияж. Авторские техники, премиум бренды (Wella, Olaplex, Kerastase), гарантия результата 14 дней. Запишитесь онлайн и получите -20% на первый визит.">
+    
+    <!-- Meta Pixel -->
+    <script>
+        !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', 'YOUR_PIXEL_ID'); fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></noscript>
+    
+    <!-- TikTok Pixel -->
+    <script>
+        !function (w, d, t) { w.TiktokAnalyticsObject=t; var ttq=w[t]=w[t]||[]; ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"]; ttq.setAndDefer=function(t,e){ttq[t]=ttq[t]||function(){(ttq.queue=ttq.queue||[]).push([t,e])}}; ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<e.length;n++)ttq.setAndDefer(e[n][0],e[n][1])}; ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js"; ttq._i=ttq._i||{}; ttq._i[e]=[]; ttq._i[e]._u=i; var o=d.createElement("script"); o.async=!0; o.src=i; var s=d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(o,s); ttq.instance(e); ttq.load(e,n); ttq._i[e]._loaded=!0}; var ttq=w[t]=w[t]||[]; ttq.load("YOUR_TT_PIXEL_ID"); ttq.page();}(window, document, 'ttq');
+    </script>
+    
+    <!-- GA4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date()); gtag('config', 'G-XXXXXXXXXX');
+    </script>
 
-/* ═══ CSS VARIABLES ═══ */
-:root{
-  --terracotta:#c46a4a;
-  --terracotta-dark:#a8553a;
-  --slate:#4a4542;
-  --slate-light:#6b6560;
-  --warm-bg:#f7f4f0;
-  --cream:#f0ebe4;
-  --amber:#c4954a;
-  --white:#ffffff;
-  --dark:#1a1814;
-  --font-heading:'Cormorant Garamond',Georgia,serif;
-  --font-body:'Inter',system-ui,sans-serif;
-  --radius-sm:8px;
-  --radius-md:16px;
-  --radius-lg:24px;
-  --shadow-sm:0 2px 8px rgba(0,0,0,0.06);
-  --shadow-md:0 8px 30px rgba(0,0,0,0.08);
-  --shadow-lg:0 20px 60px rgba(0,0,0,0.12);
-  --transition:0.4s cubic-bezier(0.25,0.1,0.25,1);
-}
-
-/* ═══ TYPOGRAPHY ═══ */
-h1,h2,h3,h4{font-family:var(--font-heading);font-weight:600;line-height:1.15;color:var(--dark)}
-h1{font-size:clamp(2.4rem,6vw,4.2rem);letter-spacing:-0.02em}
-h2{font-size:clamp(2rem,4.5vw,3.2rem);margin-bottom:0.5em}
-h3{font-size:clamp(1.3rem,2.5vw,1.7rem);font-weight:500}
-p{font-size:clamp(0.95rem,1.2vw,1.05rem);color:var(--slate-light);line-height:1.7}
-.section-eyebrow{font-family:var(--font-body);font-size:0.75rem;font-weight:500;text-transform:uppercase;letter-spacing:0.12em;color:var(--terracotta);margin-bottom:0.75rem}
-.container{width:100%;max-width:1200px;margin:0 auto;padding:0 24px}
-section{padding:clamp(60px,10vh,100px) 0;position:relative}
-.section-title{text-align:center;margin-bottom:3rem}
-.section-title p{max-width:560px;margin:0 auto}
-
-/* ═══ HEADER ═══ */
-.header{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 0;transition:var(--transition);background:transparent}
-.header.scrolled{background:rgba(247,244,240,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 1px 0 rgba(0,0,0,0.06);padding:10px 0}
-.header .container{display:flex;align-items:center;justify-content:space-between}
-.header-logo{font-family:var(--font-heading);font-size:1.6rem;font-weight:600;color:var(--dark);letter-spacing:-0.02em}
-.header-logo span{color:var(--terracotta)}
-.header-nav{display:flex;align-items:center;gap:32px}
-.header-nav a{font-size:0.85rem;font-weight:500;color:var(--slate-light);transition:var(--transition);position:relative}
-.header-nav a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1.5px;background:var(--terracotta);transition:var(--transition)}
-.header-nav a:hover{color:var(--dark)}
-.header-nav a:hover::after{width:100%}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:50px;font-size:0.88rem;font-weight:500;transition:var(--transition);white-space:nowrap}
-.btn-primary{background:var(--terracotta);color:var(--white)}
-.btn-primary:hover{background:var(--terracotta-dark);transform:translateY(-2px);box-shadow:0 8px 25px rgba(196,106,74,0.3)}
-.btn-outline{background:transparent;color:var(--white);border:1.5px solid rgba(255,255,255,0.4)}
-.btn-outline:hover{border-color:var(--white);background:rgba(255,255,255,0.08)}
-.btn-outline-dark{background:transparent;color:var(--terracotta);border:1.5px solid var(--terracotta)}
-.btn-outline-dark:hover{background:var(--terracotta);color:var(--white)}
-.mobile-toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;z-index:101}
-.mobile-toggle span{display:block;width:24px;height:2px;background:var(--dark);border-radius:2px;transition:var(--transition)}
-.mobile-toggle.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
-.mobile-toggle.active span:nth-child(2){opacity:0}
-.mobile-toggle.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
-
-/* ══ HERO ══ */
-.hero{min-height:100dvh;display:flex;align-items:center;position:relative;overflow:hidden;background:linear-gradient(135deg,#1a1814 0%,#2d2824 50%,#3d322c 100%)}
-.hero-bg{position:absolute;inset:0;z-index:0}
-.hero-bg img{width:100%;height:100%;object-fit:cover;opacity:0.3}
-.hero-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(26,24,20,0.85) 0%,rgba(26,24,20,0.4) 100%);z-index:1}
-.hero .container{position:relative;z-index:2;max-width:800px;text-align:center}
-.hero h1{color:var(--white);margin-bottom:0.4em}
-.hero h1 em{font-style:italic;color:var(--terracotta)}
-.hero-sub{font-size:clamp(1rem,1.5vw,1.2rem);color:rgba(255,255,255,0.7);margin-bottom:2.5rem;max-width:600px;margin-left:auto;margin-right:auto}
-.hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
-.hero-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 16px;border-radius:50px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);font-size:0.78rem;color:rgba(255,255,255,0.6);margin-bottom:1.5rem}
-.hero-phone{display:inline-flex;align-items:center;gap:8px;margin-top:1.5rem;font-size:1.1rem;color:rgba(255,255,255,0.5)}
-.hero-phone a{color:rgba(255,255,255,0.8);font-weight:500;transition:var(--transition)}
-.hero-phone a:hover{color:var(--terracotta)}
-
-/* ══ ABOUT ══ */
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-.about-image{border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-lg);position:relative;aspect-ratio:4/5}
-.about-image img{width:100%;height:100%;object-fit:cover}
-.about-image::after{content:'';position:absolute;inset:0;border-radius:var(--radius-lg);box-shadow:inset 0 0 0 1px rgba(255,255,255,0.1)}
-.about-content h2{margin-bottom:0.3em}
-.about-content p{margin-bottom:1.2rem}
-.about-sign{font-family:var(--font-heading);font-size:1.4rem;color:var(--terracotta);font-style:italic;margin-top:1.5rem}
-.about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:2rem}
-.about-stat{text-align:center}
-.about-stat-num{font-family:var(--font-heading);font-size:2rem;font-weight:600;color:var(--terracotta)}
-.about-stat-label{font-size:0.8rem;color:var(--slate-light);margin-top:2px}
-
-/* ══ SERVICES ══ */
-.services{background:var(--white)}
-.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.service-card{background:var(--warm-bg);border-radius:var(--radius-md);padding:28px 24px;transition:var(--transition);position:relative;overflow:hidden;border:1px solid transparent}
-.service-card:hover{border-color:rgba(196,106,74,0.15);transform:translateY(-4px);box-shadow:var(--shadow-md)}
-.service-card.featured{background:var(--terracotta);color:var(--white)}
-.service-card.featured p{color:rgba(255,255,255,0.8)}
-.service-card.featured h3{color:var(--white)}
-.service-icon{width:44px;height:44px;border-radius:12px;background:rgba(196,106,74,0.1);display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:16px;color:var(--terracotta)}
-.service-card.featured .service-icon{background:rgba(255,255,255,0.15);color:var(--white)}
-.service-card h3{margin-bottom:8px}
-.service-card p{font-size:0.88rem;margin-bottom:14px}
-.service-card .price-tag{font-family:var(--font-heading);font-size:1.25rem;font-weight:600;color:var(--terracotta)}
-.service-card.featured .price-tag{color:var(--amber)}
-
-/* ═══ PRICE LIST ═══ */
-.price-section{background:var(--cream)}
-.price-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px}
-.price-block{background:var(--white);border-radius:var(--radius-md);padding:32px;box-shadow:var(--shadow-sm);transition:var(--transition)}
-.price-block:hover{box-shadow:var(--shadow-md)}
-.price-block h3{font-size:1.3rem;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid var(--cream);position:relative}
-.price-block h3::after{content:'';position:absolute;bottom:-2px;left:0;width:50px;height:2px;background:var(--terracotta)}
-.price-item{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px dashed rgba(0,0,0,0.06);gap:16px}
-.price-item:last-child{border-bottom:none}
-.price-item-name{font-size:0.9rem;color:var(--slate);flex:1}
-.price-item-val{font-family:var(--font-heading);font-size:1rem;font-weight:600;color:var(--terracotta);white-space:nowrap}
-.price-item-dots{flex:0 1 auto;min-width:20px;height:1px;border-bottom:1px dotted rgba(0,0,0,0.12);margin:0 8px}
-.price-sub{font-size:0.78rem;color:var(--slate-light);padding:4px 0 8px;font-style:italic}
-
-/* ═══ PROMO ═══ */
-.promo{background:linear-gradient(135deg,var(--terracotta-dark) 0%,var(--terracotta) 100%);color:var(--white);text-align:center}
-.promo h2{color:var(--white)}
-.promo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:2rem}
-.promo-card{background:rgba(255,255,255,0.1);backdrop-filter:blur(8px);border-radius:var(--radius-md);padding:28px 24px;border:1px solid rgba(255,255,255,0.15);transition:var(--transition)}
-.promo-card:hover{background:rgba(255,255,255,0.18);transform:translateY(-3px)}
-.promo-tag{display:inline-block;padding:4px 12px;border-radius:50px;background:rgba(255,255,255,0.2);font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px}
-.promo-card h3{color:var(--white);font-size:1.2rem;margin-bottom:8px}
-.promo-card p{color:rgba(255,255,255,0.8);font-size:0.9rem}
-.promo-old{text-decoration:line-through;opacity:0.5;margin-right:8px;font-size:0.85rem}
-.promo-new{font-family:var(--font-heading);font-size:1.3rem;font-weight:600;color:var(--amber);display:block;margin-top:8px}
-.promo-footnote{font-size:0.8rem;color:rgba(255,255,255,0.5);margin-top:2rem}
-
-/* ═══ GALLERY ═══ */
-.gallery{background:var(--white)}
-.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:280px;gap:12px}
-.gallery-item{overflow:hidden;border-radius:var(--radius-sm);position:relative;cursor:pointer}
-.gallery-item img{width:100%;height:100%;object-fit:cover;transition:var(--transition)}
-.gallery-item:hover img{transform:scale(1.05)}
-.gallery-item:first-child{grid-column:1/3;grid-row:1/3}
-.gallery-item:nth-child(2){grid-column:3/4;grid-row:1/2}
-.gallery-item:nth-child(3){grid-column:4/5;grid-row:1/2}
-.gallery-item:nth-child(4){grid-column:3/5;grid-row:2/3}
-
-/* ═══ LOCATIONS ═══ */
-.locations-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.loc-card{background:var(--white);border-radius:var(--radius-md);padding:32px;box-shadow:var(--shadow-sm);transition:var(--transition)}
-.loc-card:hover{box-shadow:var(--shadow-md)}
-.loc-card h3{margin-bottom:4px}
-.loc-address{font-size:0.9rem;color:var(--slate-light);margin-bottom:12px}
-.loc-hours{font-size:0.85rem;color:var(--slate);margin-bottom:16px}
-.loc-hours span{color:var(--terracotta);font-weight:500}
-.loc-actions{display:flex;gap:10px;flex-wrap:wrap}
-.loc-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:50px;font-size:0.82rem;font-weight:500;transition:var(--transition);border:1.5px solid var(--terracotta);color:var(--terracotta);background:transparent}
-.loc-btn:hover{background:var(--terracotta);color:var(--white)}
-.loc-btn-secondary{border-color:var(--slate-light);color:var(--slate-light)}
-.loc-btn-secondary:hover{background:var(--slate-light);color:var(--white);border-color:var(--slate-light)}
-
-/* ═══ SLOTS ═══ */
-.slots{background:var(--warm-bg)}
-.slots-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
-.slot-card{background:var(--white);border-radius:var(--radius-md);padding:24px;box-shadow:var(--shadow-sm)}
-.slot-card h3{font-size:1.1rem;margin-bottom:12px}
-.slot-date{font-size:0.85rem;color:var(--slate-light);margin-bottom:8px}
-.slot-times{display:flex;flex-wrap:wrap;gap:6px}
-.slot-time{display:inline-block;padding:5px 14px;border-radius:50px;background:var(--cream);font-size:0.8rem;font-weight:500;color:var(--slate);transition:var(--transition);cursor:pointer}
-.slot-time:hover{background:var(--terracotta);color:var(--white)}
-.slot-note{font-size:0.78rem;color:var(--slate-light);margin-top:8px;font-style:italic}
-
-/* ═══ FORM ═══ */
-.booking{background:var(--cream)}
-.booking-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
-.booking-info h2{margin-bottom:0.3em}
-.booking-info p{margin-bottom:1rem}
-.booking-contact-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(0,0,0,0.04)}
-.booking-contact-item:last-child{border-bottom:none}
-.booking-contact-item .label{font-size:0.82rem;color:var(--slate-light);min-width:80px}
-.booking-contact-item .value{font-weight:500;color:var(--dark)}
-.booking-contact-item .value a{color:var(--terracotta);transition:var(--transition)}
-.booking-contact-item .value a:hover{color:var(--terracotta-dark)}
-.booking-form{background:var(--white);border-radius:var(--radius-md);padding:36px;box-shadow:var(--shadow-md)}
-.form-group{margin-bottom:18px}
-.form-group label{display:block;font-size:0.82rem;font-weight:500;margin-bottom:6px;color:var(--slate)}
-.form-group input,.form-group select,.form-group textarea{width:100%;padding:12px 16px;border:1.5px solid rgba(0,0,0,0.08);border-radius:var(--radius-sm);font-size:0.9rem;font-family:var(--font-body);transition:var(--transition);background:var(--warm-bg);color:var(--dark)}
-.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--terracotta);box-shadow:0 0 0 3px rgba(196,106,74,0.1);background:var(--white)}
-.form-group textarea{resize:vertical;min-height:80px}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.form-submit{width:100%;padding:14px 28px;font-size:1rem}
-
-/* ═══ FOOTER ═══ */
-.footer{background:var(--dark);color:rgba(255,255,255,0.6);padding:48px 0 32px}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:32px}
-.footer-brand .header-logo{color:var(--white);margin-bottom:12px;display:block}
-.footer-brand p{font-size:0.85rem;color:rgba(255,255,255,0.4);max-width:300px}
-.footer h4{font-family:var(--font-heading);font-size:1.1rem;color:var(--white);margin-bottom:16px}
-.footer a{display:block;font-size:0.85rem;color:rgba(255,255,255,0.5);padding:4px 0;transition:var(--transition)}
-.footer a:hover{color:var(--terracotta)}
-.footer-social{display:flex;gap:12px;margin-top:16px}
-.footer-social a{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;font-size:1.1rem;padding:0;transition:var(--transition)}
-.footer-social a:hover{background:var(--terracotta);color:var(--white)}
-.footer-bottom{border-top:1px solid rgba(255,255,255,0.06);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-size:0.8rem;color:rgba(255,255,255,0.3)}
-
-/* ═══ RESPONSIVE ═══ */
-@media(max-width:1024px){
-  .services-grid{grid-template-columns:repeat(2,1fr)}
-  .gallery-grid{grid-template-columns:repeat(3,1fr)}
-  .gallery-item:first-child{grid-column:1/3;grid-row:1/3}
-  .gallery-item:nth-child(2){grid-column:3/4;grid-row:1/2}
-  .gallery-item:nth-child(3){grid-column:1/2;grid-row:3/4}
-  .gallery-item:nth-child(4){grid-column:2/4;grid-row:3/4}
-}
-@media(max-width:768px){
-  .header-nav{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(247,244,240,0.98);backdrop-filter:blur(20px);flex-direction:column;justify-content:center;align-items:center;gap:24px}
-  .header-nav.open{display:flex}
-  .header-nav a{font-size:1.3rem}
-  .mobile-toggle{display:flex}
-  .about-grid,.price-grid,.booking-grid,.locations-grid{grid-template-columns:1fr}
-  .services-grid{grid-template-columns:1fr}
-  .services-grid .service-card.featured{order:-1}
-  .promo-grid{grid-template-columns:1fr}
-  .gallery-grid{grid-template-columns:1fr 1fr;grid-auto-rows:200px}
-  .gallery-item:first-child{grid-column:1/3;grid-row:1/2}
-  .gallery-item:nth-child(2){grid-column:1/2;grid-row:2/3}
-  .gallery-item:nth-child(3){grid-column:2/3;grid-row:2/3}
-  .gallery-item:nth-child(4){grid-column:1/3;grid-row:3/4}
-  .slots-grid{grid-template-columns:1fr}
-  .price-grid{grid-template-columns:1fr}
-  .footer-grid{grid-template-columns:1fr 1fr}
-  .footer-bottom{flex-direction:column;text-align:center}
-  .form-row{grid-template-columns:1fr}
-  .booking-form{padding:24px}
-  .section-title{margin-bottom:2rem}
-}
-@media(max-width:480px){
-  .header-logo{font-size:1.3rem}
-  .hero-actions{flex-direction:column;align-items:center}
-  .btn{width:100%;justify-content:center}
-  .gallery-grid{grid-auto-rows:160px;gap:8px}
-  .gallery-item:first-child{grid-column:1/3;grid-row:1/2}
-  .gallery-item:nth-child(2),.gallery-item:nth-child(3){grid-column:1/2;grid-row:2/3}
-  .gallery-item:nth-child(4){grid-column:2/3;grid-row:2/3}
-  .loc-actions{flex-direction:column}
-  .loc-btn{width:100%;justify-content:center}
-  .booking-form{padding:20px}
-  section{padding:40px 0}
-}
-
-/* ═══ ANIMATIONS ═══ */
-.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-</style>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #2d2d2d; line-height: 1.6; background-color: #faf8f5; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .header { background: linear-gradient(135deg, #2c1810, #4a2c24); color: #fff; padding: 20px 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 15px rgba(0,0,0,0.1); }
+        .header .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo { font-size: 28px; font-weight: 700; letter-spacing: 2px; }
+        .logo span { color: #e8c9b5; }
+        .nav a { color: #fff; text-decoration: none; margin-left: 30px; font-weight: 500; transition: color 0.3s; font-size: 16px; }
+        .nav a:hover { color: #e8c9b5; }
+        .hero { background: linear-gradient(135deg, #f5e6dc, #e8d5c4); padding: 100px 0 80px; text-align: center; position: relative; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; top: -50%; right: -20%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(232,201,181,0.3) 0%, transparent 70%); border-radius: 50%; }
+        .urgency-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.9); padding: 8px 16px; border-radius: 30px; margin-top: 1rem; font-size: 0.9rem; backdrop-filter: blur(10px); box-shadow: 0 4px 20px rgba(44,24,16,0.1); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100% { box-shadow: 0 4px 20px rgba(232,201,181,0.3); } 50% { box-shadow: 0 4px 30px rgba(232,201,181,0.6); } }
+        .countdown { font-family: 'Courier New', monospace; font-weight: 700; color: #e65100; font-size: 1.1rem; }
+        .urgency-text { color: #4a2c24; font-weight: 600; }
+        .hero h1 { font-size: 56px; font-weight: 300; letter-spacing: 2px; margin-bottom: 20px; color: #2c1810; position: relative; }
+        .hero h1 strong { font-weight: 700; color: #4a2c24; }
+        .hero .hook { font-size: 1.5rem; color: #e65100; font-weight: 700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px; position: relative; }
+        .hero p { font-size: 20px; color: #4a3a34; max-width: 600px; margin: 0 auto 40px; position: relative; }
+        .btn { display: inline-block; background: #2c1810; color: #fff; padding: 18px 56px; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 18px; transition: all 0.3s; border: none; cursor: pointer; position: relative; box-shadow: 0 4px 20px rgba(44,24,16,0.3); }
+        .btn:hover { background: #4a2c24; transform: translateY(-3px); box-shadow: 0 8px 30px rgba(44,24,16,0.4); }
+        .btn-light { background: #fff; color: #2c1810; }
+        .btn-light:hover { background: #f5e6dc; }
+        .btn-primary { background: linear-gradient(135deg, #e65100, #ff6f00); }
+        .btn-primary:hover { background: linear-gradient(135deg, #ff6f00, #e65100); box-shadow: 0 8px 30px rgba(230,81,0,0.4); }
+        .services { padding: 80px 0; background: #fff; }
+        .section-title { text-align: center; font-size: 40px; font-weight: 300; margin-bottom: 15px; color: #2c1810; }
+        .section-subtitle { text-align: center; font-size: 18px; color: #7a6a64; margin-bottom: 50px; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .service-card { background: #faf8f5; padding: 40px 30px; border-radius: 16px; text-align: center; transition: all 0.3s; border: 1px solid #f0e8e0; }
+        .service-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(44,24,16,0.1); border-color: #e8c9b5; }
+        .service-icon { font-size: 48px; margin-bottom: 20px; display: block; }
+        .service-card h3 { font-size: 22px; color: #2c1810; margin-bottom: 10px; }
+        .service-card p { color: #7a6a64; font-size: 15px; }
+        .service-card .price-tag { display: inline-block; background: #e8c9b5; color: #2c1810; padding: 6px 16px; border-radius: 20px; font-size: 14px; font-weight: 600; margin-top: 12px; }
+        .benefits { padding: 80px 0; background: linear-gradient(135deg, #faf8f5, #fff); }
+        .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto; }
+        .benefit-card { background: #fff; padding: 2.5rem 2rem; border-radius: 16px; text-align: center; transition: transform 0.3s; border: 1px solid #f0e8e0; box-shadow: 0 4px 20px rgba(44,24,16,0.05); }
+        .benefit-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(44,24,16,0.1); }
+        .benefit-card .icon { font-size: 3rem; margin-bottom: 1.5rem; }
+        .benefit-card h3 { color: #2c1810; margin-bottom: 0.75rem; font-size: 1.4rem; }
+        .benefit-card p { color: #7a6a64; font-size: 1rem; }
+        .guarantee-box { background: linear-gradient(135deg, #fff3e0, #ffe0b2); border: 2px solid #ffb300; border-radius: 16px; padding: 2rem; max-width: 700px; margin: 2rem auto; text-align: center; }
+        .guarantee-box h3 { color: #e65100; margin-bottom: 1rem; font-size: 1.5rem; }
+        .guarantee-box p { color: #4a3a34; font-size: 1.1rem; }
+        .social-proof { padding: 80px 0; background: #fff; }
+        .testimonials { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto; }
+        .testimonial { background: #fff; padding: 2.5rem 2rem; border-radius: 16px; box-shadow: 0 4px 25px rgba(44,24,16,0.08); position: relative; border: 1px solid #f0e8e0; }
+        .testimonial::before { content: '"'; font-size: 5rem; color: #e8c9b5; opacity: 0.15; position: absolute; top: 10px; left: 20px; font-family: serif; }
+        .stars { color: #ffc107; font-size: 1.5rem; margin-bottom: 1.25rem; letter-spacing: 2px; }
+        .testimonial blockquote { font-style: italic; color: #4a3a34; margin-bottom: 1.5rem; line-height: 1.7; font-size: 1.05rem; }
+        .testimonial-author { display: flex; align-items: center; gap: 1rem; }
+        .testimonial-avatar { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, #e8c9b5, #d4b49e); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1.3rem; }
+        .testimonial-author strong { color: #2c1810; font-size: 1.1rem; display: block; }
+        .testimonial-author small { color: #7a6a64; display: block; margin-top: 2px; }
+        .about { padding: 80px 0; background: linear-gradient(135deg, #f5e6dc, #fff); }
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .about-content h2 { font-size: 36px; font-weight: 300; color: #2c1810; margin-bottom: 20px; }
+        .about-content p { color: #4a3a34; font-size: 17px; margin-bottom: 20px; }
+        .features-list { list-style: none; }
+        .features-list li { padding: 12px 0; border-bottom: 1px solid #f0e8e0; color: #4a3a34; font-size: 16px; position: relative; padding-left: 30px; }
+        .features-list li::before { content: '✦'; color: #e8c9b5; position: absolute; left: 0; font-size: 1.2rem; }
+        .about-image { background: linear-gradient(135deg, #e8c9b5, #d4b49e); height: 400px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 80px; color: #fff; font-weight: 300; letter-spacing: 4px; box-shadow: 0 20px 60px rgba(44,24,16,0.15); }
+        .contact { padding: 80px 0; background: linear-gradient(135deg, #2c1810, #4a2c24); color: #fff; }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+        .contact-info h2 { font-size: 36px; font-weight: 300; margin-bottom: 20px; }
+        .contact-info p { color: #e0d0c8; margin-bottom: 30px; font-size: 17px; }
+        .contact-item { display: flex; align-items: center; margin-bottom: 20px; color: #e0d0c8; font-size: 16px; }
+        .contact-item span { margin-right: 15px; font-size: 24px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: #e0d0c8; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 14px 18px; border: 2px solid rgba(255,255,255,0.1); border-radius: 10px; background: rgba(255,255,255,0.05); color: #fff; font-size: 16px; transition: border-color 0.3s, background 0.3s; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #e8c9b5; background: rgba(255,255,255,0.08); }
+        .form-group input::placeholder, .form-group textarea::placeholder { color: #a09088; }
+        .form-group select option { color: #2d2d2d; }
+        .form-group textarea { resize: vertical; min-height: 120px; }
+        .form-message { margin-top: 15px; padding: 12px; border-radius: 8px; display: none; }
+        .form-message.success { display: block; background: rgba(76, 175, 80, 0.2); border: 1px solid #4CAF50; color: #a5d6a7; }
+        .form-message.error { display: block; background: rgba(244, 67, 54, 0.2); border: 1px solid #f44336; color: #ef9a9a; }
+        .trust-bar { display: flex; justify-content: center; flex-wrap: wrap; gap: 1.5rem; margin-top: 2rem; opacity: 0.8; font-size: 0.9rem; }
+        .trust-item { display: flex; align-items: center; gap: 6px; color: #e0d0c8; }
+        .footer { background: #1a0e0a; color: #a09088; padding: 30px 0; text-align: center; }
+        .refund-policy { background: #f5f5f5; padding: 60px 20px; text-align: center; }
+        .refund-policy h3 { margin-bottom: 1.5rem; color: #2c1810; font-size: 1.8rem; }
+        .refund-policy ul { text-align: left; max-width: 500px; margin: 0 auto; padding-left: 1.5rem; color: #4a3a34; }
+        .refund-policy li { margin: 0.75rem 0; }
+        @media (max-width: 768px) { 
+            .hero h1 { font-size: 36px; } 
+            .hero .hook { font-size: 1.2rem; } 
+            .header .container { flex-direction: column; gap: 15px; } 
+            .nav a { margin: 0 15px; font-size: 14px; } 
+            .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 30px; } 
+            .about-image { height: 250px; order: -1; } 
+            .section-title { font-size: 30px; } 
+            .services-grid { grid-template-columns: 1fr 1fr; } 
+            .btn { padding: 16px 40px; font-size: 16px; } 
+        }
+        @media (max-width: 480px) { 
+            .services-grid { grid-template-columns: 1fr; } 
+            .hero { padding: 60px 0 50px; } 
+            .hero h1 { font-size: 28px; } 
+            .hero .hook { font-size: 1rem; } 
+            .benefits-grid { grid-template-columns: 1fr; } 
+            .testimonials { grid-template-columns: 1fr; } 
+        }
+        #countdown-timer { display: inline-flex; gap: 4px; align-items: center; }
+        #countdown-timer span { background: #2c1810; color: #fff; padding: 4px 8px; border-radius: 6px; font-family: 'Courier New', monospace; font-weight: 700; min-width: 32px; text-align: center; }
+        #countdown-timer .separator { background: transparent; color: #e65100; animation: blink 1s infinite; }
+        @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+        
+        /* Date picker styling */
+        .date-group { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .date-group input { width: 100%; }
+        @media (max-width: 480px) { .date-group { grid-template-columns: 1fr; } }
+        
+        .time-slots { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+        .time-slot { padding: 10px 16px; background: rgba(255,255,255,0.05); border: 2px solid rgba(255,255,255,0.1); border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 14px; color: #e0d0c8; }
+        .time-slot:hover { border-color: #e8c9b5; background: rgba(232,201,181,0.1); }
+        .time-slot.selected { border-color: #e8c9b5; background: #e8c9b5; color: #2c1810; font-weight: 600; }
+        .time-slot.unavailable { opacity: 0.4; cursor: not-allowed; text-decoration: line-through; }
+        .selected-time-input { display: none; }
+    </style>
 </head>
 <body>
-
-<!-- ═══ HEADER ═══ -->
-<header class="header" id="header">
-  <div class="container">
-    <a href="#" class="header-logo">Fargo<span>.</span></a>
-    <nav class="header-nav" id="nav">
-      <a href="#about">Про нас</a>
-      <a href="#services">Послуги</a>
-      <a href="#price">Ціни</a>
-      <a href="#promo">Акції</a>
-      <a href="#gallery">Роботи</a>
-      <a href="#locations">Адреси</a>
-      <a href="#booking" class="btn btn-primary">Записатись</a>
-    </nav>
-    <div class="mobile-toggle" id="menuToggle">
-      <span></span><span></span><span></span>
-    </div>
-  </div>
-</header>
-
-<!-- ═══ HERO ═══ -->
-<section class="hero" id="hero">
-  <div class="hero-bg">
-    <img src="https://images.pexels.com/photos/3997993/pexels-photo-3997993.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop" alt="Салон краси Fargo" loading="eager">
-  </div>
-  <div class="hero-overlay"></div>
-  <div class="container">
-    <div class="hero-badge">📅 Щоденно з 10:00 до 20:00</div>
-    <h1>Твоя краса — <em>наша справа</em></h1>
-    <p class="hero-sub">Салон краси Fargo на Позняках. Стрижки, фарбування, манікюр, педикюр, масаж, макіяж — у затишній атмосфері з турботою про вас.</p>
-    <div class="hero-actions">
-      <a href="#booking" class="btn btn-primary">✏️ Записатись онлайн</a>
-      <a href="#price" class="btn btn-outline">Переглянути ціни</a>
-    </div>
-    <div class="hero-phone">
-      📞 <a href="tel:+380996140054">099 614 00 54</a> · <a href="tel:+380676654646">067 665 46 46</a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ ABOUT ═══ -->
-<section id="about">
-  <div class="container">
-    <div class="about-grid">
-      <div class="about-image reveal">
-        <img src="https://images.pexels.com/photos/3993320/pexels-photo-3993320.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop" alt="Салон краси Fargo інтер'єр" loading="lazy">
-      </div>
-      <div class="about-content reveal">
-        <p class="section-eyebrow">Про нас</p>
-        <h2>Салон краси Fargo на Позняках</h2>
-        <p>Друзі, салон краси «Fargo» пропонує широкий спектр послуг та продуктів для вашої краси. У наших затишних салонах ви обов'язково знайдете те, що потрібно.</p>
-        <p>У вас намічається весілля, вечірка чи важливий захід? Або ви просто хочете розслабитися і побалувати себе? Приходьте до нас — ми наповнимо ваше життя кольором 😊</p>
-        <div class="about-sign">З любов'ю, команда Fargo</div>
-        <div class="about-stats">
-          <div class="about-stat">
-            <div class="about-stat-num">2</div>
-            <div class="about-stat-label">салони на Позняках</div>
-          </div>
-          <div class="about-stat">
-            <div class="about-stat-num">10+</div>
-            <div class="about-stat-label">років досвіду</div>
-          </div>
-          <div class="about-stat">
-            <div class="about-stat-num">50+</div>
-            <div class="about-stat-label">послуг краси</div>
-          </div>
+    <header class="header">
+        <div class="container">
+            <div class="logo">GLAM <span>Beauty</span></div>
+            <nav class="nav">
+                <a href="#services">Услуги и цены</a>
+                <a href="#about">О нас</a>
+                <a href="#reviews">Отзывы</a>
+                <a href="#contact">Записаться</a>
+            </nav>
         </div>
-      </div>
+    </header>
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hook">ПЕРЕСТАНИТЕ ПЕРЕПЛАЧИВАТЬ ЗА САЛОН, КОТОРЫЙ НЕ ГАРАНТИРУЕТ РЕЗУЛЬТАТ!</div>
+            <h1>Преображение,<br>которое <strong>вдохновляет</strong></h1>
+            <p>Премиум салон красоты с индивидуальным подходом. Авторские техники, лучшие бренды (Wella, Olaplex, Kerastase) и честная гарантия 14 дней.</p>
+            <a href="#contact" class="btn btn-primary" onclick="fbq('track', 'Lead'); ttq.track('CompleteRegistration'); gtag('event', 'generate_lead');">Забронировать со скидкой 20% →</a>
+            <div class="urgency-badge" id="urgency-badge">
+                <div id="countdown-timer"><span id="timer-min">15</span><span class="separator">:</span><span id="timer-sec">00</span></div>
+                <span class="urgency-text">до конца акции -20% на первый визит</span>
+            </div>
+        </div>
+    </section>
+    <section class="benefits" id="benefits">
+        <div class="container">
+            <h2 class="section-title">Почему 2000+ клиентов выбирают нас</h2>
+            <p class="section-subtitle">Чёткие преимущества, а не пустые обещания</p>
+            <div class="benefits-grid">
+                <div class="benefit-card"><div class="icon">✨</div><h3>Топ-мастера с опытом 10+ лет</h3><p>Сертифицированные профи с обучением за рубежом ежегодно. 50+ наград профильных чемпионатов. <strong>Получаете</strong> результат, который <strong>преобразует</strong> ваш образ. <strong>Экономите</strong> время и деньги на исправлениях.</p></div>
+                <div class="benefit-card"><div class="icon">💎</div><h3>Только премиум косметика</h3><p>Профессиональные линии: Wella, Olaplex, Kerastase, Moroccanoil, OPI. Никаких масс-маркет аналогов. <strong>Получаете</strong> стойкий эффект на 4+ месяца. <strong>Исключаете</strong> потребность в частой коррекции.</p></div>
+                <div class="benefit-card"><div class="icon">⚡</div><h3>Видимый результат за 1 визит</h3><p>Кератиновое выпрямление держится 4+ месяца. Окрашивание без перегорания — 8 недель насыщенного цвета. <strong>Улучшаете</strong> состояние волос с первого раза. <strong>Поднимаете</strong> уверенность в образе.</p></div>
+                <div class="benefit-card"><div class="icon">🛡️</div><h3>Гарантия результата 14 дней</h3><p>Не понравилось — переделаем бесплатно. Не помогло — вернём 100% денег за 14 дней. Без вопросов. <strong>Получаете</strong> полную уверенность или деньги назад. <strong>Снижаете</strong> риск до нуля.</p></div>
+            </div>
+        </div>
+    </section>
+    <div class="guarantee-box">
+        <h3>🛡️ Честная гарантия: 14 дней на возврат денег (money-back guarantee)</h3>
+        <p>Если после процедуры результат не соответствует обещанному на лендинге — пишите в течение 14 дней. Вернём 100% стоимости тем же способом оплаты за 3-5 рабочих дней. Без бюрократии — просто напишите администратору. Подробнее в <a href="#refund" style="color: #e65100; text-decoration: underline; font-weight: 600;">политике возврата (refund policy)</a>.</p>
     </div>
-  </div>
-</section>
-
-<!-- ═══ SERVICES ═══ -->
-<section class="services" id="services">
-  <div class="container">
-    <div class="section-title reveal">
-      <p class="section-eyebrow">Наші послуги</p>
-      <h2>Все для вашої краси</h2>
-      <p>Професійний догляд та стиль у затишній атмосфері</p>
-    </div>
-    <div class="services-grid reveal">
-      <div class="service-card featured">
-        <div class="service-icon">💇‍♀️</div>
-        <h3>Стрижки та укладки</h3>
-        <p>Жіночі, чоловічі, дитячі стрижки. Укладки на будь-який смак</p>
-        <div class="price-tag">від 350₴</div>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">🎨</div>
-        <h3>Фарбування</h3>
-        <p>Омбре, балаяж, AirTouch, мелірування, тотал блонд</p>
-        <div class="price-tag">від 1 500₴</div>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">💅</div>
-        <h3>Манікюр та педикюр</h3>
-        <p>Класичний, апаратний, покриття гель-лак, дизайн</p>
-        <div class="price-tag">від 450₴</div>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">🧴</div>
-        <h3>Догляд за волоссям</h3>
-        <p>Експрес-догляд, реконструкція VIART та Molecula</p>
-        <div class="price-tag">від 700₴</div>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">💆‍♀️</div>
-        <h3>Масаж</h3>
-        <p>Загальний, комбінований, лімфодренаж, спортивний</p>
-        <div class="price-tag">від 400₴</div>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">✨</div>
-        <h3>Татуаж та макіяж</h3>
-        <p>Пудрові брови, губи, міжвійковий татуаж. Весільний макіяж</p>
-        <div class="price-tag">від 1 000₴</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ PRICE LIST ═══ -->
-<section class="price-section" id="price">
-  <div class="container">
-    <div class="section-title reveal">
-      <p class="section-eyebrow">Прайс</p>
-      <h2>Ціни на послуги</h2>
-      <p>Вказано вартість роботи з урахуванням матеріалів</p>
-    </div>
-    <div class="price-grid reveal">
-
-      <!-- Перукарський зал -->
-      <div class="price-block">
-        <h3>💇‍♀️ Перукарський зал</h3>
-        <div class="price-item"><span class="price-item-name">Стрижка жіноча (миття + укладання)</span><span class="price-item-dots"></span><span class="price-item-val">800–1000₴</span></div>
-        <div class="price-item"><span class="price-item-name">Полірування волосся</span><span class="price-item-dots"></span><span class="price-item-val">800–1000₴</span></div>
-        <div class="price-item"><span class="price-item-name">Полірування + стрижка кінчиків</span><span class="price-item-dots"></span><span class="price-item-val">1100–1300₴</span></div>
-        <div class="price-item"><span class="price-item-name">Стрижка кінчиків (без миття)</span><span class="price-item-dots"></span><span class="price-item-val">550₴</span></div>
-        <div class="price-item"><span class="price-item-name">Стрижка чубчика</span><span class="price-item-dots"></span><span class="price-item-val">350₴</span></div>
-        <div class="price-item"><span class="price-item-name">Стрижка кінчиків + чубчик</span><span class="price-item-dots"></span><span class="price-item-val">750₴</span></div>
-        <div class="price-item"><span class="price-item-name">Стрижка чоловіча (миття + укладка)</span><span class="price-item-dots"></span><span class="price-item-val">600₴</span></div>
-        <div class="price-item"><span class="price-item-name">Стрижка чоловіча модельна</span><span class="price-item-dots"></span><span class="price-item-val">750₴</span></div>
-        <div class="price-item"><span class="price-item-name">Стрижка чоловіча насадка</span><span class="price-item-dots"></span><span class="price-item-val">400₴</span></div>
-        <div class="price-item"><span class="price-item-name">Стрижка дитяча (5–10 років)</span><span class="price-item-dots"></span><span class="price-item-val">600₴</span></div>
-        <div class="price-item"><span class="price-item-name">Стрижка бороди та вусів</span><span class="price-item-dots"></span><span class="price-item-val">300₴</span></div>
-        <div class="price-item"><span class="price-item-name">Маска SOS (під час стрижки)</span><span class="price-item-dots"></span><span class="price-item-val">250₴</span></div>
-        <div class="price-item"><span class="price-item-name">Пілінг шкіри голови чол.</span><span class="price-item-dots"></span><span class="price-item-val">300₴</span></div>
-        <div class="price-item"><span class="price-item-name">Пілінг шкіри голови жін.</span><span class="price-item-dots"></span><span class="price-item-val">350₴</span></div>
-      </div>
-
-      <!-- Укладки -->
-      <div class="price-block">
-        <h3>💁 Укладки та зачіски</h3>
-        <p class="price-sub">Укладка на браш (з миттям)</p>
-        <div class="price-item"><span class="price-item-name">I довжина</span><span class="price-item-dots"></span><span class="price-item-val">400₴</span></div>
-        <div class="price-item"><span class="price-item-name">II–III довжина</span><span class="price-item-dots"></span><span class="price-item-val">490₴</span></div>
-        <div class="price-item"><span class="price-item-name">IV–V довжина</span><span class="price-item-dots"></span><span class="price-item-val">570₴</span></div>
-        <div class="price-item"><span class="price-item-name">VI довжина</span><span class="price-item-dots"></span><span class="price-item-val">650₴</span></div>
-        <p class="price-sub" style="margin-top:12px">Укладка накрутка (миття +300₴)</p>
-        <div class="price-item"><span class="price-item-name">II дов.</span><span class="price-item-dots"></span><span class="price-item-val">590₴</span></div>
-        <div class="price-item"><span class="price-item-name">III дов.</span><span class="price-item-dots"></span><span class="price-item-val">640₴</span></div>
-        <div class="price-item"><span class="price-item-name">IV дов.</span><span class="price-item-dots"></span><span class="price-item-val">720₴</span></div>
-        <div class="price-item"><span class="price-item-name">V дов.</span><span class="price-item-dots"></span><span class="price-item-val">820₴</span></div>
-        <div class="price-item"><span class="price-item-name">VI дов.</span><span class="price-item-dots"></span><span class="price-item-val">920₴</span></div>
-        <p class="price-sub" style="margin-top:12px">Зачіски (миття не входить)</p>
-        <div class="price-item"><span class="price-item-name">II дов.</span><span class="price-item-dots"></span><span class="price-item-val">730₴</span></div>
-        <div class="price-item"><span class="price-item-name">III дов.</span><span class="price-item-dots"></span><span class="price-item-val">790₴</span></div>
-        <div class="price-item"><span class="price-item-name">IV дов.</span><span class="price-item-dots"></span><span class="price-item-val">860₴</span></div>
-        <div class="price-item"><span class="price-item-name">V дов.</span><span class="price-item-dots"></span><span class="price-item-val">950₴</span></div>
-        <div class="price-item"><span class="price-item-name">VI дов.</span><span class="price-item-dots"></span><span class="price-item-val">1 050₴</span></div>
-      </div>
-
-      <!-- Фарбування волосся -->
-      <div class="price-block">
-        <h3>🎨 Фарбування волосся</h3>
-        <p class="price-sub">* загальна вартість з урахуванням роботи та всіх матеріалів</p>
-        <div class="price-item"><span class="price-item-name">Фарбування коренів (1–2 см)</span><span class="price-item-dots"></span><span class="price-item-val">1 500–1 980₴</span></div>
-        <div class="price-item"><span class="price-item-name">Фарбування коренів спецблонд</span><span class="price-item-dots"></span><span class="price-item-val">1 650–2 350₴</span></div>
-        <div class="price-item"><span class="price-item-name">Корені безаміачний Vibrance</span><span class="price-item-dots"></span><span class="price-item-val">1 870–2 400₴</span></div>
-        <p class="price-sub" style="margin-top:12px">Однотонне фарбування Indola / Vibrance</p>
-        <div class="price-item"><span class="price-item-name">I дов.</span><span class="price-item-dots"></span><span class="price-item-val">1 750 / 2 150₴</span></div>
-        <div class="price-item"><span class="price-item-name">II дов.</span><span class="price-item-dots"></span><span class="price-item-val">2 080 / 2 480₴</span></div>
-        <div class="price-item"><span class="price-item-name">III дов.</span><span class="price-item-dots"></span><span class="price-item-val">2 350 / 2 700₴</span></div>
-        <div class="price-item"><span class="price-item-name">IV дов.</span><span class="price-item-dots"></span><span class="price-item-val">2 680 / 3 100₴</span></div>
-        <div class="price-item"><span class="price-item-name">V дов.</span><span class="price-item-dots"></span><span class="price-item-val">3 050 / 3 450₴</span></div>
-        <div class="price-item"><span class="price-item-name">VI дов.</span><span class="price-item-dots"></span><span class="price-item-val">3 400 / 3 850₴</span></div>
-        <div class="price-item"><span class="price-item-name">VII дов.</span><span class="price-item-dots"></span><span class="price-item-val">3 750 / 4 100₴</span></div>
-      </div>
-
-      <!-- Техніки фарбування -->
-      <div class="price-block">
-        <h3>🌟 Техніки фарбування</h3>
-        <p class="price-sub">Омбре, Шатуш, Балаяж (Indola, Yellow, Vibrance)</p>
-        <div class="price-item"><span class="price-item-name">II дов.</span><span class="price-item-dots"></span><span class="price-item-val">3 700₴</span></div>
-        <div class="price-item"><span class="price-item-name">III дов.</span><span class="price-item-dots"></span><span class="price-item-val">4 100₴</span></div>
-        <div class="price-item"><span class="price-item-name">IV дов.</span><span class="price-item-dots"></span><span class="price-item-val">4 500₴</span></div>
-        <div class="price-item"><span class="price-item-name">V дов.</span><span class="price-item-dots"></span><span class="price-item-val">4 950₴</span></div>
-        <div class="price-item"><span class="price-item-name">VI дов.</span><span class="price-item-dots"></span><span class="price-item-val">5 450₴</span></div>
-        <div class="price-item"><span class="price-item-name">VII дов.</span><span class="price-item-dots"></span><span class="price-item-val">5 800₴</span></div>
-        <p class="price-sub" style="margin-top:12px">Розтяжка кольору (Indola / Vibrance)</p>
-        <div class="price-item"><span class="price-item-name">I дов.</span><span class="price-item-dots"></span><span class="price-item-val">2 100 / 2 400₴</span></div>
-        <div class="price-item"><span class="price-item-name">II дов.</span><span class="price-item-dots"></span><span class="price-item-val">2 450 / 2 700₴</span></div>
-        <div class="price-item"><span class="price-item-name">III дов.</span><span class="price-item-dots"></span><span class="price-item-val">2 760 / 3 100₴</span></div>
-        <div class="price-item"><span class="price-item-name">IV дов.</span><span class="price-item-dots"></span><span class="price-item-val">3 100 / 3 490₴</span></div>
-        <div class="price-item"><span class="price-item-name">V дов.</span><span class="price-item-dots"></span><span class="price-item-val">3 480 / 3 880₴</span></div>
-        <div class="price-item"><span class="price-item-name">VI дов.</span><span class="price-item-dots"></span><span class="price-item-val">3 750 / 4 250₴</span></div>
-        <div class="price-item"><span class="price-item-name">VII дов.</span><span class="price-item-dots"></span><span class="price-item-val">4 150 / 4 550₴</span></div>
-      </div>
-
-      <!-- Блонд -->
-      <div class="price-block">
-        <h3>🦋 Мелірування / Блонд</h3>
-        <p class="price-sub">Мелірування / Знебарвлення / Тотал блонд (без тонування)</p>
-        <div class="price-item"><span class="price-item-name">I–II дов.</span><span class="price-item-dots"></span><span class="price-item-val">2 200₴</span></div>
-        <div class="price-item"><span class="price-item-name">III дов.</span><span class="price-item-dots"></span><span class="price-item-val">2 680₴</span></div>
-        <div class="price-item"><span class="price-item-name">IV дов.</span><span class="price-item-dots"></span><span class="price-item-val">3 180₴</span></div>
-        <div class="price-item"><span class="price-item-name">V дов.</span><span class="price-item-dots"></span><span class="price-item-val">3 580₴</span></div>
-        <div class="price-item"><span class="price-item-name">VI дов.</span><span class="price-item-dots"></span><span class="price-item-val">3 950₴</span></div>
-        <div class="price-item"><span class="price-item-name">VII дов.</span><span class="price-item-dots"></span><span class="price-item-val">4 200₴</span></div>
-        <p class="price-sub" style="margin-top:12px">AirTouch / Кольорове фарбування</p>
-        <div class="price-item"><span class="price-item-name">II дов.</span><span class="price-item-dots"></span><span class="price-item-val">4 550₴</span></div>
-        <div class="price-item"><span class="price-item-name">III дов.</span><span class="price-item-dots"></span><span class="price-item-val">5 100₴</span></div>
-        <div class="price-item"><span class="price-item-name">IV дов.</span><span class="price-item-dots"></span><span class="price-item-val">5 600₴</span></div>
-        <div class="price-item"><span class="price-item-name">V дов.</span><span class="price-item-dots"></span><span class="price-item-val">6 200₴</span></div>
-        <div class="price-item"><span class="price-item-name">VI дов.</span><span class="price-item-dots"></span><span class="price-item-val">6 700₴</span></div>
-        <div class="price-item"><span class="price-item-name">VII дов.</span><span class="price-item-dots"></span><span class="price-item-val">7 250₴</span></div>
-        <p class="price-sub" style="margin-top:12px">Вихід з чорного / Блонд миття</p>
-        <div class="price-item"><span class="price-item-name">Вихід з чорного 1–2 дов.</span><span class="price-item-dots"></span><span class="price-item-val">6 800₴</span></div>
-        <div class="price-item"><span class="price-item-name">Вихід з чорного 3–4 дов.</span><span class="price-item-dots"></span><span class="price-item-val">7 800₴</span></div>
-        <div class="price-item"><span class="price-item-name">Вихід з чорного 5–6 дов.</span><span class="price-item-dots"></span><span class="price-item-val">8 800₴</span></div>
-        <div class="price-item"><span class="price-item-name">Блонд миття I дов.</span><span class="price-item-dots"></span><span class="price-item-val">750₴</span></div>
-        <div class="price-item"><span class="price-item-name">Блонд миття II дов.</span><span class="price-item-dots"></span><span class="price-item-val">950₴</span></div>
-      </div>
-
-      <!-- Догляд -->
-      <div class="price-block">
-        <h3>🧴 Догляд за волоссям</h3>
-        <p class="price-sub">Експрес-догляд Bbcos Kristal Evo / Milk Shake</p>
-        <div class="price-item"><span class="price-item-name">1–2 дов.</span><span class="price-item-dots"></span><span class="price-item-val">700₴</span></div>
-        <div class="price-item"><span class="price-item-name">3–4 дов.</span><span class="price-item-dots"></span><span class="price-item-val">800₴</span></div>
-        <div class="price-item"><span class="price-item-name">5–6 дов.</span><span class="price-item-dots"></span><span class="price-item-val">900₴</span></div>
-        <p class="price-sub" style="margin-top:12px">Догляд Bond Yellow</p>
-        <div class="price-item"><span class="price-item-name">1–2 дов.</span><span class="price-item-dots"></span><span class="price-item-val">700₴</span></div>
-        <div class="price-item"><span class="price-item-name">3–4 дов.</span><span class="price-item-dots"></span><span class="price-item-val">800₴</span></div>
-        <div class="price-item"><span class="price-item-name">5–6 дов.</span><span class="price-item-dots"></span><span class="price-item-val">900₴</span></div>
-        <p class="price-sub" style="margin-top:12px">Реконструкція VIART SoS Recovery</p>
-        <div class="price-item"><span class="price-item-name">1–2 дов.</span><span class="price-item-dots"></span><span class="price-item-val">1 870₴</span></div>
-        <div class="price-item"><span class="price-item-name">3–4 дов.</span><span class="price-item-dots"></span><span class="price-item-val">2 090₴</span></div>
-        <div class="price-item"><span class="price-item-name">5–6 дов.</span><span class="price-item-dots"></span><span class="price-item-val">2 310₴</span></div>
-        <p class="price-sub" style="margin-top:12px">Реконструкція Molecula</p>
-        <div class="price-item"><span class="price-item-name">1–2 дов.</span><span class="price-item-dots"></span><span class="price-item-val">1 600₴</span></div>
-        <div class="price-item"><span class="price-item-name">3–4 дов.</span><span class="price-item-dots"></span><span class="price-item-val">1 800₴</span></div>
-        <div class="price-item"><span class="price-item-name">5–6 дов.</span><span class="price-item-dots"></span><span class="price-item-val">2 000₴</span></div>
-        <p class="price-sub" style="margin-top:12px">Додатково</p>
-        <div class="price-item"><span class="price-item-name">Препігментація Indola / Vibrance</span><span class="price-item-dots"></span><span class="price-item-val">800–1 550₴</span></div>
-        <div class="price-item"><span class="price-item-name">Захист Fiberplex (Schwarzkopf)</span><span class="price-item-dots"></span><span class="price-item-val">600–800₴</span></div>
-        <div class="price-item"><span class="price-item-name">Фарбування фарбою клієнта</span><span class="price-item-dots"></span><span class="price-item-val">1 200–1 600₴</span></div>
-        <div class="price-item"><span class="price-item-name">Камуфлювання сивини (чол.)</span><span class="price-item-dots"></span><span class="price-item-val">700–900₴</span></div>
-      </div>
-
-      <!-- Манікюр -->
-      <div class="price-block">
-        <h3>💅 Манікюр</h3>
-        <div class="price-item"><span class="price-item-name">Манікюр + покриття (однотон)</span><span class="price-item-dots"></span><span class="price-item-val">970₴</span></div>
-        <div class="price-item"><span class="price-item-name">Манікюр зі зняттям + покриття</span><span class="price-item-dots"></span><span class="price-item-val">970₴</span></div>
-        <div class="price-item"><span class="price-item-name">Манікюр + покриття френч/котяче око</span><span class="price-item-dots"></span><span class="price-item-val">1 090₴</span></div>
-        <div class="price-item"><span class="price-item-name">Манікюр жіночий</span><span class="price-item-dots"></span><span class="price-item-val">520₴</span></div>
-        <div class="price-item"><span class="price-item-name">Манікюр чоловічий</span><span class="price-item-dots"></span><span class="price-item-val">570₴</span></div>
-        <div class="price-item"><span class="price-item-name">Покриття гель-лак (однотон)</span><span class="price-item-dots"></span><span class="price-item-val">450₴</span></div>
-        <div class="price-item"><span class="price-item-name">Покриття френч / котяче око</span><span class="price-item-dots"></span><span class="price-item-val">570₴</span></div>
-        <div class="price-item"><span class="price-item-name">Оформлення вільного краю</span><span class="price-item-dots"></span><span class="price-item-val">120₴</span></div>
-        <div class="price-item"><span class="price-item-name">Укріплення</span><span class="price-item-dots"></span><span class="price-item-val">160–250₴</span></div>
-        <div class="price-item"><span class="price-item-name">Зняття гель-лаку + оформлення</span><span class="price-item-dots"></span><span class="price-item-val">250₴</span></div>
-        <div class="price-item"><span class="price-item-name">Зняття (з манікюром або покриттям)</span><span class="price-item-dots"></span><span class="price-item-val">150₴</span></div>
-        <div class="price-item"><span class="price-item-name">Зняття (без покриття)</span><span class="price-item-dots"></span><span class="price-item-val">200₴</span></div>
-        <div class="price-item"><span class="price-item-name">Зняття нарощених нігтів</span><span class="price-item-dots"></span><span class="price-item-val">250₴</span></div>
-        <div class="price-item"><span class="price-item-name">Ремонт нігтя (нарощування гелем)</span><span class="price-item-dots"></span><span class="price-item-val">60₴</span></div>
-        <div class="price-item"><span class="price-item-name">Дизайн (від)</span><span class="price-item-dots"></span><span class="price-item-val">25₴</span></div>
-        <div class="price-item"><span class="price-item-name">Покриття звичайним лаком</span><span class="price-item-dots"></span><span class="price-item-val">200₴</span></div>
-        <div class="price-item"><span class="price-item-name">Покриття лікувальне</span><span class="price-item-dots"></span><span class="price-item-val">100₴</span></div>
-      </div>
-
-      <!-- Педикюр -->
-      <div class="price-block">
-        <h3>🦶 Педикюр</h3>
-        <div class="price-item"><span class="price-item-name">Педикюр зі зняттям + покриття</span><span class="price-item-dots"></span><span class="price-item-val">1 280₴</span></div>
-        <div class="price-item"><span class="price-item-name">Педикюр + покриття</span><span class="price-item-dots"></span><span class="price-item-val">1 130₴</span></div>
-        <div class="price-item"><span class="price-item-name">Педикюр зі зняттям + френч</span><span class="price-item-dots"></span><span class="price-item-val">1 400₴</span></div>
-        <div class="price-item"><span class="price-item-name">Педикюр + френч</span><span class="price-item-dots"></span><span class="price-item-val">1 250₴</span></div>
-        <div class="price-item"><span class="price-item-name">Педикюр жіночий</span><span class="price-item-dots"></span><span class="price-item-val">680₴</span></div>
-        <div class="price-item"><span class="price-item-name">Педикюр (тільки пальці)</span><span class="price-item-dots"></span><span class="price-item-val">600₴</span></div>
-        <div class="price-item"><span class="price-item-name">Обробка стопи</span><span class="price-item-dots"></span><span class="price-item-val">500₴</span></div>
-        <div class="price-item"><span class="price-item-name">Покриття гель-лак (однотон)</span><span class="price-item-dots"></span><span class="price-item-val">450₴</span></div>
-        <div class="price-item"><span class="price-item-name">Покриття френч</span><span class="price-item-dots"></span><span class="price-item-val">570₴</span></div>
-        <div class="price-item"><span class="price-item-name">Зняття (з педикюром або покриттям)</span><span class="price-item-dots"></span><span class="price-item-val">150₴</span></div>
-        <div class="price-item"><span class="price-item-name">Зняття (без покриття та педикюру)</span><span class="price-item-dots"></span><span class="price-item-val">200₴</span></div>
-        <div class="price-item"><span class="price-item-name">Покриття звичайним лаком</span><span class="price-item-dots"></span><span class="price-item-val">200₴</span></div>
-      </div>
-
-      <!-- Масаж -->
-      <div class="price-block">
-        <h3>💆‍♀️ Масаж</h3>
-        <div class="price-item"><span class="price-item-name">Загальний масаж тіла (60 хв)</span><span class="price-item-dots"></span><span class="price-item-val">980₴</span></div>
-        <div class="price-item"><span class="price-item-name">Загальний масаж тіла (90 хв)</span><span class="price-item-dots"></span><span class="price-item-val">1 300₴</span></div>
-        <div class="price-item"><span class="price-item-name">Комбінований масаж (60 хв)</span><span class="price-item-dots"></span><span class="price-item-val">1 400₴</span></div>
-        <div class="price-item"><span class="price-item-name">Комбінований масаж (90 хв)</span><span class="price-item-dots"></span><span class="price-item-val">1 750₴</span></div>
-        <div class="price-item"><span class="price-item-name">Масаж спини (30 хв)</span><span class="price-item-dots"></span><span class="price-item-val">550₴</span></div>
-        <div class="price-item"><span class="price-item-name">Масаж шийно-комірцевої зони (20 хв)</span><span class="price-item-dots"></span><span class="price-item-val">500₴</span></div>
-        <div class="price-item"><span class="price-item-name">Масаж голови (10–15 хв)</span><span class="price-item-dots"></span><span class="price-item-val">450₴</span></div>
-        <div class="price-item"><span class="price-item-name">Масаж стоп (20 хв)</span><span class="price-item-dots"></span><span class="price-item-val">450₴</span></div>
-        <div class="price-item"><span class="price-item-name">Масаж ніг (30 хв)</span><span class="price-item-dots"></span><span class="price-item-val">450₴</span></div>
-        <div class="price-item"><span class="price-item-name">Масаж рук (20 хв)</span><span class="price-item-dots"></span><span class="price-item-val">400₴</span></div>
-        <div class="price-item"><span class="price-item-name">Лімфодренажний масаж (30 хв)</span><span class="price-item-dots"></span><span class="price-item-val">1 100₴</span></div>
-        <div class="price-item"><span class="price-item-name">Лімфодренажний масаж (60 хв)</span><span class="price-item-dots"></span><span class="price-item-val">1 500₴</span></div>
-        <div class="price-item"><span class="price-item-name">Спортивний масаж (60 хв)</span><span class="price-item-dots"></span><span class="price-item-val">1 200₴</span></div>
-        <div class="price-item"><span class="price-item-name">Антицелюлітний масаж (від)</span><span class="price-item-dots"></span><span class="price-item-val">550₴</span></div>
-        <div class="price-item"><span class="price-item-name">Масаж для вагітних (60 хв)</span><span class="price-item-dots"></span><span class="price-item-val">1 100₴</span></div>
-      </div>
-
-      <!-- Татуаж / Ламінування / Макіяж / Бровіст -->
-      <div class="price-block">
-        <h3>✨ Татуаж, ламінування, макіяж</h3>
-        <p class="price-sub">Татуаж</p>
-        <div class="price-item"><span class="price-item-name">Пудрова техніка брів</span><span class="price-item-dots"></span><span class="price-item-val">2 750₴</span></div>
-        <div class="price-item"><span class="price-item-name">Корекція брів (татуаж)</span><span class="price-item-dots"></span><span class="price-item-val">1 700₴</span></div>
-        <div class="price-item"><span class="price-item-name">Татуаж губ</span><span class="price-item-dots"></span><span class="price-item-val">2 750₴</span></div>
-        <div class="price-item"><span class="price-item-name">Корекція губ</span><span class="price-item-dots"></span><span class="price-item-val">1 700₴</span></div>
-        <div class="price-item"><span class="price-item-name">Міжвійковий татуаж</span><span class="price-item-dots"></span><span class="price-item-val">2 000₴</span></div>
-        <p class="price-sub" style="margin-top:12px">Ламінування</p>
-        <div class="price-item"><span class="price-item-name">Ламінування вій (+фарбування)</span><span class="price-item-dots"></span><span class="price-item-val">900₴</span></div>
-        <div class="price-item"><span class="price-item-name">Ламінування брів (фарбув.+корекція)</span><span class="price-item-dots"></span><span class="price-item-val">900₴</span></div>
-        <div class="price-item"><span class="price-item-name">Ламінування вій + брів (комплекс)</span><span class="price-item-dots"></span><span class="price-item-val">1 650₴</span></div>
-        <p class="price-sub" style="margin-top:12px">Макіяж</p>
-        <div class="price-item"><span class="price-item-name">Денний / Вечірній / Весільний</span><span class="price-item-dots"></span><span class="price-item-val">1 000₴</span></div>
-        <p class="price-sub" style="margin-top:12px">Бровіст</p>
-        <div class="price-item"><span class="price-item-name">Корекція брів</span><span class="price-item-dots"></span><span class="price-item-val">250₴</span></div>
-        <div class="price-item"><span class="price-item-name">Чоловіча корекція брів</span><span class="price-item-dots"></span><span class="price-item-val">300₴</span></div>
-        <div class="price-item"><span class="price-item-name">Фарбування брів (фарба/хна)</span><span class="price-item-dots"></span><span class="price-item-val">350₴</span></div>
-        <div class="price-item"><span class="price-item-name">Фарбування вій</span><span class="price-item-dots"></span><span class="price-item-val">350₴</span></div>
-        <div class="price-item"><span class="price-item-name">Комплекс: корекція + фарбування брів</span><span class="price-item-dots"></span><span class="price-item-val">600₴</span></div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ═══ PROMO ═══ -->
-<section class="promo" id="promo">
-  <div class="container">
-    <div class="section-title reveal">
-      <p class="section-eyebrow" style="color:var(--amber)">Акції</p>
-      <h2>Спеціальні пропозиції</h2>
-      <p style="color:rgba(255,255,255,0.7)">Дійсні до 31 липня</p>
-    </div>
-    <div class="promo-grid reveal">
-      <div class="promo-card">
-        <div class="promo-tag">−15%</div>
-        <h3>Реконструкція VIART</h3>
-        <p>Відновлення волосся SoS Recovery</p>
-        <span class="promo-new">1 590₴ <span class="promo-old">1 870₴</span></span>
-      </div>
-      <div class="promo-card">
-        <div class="promo-tag">−10%</div>
-        <h3>Перший візит до масажиста</h3>
-        <p>Знижка на перше відвідування</p>
-        <span class="promo-new">Для нових клієнтів</span>
-      </div>
-      <div class="promo-card">
-        <div class="promo-tag">Сет</div>
-        <h3>Стрижка + BOND Yellow</h3>
-        <p>Жіноча стрижка з доглядом</p>
-        <span class="promo-new">1 350₴ <span class="promo-old">1 500₴</span></span>
-      </div>
-    </div>
-    <p class="promo-footnote">* всі пропозиції діють до 31-го липня</p>
-  </div>
-</section>
-
-<!-- ═══ AVAILABLE SLOTS ═══ -->
-<section class="slots" id="slots">
-  <div class="container">
-    <div class="section-title reveal">
-      <p class="section-eyebrow">Вільні віконця</p>
-      <h2>Найближчі дати</h2>
-      <p>Інформація оновлюється щодня</p>
-    </div>
-    <div class="slots-grid reveal">
-      <div class="slot-card">
-        <h3 data-service="Стрижка жіноча">💇‍♀️ Стрижка, укладка, полірування</h3>
-        <div class="slot-date">📅 11 липня (субота)</div>
-        <div class="slot-times">
-          <span class="slot-time">10:30</span>
-          <span class="slot-time">16:00</span>
-          <span class="slot-time">19:15</span>
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">Наши услуги и цены</h2>
+            <p class="section-subtitle">Прозрачные цены, никаких скрытых доплат</p>
+            <div class="services-grid">
+                <div class="service-card"><span class="service-icon">✂️</span><h3>Стрижка</h3><p>Классические и креативные стрижки от топ-стилистов с учётом формы лица.</p><span class="price-tag">от 800₽</span></div>
+                <div class="service-card"><span class="service-icon">🎨</span><h3>Окрашивание</h3><p>Безаммиачные краски, техники balayage, shatush, airtouch и сложное цветное окрашивание.</p><span class="price-tag">от 3000₽</span></div>
+                <div class="service-card"><span class="service-icon">💅</span><h3>Маникюр</h3><p>Классический, аппаратный, SPA-маникюр и покрытие гель-лаком премиум-брендов.</p><span class="price-tag">от 1200₽</span></div>
+                <div class="service-card"><span class="service-icon">🦶</span><h3>Педикюр</h3><p>Комплексный уход за ногами с массажем, пилингом и долговременным покрытием.</p><span class="price-tag">от 1500₽</span></div>
+                <div class="service-card"><span class="service-icon">👁️</span><h3>Ламинирование ресниц</h3><p>Эффектный изгиб и объём без наращивания — здоровый, ухоженный взгляд на 6 недель.</p><span class="price-tag">от 2000₽</span></div>
+                <div class="service-card"><span class="service-icon">💄</span><h3>Макияж</h3><p>Дневной, вечерний, свадебный макияж с фиксацией на 12 часов и индивидуальным подбором тона.</p><span class="price-tag">от 2500₽</span></div>
+            </div>
         </div>
-        <div class="slot-date" style="margin-top:10px">📅 12 липня (неділя) — Княжий</div>
-        <div class="slot-times">
-          <span class="slot-time">10:00</span>
-          <span class="slot-time">13:30</span>
-          <span class="slot-time">14:30</span>
-          <span class="slot-time">16:00</span>
-          <span class="slot-time">17:00</span>
+    </section>
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <h2>Создаём красоту<br>с 2015 года</h2>
+                    <p>GLAM Beauty Salon — это пространство, где профессионализм встречается с теплотой. Мы используем только премиальную косметику и следим за мировыми трендами.</p>
+                    <ul class="features-list">
+                        <li>Авторские методики колористики</li>
+                        <li>Стерильность и безопасность (автоклавирование инструментов)</li>
+                        <li>Индивидуальный подбор продуктов под тип волос/кожи</li>
+                        <li>Уютная атмосфера, авторский чай/кофе, парковка для гостей</li>
+                    </ul>
+                </div>
+                <div class="about-image">GLAM</div>
+            </div>
         </div>
-        <div class="slot-date" style="margin-top:10px">📅 12 липня (неділя) — Ахматової</div>
-        <div class="slot-times">
-          <span class="slot-time">10:00</span>
-          <span class="slot-time">11:30</span>
-          <span class="slot-time">12:30</span>
-          <span class="slot-time">13:30</span>
-          <span class="slot-time">14:00</span>
-          <span class="slot-time">15:00</span>
-          <span class="slot-time">18:00</span>
+    </section>
+    <section class="social-proof" id="reviews">
+        <div class="container">
+            <h2 class="section-title">Реальные результаты реальных клиентов</h2>
+            <p class="section-subtitle">Более 500 отзывов на Google Maps — рейтинг 4.9/5</p>
+            <div class="testimonials">
+                <div class="testimonial review client">
+                    <div class="stars">★★★★★</div>
+                    <blockquote>"Лучший салон в городе! Сделала окрашивание в технике balayage — волосы никогда не выглядели так здорово и дорого. Мастер поняла меня с полуслова. Уже 2 года только сюда."</blockquote>
+                    <div class="testimonial-author"><div class="testimonial-avatar">МК</div><div><strong>Марина К.</strong><small>Верный клиент 2+ года • 28 посещений • Google Maps</small></div></div>
+                </div>
+                <div class="testimonial review client">
+                    <div class="stars">★★★★★</div>
+                    <blockquote>"Наконец нашла место с качественной косметикой. Кератин держится 4 месяца! Маникюр 4 недели без сколов. Очень рекомендую — цены адекватные за это качество."</blockquote>
+                    <div class="testimonial-author"><div class="testimonial-avatar">АС</div><div><strong>Анна С.</strong><small>Клиент с 2022 • 15 процедур • 8 отзывов на Google Maps</small></div></div>
+                </div>
+                <div class="testimonial review client">
+                    <div class="stars">★★★★★</div>
+                    <blockquote>"Делала макияж на свадьбу — был идеальный, держался весь день до самого утра. Визажист учла все пожелания, подобрала идеальный тон. Спасибо команде!"</blockquote>
+                    <div class="testimonial-author"><div class="testimonial-avatar">ОС</div><div><strong>Ольга С.</strong><small>Свадебный макияж • 5 звёзд • Яндекс Карты</small></div></div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="slot-card">
-        <h3 data-service="Фарбування волосся">🎨 Фарбування / Реконструкція</h3>
-        <div class="slot-date">📅 12 липня (неділя) — Княжий</div>
-        <div class="slot-times">
-          <span class="slot-time">13:30</span>
-          <span class="slot-time">16:00</span>
+    </section>
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h2>Запишитесь<br>на процедуру</h2>
+                    <p>Мы перезвоним в течение 15 минут, чтобы подтвердить удобное время.</p>
+                    <div class="contact-item"><span>📍</span> ул. Тверская, д. 15, Москва (м. Тверская/Пушкинская)</div>
+                    <div class="contact-item"><span>📞</span> +7 (495) 123-45-67</div>
+                    <div class="contact-item"><span>✉️</span> hello@glambeauty.ru</div>
+                    <div class="contact-item"><span>🕐</span> Ежедневно 9:00 — 21:00</div>
+                    
+                    <div class="trust-bar">
+                        <span class="trust-item">🔒 Бронирование за 30 сек</span>
+                        <span class="trust-item">💳 Оплата после услуги</span>
+                        <span class="trust-item">⭐ 4.9/5 Google Maps</span>
+                        <span class="trust-item">🛡 14 дней на возврат</span>
+                    </div>
+                    
+                    <div style="margin-top: 2rem; font-size: 0.85rem; color: #a09088;">
+                        <a href="#privacy" style="color: #e8c9b5;">Privacy Policy</a> | 
+                        <a href="#terms" style="color: #e8c9b5;">Terms of Service</a> | 
+                        <a href="#refund" style="color: #e8c9b5;">Refund Policy</a> | 
+                        <a href="#privacy" style="color: #e8c9b5;">Политика конфиденциальности</a>
+                    </div>
+                </div>
+                <div>
+                    <form id="bookingForm">
+                        <div class="form-group"><label for="name">Ваше имя</label><input type="text" id="name" name="name" placeholder="Иван Иванов" required></div>
+                        <div class="form-group"><label for="phone">Телефон</label><input type="tel" id="phone" name="phone" placeholder="+7 (___) ___-__-__" required></div>
+                        <div class="form-group"><label for="service">Услуга</label><select id="service" name="service" required><option value="">Выберите услугу</option><option value="стрижка">Стрижка (от 800₽)</option><option value="окрашивание">Окрашивание (от 3000₽)</option><option value="маникюр">Маникюр (от 1200₽)</option><option value="педикюр">Педикюр (от 1500₽)</option><option value="ламинирование ресниц">Ламинирование ресниц (от 2000₽)</option><option value="макияж">Макияж (от 2500₽)</option></select></div>
+                        <div class="form-group"><label for="date">Дата визита</label><input type="date" id="date" name="date" required min=""></div>
+                        <div class="form-group"><label>Удобное время (выберите слот)</label><div class="time-slots" id="timeSlots"></div><input type="hidden" id="selectedTime" name="time" class="selected-time-input"></div>
+                        <div class="form-group"><label for="message">Пожелания</label><textarea id="message" name="message" placeholder="Например: хочу конкретного мастера, аллергия на компоненты..." rows="3"></textarea></div>
+                        <button type="submit" class="btn btn-light" style="width: 100%;">Отправить заявку и получить -20%</button>
+                    </form>
+                    <div id="formMessage" class="form-message"></div>
+                </div>
+            </div>
         </div>
-        <div class="slot-date" style="margin-top:10px">📅 12 липня (неділя) — Ахматової</div>
-        <div class="slot-times">
-          <span class="slot-time">10:00</span>
-          <span class="slot-time">12:00</span>
-          <span class="slot-time">14:00</span>
-          <span class="slot-time">15:00</span>
-          <span class="slot-time">16:00</span>
-          <span class="slot-time">18:00</span>
+    </section>
+    <section id="refund" class="refund-policy">
+        <h3>Политика возврата (14 дней) — Money-back guarantee</h3>
+        <ul>
+            <li>Возврат 100% стоимости, если результат не соответствует обещанному на лендинге</li>
+            <li>Заявка принимается в течение 14 дней после процедуры</li>
+            <li>Деньги возвращаются тем же способом оплаты в течение 3-5 рабочих дней</li>
+            <li>Без вопросов, без бюрократии — просто напишите администратору в Telegram/WhatsApp/телефон</li>
+        </ul>
+    </section>
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 GLAM Beauty Salon. Все права защищены. ИП Иванов И.И., ИНН 7701234567</p>
+            <p style="margin-top: 0.5rem; font-size: 0.8rem;"><a href="#privacy" style="color: #7a6a64;">Privacy Policy</a> | <a href="#terms" style="color: #7a6a64;">Terms of Service</a> | <a href="#refund" style="color: #7a6a64;">Refund Policy</a></p>
         </div>
-      </div>
-      <div class="slot-card">
-        <h3 data-service="Манікюр">💅 Манікюр / Педикюр</h3>
-        <div class="slot-date">📅 11–12 липня</div>
-        <div class="slot-note">Інформація оновлюється — уточнюйте за телефоном</div>
-      </div>
-      <div class="slot-card">
-        <h3 data-service="Ламінування">✨ Ламінування / Татуаж / Масаж / Макіяж</h3>
-        <div class="slot-date">📅 11 липня (субота)</div>
-        <div class="slot-times">
-          <span class="slot-time">13:00</span>
-          <span class="slot-time">15:00</span>
-          <span class="slot-time">18:30</span>
-        </div>
-        <div class="slot-date" style="margin-top:10px">📅 12 липня (неділя)</div>
-        <div class="slot-times">
-          <span class="slot-time">14:30</span>
-          <span class="slot-time">17:30</span>
-        </div>
-        <div class="slot-note">Ламінування / Бровіст</div>
-      </div>
-    </div>
-  </div>
-</section>
+    </footer>
+    <script>
+        (function(){
+            let time = 15 * 60;
+            const minEl = document.getElementById('timer-min');
+            const secEl = document.getElementById('timer-sec');
+            const timer = setInterval(() => {
+                time--;
+                const m = Math.floor(time / 60).toString().padStart(2, '0');
+                const s = (time % 60).toString().padStart(2, '0');
+                if (minEl) minEl.textContent = m;
+                if (secEl) secEl.textContent = s;
+                if (time <= 0) {
+                    clearInterval(timer);
+                    if (minEl) minEl.textContent = '00';
+                    if (secEl) secEl.textContent = '00';
+                    document.getElementById('urgency-badge').innerHTML = '<span class="urgency-text">Акция завершена — напишите нам для индивидуального предложения</span>';
+                }
+            }, 1000);
 
-<!-- ═══ GALLERY ═══ -->
-<section class="gallery" id="gallery">
-  <div class="container">
-    <div class="section-title reveal">
-      <p class="section-eyebrow">Наші роботи</p>
-      <h2>Галерея</h2>
-      <p>Більше фото в Instagram: <a href="https://www.instagram.com/fargosalon" target="_blank" style="color:var(--terracotta);font-weight:500">@fargosalon</a></p>
-    </div>
-    <div class="gallery-grid reveal">
-      <div class="gallery-item">
-        <img src="https://images.pexels.com/photos/3992875/pexels-photo-3992875.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop" alt="Стрижка в салоні Fargo" loading="lazy">
-      </div>
-      <div class="gallery-item">
-        <img src="https://images.pexels.com/photos/5069603/pexels-photo-5069603.jpeg?auto=compress&cs=tinysrgb&w=400&h=280&fit=crop" alt="Укладка волосся" loading="lazy">
-      </div>
-      <div class="gallery-item">
-        <img src="https://images.pexels.com/photos/5069604/pexels-photo-5069604.jpeg?auto=compress&cs=tinysrgb&w=400&h=280&fit=crop" alt="Салон краси" loading="lazy">
-      </div>
-      <div class="gallery-item">
-        <img src="https://images.pexels.com/photos/3993320/pexels-photo-3993320.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop" alt="Салон краси" loading="lazy">
-      </div>
-    </div>
-  </div>
-</section>
+            document.addEventListener('DOMContentLoaded', function() {
+                const form = document.getElementById('bookingForm');
+                const messageDiv = document.getElementById('formMessage');
+                const dateInput = document.getElementById('date');
+                const timeSlots = document.getElementById('timeSlots');
+                const selectedTimeInput = document.getElementById('selectedTime');
+                const phoneInput = document.getElementById('phone');
 
-<!-- ═══ LOCATIONS ═══ -->
-<section id="locations">
-  <div class="container">
-    <div class="section-title reveal">
-      <p class="section-eyebrow">Адреси</p>
-      <h2>Де нас знайти</h2>
-      <p>Два салони на Позняках — обирайте зручний</p>
-    </div>
-    <div class="locations-grid reveal">
-      <div class="loc-card">
-        <h3>📍 Княжий Затон</h3>
-        <div class="loc-address">вул. Княжий Затон, 2/30, м. Позняки, Київ</div>
-        <div class="loc-hours">🕐 <span>Щоденно</span> з 10:00 до 20:00</div>
-        <div class="loc-actions">
-          <a href="https://www.google.com/maps/dir/?api=1&destination=50.40352,30.62927" target="_blank" class="loc-btn">🗺️ Прокласти маршрут</a>
-          <a href="tel:+380996140054" class="loc-btn loc-btn-secondary">📞 099 614 00 54</a>
-        </div>
-      </div>
-      <div class="loc-card">
-        <h3>📍 Анни Ахматової</h3>
-        <div class="loc-address">вул. Анни Ахматової, 30, м. Позняки, Київ</div>
-        <div class="loc-hours">🕐 <span>Щоденно</span> з 10:00 до 20:00</div>
-        <div class="loc-actions">
-          <a href="https://www.google.com/maps/dir/?api=1&destination=50.4081,30.62155" target="_blank" class="loc-btn">🗺️ Прокласти маршрут</a>
-          <a href="tel:+380676654646" class="loc-btn loc-btn-secondary">📞 067 665 46 46</a>
-        </div>
-      </div>
-    </div>
-    <div style="margin-top: 32px; border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-md);">
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2543.5!2d30.625!3d50.405!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4d3a0e50cbcf9%3A0xa4e1f4c4f4c4f4c4!2z0JrQvdGP0LbQuNC5INCX0LDRgtC-0L0sIDIvMzAsINCa0LjRlNCy!5e0!3m2!1suk!2sua!4v1" width="100%" height="350" style="border:0;display:block" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
-    </div>
-  </div>
-</section>
+                // Set min date to today
+                const today = new Date().toISOString().split('T')[0];
+                dateInput.min = today;
 
-<!-- ═══ BOOKING ═══ -->
-<section class="booking" id="booking">
-  <div class="container">
-    <div class="section-title reveal">
-      <p class="section-eyebrow">Запис</p>
-      <h2>Запишіться до нас</h2>
-      <p>Або зателефонуйте: <a href="tel:+380996140054" style="color:var(--terracotta);font-weight:500">099 614 00 54</a></p>
-    </div>
-    <div class="booking-grid reveal">
-      <div class="booking-info">
-        <h2>Контакти</h2>
-        <p>Ми завжди на зв'язку та раді допомогти з вибором послуги</p>
-        <div class="booking-contact-item">
-          <span class="label">📞 Телефони</span>
-          <span class="value"><a href="tel:+380996140054">099 614 00 54</a> · <a href="tel:+380676654646">067 665 46 46</a></span>
-        </div>
-        <div class="booking-contact-item">
-          <span class="label">📧 Email</span>
-          <span class="value"><a href="mailto:fargosalon@gmail.com">fargosalon@gmail.com</a></span>
-        </div>
-        <div class="booking-contact-item">
-          <span class="label">📱 Telegram</span>
-          <span class="value"><a href="https://t.me/fargosalon" target="_blank">@fargosalon</a></span>
-        </div>
-        <div class="booking-contact-item">
-          <span class="label">📷 Instagram</span>
-          <span class="value"><a href="https://www.instagram.com/fargosalon" target="_blank">@fargosalon</a></span>
-        </div>
-        <div class="booking-contact-item">
-          <span class="label">🏠 Адреси</span>
-          <span class="value">Княжий Затон, 2/30<br>Анни Ахматової, 30</span>
-        </div>
-        <div class="booking-contact-item">
-          <span class="label">🕐 Графік</span>
-          <span class="value">Щоденно 10:00–20:00</span>
-        </div>
-      </div>
-      <form class="booking-form" onsubmit="alert('Дякуємо! Ми зв\'яжемося з вами найближчим часом 😊');return false">
-        <div class="form-row">
-          <div class="form-group">
-            <label for="name">Ім'я *</label>
-            <input type="text" id="name" required placeholder="Ваше ім'я">
-          </div>
-          <div class="form-group">
-            <label for="phone">Телефон *</label>
-            <input type="tel" id="phone" required placeholder="+38 (0__) ___ __ __">
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label for="service">Послуга</label>
-            <select id="service">
-              <option value="">Оберіть послугу</option>
-              <option>Стрижка жіноча</option>
-              <option>Стрижка чоловіча</option>
-              <option>Фарбування волосся</option>
-              <option>Манікюр</option>
-              <option>Педикюр</option>
-              <option>Укладка</option>
-              <option>Масаж</option>
-              <option>Ламінування</option>
-              <option>Татуаж</option>
-              <option>Макіяж</option>
-              <option>Інше</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="salon">Салон</label>
-            <select id="salon">
-              <option value="">Оберіть адресу</option>
-              <option>Княжий Затон, 2/30</option>
-              <option>Анни Ахматової, 30</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label for="date">Дата</label>
-            <select id="date">
-              <option value="">Оберіть дату</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="time">Час</label>
-            <select id="time">
-              <option value="">Оберіть час</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="comment">Коментар</label>
-          <textarea id="comment" placeholder="Бажаний час, дата, додаткові побажання..."></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary form-submit">✉️ Надіслати заявку</button>
-      </form>
-    </div>
-  </div>
-</section>
+                // Generate time slots
+                function generateTimeSlots() {
+                    const slots = [];
+                    for (let h = 9; h <= 20; h++) {
+                        slots.push(`${h.toString().padStart(2, '0')}:00`);
+                        if (h < 20) slots.push(`${h.toString().padStart(2, '0')}:30`);
+                    }
+                    return slots;
+                }
 
-<!-- ═══ FOOTER ═══ -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <a href="#" class="header-logo">Fargo<span>.</span></a>
-        <p>Салон краси на Позняках. Стрижки, фарбування, манікюр, педикюр, масаж, макіяж, татуаж, ламінування.</p>
-        <div class="footer-social">
-          <a href="https://www.instagram.com/fargosalon" target="_blank" aria-label="Instagram">📷</a>
-          <a href="https://t.me/fargosalon" target="_blank" aria-label="Telegram">✈️</a>
-          <a href="viber://chat?number=%2B380996140054" aria-label="Viber">💬</a>
-        </div>
-      </div>
-      <div>
-        <h4>Послуги</h4>
-        <a href="#price">Стрижки</a>
-        <a href="#price">Фарбування</a>
-        <a href="#price">Манікюр</a>
-        <a href="#price">Масаж</a>
-        <a href="#price">Татуаж</a>
-      </div>
-      <div>
-        <h4>Контакти</h4>
-        <a href="tel:+380996140054">099 614 00 54</a>
-        <a href="tel:+380676654646">067 665 46 46</a>
-        <a href="mailto:fargosalon@gmail.com">fargosalon@gmail.com</a>
-        <a href="https://t.me/fargosalon">Telegram</a>
-      </div>
-      <div>
-        <h4>Адреси</h4>
-        <a href="https://www.google.com/maps/dir/?api=1&destination=50.40352,30.62927" target="_blank">Княжий Затон, 2/30</a>
-        <a href="https://www.google.com/maps/dir/?api=1&destination=50.4081,30.62155" target="_blank">Анни Ахматової, 30</a>
-        <p style="font-size:0.8rem;color:rgba(255,255,255,0.3);margin-top:8px">Щоденно 10:00–20:00</p>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>© 2026 Fargo салон краси</span>
-      <span>Зроблено з ❤️ у Києві</span>
-    </div>
-  </div>
-</footer>
+                const allSlots = generateTimeSlots();
+                let selectedSlot = null;
 
-<script>
-// Mobile menu toggle
-const menuToggle = document.getElementById('menuToggle');
-const nav = document.getElementById('nav');
-menuToggle.addEventListener('click', function() {
-  this.classList.toggle('active');
-  nav.classList.toggle('open');
-});
-document.querySelectorAll('.header-nav a').forEach(a => {
-  a.addEventListener('click', () => {
-    menuToggle.classList.remove('active');
-    nav.classList.remove('open');
-  });
-});
+                function renderSlots(dateStr) {
+                    timeSlots.innerHTML = '';
+                    // Simulate some booked slots (in real app, fetch from API)
+                    const booked = ['10:00', '14:30', '18:00'];
+                    allSlots.forEach(slot => {
+                        const btn = document.createElement('button');
+                        btn.type = 'button';
+                        btn.className = 'time-slot' + (booked.includes(slot) ? ' unavailable' : '');
+                        btn.textContent = slot;
+                        btn.disabled = booked.includes(slot);
+                        if (!booked.includes(slot)) {
+                            btn.addEventListener('click', () => {
+                                document.querySelectorAll('.time-slot').forEach(b => b.classList.remove('selected'));
+                                btn.classList.add('selected');
+                                selectedSlot = slot;
+                                selectedTimeInput.value = slot;
+                            });
+                        }
+                        timeSlots.appendChild(btn);
+                    });
+                }
 
-// Header scroll effect
-window.addEventListener('scroll', () => {
-  document.getElementById('header').classList.toggle('scrolled', window.scrollY > 60);
-});
+                // Initial render
+                renderSlots(today);
+                dateInput.addEventListener('change', () => renderSlots(dateInput.value));
 
-// Scroll reveal
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const name = document.getElementById('name').value.trim();
+                    const phone = document.getElementById('phone').value.trim();
+                    const service = document.getElementById('service').value;
+                    const date = document.getElementById('date').value;
+                    const time = selectedTimeInput.value;
 
-// Slot time picker — click a time → fills booking form
-document.querySelector('.slots-grid')?.addEventListener('click', function(e) {
-  const el = e.target.closest('.slot-time');
-  if (!el) return;
+                    if (!name || !phone || !service || !date || !time) {
+                        messageDiv.className = 'form-message error';
+                        messageDiv.textContent = 'Пожалуйста, заполните все обязательные поля, включая дату и время.';
+                        return;
+                    }
 
-  // Find parent card and extract service
-  const card = el.closest('.slot-card');
-  const service = card?.querySelector('h3')?.dataset?.service || '';
+                    fbq('track', 'Lead', { content_name: service, value: 0.01, currency: 'RUB' });
+                    ttq.track('CompleteRegistration', { content_name: service });
+                    gtag('event', 'generate_lead', { service: service });
 
-  // Find the date: walk backwards to the nearest preceding .slot-date sibling
-  let dateEl = el.parentElement?.previousElementSibling;
-  while (dateEl && !dateEl.classList.contains('slot-date')) {
-    dateEl = dateEl.previousElementSibling;
-  }
-  const dateText = dateEl ? dateEl.textContent.replace('📅 ','').trim() : '';
-  const time = el.textContent.trim();
+                    const formData = { name, phone, service, date, time, message: document.getElementById('message').value.trim() };
+                    console.log('Form submitted:', formData);
 
-  // Determine salon from date text
-  let salon = '';
-  if (dateText.includes('— Княжий')) salon = 'Княжий Затон, 2/30';
-  else if (dateText.includes('— Ахматової')) salon = 'Анни Ахматової, 30';
+                    messageDiv.className = 'form-message success';
+                    messageDiv.textContent = 'Спасибо! Мы перезвоним вам в течение 15 минут для подтверждения записи и применения скидки 20%.';
+                    form.reset();
+                    selectedSlot = null;
+                    selectedTimeInput.value = '';
+                    document.querySelectorAll('.time-slot').forEach(b => b.classList.remove('selected'));
+                    setTimeout(() => { messageDiv.className = 'form-message'; }, 5000);
+                });
 
-  // Fill form fields
-  const svc = document.getElementById('service');
-  if (svc) {
-    Array.from(svc.options).forEach(o => {
-      o.selected = o.text === service || (!service && !o.value);
-    });
-  }
-  const sln = document.getElementById('salon');
-  if (sln) {
-    Array.from(sln.options).forEach(o => {
-      o.selected = o.text === salon || (!salon && !o.value);
-    });
-  }
-  const dt = document.getElementById('date');
-  if (dt) {
-    Array.from(dt.options).forEach(o => {
-      o.selected = o.text === dateText || (!dateText && !o.value);
-    });
-  }
-  const tm = document.getElementById('time');
-  if (tm) {
-    Array.from(tm.options).forEach(o => {
-      o.selected = o.text === time || (!time && !o.value);
-    });
-  }
-
-  // Scroll to form
-  document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' });
-  // Focus name field
-  setTimeout(() => document.getElementById('name')?.focus(), 600);
-});
-
-// Populate date & time dropdowns on page load
-(function initDateTimeDropdowns() {
-  // 30 days in Ukrainian
-  const months = ['', 'січня','лютого','березня','квітня','травня','червня','липня','серпня','вересня','жовтня','листопада','грудня'];
-  const days = ['неділя','понеділок','вівторок','середа','четвер','п\'ятниця','субота'];
-  const dateSel = document.getElementById('date');
-  if (dateSel) {
-    const today = new Date(2026, 6, 11); // July 11, 2026
-    for (let i = 0; i < 30; i++) {
-      const d = new Date(today);
-      d.setDate(today.getDate() + i);
-      const day = d.getDay();
-      if (day === 0) continue; // skip Sundays — salon closed
-      const label = `${d.getDate()} ${months[d.getMonth()+1]} (${days[day]})`;
-      const opt = document.createElement('option');
-      opt.textContent = label;
-      dateSel.appendChild(opt);
-    }
-  }
-  // 30-min slots 9:00–20:30
-  const timeSel = document.getElementById('time');
-  if (timeSel) {
-    for (let h = 9; h <= 20; h++) {
-      for (let m = 0; m < 60; m += 30) {
-        if (h === 20 && m > 30) break;
-        const label = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
-        const opt = document.createElement('option');
-        opt.textContent = label;
-        timeSel.appendChild(opt);
-      }
-    }
-  }
-})();
-</script>
+                phoneInput.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length > 0) {
+                        let formatted = '+7 (';
+                        if (value.length > 1) { formatted += value.substring(1, 4); }
+                        if (value.length >= 4) { formatted += ') '; formatted += value.substring(4, 7); }
+                        if (value.length >= 7) { formatted += '-'; formatted += value.substring(7, 9); }
+                        if (value.length >= 9) { formatted += '-'; formatted += value.substring(9, 11); }
+                        e.target.value = formatted;
+                    }
+                });
+            });
+        })();
+    </script>
 </body>
 </html>
