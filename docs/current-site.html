@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fargo — салон краси</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Tahoma,'Segoe UI',sans-serif;color:#333;background:#f7f7f8}
+header{background:#222;color:#eee;padding:22px 20px;text-align:center}
+header h1{font-size:28px;letter-spacing:1px;font-weight:400;margin-bottom:4px}
+header p{font-size:14px;color:#999}
+nav{background:#eee;padding:12px;text-align:center;border-bottom:1px solid #ddd}
+nav a{color:#555;margin:0 18px;font-size:13px;text-decoration:none;font-weight:600;text-transform:uppercase}
+nav a:hover{color:#000}
+section{max-width:960px;margin:0 auto;padding:30px 20px}
+.hero{text-align:center;padding:50px 20px}
+.hero h2{font-size:24px;color:#222;margin-bottom:10px;font-weight:400}
+.hero p{color:#777;max-width:520px;margin:0 auto;line-height:1.6}
+.hero .btn{display:inline-block;margin-top:18px;padding:12px 32px;background:#333;color:#fff;border-radius:4px;text-decoration:none;font-size:14px}
+.hero .btn:hover{background:#555}
+.info{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:600px;margin:30px auto}
+.info div{padding:12px 16px;background:#fff;border-radius:4px;border:1px solid #e5e5e5}
+.info strong{display:block;font-size:11px;color:#999;text-transform:uppercase;margin-bottom:2px}
+.info span{font-size:15px;color:#333}
+.services{background:#fff;border-radius:6px;border:1px solid #e5e5e5;margin-top:20px}
+.services h3{font-size:16px;font-weight:600;padding:16px 20px;border-bottom:1px solid #eee;color:#333}
+.service-row{display:flex;justify-content:space-between;padding:12px 20px;border-bottom:1px solid #f0f0f0;font-size:14px}
+.service-row:last-child{border-bottom:none}
+.service-row .price{color:#888}
+.gallery{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:20px}
+.gallery img{width:200px;height:160px;object-fit:cover;border-radius:4px;border:1px solid #e5e5e5}
+footer{background:#222;color:#999;text-align:center;padding:24px 20px;font-size:13px;margin-top:40px}
+footer a{color:#bbb;text-decoration:none}
+</style>
+</head>
+<body>
+
+<header>
+<h1>Fargo</h1>
+<p>Салон краси на Позняках</p>
+</header>
+
+<nav>
+<a href="#">Про нас</a>
+<a href="#">Послуги</a>
+<a href="#">Ціни</a>
+<a href="#">Галерея</a>
+<a href="#">Контакти</a>
+</nav>
+
+<section class="hero">
+<h2>Салон краси Fargo</h2>
+<p>Ми пропонуємо широкий спектр послуг: стрижки, фарбування, манікюр, педикюр, масаж та косметологію. Працюємо щоденно з 10:00 до 20:00.</p>
+<a class="btn" href="#">✏️ Записатись онлайн</a>
+<div class="info">
+<div><strong>📍 Княжий Затон</strong><span>вул. Княжий Затон, 2/30</span></div>
+<div><strong>📍 Анни Ахматової</strong><span>вул. Анни Ахматової, 30</span></div>
+<div><strong>📞 Телефон</strong><span>099 614 00 54</span></div>
+<div><strong>📞 Телефон</strong><span>067 665 46 46</span></div>
+</div>
+</section>
+
+<section>
+<h3 style="margin-bottom:12px;font-weight:600;font-size:18px;color:#333">Послуги та ціни</h3>
+<div class="services">
+<h3>💇‍♀️ Перукарський зал</h3>
+<div class="service-row"><span>Стрижка жіноча</span><span class="price">550 грн</span></div>
+<div class="service-row"><span>Стрижка чоловіча</span><span class="price">350 грн</span></div>
+<div class="service-row"><span>Фарбування волосся</span><span class="price">від 1200 грн</span></div>
+<div class="service-row"><span>Укладка</span><span class="price">400 грн</span></div>
+<h3>💅 Манікюр та педикюр</h3>
+<div class="service-row"><span>Манікюр класичний</span><span class="price">350 грн</span></div>
+<div class="service-row"><span>Педикюр класичний</span><span class="price">450 грн</span></div>
+<h3>💆‍♀️ Масаж</h3>
+<div class="service-row"><span>Масаж спини</span><span class="price">500 грн</span></div>
+<div class="service-row"><span>Загальний масаж</span><span class="price">800 грн</span></div>
+</div>
+</section>
+
+<section>
+<h3 style="margin-bottom:12px;font-weight:600;font-size:18px;color:#333">Фото салону</h3>
+<div class="gallery">
+<img src="https://images.pexels.com/photos/3992875/pexels-photo-3992875.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Інтер'єр">
+<img src="https://images.pexels.com/photos/5069603/pexels-photo-5069603.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Робоче місце">
+<img src="https://images.pexels.com/photos/3736520/pexels-photo-3736520.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Косметологія">
+</div>
+</section>
+
+<footer>
+<p>Fargo — салон краси | <a href="tel:+380996140054">099 614 00 54</a></p>
+</footer>
+
+</body>
+</html>
