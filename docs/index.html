@@ -1,1154 +1,140 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="light">
+<html lang="uk" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MÉLANGE - студия красоты</title>
+<title>Hermes — портфоліо веб-проектів</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&family=Satoshi:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* =============================================
-   TOKENS
-   ============================================= */
-:root {
-  --accent: #B76E79;
-  --accent-hover: #A05A65;
-  --accent-light: rgba(183, 110, 121, 0.08);
-  --bg: #FAFAFA;
-  --surface: #FFFFFF;
-  --surface-elevated: #F5F5F7;
-  --text: #1D1D1F;
-  --text-muted: #86868B;
-  --border: #E5E5EA;
-  --radius-sm: 8px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
-  --header-h: 64px;
-  --max-w: 1200px;
-  --font-display: 'Satoshi', sans-serif;
-  --font-body: 'Outfit', sans-serif;
-}
-
-[data-theme="dark"] {
-  --bg: #1D1D1F;
-  --surface: #2C2C2E;
-  --surface-elevated: #38383A;
-  --text: #F5F5F7;
-  --text-muted: #A1A1A6;
-  --border: #38383A;
-  --accent-light: rgba(183, 110, 121, 0.15);
-}
-
-/* =============================================
-   RESET & BASE
-   ============================================= */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: var(--font-body);
-  font-weight: 400;
-  color: var(--text);
-  background: var(--bg);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  transition: background 0.3s, color 0.3s;
-}
-
-/* =============================================
-   HEADER
-   ============================================= */
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: var(--header-h);
-  background: var(--bg);
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 24px;
-  z-index: 100;
-  transition: background 0.3s, border-color 0.3s;
-}
-
-.logo {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.25rem;
-  letter-spacing: -0.02em;
-  text-decoration: none;
-  color: var(--text);
-}
-
-.logo span {
-  color: var(--accent);
-}
-
-nav {
-  display: flex;
-  align-items: center;
-  gap: 32px;
-}
-
-nav a {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--text-muted);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-nav a:hover {
-  color: var(--text);
-}
-
-.nav-cta {
-  display: inline-flex;
-  align-items: center;
-  height: 40px;
-  padding: 0 20px;
-  background: var(--accent);
-  color: #fff;
-  border-radius: 100px;
-  font-family: var(--font-body);
-  font-size: 0.875rem;
-  font-weight: 500;
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-  transition: background 0.2s, transform 0.15s;
-}
-
-.nav-cta:hover {
-  background: var(--accent-hover);
-}
-
-.nav-cta:active {
-  transform: scale(0.97);
-}
-
-.theme-toggle {
-  background: none;
-  border: 1px solid var(--border);
-  border-radius: 100px;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: var(--text-muted);
-  font-size: 1rem;
-  transition: background 0.2s, color 0.2s;
-}
-
-.theme-toggle:hover {
-  background: var(--surface-elevated);
-  color: var(--text);
-}
-
-/* =============================================
-   HERO
-   ============================================= */
-.hero {
-  min-height: 100dvh;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding-top: var(--header-h);
-}
-
-.hero-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 64px 48px 64px 24px;
-  max-width: 520px;
-  margin-left: auto;
-}
-
-.hero-eyebrow {
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 16px;
-}
-
-.hero h1 {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(2.5rem, 4vw, 3.75rem);
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  color: var(--text);
-  margin-bottom: 16px;
-}
-
-.hero p {
-  font-size: 1.125rem;
-  color: var(--text-muted);
-  line-height: 1.6;
-  margin-bottom: 32px;
-  max-width: 40ch;
-}
-
-.hero-cta {
-  display: inline-flex;
-  align-items: center;
-  height: 48px;
-  padding: 0 28px;
-  background: var(--accent);
-  color: #fff;
-  border-radius: 100px;
-  font-family: var(--font-body);
-  font-size: 0.9375rem;
-  font-weight: 500;
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-  transition: background 0.2s, transform 0.15s;
-  align-self: flex-start;
-}
-
-.hero-cta:hover {
-  background: var(--accent-hover);
-}
-
-.hero-cta:active {
-  transform: scale(0.97);
-}
-
-.hero-image {
-  background: var(--surface-elevated);
-  overflow: hidden;
-  position: relative;
-}
-
-.hero-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-@media (max-width: 768px) {
-  .hero {
-    grid-template-columns: 1fr;
-    min-height: auto;
-  }
-  .hero-content {
-    padding: 80px 24px 40px;
-    max-width: 100%;
-    margin: 0;
-  }
-  .hero-image {
-    min-height: 50vh;
-    order: -1;
-  }
-}
-
-/* =============================================
-   SECTION BASE
-   ============================================= */
-section {
-  padding: 96px 24px;
-}
-
-.section-inner {
-  max-width: var(--max-w);
-  margin: 0 auto;
-}
-
-.section-label {
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 12px;
-}
-
-.section-title {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(1.75rem, 3vw, 2.5rem);
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-  margin-bottom: 16px;
-}
-
-.section-sub {
-  font-size: 1rem;
-  color: var(--text-muted);
-  max-width: 48ch;
-  line-height: 1.7;
-}
-
-/* =============================================
-   SERVICES — Bento Grid
-   ============================================= */
-.services-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-top: 48px;
-}
-
-.service-card {
-  border-radius: var(--radius-md);
-  padding: 32px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  transition: background 0.2s, transform 0.2s;
-}
-
-.service-card:hover {
-  background: var(--surface-elevated);
-  transform: translateY(-2px);
-}
-
-.service-card:first-child {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  align-items: center;
-  padding: 0;
-  overflow: hidden;
-}
-
-.service-card:first-child .service-text {
-  padding: 32px;
-}
-
-.service-card:first-child .service-image {
-  height: 100%;
-  min-height: 240px;
-}
-
-.service-card:first-child .service-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.service-card:last-child {
-  background: var(--accent-light);
-  border-color: transparent;
-}
-
-.service-icon {
-  font-size: 1.5rem;
-  margin-bottom: 16px;
-  display: block;
-}
-
-.service-card h3 {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: 1.25rem;
-  margin-bottom: 8px;
-}
-
-.service-card p {
-  font-size: 0.875rem;
-  color: var(--text-muted);
-  line-height: 1.6;
-}
-
-.service-price {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: 0.875rem;
-  color: var(--accent);
-  margin-top: 12px;
-}
-
-@media (max-width: 768px) {
-  .services-grid {
-    grid-template-columns: 1fr;
-  }
-  .service-card:first-child {
-    grid-template-columns: 1fr;
-  }
-  .service-card:first-child .service-image {
-    min-height: 200px;
-  }
-}
-
-/* =============================================
-   ABOUT — Full-width editorial
-   ============================================= */
-.about {
-  background: var(--surface-elevated);
-  transition: background 0.3s;
-}
-
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 64px;
-  align-items: center;
-}
-
-.about-image {
-  border-radius: var(--radius-md);
-  overflow: hidden;
-}
-
-.about-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  min-height: 400px;
-}
-
-.about blockquote {
-  font-family: var(--font-display);
-  font-weight: 300;
-  font-size: clamp(1.25rem, 2vw, 1.75rem);
-  line-height: 1.5;
-  letter-spacing: -0.01em;
-  color: var(--text);
-  border-left: 3px solid var(--accent);
-  padding-left: 24px;
-}
-
-.about cite {
-  display: block;
-  margin-top: 16px;
-  font-style: normal;
-  font-size: 0.875rem;
-  color: var(--text-muted);
-}
-
-.about cite strong {
-  color: var(--text);
-  font-weight: 500;
-}
-
-@media (max-width: 768px) {
-  .about-grid {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-  .about-image img {
-    min-height: 280px;
-  }
-}
-
-/* =============================================
-   GALLERY — Full-width showcase
-   ============================================= */
-.gallery {
-  padding: 96px 0;
-}
-
-.gallery .section-inner {
-  padding: 0 24px;
-}
-
-.gallery-track {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-  margin-top: 40px;
-}
-
-.gallery-item {
-  aspect-ratio: 3 / 4;
-  overflow: hidden;
-  border-radius: var(--radius-sm);
-  position: relative;
-  cursor: pointer;
-}
-
-.gallery-item:nth-child(2) {
-  aspect-ratio: 4 / 5;
-}
-
-.gallery-item:nth-child(4) {
-  aspect-ratio: 2 / 3;
-}
-
-.gallery-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.5s;
-}
-
-.gallery-item:hover img {
-  transform: scale(1.05);
-}
-
-@media (max-width: 900px) {
-  .gallery-track {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 500px) {
-  .gallery-track {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-/* =============================================
-   TESTIMONIALS
-   ============================================= */
-.testimonials-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-top: 48px;
-}
-
-.testimonial-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 28px;
-  transition: transform 0.2s;
-}
-
-.testimonial-card:hover {
-  transform: translateY(-2px);
-}
-
-.testimonial-text {
-  font-size: 0.9375rem;
-  line-height: 1.7;
-  color: var(--text);
-  margin-bottom: 20px;
-}
-
-.testimonial-author {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.testimonial-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 100px;
-  background: var(--accent);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font: 600 13px/1 var(--font-body);
-  flex-shrink: 0;
-}
-
-.testimonial-name {
-  font-size: 0.875rem;
-  font-weight: 500;
-}
-
-.testimonial-role {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
-
-@media (max-width: 900px) {
-  .testimonials-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media (max-width: 500px) {
-  .testimonials-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* =============================================
-   BOOKING
-   ============================================= */
-.booking {
-  background: var(--surface-elevated);
-  transition: background 0.3s;
-}
-
-.booking-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  align-items: start;
-}
-
-.booking-info h2 {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(1.75rem, 3vw, 2.25rem);
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-  margin-bottom: 16px;
-}
-
-.booking-info p {
-  color: var(--text-muted);
-  line-height: 1.7;
-  margin-bottom: 24px;
-}
-
-.booking-detail {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
-  font-size: 0.9375rem;
-}
-
-.booking-detail span:first-child {
-  color: var(--text-muted);
-  min-width: 80px;
-}
-
-.booking-form {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 32px;
-}
-
-.form-group {
-  margin-bottom: 20px;
-}
-
-.form-group label {
-  display: block;
-  font-size: 0.8125rem;
-  font-weight: 500;
-  margin-bottom: 6px;
-  color: var(--text);
-}
-
-.form-group input,
-.form-group select,
-.form-group textarea {
-  width: 100%;
-  height: 44px;
-  padding: 0 14px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-body);
-  font-size: 0.9375rem;
-  transition: border-color 0.2s;
-}
-
-.form-group textarea {
-  height: 100px;
-  padding: 12px 14px;
-  resize: vertical;
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-light);
-}
-
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-
-.form-message {
-  font: 400 14px/1.4 var(--font-body);
-  padding: 10px 14px;
-  border-radius: var(--radius-sm);
-  margin-bottom: 12px;
-  display: none;
-}
-.form-message.error {
-  display: block;
-  background: #fef2f2;
-  color: #991b1b;
-  border: 1px solid #fecaca;
-}
-.form-message.success {
-  display: block;
-  background: #f0fdf4;
-  color: #166534;
-  border: 1px solid #bbf7d0;
-}
-.submit-btn {
-  width: 100%;
-  padding: 14px 32px;
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  border-radius: var(--radius-sm);
-  font: 500 15px/1.4 var(--font-body);
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.submit-btn:hover {
-  background: var(--accent-hover);
-}
-
-.submit-btn:active {
-  transform: scale(0.98);
-}
-
-@media (max-width: 768px) {
-  .booking-layout {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* =============================================
-   FOOTER
-   ============================================= */
-footer {
-  padding: 48px 24px;
-  border-top: 1px solid var(--border);
-  background: var(--bg);
-  transition: background 0.3s, border-color 0.3s;
-}
-
-.footer-inner {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.footer-links {
-  display: flex;
-  gap: 24px;
-}
-
-.footer-links a {
-  font-size: 0.8125rem;
-  color: var(--text-muted);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.footer-links a:hover {
-  color: var(--text);
-}
-
-.footer-social {
-  display: flex;
-  gap: 16px;
-}
-
-.footer-social a {
-  color: var(--text-muted);
-  text-decoration: none;
-  font-size: 0.8125rem;
-  transition: color 0.2s;
-}
-
-.footer-social a:hover {
-  color: var(--accent);
-}
-
-@media (max-width: 600px) {
-  .footer-inner {
-    flex-direction: column;
-    gap: 24px;
-    text-align: center;
-  }
-}
-
-/* =============================================
-   SCROLL REVEAL (IntersectionObserver)
-   ============================================= */
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-  .service-card,
-  .testimonial-card,
-  .gallery-item img {
-    transition: none;
-  }
-  .service-card:hover {
-    transform: none;
-  }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',-apple-system,sans-serif;background:#fafafa;color:#1a1a1a;min-height:100vh}
+.container{max-width:1280px;margin:0 auto;padding:0 24px}
+
+/* HEADER */
+header{background:#fff;border-bottom:1px solid #eee;padding:20px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(10px);background:rgba(255,255,255,.92)}
+header .container{display:flex;align-items:center;justify-content:space-between}
+.logo{font-weight:700;font-size:22px;letter-spacing:-.5px;color:#1a1a1a}
+.logo span{color:#888}
+.logo em{font-style:normal;color:#6c5ce7}
+nav a{text-decoration:none;color:#666;font-size:14px;font-weight:500;transition:color .2s;margin-left:24px}
+nav a:hover{color:#6c5ce7}
+
+/* HERO SECTION */
+.hero{text-align:center;padding:80px 0 48px}
+.hero h1{font-size:42px;font-weight:700;letter-spacing:-1.5px;margin-bottom:12px}
+.hero p{font-size:18px;color:#666;max-width:560px;margin:0 auto;line-height:1.6}
+.hero .count{color:#6c5ce7;font-weight:600}
+
+/* FILTERS */
+.filters{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:48px;padding:0 24px}
+.filter-btn{padding:8px 20px;border:1.5px solid #e0e0e0;border-radius:100px;background:#fff;font-size:14px;font-weight:500;color:#555;cursor:pointer;transition:all .2s;font-family:inherit}
+.filter-btn:hover{border-color:#6c5ce7;color:#6c5ce7}
+.filter-btn.active{background:#6c5ce7;border-color:#6c5ce7;color:#fff}
+
+/* PROJECT GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:24px;padding-bottom:80px}
+.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04);transition:all .3s ease;cursor:pointer;border:1px solid #f0f0f0}
+.card:hover{box-shadow:0 8px 30px rgba(0,0,0,.08);transform:translateY(-4px);border-color:#e8e0ff}
+.card-img{width:100%;height:220px;object-fit:cover;display:block;background:#f5f5f5}
+.card-body{padding:20px}
+.card-body h3{font-size:18px;font-weight:600;margin-bottom:6px}
+.card-body .category{display:inline-block;font-size:12px;font-weight:600;color:#6c5ce7;background:#f0edff;padding:3px 10px;border-radius:100px;margin-bottom:8px}
+.card-body .desc{font-size:14px;color:#777;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card{text-decoration:none;color:inherit;display:block}
+.card-hover{position:relative}
+.card-hover .overlay{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(108,92,231,.85);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;border-radius:0}
+.card:hover .overlay{opacity:1}
+.overlay span{color:#fff;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px}
+
+/* FOOTER */
+footer{text-align:center;padding:32px 0 48px;border-top:1px solid #eee;color:#999;font-size:14px}
+
+@media(max-width:640px){
+.hero h1{font-size:28px}
+.hero{padding:48px 0 32px}
+.grid{grid-template-columns:1fr}
+header .container{flex-direction:column;gap:12px}
+nav a{margin:0 12px}
 }
 </style>
 </head>
 <body>
 
 <header>
-  <a href="#" class="logo">M<span>É</span>LANGE</a>
-  <nav>
-    <a href="#services">Услуги</a>
-    <a href="#about">О студии</a>
-    <a href="#gallery">Работы</a>
-    <a href="#booking">Запись</a>
-    <button class="theme-toggle" id="themeToggle" aria-label="Сменить тему">&#9681;</button>
-    <a href="#booking" class="nav-cta">Записаться</a>
-  </nav>
+<div class="container">
+<a href="/" class="logo">Hermes <span>//</span> <em>Studio</em></a>
+<nav>
+<a href="/">Портфоліо</a>
+</nav>
+</div>
 </header>
 
 <section class="hero">
-  <div class="hero-content">
-    <p class="hero-eyebrow">Студия красоты</p>
-    <h1>Ваш образ -<br>наша работа</h1>
-    <p>Студия, где каждая деталь продумана. От консультации до финального штриха - мы создаём образ, в котором вы чувствуете себя собой.</p>
-    <a href="#booking" class="hero-cta">Записаться</a>
-  </div>
-  <div class="hero-image">
-    <img src="https://images.pexels.com/photos/7750114/pexels-photo-7750114.jpeg?auto=compress&cs=tinysrgb&w=800&h=900&fit=crop" alt="Интерьер салона красоты" loading="eager" style="width:100%;height:100%;object-fit:cover;background:#F5F5F7;">
-  </div>
+<div class="container">
+<h1>Веб-проекти, зроблені з увагою</h1>
+<p>Кожен сайт — це окремий бізнес з власним стилем. Обирайте категорію, щоб побачити роботи за напрямком.</p>
+<p class="count" style="margin-top:8px">2 проєкти · зростаємо</p>
+</div>
 </section>
 
-<section id="services">
-  <div class="section-inner reveal">
-    <h2 class="section-title">Что мы делаем</h2>
-    <p class="section-sub">Каждая услуга - это результат работы команды, которая знает своё дело. Мы используем премиальные материалы и учитываем индивидуальные особенности.</p>
-  </div>
-  <div class="section-inner services-grid">
-    <div class="service-card reveal">
-      <div class="service-text">
-        <span class="service-icon">&#9998;</span>
-        <h3>Стрижки и укладки</h3>
-        <p>От классических форм до текстурированных стрижек. Каждая линия проверена на трёх ракурсах, каждая прядь уложена с учётом структуры ваших волос.</p>
-        <p class="service-price">от 3 500 &#8381;</p>
-      </div>
-      <div class="service-image">
-        <img src="https://images.pexels.com/photos/3992875/pexels-photo-3992875.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Стрижка" loading="lazy" style="width:100%;height:100%;object-fit:cover;">
-      </div>
-    </div>
-    <div class="service-card reveal">
-      <span class="service-icon">&#9826;</span>
-      <h3>Окрашивание</h3>
-      <p>AirTouch, балаяж, сложное тонирование. Работаем с брендами L'Oreal Professionnel и Redken.</p>
-      <p class="service-price">от 7 000 &#8381;</p>
-    </div>
-    <div class="service-card reveal">
-      <span class="service-icon">&#9783;</span>
-      <h3>Уход за волосами</h3>
-      <p>Кератиновое восстановление, ботокс, ламинирование. Возвращаем здоровье и блеск даже после самого агрессивного окрашивания.</p>
-      <p class="service-price">от 4 500 &#8381;</p>
-    </div>
-    <div class="service-card reveal">
-      <span class="service-icon">&#9733;</span>
-      <h3>Брови и ресницы</h3>
-      <p>Архитектура бровей, ламинирование, окрашивание. Форма, которая подчеркивает ваши черты.</p>
-      <p class="service-price">от 1 500 &#8381;</p>
-    </div>
-  </div>
-</section>
+<div class="filters" id="filters">
+<button class="filter-btn active" data-filter="all">Усі</button>
+<button class="filter-btn" data-filter="salon">Салон краси</button>
+</div>
 
-<section id="about" class="about">
-  <div class="section-inner about-grid">
-    <div class="about-image reveal">
-      <img src="https://images.pexels.com/photos/3736520/pexels-photo-3736520.jpeg?auto=compress&cs=tinysrgb&w=600&h=500&fit=crop" alt="Интерьер студии" loading="lazy" style="width:100%;height:100%;object-fit:cover;">
-    </div>
-    <div class="reveal">
-      <h2 class="section-title">Пространство, где рождается ваш образ</h2>
-      <p class="section-sub" style="margin-bottom: 32px;">
-        MÉLANGE открылась в 2018 году с простой идеей: сделать салон, куда хочется возвращаться. Не за быстрым результатом, а за ощущением, что тебя услышали. Мы не гонимся за трендами ради трендов - мы ищем то, что работает именно для вас.
-      </p>
-      <blockquote>
-        Наша задача - не повторить картинку из Pinterest, а найти ту единственную деталь, которая делает образ вашим.
-        <cite>- <strong>Анна Смирнова</strong>, основательница студии</cite>
-      </blockquote>
-    </div>
-  </div>
-</section>
+<div class="container">
+<div class="grid" id="grid">
+<!-- FARGO -->
+<a href="https://mcduck-s8.github.io/hermes-salon-landing/fargo/index.html" class="card" data-category="salon" target="_blank">
+<div class="card-hover">
+<img class="card-img" src="https://images.pexels.com/photos/3992875/pexels-photo-3992875.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop" alt="Fargo salon preview" loading="lazy">
+<div class="overlay"><span>↗ Відкрити сайт</span></div>
+</div>
+<div class="card-body">
+<span class="category">Салон краси</span>
+<h3>Fargo — салон краси на Позняках</h3>
+<p class="desc">Повноцінний сайт з прайсом, галереєю, формою запису, вибором дати/часу та Google Maps. Київ, 2 адреси.</p>
+</div>
+</a>
 
-<section id="gallery" class="gallery">
-  <div class="section-inner reveal">
-    <h2 class="section-title">Наши работы</h2>
-    <p class="section-sub">То, что мы делаем - в кадрах. Без фильтров и постановки, только живые работы наших мастеров.</p>
-  </div>
-  <div class="gallery-track">
-    <div class="gallery-item reveal">
-      <img src="https://images.pexels.com/photos/8834077/pexels-photo-8834077.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop" alt="Окрашивание волос" loading="lazy">
-    </div>
-    <div class="gallery-item reveal">
-      <img src="https://images.pexels.com/photos/3997997/pexels-photo-3997997.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop" alt="Стрижка" loading="lazy">
-    </div>
-    <div class="gallery-item reveal">
-      <img src="https://images.pexels.com/photos/5069605/pexels-photo-5069605.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop" alt="Прическа" loading="lazy">
-    </div>
-    <div class="gallery-item reveal">
-      <img src="https://images.pexels.com/photos/4974566/pexels-photo-4974566.jpeg?auto=compress&cs=tinysrgb&w=400&h=700&fit=crop" alt="Укладка" loading="lazy">
-    </div>
-  </div>
-</section>
-
-<section id="testimonials">
-  <div class="section-inner reveal">
-    <h2 class="section-title">Что говорят гости</h2>
-  </div>
-  <div class="section-inner testimonials-grid">
-    <div class="testimonial-card reveal">
-      <p class="testimonial-text">Хожу к Марии уже два года. Каждый раз ухожу с ощущением, что меня не просто подстригли, а сделали настроение. Это дорогого стоит.</p>
-      <div class="testimonial-author">
-        <div class="testimonial-avatar">ЕК</div>
-        <div>
-          <div class="testimonial-name">Екатерина</div>
-          <div class="testimonial-role">постоянный гость</div>
-        </div>
-      </div>
-    </div>
-    <div class="testimonial-card reveal">
-      <p class="testimonial-text">Сделали сложное окрашивание после неудачного опыта в другом месте. Результат превзошел ожидания. Волосы живые, цвет натуральный.</p>
-      <div class="testimonial-author">
-        <div class="testimonial-avatar">ОЛ</div>
-        <div>
-          <div class="testimonial-name">Ольга</div>
-          <div class="testimonial-role">гость студии</div>
-        </div>
-      </div>
-    </div>
-    <div class="testimonial-card reveal">
-      <p class="testimonial-text">Атмосфера в студии невероятная. Чувствуешь себя не в салоне, а в гостях у подруги, которая гениально делает прически.</p>
-      <div class="testimonial-author">
-        <div class="testimonial-avatar">ДМ</div>
-        <div>
-          <div class="testimonial-name">Дмитрий</div>
-          <div class="testimonial-role">гость студии</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="booking" class="booking">
-  <div class="section-inner booking-layout">
-    <div class="booking-info reveal">
-      <h2>Давайте познакомимся</h2>
-      <p>Оставьте заявку, и мы свяжемся с вами в ближайшее время, чтобы подобрать удобное время и ответить на вопросы.</p>
-      <div class="booking-detail">
-        <span>Адрес</span>
-        <span>ул. Тверская, 15, Москва</span>
-      </div>
-      <div class="booking-detail">
-        <span>Часы</span>
-        <span>10:00 - 21:00, ежедневно</span>
-      </div>
-      <div class="booking-detail">
-        <span>Телефон</span>
-        <span>+7 (495) 123-45-67</span>
-      </div>
-    </div>
-    <form class="booking-form reveal" id="bookingForm">
-      <div class="form-group">
-        <label for="name">Имя</label>
-        <input type="text" id="name" placeholder="Анна" required>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label for="phone">Телефон</label>
-          <input type="tel" id="phone" placeholder="+7 (999) 123-45-67" required>
-        </div>
-        <div class="form-group">
-          <label for="service">Услуга</label>
-          <select id="service" required>
-            <option value="">Выберите услугу</option>
-            <option>Стрижка</option>
-            <option>Окрашивание</option>
-            <option>Уход за волосами</option>
-            <option>Брови и ресницы</option>
-            <option>Другое</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label for="date">Дата визита</label>
-          <select id="date" required>
-            <option value="">Выберите дату</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="time">Удобное время</label>
-          <select id="time" required>
-            <option value="">Сначала выберите дату</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="comment">Комментарий</label>
-        <textarea id="comment" placeholder="Пожелания..." rows="3"></textarea>
-      </div>
-      <div id="formMessage" class="form-message"></div>
-      <button type="submit" class="submit-btn">Отправить заявку</button>
-    </form>
-  </div>
-</section>
+<!-- OLD SALON -->
+<a href="https://mcduck-s8.github.io/hermes-salon-landing/old-salon/index.html" class="card" data-category="salon" target="_blank">
+<div class="card-hover">
+<img class="card-img" src="https://images.pexels.com/photos/7750114/pexels-photo-7750114.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop" alt="MÉLANGE salon preview" loading="lazy">
+<div class="overlay"><span>↗ Відкрити сайт</span></div>
+</div>
+<div class="card-body">
+<span class="category">Салон краси</span>
+<h3>MÉLANGE — студія краси</h3>
+<p class="desc">Лендінг з послугами, галереєю робіт, відгуками, формою запису та темною темою. Москва.</p>
+</div>
+</a>
+</div>
+</div>
 
 <footer>
-  <div class="footer-inner">
-    <a href="#" class="logo">M<span>É</span>LANGE</a>
-    <div class="footer-links">
-      <a href="#services">Услуги</a>
-      <a href="#about">О студии</a>
-      <a href="#gallery">Работы</a>
-      <a href="#booking">Запись</a>
-    </div>
-    <div class="footer-social">
-      <a href="#" target="_blank">Instagram</a>
-      <a href="#" target="_blank">Telegram</a>
-      <a href="#" target="_blank">WhatsApp</a>
-    </div>
-  </div>
+<div class="container">
+Hermes Studio · проекти додаються в міру створення
+</div>
 </footer>
 
 <script>
-// Theme toggle
-const toggle = document.getElementById('themeToggle');
-const html = document.documentElement;
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme) html.setAttribute('data-theme', savedTheme);
-toggle.addEventListener('click', () => {
-  const current = html.getAttribute('data-theme');
-  const next = current === 'light' ? 'dark' : 'light';
-  html.setAttribute('data-theme', next);
-  localStorage.setItem('theme', next);
+const buttons = document.querySelectorAll('.filter-btn');
+const cards = document.querySelectorAll('.card');
+
+buttons.forEach(btn => {
+btn.addEventListener('click', () => {
+buttons.forEach(b => b.classList.remove('active'));
+btn.classList.add('active');
+const filter = btn.dataset.filter;
+cards.forEach(card => {
+card.style.display = (filter === 'all' || card.dataset.category === filter) ? 'block' : 'none';
 });
-
-// Scroll reveal
-const revealEls = document.querySelectorAll('.reveal');
-if (revealEls.length) {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
-  );
-  revealEls.forEach((el) => observer.observe(el));
-}
-
-// Date selector
-const dateSelect = document.getElementById('date');
-const timeSelect = document.getElementById('time');
-if (dateSelect && timeSelect) {
-  const today = new Date();
-  for (let i = 0; i < 30; i++) {
-    const d = new Date(today);
-    d.setDate(today.getDate() + i);
-    const opt = document.createElement('option');
-    opt.value = d.toISOString().split('T')[0];
-    opt.textContent = d.toLocaleDateString('ru-RU', {
-      weekday: 'short', day: 'numeric', month: 'short'
-    });
-    dateSelect.appendChild(opt);
-  }
-
-  dateSelect.addEventListener('change', () => {
-    timeSelect.innerHTML = '<option value="">Выберите время</option>';
-    if (!dateSelect.value) return;
-    const day = new Date(dateSelect.value + 'T00:00:00').getDay();
-    if (day === 0) {
-      const o = document.createElement('option');
-      o.textContent = 'Воскресенье - выходной';
-      o.disabled = true;
-      timeSelect.appendChild(o);
-      return;
-    }
-    const booked = ['10:00', '14:30', '18:00'];
-    for (let h = 9; h <= 20; h++) {
-      for (let m = 0; m < 60; m += 30) {
-        if (h === 20 && m === 30) break;
-        const slot = h.toString().padStart(2,'0') + ':' + m.toString().padStart(2,'0');
-        const o = document.createElement('option');
-        o.value = slot;
-        o.textContent = booked.includes(slot) ? slot + ' (занято)' : slot;
-        if (booked.includes(slot)) o.disabled = true;
-        timeSelect.appendChild(o);
-      }
-    }
-  });
-}
-
-// Form submit
-const form = document.getElementById('bookingForm');
-const formMsg = document.getElementById('formMessage');
-if (form) {
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const name = document.getElementById('name').value.trim();
-    const phone = document.getElementById('phone').value.trim();
-    const service = document.getElementById('service').value;
-    const date = dateSelect ? dateSelect.value : '';
-    const time = timeSelect ? timeSelect.value : '';
-    if (!name || !phone || !service || !date || !time) {
-      formMsg.className = 'form-message error';
-      formMsg.textContent = 'Заполните все обязательные поля.';
-      return;
-    }
-    formMsg.className = 'form-message success';
-    formMsg.textContent = 'Спасибо! Мы перезвоним в течение 15 минут для подтверждения.';
-    console.log({name, phone, service, date, time, comment: document.getElementById('comment').value.trim()});
-    form.reset();
-    if (timeSelect) timeSelect.innerHTML = '<option value="">Сначала выберите дату</option>';
-    setTimeout(() => { formMsg.className = 'form-message'; }, 5000);
-  });
-}
-
-// Phone mask
-const phoneInput = document.getElementById('phone');
-if (phoneInput) {
-  phoneInput.addEventListener('input', function() {
-    let v = this.value.replace(/\D/g, '');
-    if (v.length > 0) {
-      let f = '+7 (';
-      if (v.length > 1) { f += v.substring(1, 4); } else { f += v.substring(1); this.value = f; return; }
-      f += ') ';
-      if (v.length > 4) { f += v.substring(4, 7); } else { f += v.substring(4); this.value = f; return; }
-      f += '-';
-      if (v.length > 7) { f += v.substring(7, 9); } else { f += v.substring(7); this.value = f; return; }
-      f += '-';
-      f += v.substring(9, 11);
-      this.value = f;
-    }
-  });
-}
+});
+});
 </script>
+
 </body>
 </html>
