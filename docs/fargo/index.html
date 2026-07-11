@@ -268,6 +268,14 @@ section{padding:clamp(60px,10vh,100px) 0;position:relative}
 /* ═══ ANIMATIONS ═══ */
 .reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease}
 .reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ═══ PRICE ACCORDION ═══ */
+.price-block{cursor:pointer;transition:var(--transition)}
+.price-block h3{user-select:none;position:relative;padding-right:28px}
+.price-block h3::before{content:'−';position:absolute;right:0;top:0;font-size:1.2rem;color:var(--terracotta);transition:var(--transition)}
+.price-block.collapsed h3::before{content:'+'}
+.price-content{overflow:hidden;transition:max-height 0.35s ease,opacity 0.3s ease;max-height:5000px;opacity:1}
+.price-block.collapsed .price-content{max-height:0;opacity:0}
 </style>
 </head>
 <body>
@@ -1046,6 +1054,27 @@ document.querySelector('.slots-grid')?.addEventListener('click', function(e) {
     }
   }
 })();
+
+// Price accordion — click heading to expand/collapse
+document.querySelectorAll('.price-block').forEach(function(block) {
+  const items = [];
+  let child = block.querySelector('h3').nextElementSibling;
+  while (child) {
+    const next = child.nextElementSibling;
+    items.push(child);
+    child = next;
+  }
+  const wrap = document.createElement('div');
+  wrap.className = 'price-content';
+  items.forEach(function(el) { wrap.appendChild(el); });
+  block.appendChild(wrap);
+  block.classList.add('collapsed');
+});
+document.querySelector('.price-grid')?.addEventListener('click', function(e) {
+  const h3 = e.target.closest('.price-block h3');
+  if (!h3) return;
+  h3.parentElement.classList.toggle('collapsed');
+});
 </script>
 </body>
 </html>
