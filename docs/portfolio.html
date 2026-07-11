@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Портфолио: Редизайн салона красоты</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'Inter','Segoe UI',system-ui,sans-serif;background:#0d0d0f;color:#e8e8ee;display:flex;flex-direction:column}
+header{text-align:center;padding:18px 20px 14px;border-bottom:1px solid #222}
+header h1{font-size:20px;font-weight:700;letter-spacing:-.3px}
+header p{font-size:13px;color:#666;margin-top:3px}
+.viewport{flex:1;display:flex;min-height:0}
+.panel{flex:1;display:flex;flex-direction:column;min-width:0}
+.panel-left{border-right:1px solid #222}
+.panel-header{padding:8px 16px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;flex-shrink:0}
+.panel-left .panel-header{background:#1a0a0a;color:#ff6b6b;border-bottom:2px solid #ff4444}
+.panel-right .panel-header{background:#0a1a0a;color:#51cf66;border-bottom:2px solid #2f9e44}
+.panel-header .badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:2px 8px;border-radius:100px}
+.panel-left .badge{background:#ff4444;color:#fff}
+.panel-right .badge{background:#2f9e44;color:#fff}
+.panel-header .desc{color:#888;font-weight:400;font-size:11px;margin-left:auto}
+iframe{flex:1;width:100%;border:none;background:#fff}
+footer{padding:14px 20px;text-align:center;border-top:1px solid #222;flex-shrink:0}
+footer a{display:inline-flex;align-items:center;gap:6px;padding:10px 28px;background:#229ed9;color:#fff;border-radius:8px;text-decoration:none;font-size:14px;font-weight:600;transition:background .15s}
+footer a:hover{background:#1c86b8}
+footer .hint{display:block;color:#555;font-size:11px;margin-top:6px}
+
+@media(max-width:768px){
+header h1{font-size:16px;padding:0 12px}
+.viewport{flex-direction:column}
+.panel-left{border-right:none;border-bottom:1px solid #222}
+.panel{flex:1;min-height:45vh}
+.panel-right{min-height:45vh}
+footer a{padding:10px 20px;font-size:13px}
+}
+</style>
+</head>
+<body>
+
+<header>
+<h1>Портфолио: Редизайн сайта салона красоты</h1>
+<p>Сравните старую и новую версию сайта</p>
+</header>
+
+<div class="viewport">
+<div class="panel panel-left">
+<div class="panel-header">
+<span class="badge">Было</span>
+<span>Старый дизайн (2005-2021)</span>
+<span class="desc">❌ неадаптивный</span>
+</div>
+<iframe id="oldFrame" src="old_site.html" loading="lazy"></iframe>
+</div>
+
+<div class="panel panel-right">
+<div class="panel-header">
+<span class="badge">Стало</span>
+<span>Новый лендинг (2026)</span>
+<span class="desc">✅ адаптивный</span>
+</div>
+<iframe id="newFrame" src="https://mcduck-s8.github.io/hermes-salon-landing/fargo/" loading="lazy"></iframe>
+</div>
+</div>
+
+<footer>
+<a href="https://t.me/hermes_studio" target="_blank">✏️ Связаться с Hermes Studio</a>
+<span class="hint">Синхронный скролл: покрутите колёсико над любой панелью</span>
+</footer>
+
+<script>
+(function(){
+let syncing = false;
+const oldFrame = document.getElementById('oldFrame');
+const newFrame = document.getElementById('newFrame');
+let oldDoc = null, newDoc = null;
+
+function getDoc(iframe){
+try{return iframe.contentDocument || iframe.contentWindow.document}catch(e){return null}
+}
+
+function setupScrollSync(){
+oldDoc = getDoc(oldFrame);
+newDoc = getDoc(newFrame);
+if(!oldDoc || !newDoc) return;
+
+const syncScroll = (source, target) => {
+source.addEventListener('scroll', () => {
+if(syncing) return;
+syncing = true;
+const ratio = source.scrollTop / (source.scrollHeight - source.clientHeight);
+target.scrollTop = ratio * (target.scrollHeight - target.clientHeight);
+requestAnimationFrame(() => { syncing = false; });
+}, {passive: true});
+};
+
+syncScroll(oldDoc, newDoc);
+syncScroll(newDoc, oldDoc);
+}
+
+// Wait for both iframes to load
+let loaded = 0;
+function onLoad(){
+loaded++;
+if(loaded === 2) setupScrollSync();
+}
+
+oldFrame.addEventListener('load', onLoad);
+newFrame.addEventListener('load', onLoad);
+
+// Fallback: retry setup periodically (in case iframe from external domain is slow)
+let attempts = 0;
+const retry = setInterval(() => {
+attempts++;
+if(oldDoc && newDoc){ clearInterval(retry); return; }
+oldDoc = getDoc(oldFrame);
+newDoc = getDoc(newFrame);
+if(oldDoc && newDoc){ setupScrollSync(); clearInterval(retry); }
+if(attempts > 20) clearInterval(retry);
+}, 500);
+})();
+</script>
+
+</body>
+</html>
