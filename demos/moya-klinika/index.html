@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Моя Клініка — демо-версія сайту</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f8f8fa;color:#1a1a1a;line-height:1.5}
+.hero{background:linear-gradient(135deg,#6c5ce7,a29bfe);color:#fff;padding:60px 24px;text-align:center}
+.hero h1{font-size:36px;font-weight:800;margin-bottom:8px;letter-spacing:-1px}
+.hero .sub{font-size:18px;opacity:.85;margin-bottom:20px}
+.hero .btn{display:inline-block;padding:14px 32px;background:#fff;color:#6c5ce7;border-radius:8px;font-weight:700;text-decoration:none;font-size:16px;transition:transform .15s}
+.hero .btn:hover{transform:translateY(-2px)}
+.container{max-width:1000px;margin:0 auto;padding:40px 24px}
+.section-title{font-size:22px;font-weight:700;margin-bottom:20px;color:#6c5ce7}
+.features{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:40px}
+.feature{background:#fff;border-radius:12px;padding:20px;border:1px solid #eee}
+.feature h3{font-size:16px;font-weight:600;margin-bottom:6px}
+.feature p{font-size:14px;color:#666;line-height:1.5}
+.doctors{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-bottom:40px}
+.doctor-card{background:#fff;border-radius:12px;padding:20px;text-align:center;border:1px solid #eee}
+.doctor-card .avatar{width:80px;height:80px;border-radius:50%;background:#eee;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:24px}
+.doctor-card h3{font-size:15px;font-weight:600}
+.doctor-card p{font-size:13px;color:#666}
+.cta{background:linear-gradient(135deg,#6c5ce7,a29bfe);color:#fff;padding:50px 24px;text-align:center;border-radius:16px;margin:40px 24px}
+.cta h2{font-size:24px;font-weight:700;margin-bottom:12px}
+.cta p{font-size:15px;opacity:.9;margin-bottom:20px}
+.cta .btn{display:inline-block;padding:14px 32px;background:#fff;color:#6c5ce7;border-radius:8px;font-weight:700;text-decoration:none}
+.footer{text-align:center;padding:24px;color:#999;font-size:13px}
+@media(max-width:768px){.hero h1{font-size:28px}}
+</style>
+</head>
+<body>
+<section class="hero">
+<h1>Моя Клініка</h1>
+<p class="sub">Турбота про ваше здоров'я — наш головний пріоритет</p>
+<a class="btn" href="#contact">✎ Записатись на прийом</a>
+</section>
+<div class="container">
+<h2 class="section-title">Медичні послуги</h2>
+<div class="features">
+<div class="feature"><h3>👨‍⚕️ Консультація лікаря</h3><p>Терапевт, педіатр, кардіолог — попередній запис</p></div>
+<div class="feature"><h3>🩸 Аналізи</h3><p>Загальні та біохімічні аналізи крові, сечі</p></div>
+<div class="feature"><h3>💉 Вакцинація</h3><p>Планові щеплення за календарем та індивідуальні схеми</p></div>
+<div class="feature"><h3>🏥 Денний стаціонар</h3><p>Крапельниці, уколи, процедури під наглядом лікаря</p></div>
+</div>
+<h2 class="section-title">Наші лікарі</h2>
+<div class="doctors">
+<div class="doctor-card"><div class="avatar">👨‍⚕️</div><h3>Лікар-терапевт</h3><p>Стаж 15 років</p></div>
+<div class="doctor-card"><div class="avatar">👩‍⚕️</div><h3>Лікар-педіатр</h3><p>Стаж 12 років</p></div>
+<div class="doctor-card"><div class="avatar">👨‍⚕️</div><h3>Лікар-кардіолог</h3><p>Стаж 20 років</p></div>
+</div>
+</div>
+<section id="contact" class="cta">
+<h2>Запишіться на прийом</h2>
+<p>Запишіться онлайн або в Instagram — ми чекаємо на вас!</p>
+<a class="btn" href="https://instagram.com/my_clinic_kiev">✎ Написати в Instagram</a>
+</section>
+<div class="footer">
+Моя Клініка &middot; Демо-версія від Hermes Studio &middot; 2026
+</div>
+</body>
+</html>
