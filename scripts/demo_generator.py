@@ -15,6 +15,12 @@ TEMPLATES = {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="{name} — демо-версія">
+<meta property="og:description" content="Сайт для {name} від Hermes Studio — сучасний дизайн, адаптивна верстка">
+<meta property="og:image" content="{og_image}">
+<meta property="og:url" content="{og_url}">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
 <title>{name} — демо-версія сайту</title>
 <style>
 *{{margin:0;padding:0;box-sizing:border-box}}
@@ -74,6 +80,12 @@ body{{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="{name} — демо-версія">
+<meta property="og:description" content="Сайт для {name} від Hermes Studio — сучасний дизайн, адаптивна верстка">
+<meta property="og:image" content="{og_image}">
+<meta property="og:url" content="{og_url}">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
 <title>{name} — демо-версія сайту</title>
 <style>
 *{{margin:0;padding:0;box-sizing:border-box}}
@@ -135,6 +147,12 @@ body{{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="{name} — демо-версія">
+<meta property="og:description" content="Сайт для {name} від Hermes Studio — сучасний дизайн, адаптивна верстка">
+<meta property="og:image" content="{og_image}">
+<meta property="og:url" content="{og_url}">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
 <title>{name} — демо-версія сайту</title>
 <style>
 *{{margin:0;padding:0;box-sizing:border-box}}
@@ -268,6 +286,8 @@ def generate_demo(name, category="salon", instagram="", tagline="",
         cta_text=cta_text,
         instagram_slug=instagram_slug,
         year=datetime.now().year,
+        og_url=f"https://mcduck-s8.github.io/hermes-salon-landing/demos/{slug}/",
+        og_image="https://mcduck-s8.github.io/hermes-salon-landing/studio-preview.jpg",
     )
     
     return slug, html
