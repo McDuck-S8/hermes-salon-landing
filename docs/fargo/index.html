@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fargo — салон краси на Позняках</title>
 <meta name="description" content="Салон краси Fargo на Позняках. Стрижки, фарбування, манікюр, педикюр, масаж, макіяж. Два салони: Княжий Затон, 2/30 та Анни Ахматової, 30.">
+<meta property="og:title" content="Fargo — салон краси на Позняках">
+<meta property="og:description" content="Стрижки, фарбування, манікюр, педикюр, масаж, макіяж у салоні Fargo на Позняках. ✂️ Запис онлайн.">
+<meta property="og:image" content="https://images.pexels.com/photos/5069603/pexels-photo-5069603.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop">
+<meta property="og:url" content="https://mcduck-s8.github.io/hermes-salon-landing/fargo/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Fargo Salon">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://images.pexels.com/photos/5069603/pexels-photo-5069603.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -55,7 +63,8 @@ section{padding:clamp(60px,10vh,100px) 0;position:relative}
 .header{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 0;transition:var(--transition);background:transparent}
 .header.scrolled{background:rgba(247,244,240,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 1px 0 rgba(0,0,0,0.06);padding:10px 0}
 .header .container{display:flex;align-items:center;justify-content:space-between}
-.header-logo{font-family:var(--font-heading);font-size:1.6rem;font-weight:600;color:var(--dark);letter-spacing:-0.02em}
+.header-logo{font-family:var(--font-heading);font-size:1.6rem;font-weight:600;color:var(--white);letter-spacing:-0.02em;transition:var(--transition)}
+.header.scrolled .header-logo{color:var(--dark)}
 .header-logo span{color:var(--terracotta)}
 .header-nav{display:flex;align-items:center;gap:32px}
 .header-nav a{font-size:0.85rem;font-weight:500;color:var(--slate-light);transition:var(--transition);position:relative}
@@ -131,6 +140,13 @@ section{padding:clamp(60px,10vh,100px) 0;position:relative}
 .price-item-val{font-family:var(--font-heading);font-size:1rem;font-weight:600;color:var(--terracotta);white-space:nowrap}
 .price-item-dots{flex:0 1 auto;min-width:20px;height:1px;border-bottom:1px dotted rgba(0,0,0,0.12);margin:0 8px}
 .price-sub{font-size:0.78rem;color:var(--slate-light);padding:4px 0 8px;font-style:italic}
+
+/* ═══ PRICE ACCORDION ═══ */
+.price-block h3{cursor:pointer;position:sticky;top:80px;z-index:5;margin:0 -16px;padding:12px 16px;padding-right:48px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;background:var(--cream);user-select:none}
+.price-block h3::after{content:'+';position:absolute;right:16px;top:12px;font-size:1.2rem;font-weight:400;color:var(--terracotta);transition:transform .25s;line-height:1.4}
+.price-block:not(.collapsed) h3::after{transform:rotate(45deg);color:var(--terracotta-dark)}
+.price-content{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.price-block:not(.collapsed) .price-content{max-height:3000px}
 
 /* ═══ PROMO ═══ */
 .promo{background:linear-gradient(135deg,var(--terracotta-dark) 0%,var(--terracotta) 100%);color:var(--white);text-align:center}
@@ -212,6 +228,7 @@ section{padding:clamp(60px,10vh,100px) 0;position:relative}
 .footer-social{display:flex;gap:12px;margin-top:16px}
 .footer-social a{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;font-size:1.1rem;padding:0;transition:var(--transition)}
 .footer-social a:hover{background:var(--terracotta);color:var(--white)}
+.footer-social svg{width:18px;height:18px}
 .footer-bottom{border-top:1px solid rgba(255,255,255,0.06);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-size:0.8rem;color:rgba(255,255,255,0.3)}
 
 /* ═══ RESPONSIVE ═══ */
@@ -411,7 +428,7 @@ section{padding:clamp(60px,10vh,100px) 0;position:relative}
     <div class="price-grid">
 
       <!-- Перукарський зал -->
-      <div class="price-block">
+      <div class="price-block" id="price-haircut">
         <h3>💇‍♀️ Перукарський зал</h3>
         <div class="price-item"><span class="price-item-name">Стрижка жіноча (миття + укладання)</span><span class="price-item-dots"></span><span class="price-item-val">800–1000₴</span></div>
         <div class="price-item"><span class="price-item-name">Полірування волосся</span><span class="price-item-dots"></span><span class="price-item-val">800–1000₴</span></div>
@@ -430,9 +447,9 @@ section{padding:clamp(60px,10vh,100px) 0;position:relative}
       </div>
 
       <!-- Укладки -->
-      <div class="price-block">
-        <h3>💁 Укладки та зачіски</h3>
-        <p class="price-sub">Укладка на браш (з миттям)</p>
+      <div class="price-block" id="price-styling">
+              <h3>💁 Укладки та зачіски</h3>
+              <p class="price-sub">Укладка на браш (з миттям)</p>
         <div class="price-item"><span class="price-item-name">I довжина</span><span class="price-item-dots"></span><span class="price-item-val">400₴</span></div>
         <div class="price-item"><span class="price-item-name">II–III довжина</span><span class="price-item-dots"></span><span class="price-item-val">490₴</span></div>
         <div class="price-item"><span class="price-item-name">IV–V довжина</span><span class="price-item-dots"></span><span class="price-item-val">570₴</span></div>
@@ -452,9 +469,9 @@ section{padding:clamp(60px,10vh,100px) 0;position:relative}
       </div>
 
       <!-- Фарбування волосся -->
-      <div class="price-block">
-        <h3>🎨 Фарбування волосся</h3>
-        <p class="price-sub">* загальна вартість з урахуванням роботи та всіх матеріалів</p>
+      <div class="price-block" id="price-color">
+              <h3>🎨 Фарбування волосся</h3>
+              <p class="price-sub">* загальна вартість з урахуванням роботи та всіх матеріалів</p>
         <div class="price-item"><span class="price-item-name">Фарбування коренів (1–2 см)</span><span class="price-item-dots"></span><span class="price-item-val">1 500–1 980₴</span></div>
         <div class="price-item"><span class="price-item-name">Фарбування коренів спецблонд</span><span class="price-item-dots"></span><span class="price-item-val">1 650–2 350₴</span></div>
         <div class="price-item"><span class="price-item-name">Корені безаміачний Vibrance</span><span class="price-item-dots"></span><span class="price-item-val">1 870–2 400₴</span></div>
@@ -469,9 +486,9 @@ section{padding:clamp(60px,10vh,100px) 0;position:relative}
       </div>
 
       <!-- Техніки фарбування -->
-      <div class="price-block">
-        <h3>🌟 Техніки фарбування</h3>
-        <p class="price-sub">Омбре, Шатуш, Балаяж (Indola, Yellow, Vibrance)</p>
+      <div class="price-block" id="price-techniques">
+              <h3>🌟 Техніки фарбування</h3>
+              <p class="price-sub">Омбре, Шатуш, Балаяж (Indola, Yellow, Vibrance)</p>
         <div class="price-item"><span class="price-item-name">II дов.</span><span class="price-item-dots"></span><span class="price-item-val">3 700₴</span></div>
         <div class="price-item"><span class="price-item-name">III дов.</span><span class="price-item-dots"></span><span class="price-item-val">4 100₴</span></div>
         <div class="price-item"><span class="price-item-name">IV дов.</span><span class="price-item-dots"></span><span class="price-item-val">4 500₴</span></div>
@@ -489,9 +506,9 @@ section{padding:clamp(60px,10vh,100px) 0;position:relative}
       </div>
 
       <!-- Блонд -->
-      <div class="price-block">
-        <h3>🦋 Мелірування / Блонд</h3>
-        <p class="price-sub">Мелірування / Знебарвлення / Тотал блонд (без тонування)</p>
+      <div class="price-block" id="price-blond">
+              <h3>🦋 Мелірування / Блонд</h3>
+              <p class="price-sub">Мелірування / Знебарвлення / Тотал блонд (без тонування)</p>
         <div class="price-item"><span class="price-item-name">I–II дов.</span><span class="price-item-dots"></span><span class="price-item-val">2 200₴</span></div>
         <div class="price-item"><span class="price-item-name">III дов.</span><span class="price-item-dots"></span><span class="price-item-val">2 680₴</span></div>
         <div class="price-item"><span class="price-item-name">IV дов.</span><span class="price-item-dots"></span><span class="price-item-val">3 180₴</span></div>
@@ -514,9 +531,9 @@ section{padding:clamp(60px,10vh,100px) 0;position:relative}
       </div>
 
       <!-- Догляд -->
-      <div class="price-block">
-        <h3>🧴 Догляд за волоссям</h3>
-        <p class="price-sub">Експрес-догляд Bbcos Kristal Evo / Milk Shake</p>
+      <div class="price-block" id="price-care">
+              <h3>🧴 Догляд за волоссям</h3>
+              <p class="price-sub">Експрес-догляд Bbcos Kristal Evo / Milk Shake</p>
         <div class="price-item"><span class="price-item-name">1–2 дов.</span><span class="price-item-dots"></span><span class="price-item-val">700₴</span></div>
         <div class="price-item"><span class="price-item-name">3–4 дов.</span><span class="price-item-dots"></span><span class="price-item-val">800₴</span></div>
         <div class="price-item"><span class="price-item-name">5–6 дов.</span><span class="price-item-dots"></span><span class="price-item-val">900₴</span></div>
@@ -540,8 +557,8 @@ section{padding:clamp(60px,10vh,100px) 0;position:relative}
       </div>
 
       <!-- Манікюр -->
-      <div class="price-block">
-        <h3>💅 Манікюр</h3>
+      <div class="price-block" id="price-nails">
+              <h3>💅 Манікюр</h3>
         <div class="price-item"><span class="price-item-name">Манікюр + покриття (однотон)</span><span class="price-item-dots"></span><span class="price-item-val">970₴</span></div>
         <div class="price-item"><span class="price-item-name">Манікюр зі зняттям + покриття</span><span class="price-item-dots"></span><span class="price-item-val">970₴</span></div>
         <div class="price-item"><span class="price-item-name">Манікюр + покриття френч/котяче око</span><span class="price-item-dots"></span><span class="price-item-val">1 090₴</span></div>
@@ -562,8 +579,8 @@ section{padding:clamp(60px,10vh,100px) 0;position:relative}
       </div>
 
       <!-- Педикюр -->
-      <div class="price-block">
-        <h3>🦶 Педикюр</h3>
+      <div class="price-block" id="price-pedicure">
+              <h3>🦶 Педикюр</h3>
         <div class="price-item"><span class="price-item-name">Педикюр зі зняттям + покриття</span><span class="price-item-dots"></span><span class="price-item-val">1 280₴</span></div>
         <div class="price-item"><span class="price-item-name">Педикюр + покриття</span><span class="price-item-dots"></span><span class="price-item-val">1 130₴</span></div>
         <div class="price-item"><span class="price-item-name">Педикюр зі зняттям + френч</span><span class="price-item-dots"></span><span class="price-item-val">1 400₴</span></div>
@@ -579,8 +596,8 @@ section{padding:clamp(60px,10vh,100px) 0;position:relative}
       </div>
 
       <!-- Масаж -->
-      <div class="price-block">
-        <h3>💆‍♀️ Масаж</h3>
+      <div class="price-block" id="price-massage">
+              <h3>💆‍♀️ Масаж</h3>
         <div class="price-item"><span class="price-item-name">Загальний масаж тіла (60 хв)</span><span class="price-item-dots"></span><span class="price-item-val">980₴</span></div>
         <div class="price-item"><span class="price-item-name">Загальний масаж тіла (90 хв)</span><span class="price-item-dots"></span><span class="price-item-val">1 300₴</span></div>
         <div class="price-item"><span class="price-item-name">Комбінований масаж (60 хв)</span><span class="price-item-dots"></span><span class="price-item-val">1 400₴</span></div>
@@ -599,8 +616,8 @@ section{padding:clamp(60px,10vh,100px) 0;position:relative}
       </div>
 
       <!-- Татуаж / Ламінування / Макіяж / Бровіст -->
-      <div class="price-block">
-        <h3>✨ Татуаж, ламінування, макіяж</h3>
+      <div class="price-block" id="price-tattoo">
+              <h3>✨ Татуаж, ламінування, макіяж</h3>
         <p class="price-sub">Татуаж</p>
         <div class="price-item"><span class="price-item-name">Пудрова техніка брів</span><span class="price-item-dots"></span><span class="price-item-val">2 750₴</span></div>
         <div class="price-item"><span class="price-item-name">Корекція брів (татуаж)</span><span class="price-item-dots"></span><span class="price-item-val">1 700₴</span></div>
@@ -900,18 +917,18 @@ section{padding:clamp(60px,10vh,100px) 0;position:relative}
         <a href="#" class="header-logo">Fargo<span>.</span></a>
         <p>Салон краси на Позняках. Стрижки, фарбування, манікюр, педикюр, масаж, макіяж, татуаж, ламінування.</p>
         <div class="footer-social">
-          <a href="https://www.instagram.com/fargosalon" target="_blank" aria-label="Instagram">📷</a>
-          <a href="https://t.me/fargosalon" target="_blank" aria-label="Telegram">✈️</a>
-          <a href="viber://chat?number=%2B380996140054" aria-label="Viber">💬</a>
+          <a href="https://www.instagram.com/fargosalon" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5"/></svg></a>
+          <a href="https://t.me/fargosalon" target="_blank" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg></a>
+          <a href="viber://chat?number=%2B380996140054" aria-label="Viber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></a>
         </div>
       </div>
       <div>
         <h4>Послуги</h4>
-        <a href="#price">Стрижки</a>
-        <a href="#price">Фарбування</a>
-        <a href="#price">Манікюр</a>
-        <a href="#price">Масаж</a>
-        <a href="#price">Татуаж</a>
+        <a href="#price-haircut">Стрижки</a>
+        <a href="#price-color">Фарбування</a>
+        <a href="#price-nails">Манікюр</a>
+        <a href="#price-massage">Масаж</a>
+        <a href="#price-tattoo">Татуаж</a>
       </div>
       <div>
         <h4>Контакти</h4>
@@ -969,84 +986,51 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 document.querySelector('.slots-grid')?.addEventListener('click', function(e) {
   const el = e.target.closest('.slot-time');
   if (!el) return;
-
-  // Find parent card and extract service
   const card = el.closest('.slot-card');
   const service = card?.querySelector('h3')?.dataset?.service || '';
-
-  // Find the date: walk backwards to the nearest preceding .slot-date sibling
   let dateEl = el.parentElement?.previousElementSibling;
-  while (dateEl && !dateEl.classList.contains('slot-date')) {
-    dateEl = dateEl.previousElementSibling;
-  }
+  while (dateEl && !dateEl.classList.contains('slot-date')) dateEl = dateEl.previousElementSibling;
   const dateTextRaw = dateEl ? dateEl.textContent.replace('📅 ','').trim() : '';
-  // Strip salon suffix for dropdown matching (e.g. "12 липня (неділя) — Княжий" → "12 липня (неділя)")
   const dateText = dateTextRaw.replace(/\s*—\s*(Княжий|Ахматової)$/, '').trim();
   const time = el.textContent.trim();
-
-  // Determine salon from date text
   let salon = '';
   if (dateTextRaw.includes('— Княжий')) salon = 'Княжий Затон, 2/30';
   else if (dateTextRaw.includes('— Ахматової')) salon = 'Анни Ахматової, 30';
-
-  // Fill form fields
   const svc = document.getElementById('service');
-  if (svc) {
-    Array.from(svc.options).forEach(o => {
-      o.selected = o.text === service || (!service && !o.value);
-    });
-  }
+  if (svc) Array.from(svc.options).forEach(o => { o.selected = o.text === service || (!service && !o.value); });
   const sln = document.getElementById('salon');
-  if (sln) {
-    Array.from(sln.options).forEach(o => {
-      o.selected = o.text === salon || (!salon && !o.value);
-    });
-  }
+  if (sln) Array.from(sln.options).forEach(o => { o.selected = o.text === salon || (!salon && !o.value); });
   const dt = document.getElementById('date');
-  if (dt) {
-    Array.from(dt.options).forEach(o => {
-      o.selected = o.text === dateText || (!dateText && !o.value);
-    });
-  }
+  if (dt) Array.from(dt.options).forEach(o => { o.selected = o.text === dateText || (!dateText && !o.value); });
   const tm = document.getElementById('time');
-  if (tm) {
-    Array.from(tm.options).forEach(o => {
-      o.selected = o.text === time || (!time && !o.value);
-    });
-  }
-
-  // Scroll to form
+  if (tm) Array.from(tm.options).forEach(o => { o.selected = o.text === time || (!time && !o.value); });
   document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' });
-  // Focus name field
   setTimeout(() => document.getElementById('name')?.focus(), 600);
 });
 
 // Populate date & time dropdowns on page load
 (function initDateTimeDropdowns() {
-  // 30 days in Ukrainian
   const months = ['', 'січня','лютого','березня','квітня','травня','червня','липня','серпня','вересня','жовтня','листопада','грудня'];
   const days = ['неділя','понеділок','вівторок','середа','четвер','п\'ятниця','субота'];
   const dateSel = document.getElementById('date');
   if (dateSel) {
-    const today = new Date(2026, 6, 11); // July 11, 2026
+    const today = new Date(2026, 6, 11);
     for (let i = 0; i < 30; i++) {
       const d = new Date(today);
       d.setDate(today.getDate() + i);
       const day = d.getDay();
-      // if (day === 0) continue; // Sundays included — slot data has Sunday times
-      const label = `${d.getDate()} ${months[d.getMonth()+1]} (${days[day]})`;
+      const label = d.getDate() + ' ' + months[d.getMonth()+1] + ' (' + days[day] + ')';
       const opt = document.createElement('option');
       opt.textContent = label;
       dateSel.appendChild(opt);
     }
   }
-  // 30-min slots 9:00–20:30
   const timeSel = document.getElementById('time');
   if (timeSel) {
     for (let h = 9; h <= 20; h++) {
       for (let m = 0; m < 60; m += 30) {
         if (h === 20 && m > 30) break;
-        const label = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+        const label = String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0');
         const opt = document.createElement('option');
         opt.textContent = label;
         timeSel.appendChild(opt);
@@ -1055,26 +1039,72 @@ document.querySelector('.slots-grid')?.addEventListener('click', function(e) {
   }
 })();
 
-// Price accordion — click heading to expand/collapse
-document.querySelectorAll('.price-block').forEach(function(block) {
-  const items = [];
-  let child = block.querySelector('h3').nextElementSibling;
-  while (child) {
-    const next = child.nextElementSibling;
-    items.push(child);
-    child = next;
+// ═══ PRICE ACCORDION ═══
+(function initPriceAccordion() {
+  var blocks = document.querySelectorAll('.price-block');
+  // Wrap items in .price-content
+  blocks.forEach(function(block) {
+    var items = [];
+    var child = block.querySelector('h3').nextElementSibling;
+    while (child) {
+      var next = child.nextElementSibling;
+      items.push(child);
+      child = next;
+    }
+    if (items.length) {
+      var wrap = document.createElement('div');
+      wrap.className = 'price-content';
+      items.forEach(function(el) { wrap.appendChild(el); });
+      block.appendChild(wrap);
+    }
+  });
+
+  // Open hash target on load (footer links)
+  function openHash() {
+    var id = window.location.hash;
+    if (!id) return;
+    var target = document.querySelector(id === '#price' ? '.price-grid' : id);
+    if (!target) return;
+    if (target.classList) {
+      target.classList.remove('collapsed');
+      var idx = Array.prototype.indexOf.call(blocks, target);
+      if (idx >= 0) {
+        var partner = idx % 2 === 0 ? blocks[idx + 1] : blocks[idx - 1];
+        if (partner) partner.classList.remove('collapsed');
+      }
+    }
+    setTimeout(function() { target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
   }
-  const wrap = document.createElement('div');
-  wrap.className = 'price-content';
-  items.forEach(function(el) { wrap.appendChild(el); });
-  block.appendChild(wrap);
-  block.classList.add('collapsed');
-});
-document.querySelector('.price-grid')?.addEventListener('click', function(e) {
-  const h3 = e.target.closest('.price-block h3');
-  if (!h3) return;
-  h3.parentElement.classList.toggle('collapsed');
-});
+
+  // Click handler — sync paired blocks on desktop
+  var grid = document.querySelector('.price-grid');
+  grid.addEventListener('click', function(e) {
+    var h3 = e.target.closest('.price-block h3');
+    if (!h3) return;
+    if (window.innerWidth <= 768) {
+      h3.parentElement.classList.toggle('collapsed');
+      return;
+    }
+    var block = h3.parentElement;
+    var idx = Array.prototype.indexOf.call(blocks, block);
+    if (idx < 0) return;
+    var isCollapsing = !block.classList.contains('collapsed');
+    block.classList.toggle('collapsed');
+    var partnerIdx = idx % 2 === 0 ? idx + 1 : idx - 1;
+    var partner = blocks[partnerIdx];
+    if (partner) {
+      if (isCollapsing) partner.classList.add('collapsed');
+      else partner.classList.remove('collapsed');
+    }
+  });
+
+  // Start collapsed
+  blocks.forEach(function(b) { b.classList.add('collapsed'); });
+
+  // Open from hash after init
+  openHash();
+  window.addEventListener('hashchange', openHash);
+})();
 </script>
 </body>
 </html>
