@@ -3,7 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hermes Studio — портфолио</title>
+<title>Hermes Studio — веб-студія</title>
+<meta property="og:title" content="Hermes Studio — розробка сайтів для малого бізнесу">
+<meta property="og:description" content="Сайти, лендінги, запис онлайн для салонів краси, кафе, медцентрів та автосервісів. Швидко, якісно, з AI.">
+<meta property="og:image" content="https://mcduck-s8.github.io/hermes-salon-landing/studio-preview.jpg">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hermes Studio">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mcduck-s8.github.io/hermes-salon-landing/studio-preview.jpg">
+<meta name="description" content="Hermes Studio — розробка сайтів для малого бізнесу. Сайти, лендінги, запис онлайн для салонів краси, кафе, медцентрів, автосервісів.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -107,10 +115,14 @@ footer{max-width:1320px;margin:0 auto;padding:32px 24px;border-top:1px solid var
 
 <section class="hero">
 <div class="hero-top">
-<h1 data-i18n="title">Веб-проєкти</h1>
-<span style="font-size:14px;color:var(--muted)">7 проєктів · 5 категорій</span>
+<h1 data-i18n="title">Hermes Studio</h1>
+<span style="font-size:14px;color:var(--muted)">веб-розробка · AI · 7 проєктів</span>
 </div>
-<p class="sub" data-i18n="subtitle">Кожен сайт — окремий бізнес з власним стилем. Обирайте категорію, щоб побачити роботи за напрямком.</p>
+<p class="sub" data-i18n="subtitle">Створюємо сайти для малого бізнесу, які реально працюють. Прайс з акордеоном, запис онлайн, галерея, 2 мови, SEO — під ключ. Швидше й дешевше за студії завдяки AI.</p>
+<div style="display:flex;gap:8px;margin-top:20px;flex-wrap:wrap">
+<a href="#projects" class="btn-primary" style="padding:12px 28px;background:var(--accent);color:#fff;border-radius:8px;font-weight:600;text-decoration:none;font-size:15px;transition:background .15s">⟶ Подивитись роботи</a>
+<a href="#pricing" class="btn-secondary" style="padding:12px 28px;background:var(--cat-hover);color:var(--text);border-radius:8px;font-weight:500;text-decoration:none;font-size:15px;transition:background .15s">Ціни та пакети</a>
+</div>
 </section>
 
 <div class="layout">
@@ -132,13 +144,77 @@ footer{max-width:1320px;margin:0 auto;padding:32px 24px;border-top:1px solid var
 </main>
 </div>
 
+<!-- SERVICES -->
+<section id="services" style="max-width:1320px;margin:0 auto;padding:40px 24px;border-top:1px solid var(--border)">
+<h2 style="font-size:24px;font-weight:800;margin-bottom:24px;letter-spacing:-.5px">Що ми робимо</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px">
+<div style="background:var(--surface);border:1px solid var(--card-border);border-radius:12px;padding:20px">
+<div style="font-size:32px;margin-bottom:8px">🌐</div>
+<h3 style="font-size:15px;font-weight:700;margin-bottom:6px">Сайти під ключ</h3>
+<p style="font-size:13px;color:var(--muted);line-height:1.5">Лендінг, багатосторінковий, каталог. Адаптив, SEO, швидкість 95+ Lighthouse.</p>
+</div>
+<div style="background:var(--surface);border:1px solid var(--card-border);border-radius:12px;padding:20px">
+<div style="font-size:32px;margin-bottom:8px">📅</div>
+<h3 style="font-size:15px;font-weight:700;margin-bottom:6px">Запис онлайн</h3>
+<p style="font-size:13px;color:var(--muted);line-height:1.5">Форма з вибором дати/часу/майстра. Telegram-сповіщення про новий запис.</p>
+</div>
+<div style="background:var(--surface);border:1px solid var(--card-border);border-radius:12px;padding:20px">
+<div style="font-size:32px;margin-bottom:8px">📱</div>
+<h3 style="font-size:15px;font-weight:700;margin-bottom:6px">Інтеграції</h3>
+<p style="font-size:13px;color:var(--muted);line-height:1.5">Instagram, Google Maps, Telegram-бот, CRM, платіжні системи.</p>
+</div>
+<div style="background:var(--surface);border:1px solid var(--card-border);border-radius:12px;padding:20px">
+<div style="font-size:32px;margin-bottom:8px">🤖</div>
+<h3 style="font-size:15px;font-weight:700;margin-bottom:6px">AI-прискорення</h3>
+<p style="font-size:13px;color:var(--muted);line-height:1.5">Сайти створюються з AI-агентами — у 3-5x швидше й дешевше за звичайну студію.</p>
+</div>
+</div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section style="max-width:1320px;margin:0 auto;padding:24px 24px 40px">
+<h2 style="font-size:24px;font-weight:800;margin-bottom:24px;letter-spacing:-.5px">Як ми працюємо</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px">
+<div style="background:var(--surface);border:1px solid var(--card-border);border-radius:12px;padding:16px;text-align:center">
+<div style="width:36px;height:36px;border-radius:50%;background:var(--accent);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;margin-bottom:8px">1</div>
+<h3 style="font-size:13px;font-weight:600;margin-bottom:4px">Аналіз</h3>
+<p style="font-size:12px;color:var(--muted);line-height:1.4">Вивчаємо бізнес, конкурентів, цільову аудиторію</p>
+</div>
+<div style="background:var(--surface);border:1px solid var(--card-border);border-radius:12px;padding:16px;text-align:center">
+<div style="width:36px;height:36px;border-radius:50%;background:var(--accent);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;margin-bottom:8px">2</div>
+<h3 style="font-size:13px;font-weight:600;margin-bottom:4px">Демо</h3>
+<p style="font-size:12px;color:var(--muted);line-height:1.4">Робимо робочий прототип за 1-2 дні</p>
+</div>
+<div style="background:var(--surface);border:1px solid var(--card-border);border-radius:12px;padding:16px;text-align:center">
+<div style="width:36px;height:36px;border-radius:50%;background:var(--accent);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;margin-bottom:8px">3</div>
+<h3 style="font-size:13px;font-weight:600;margin-bottom:4px">Запуск</h3>
+<p style="font-size:12px;color:var(--muted);line-height:1.4">Деплой, SEO, OG-теги, SSL — все під ключ</p>
+</div>
+<div style="background:var(--surface);border:1px solid var(--card-border);border-radius:12px;padding:16px;text-align:center">
+<div style="width:36px;height:36px;border-radius:50%;background:var(--accent);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;margin-bottom:8px">4</div>
+<h3 style="font-size:13px;font-weight:600;margin-bottom:4px">Підтримка</h3>
+<p style="font-size:12px;color:var(--muted);line-height:1.4">Хостинг, оновлення, правки — $30-50/міс</p>
+</div>
+</div>
+</section>
+
+<!-- CTA -->
+<section id="pricing" style="max-width:1320px;margin:0 auto;padding:40px 24px;border-top:1px solid var(--border);text-align:center">
+<h2 style="font-size:24px;font-weight:800;margin-bottom:8px;letter-spacing:-.5px">Готові почати?</h2>
+<p style="color:var(--muted);font-size:15px;margin-bottom:20px;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.5">Залиште заявку — ми зробимо демо вашого майбутнього сайту безкоштовно. Якщо сподобається — домовимося про ціну.</p>
+<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+<a href="https://instagram.com/hermes.studio" target="_blank" class="btn-primary" style="padding:14px 32px;background:var(--accent);color:#fff;border-radius:8px;font-weight:600;text-decoration:none;font-size:15px;transition:background .15s">⟶ Написати в Instagram</a>
+<a href="mailto:studio@hermes.dev" style="padding:14px 32px;background:var(--cat-hover);color:var(--text);border-radius:8px;font-weight:500;text-decoration:none;font-size:15px;transition:background .15s">✉ studio@hermes.dev</a>
+</div>
+</section>
+
 <footer data-i18n="footer">Hermes Studio · нові проєкти додаються в міру створення</footer>
 
 <script>
 const LANG = {
-ru:{title:'Веб-проекты',subtitle:'Каждый сайт — отдельный бизнес с собственным стилем. Выберите категорию, чтобы увидеть работы по направлению.',categories:'Категории',all:'Все проекты',cat_salon:'Салон красоты',cat_cafe:'Кафе',cat_auto:'Авто',cat_clinic:'Медицина',cat_funeral:'Ритуальные',footer:'Hermes Studio · новые проекты добавляются по мере создания',empty:'Здесь пока пусто. Скоро появится первый проект.'},
-uk:{title:'Веб-проєкти',subtitle:'Кожен сайт — окремий бізнес з власним стилем. Оберіть категорію, щоб побачити роботи за напрямком.',categories:'Категорії',all:'Усі проєкти',cat_salon:'Салон краси',cat_cafe:'Кафе',cat_auto:'Авто',cat_clinic:'Медицина',cat_funeral:'Ритуальні',footer:'Hermes Studio · нові проєкти додаються в міру створення',empty:'Тут поки що пусто. Скоро з\'явиться перший проєкт.'},
-en:{title:'Web Projects',subtitle:'Every site is a separate business with its own style. Choose a category to see work by direction.',categories:'Categories',all:'All Projects',cat_salon:'Beauty Salon',cat_cafe:'Café',cat_auto:'Auto Service',cat_clinic:'Clinic',cat_funeral:'Funeral',footer:'Hermes Studio · new projects added as they are created',empty:'Nothing here yet. First project coming soon.'}
+ru:{title:'Hermes Studio',subtitle:'Создаем сайты для малого бизнеса, которые реально работают. Прайс с аккордеоном, запись онлайн, галерея, 2 языка, SEO — под ключ. Быстрее и дешевле студий благодаря AI.',categories:'Категории',all:'Все проекты',cat_salon:'Салон красоты',cat_cafe:'Кафе',cat_auto:'Авто',cat_clinic:'Медицина',cat_funeral:'Ритуальные',footer:'Hermes Studio · новые проекты добавляются по мере создания',empty:'Здесь пока пусто. Скоро появится первый проект.'},
+uk:{title:'Hermes Studio',subtitle:'Створюємо сайти для малого бізнесу, які реально працюють. Прайс з акордеоном, запис онлайн, галерея, 2 мови, SEO — під ключ. Швидше й дешевше за студії завдяки AI.',categories:'Категорії',all:'Усі проєкти',cat_salon:'Салон краси',cat_cafe:'Кафе',cat_auto:'Авто',cat_clinic:'Медицина',cat_funeral:'Ритуальні',footer:'Hermes Studio · нові проєкти додаються в міру створення',empty:'Тут поки що пусто. Скоро з\'явиться перший проєкт.'},
+en:{title:'Hermes Studio',subtitle:'We build websites for small businesses that actually work. Accordion price list, online booking, gallery, 2 languages, SEO — turnkey. Faster and cheaper than traditional studios thanks to AI.',categories:'Categories',all:'All Projects',cat_salon:'Beauty Salon',cat_cafe:'Café',cat_auto:'Auto Service',cat_clinic:'Clinic',cat_funeral:'Funeral',footer:'Hermes Studio · new projects added as they are created',empty:'Nothing here yet. First project coming soon.'}
 };
 
 const PROJECTS = [
