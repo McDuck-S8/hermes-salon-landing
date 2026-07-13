@@ -69,14 +69,155 @@ body{{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
 </div>
 </body>
 </html>""",
+    "medical": """<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{name} — демо-версія сайту</title>
+<style>
+*{{margin:0;padding:0;box-sizing:border-box}}
+body{{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f8f8fa;color:#1a1a1a;line-height:1.5}}
+.hero{{background:linear-gradient(135deg,#{accent1},{accent2});color:#fff;padding:60px 24px;text-align:center}}
+.hero h1{{font-size:36px;font-weight:800;margin-bottom:8px;letter-spacing:-1px}}
+.hero .sub{{font-size:18px;opacity:.85;margin-bottom:20px}}
+.hero .btn{{display:inline-block;padding:14px 32px;background:#fff;color:#{accent1};border-radius:8px;font-weight:700;text-decoration:none;font-size:16px;transition:transform .15s}}
+.hero .btn:hover{{transform:translateY(-2px)}}
+.container{{max-width:1000px;margin:0 auto;padding:40px 24px}}
+.section-title{{font-size:22px;font-weight:700;margin-bottom:20px;color:#{accent1}}}
+.features{{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:40px}}
+.feature{{background:#fff;border-radius:12px;padding:20px;border:1px solid #eee}}
+.feature h3{{font-size:16px;font-weight:600;margin-bottom:6px}}
+.feature p{{font-size:14px;color:#666;line-height:1.5}}
+.doctors{{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-bottom:40px}}
+.doctor-card{{background:#fff;border-radius:12px;padding:20px;text-align:center;border:1px solid #eee}}
+.doctor-card .avatar{{width:80px;height:80px;border-radius:50%;background:#eee;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;color:#999;font-size:24px}}
+.doctor-card h3{{font-size:15px;font-weight:600}}
+.doctor-card p{{font-size:13px;color:#666}}
+.cta{{background:linear-gradient(135deg,#{accent1},{accent2});color:#fff;padding:50px 24px;text-align:center;border-radius:16px;margin:40px 24px}}
+.cta h2{{font-size:24px;font-weight:700;margin-bottom:12px}}
+.cta p{{font-size:15px;opacity:.9;margin-bottom:20px}}
+.cta .btn{{display:inline-block;padding:14px 32px;background:#fff;color:#{accent1};border-radius:8px;font-weight:700;text-decoration:none}}
+.footer{{text-align:center;padding:24px;color:#999;font-size:13px}}
+@media(max-width:768px){{.hero h1{{font-size:28px}}}}
+</style>
+</head>
+<body>
+<section class="hero">
+<h1>{name}</h1>
+<p class="sub">{tagline}</p>
+<a class="btn" href="#contact">✎ Записатись на прийом</a>
+</section>
+<div class="container">
+<h2 class="section-title">Медичні послуги</h2>
+<div class="features">
+{services_html}
+</div>
+<h2 class="section-title">Наші лікарі</h2>
+<div class="doctors">
+<div class="doctor-card"><div class="avatar">👨‍⚕️</div><h3>Лікар-терапевт</h3><p>Стаж 15 років</p></div>
+<div class="doctor-card"><div class="avatar">👩‍⚕️</div><h3>Лікар-педіатр</h3><p>Стаж 12 років</p></div>
+<div class="doctor-card"><div class="avatar">👨‍⚕️</div><h3>Лікар-кардіолог</h3><p>Стаж 20 років</p></div>
+</div>
+</div>
+<section id="contact" class="cta">
+<h2>Запишіться на прийом</h2>
+<p>{cta_text}</p>
+<a class="btn" href="https://instagram.com/{instagram_slug}">✎ Написати в Instagram</a>
+</section>
+<div class="footer">
+{name} &middot; Демо-версія від Hermes Studio &middot; {year}
+</div>
+</body>
+</html>""",
+    "cafe": """<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{name} — демо-версія сайту</title>
+<style>
+*{{margin:0;padding:0;box-sizing:border-box}}
+body{{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f8f8fa;color:#1a1a1a;line-height:1.5}}
+.hero{{background:linear-gradient(135deg,#{accent1},{accent2});color:#fff;padding:60px 24px;text-align:center}}
+.hero h1{{font-size:36px;font-weight:800;margin-bottom:8px;letter-spacing:-1px}}
+.hero .sub{{font-size:18px;opacity:.85;margin-bottom:20px}}
+.hero .btn{{display:inline-block;padding:14px 32px;background:#fff;color:#{accent1};border-radius:8px;font-weight:700;text-decoration:none;font-size:16px}}
+.container{{max-width:1000px;margin:0 auto;padding:40px 24px}}
+.section-title{{font-size:22px;font-weight:700;margin-bottom:20px;color:#{accent1}}}
+.features{{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:40px}}
+.feature{{background:#fff;border-radius:12px;padding:20px;border:1px solid #eee}}
+.feature h3{{font-size:16px;font-weight:600;margin-bottom:6px}}
+.feature p{{font-size:14px;color:#666;line-height:1.5}}
+.menu{{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:40px}}
+.menu-item{{background:#fff;border-radius:8px;padding:16px;border:1px solid #eee;text-align:center}}
+.menu-item .icon{{font-size:32px;margin-bottom:8px}}
+.menu-item h3{{font-size:14px;font-weight:600}}
+.menu-item .price{{color:#{accent1};font-weight:700;font-size:14px}}
+.gallery{{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:40px}}
+.gallery-item{{background:#eee;border-radius:8px;height:150px;display:flex;align-items:center;justify-content:center;color:#999;font-size:13px}}
+.cta{{background:linear-gradient(135deg,#{accent1},{accent2});color:#fff;padding:50px 24px;text-align:center;border-radius:16px;margin:40px 24px}}
+.cta h2{{font-size:24px;font-weight:700;margin-bottom:12px}}
+.cta p{{font-size:15px;opacity:.9;margin-bottom:20px}}
+.cta .btn{{display:inline-block;padding:14px 32px;background:#fff;color:#{accent1};border-radius:8px;font-weight:700;text-decoration:none}}
+.footer{{text-align:center;padding:24px;color:#999;font-size:13px}}
+@media(max-width:768px){{.hero h1{{font-size:28px}}}}
+</style>
+</head>
+<body>
+<section class="hero">
+<h1>{name}</h1>
+<p class="sub">{tagline}</p>
+<a class="btn" href="#contact">✎ Забронювати стіл</a>
+</section>
+<div class="container">
+<h2 class="section-title">Меню</h2>
+<div class="menu">
+<div class="menu-item"><div class="icon">☕</div><h3>Кава</h3><p class="price">від 45₴</p></div>
+<div class="menu-item"><div class="icon">🥐</div><h3>Випічка</h3><p class="price">від 35₴</p></div>
+<div class="menu-item"><div class="icon">🥗</div><h3>Салати</h3><p class="price">від 85₴</p></div>
+<div class="menu-item"><div class="icon">🍝</div><h3>Гарячі страви</h3><p class="price">від 120₴</p></div>
+</div>
+<h2 class="section-title">Про нас</h2>
+<div class="features">
+{services_html}
+</div>
+<h2 class="section-title">Галерея</h2>
+<div class="gallery">
+<div class="gallery-item">📸 Інтер'єр</div>
+<div class="gallery-item">📸 Страви</div>
+<div class="gallery-item">📸 Атмосфера</div>
+</div>
+</div>
+<section id="contact" class="cta">
+<h2>Забронюйте стіл</h2>
+<p>{cta_text}</p>
+<a class="btn" href="https://instagram.com/{instagram_slug}">✎ Написати в Instagram</a>
+</section>
+<div class="footer">
+{name} &middot; Демо-версія від Hermes Studio &middot; {year}
+</div>
+</body>
+</html>""",
 }
 
 DEFAULT_SERVICES = {
     "salon": [
-        ("💇‍♀️ Стрижки та укладки", "Професійні стрижки, укладки, догляд за волоссям для жінок та чоловіків"),
-        ("🎨 Фарбування", "Омбрі, балаяж, мелірування, тонування — будь-які техніки"),
+        ("💇‍♀️ Стрижки та укладки", "Професійні стрижки, укладки, догляд за волоссям"),
+        ("🎨 Фарбування", "Омбрі, балаяж, мелірування, тонування"),
         ("💅 Манікюр та педикюр", "Класичний, апаратний, гель-лак, дизайн нігтів"),
         ("✨ Догляд за обличчям", "Чистка, маски, пілінг, масаж обличчя"),
+    ],
+    "medical": [
+        ("👨‍⚕️ Консультація лікаря", "Терапевт, педіатр, кардіолог — попередній запис"),
+        ("🩸 Аналізи", "Загальні та біохімічні аналізи крові, сечі"),
+        ("💉 Вакцинація", "Планові щеплення за календарем та індивідуальні схеми"),
+        ("🏥 Денний стаціонар", "Крапельниці, уколи, процедури під наглядом лікаря"),
+    ],
+    "cafe": [
+        ("☕ Напої", "Кава, чай, смузі, лимонади — 20+ позицій"),
+        ("🥐 Сніданки", "З 8:00 до 12:00 — круасани, тости, яєчня"),
+        ("🍝 Обіди", "Бізнес-ланчі з 12:00 до 16:00"),
     ],
 }
 
