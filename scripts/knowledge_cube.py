@@ -20,12 +20,14 @@ def get_db():
     conn.executescript("""
         CREATE TABLE IF NOT EXISTS experiences (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            ts TEXT NOT NULL, raw_text TEXT NOT NULL, hash TEXT UNIQUE NOT NULL,
+            ts TEXT NOT NULL, content TEXT NOT NULL, raw_text TEXT NOT NULL, hash TEXT UNIQUE NOT NULL,
             axis_time_hour INTEGER, axis_time_dow INTEGER,
             axis_domain TEXT, axis_outcome TEXT,
             dynamic_axes TEXT DEFAULT '{}',
             is_white_spot INTEGER DEFAULT 0, white_spot_cluster_id TEXT,
-            source TEXT, confidence REAL DEFAULT 1.0, tags TEXT DEFAULT '[]'
+            source TEXT, confidence REAL DEFAULT 1.0, tags TEXT DEFAULT '[]',
+            importance REAL DEFAULT 0.5,
+            expiration_date TEXT, verification_method TEXT DEFAULT 'manual'
         );
         CREATE TABLE IF NOT EXISTS dimensions (
             name TEXT PRIMARY KEY, discovered_at TEXT NOT NULL,
@@ -117,9 +119,9 @@ def add_experience(text, tools=None, source="session", dynamic_axes=None):
     tags = auto_tag(text, tools)
     dynamic = dynamic_axes or {}
     is_white, white_reasons = detect_white_spot(text, domain, outcome, dynamic)
-    conn.execute("""INSERT INTO experiences (ts,raw_text,hash,axis_time_hour,axis_time_dow,
-        axis_domain,axis_outcome,dynamic_axes,is_white_spot,source,tags) VALUES (?,?,?,?,?,?,?,?,?,?,?)""",
-        (now.isoformat(), text, h, now.hour, now.weekday(), domain, outcome,
+    conn.execute("""INSERT INTO experiences (ts,content,raw_text,hash,axis_time_hour,axis_time_dow,
+        axis_domain,axis_outcome,dynamic_axes,is_white_spot,source,tags) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)""",
+        (now.isoformat(), text, text, h, now.hour, now.weekday(), domain, outcome,
          json.dumps(dynamic), 1 if is_white else 0, source, json.dumps(tags)))
     conn.commit(); conn.close()
     return {"status":"added","domain":domain,"outcome":outcome,"tags":tags,

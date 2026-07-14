@@ -495,6 +495,9 @@ def _self_reflect(history, snap):
     lines = []
     lines.append("=== САМОПОНИМАНИЕ ===")
     
+    # Какие источники исчерпаны (нужно до блока recent для untouched)
+    extract_done = [aid.replace('extract_', '') for aid in history if aid.startswith('extract_')]
+    
     # Последние 10 решений
     recent = list(history.items())[-10:]
     if recent:
@@ -502,31 +505,30 @@ def _self_reflect(history, snap):
         for aid, info in recent:
             result = info.get('result', '')[:100]
             lines.append(f"  [{aid}] {result}")
-        
+       
         # Какие действия повторяются
         from collections import Counter
         action_counts = Counter(aid for aid, _ in recent)
         repeats = {a: c for a, c in action_counts.items() if c > 1}
         if repeats:
             lines.append(f"ПОВТОРЫ: {repeats} — нужно сменить стратегию")
-        
+       
         # Какие источники исчерпаны
-        extract_done = [aid.replace('extract_', '') for aid in history if aid.startswith('extract_')]
         if extract_done:
             lines.append(f"Источники уже извлечены: {extract_done}")
-    
+   
     # Текущее состояние
     ee = snap.get('ee', {})
     kc = snap.get('kc', {})
     lines.append(f"Сейчас: KC={kc.get('total',0)} EE={ee.get('entities',0)} связей={ee.get('relations',0)}")
     lines.append(f"Сироты: {kc.get('orphans',0)} ({kc.get('orphans',0)*100//max(kc.get('total',1),1)}%)")
-    
+   
     # Что ещё не тронуто
     orphans_raw = kc.get('orphan_by_source', {})
     untouched = {s: c for s, c in orphans_raw.items() if s not in extract_done}
     if untouched:
         lines.append(f"Не тронутые источники: {untouched}")
-    
+   
     return '\n'.join(lines)
 
 
@@ -2199,8 +2201,8 @@ def _self_discover(snap, done_sources, historical_ids=None):
         e2.execute("""
             SELECT COUNT(DISTINCT e.id) FROM entities e
             JOIN entity_types et ON e.type_id=et.id
-            LEFT JOIN relationships r ON e.id = r.source_entity_id OR e.id = r.target_entity_id
-            WHERE et.name='AI Agent' AND r.id IS NULL
+            LEFT JOIN relationships r ON e.id = r.source_id OR e.id = r.target_id
+                        WHERE et.name='AI Agent' AND r.id IS NULL
         """)
         isolated = e2.fetchone()[0]
         e2.execute("SELECT COUNT(*) FROM entities e JOIN entity_types et ON e.type_id=et.id WHERE et.name='AI Agent'")
