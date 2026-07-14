@@ -80,11 +80,15 @@ section{padding:clamp(60px,10vh,100px) 0;position:relative}
 .btn-outline:hover{border-color:var(--white);background:rgba(255,255,255,0.08)}
 .btn-outline-dark{background:transparent;color:var(--terracotta);border:1.5px solid var(--terracotta)}
 .btn-outline-dark:hover{background:var(--terracotta);color:var(--white)}
+.header .btn-primary{background:var(--terracotta);color:var(--white)}
+.header.scrolled .btn-primary{background:var(--dark);color:var(--white)}
+.header .btn-primary:hover{background:var(--terracotta-dark);transform:translateY(-2px);box-shadow:0 8px 25px rgba(196,106,74,0.3)}
+.header.scrolled .btn-primary:hover{background:var(--terracotta);color:var(--white);box-shadow:0 8px 25px rgba(196,106,74,0.3)}
 .header .btn-outline{color:var(--white);border-color:rgba(255,255,255,0.4)}
 .header.scrolled .btn-outline{color:var(--terracotta);border-color:var(--terracotta)}
 .header .btn-outline:hover{background:rgba(255,255,255,0.08);border-color:var(--white);color:var(--white)}
 .header.scrolled .btn-outline:hover{background:var(--terracotta);border-color:var(--terracotta);color:var(--white)}
-.btn-outline:hover{border-color:var(--white);background:rgba(255,255,255,0.08)}
+.mobile-toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;z-index:101}
 .btn-outline-dark{background:transparent;color:var(--terracotta);border:1.5px solid var(--terracotta)}
 .btn-outline-dark:hover{background:var(--terracotta);color:var(--white)}
 .mobile-toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;z-index:101}
