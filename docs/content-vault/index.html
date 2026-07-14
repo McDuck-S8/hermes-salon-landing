@@ -3,685 +3,525 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Content Vault — Unlock Premium Content</title>
+<title>Content Vault — TON Monetization Guide</title>
+<meta name="description" content="Complete guide to earning TON without KYC. Content-locking, referral programs, Telegram Mini Apps — step-by-step playbook.">
+<meta property="og:title" content="Content Vault — TON Monetization Guide">
+<meta property="og:description" content="Complete guide to earning TON without KYC. Step-by-step playbook.">
+<meta property="og:image" content="https://mcduck-s8.github.io/hermes-salon-landing/content-vault/icon-180.png">
+<meta property="og:url" content="https://mcduck-s8.github.io/hermes-salon-landing/content-vault/">
+<meta name="twitter:card" content="summary_large_image">
 <style>
   :root {
-    --ton-blue: #0088CC;
-    --ton-blue-dark: #006699;
-    --bg: #0D0D12;
-    --surface: #16161F;
-    --border: #2A2A3A;
-    --text: #E8E8EE;
-    --text-dim: #8888A0;
-    --accent: #00A3FF;
-    --success: #34C759;
+    --blue: #0098EA;
+    --blue-dark: #0072B0;
+    --blue-glow: rgba(0, 152, 234, 0.25);
+    --bg: #0B0B12;
+    --surface: #14141F;
+    --surface-alt: #1A1A28;
+    --border: #262640;
+    --text: #E8E8F0;
+    --text-dim: #7878A0;
+    --success: #30D158;
     --error: #FF453A;
-    --radius: 12px;
+    --radius: 16px;
+    --radius-sm: 10px;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', system-ui, sans-serif;
     background: var(--bg);
     color: var(--text);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
     line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
   }
-
-  .container {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 40px 20px;
-    flex: 1;
-    width: 100%;
-  }
+  .container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
 
   /* Header */
   header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 0;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 0; border-bottom: 1px solid var(--border);
   }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; }
+  .logo-icon { width: 36px; height: 36px; background: var(--blue); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+  .header-right { display: flex; align-items: center; gap: 12px; font-size: 14px; }
 
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 700;
-    font-size: 18px;
-    color: var(--text);
+  /* Hero */
+  .hero { padding: 60px 0 40px; text-align: center; }
+  .hero h1 { font-size: clamp(28px, 5vw, 48px); font-weight: 800; line-height: 1.15; margin-bottom: 16px; }
+  .hero h1 span { background: linear-gradient(135deg, var(--blue), #7B68EE); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero p { font-size: 18px; color: var(--text-dim); max-width: 600px; margin: 0 auto 32px; }
+  
+  .price-card {
+    display: inline-flex; align-items: center; gap: 16px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 20px 32px; margin: 0 auto 32px;
   }
+  .price-amount { font-size: 36px; font-weight: 800; color: var(--blue); }
+  .price-label { font-size: 14px; color: var(--text-dim); }
+  .price-usd { font-size: 14px; color: var(--text-dim); opacity: 0.7; }
 
-  .logo-icon {
-    width: 32px; height: 32px;
-    background: var(--ton-blue);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-  }
+  /* Steps */
+  .steps { display: flex; justify-content: center; gap: 12px; margin: 32px 0; flex-wrap: wrap; }
+  .step { display: flex; align-items: center; gap: 10px; padding: 10px 20px; border-radius: 24px; background: var(--surface); border: 1px solid var(--border); font-size: 14px; color: var(--text-dim); transition: all 0.3s; }
+  .step-num { width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; background: var(--border); color: var(--text-dim); flex-shrink: 0; }
+  .step.active { border-color: var(--blue); color: var(--text); }
+  .step.active .step-num { background: var(--blue); color: #fff; }
+  .step.done { border-color: var(--success); color: var(--success); }
+  .step.done .step-num { background: var(--success); color: #000; }
 
-  /* Cards */
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 32px;
-    margin-bottom: 20px;
-  }
-
-  .card-centered {
-    text-align: center;
-  }
+  /* Card */
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; margin-bottom: 20px; }
+  .card-cta { text-align: center; }
 
   /* Buttons */
   .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 14px 28px;
-    border: none;
-    border-radius: var(--radius);
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 16px 32px; border: none; border-radius: var(--radius-sm);
+    font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+    text-decoration: none; font-family: inherit;
   }
+  .btn-primary { background: var(--blue); color: #fff; box-shadow: 0 4px 20px var(--blue-glow); }
+  .btn-primary:hover { background: var(--blue-dark); transform: translateY(-2px); box-shadow: 0 6px 28px var(--blue-glow); }
+  .btn-primary:disabled { opacity: 0.35; cursor: not-allowed; transform: none; box-shadow: none; }
+  .btn-secondary { background: transparent; color: var(--text); border: 1px solid var(--border); }
+  .btn-secondary:hover { border-color: var(--blue); color: var(--blue); }
+  .btn-success { background: var(--success); color: #000; }
+  .btn-sm { padding: 10px 20px; font-size: 14px; }
 
-  .btn-primary {
-    background: var(--ton-blue);
-    color: white;
+  .wallet-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 16px; background: rgba(48, 209, 88, 0.08); border: 1px solid rgba(48, 209, 88, 0.2); border-radius: var(--radius-sm);
+    font-size: 13px; color: var(--success); margin: 16px 0;
   }
-  .btn-primary:hover { background: var(--ton-blue-dark); transform: translateY(-1px); }
-  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+  .wallet-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); }
 
-  .btn-secondary {
-    background: transparent;
-    color: var(--text);
-    border: 1px solid var(--border);
+  /* Error */
+  .error-box { display: none; background: rgba(255, 69, 58, 0.08); border: 1px solid rgba(255, 69, 58, 0.25); border-radius: var(--radius-sm); padding: 14px 18px; color: var(--error); font-size: 14px; margin: 16px 0; text-align: left; }
+  .error-box.show { display: block; }
+
+  /* Content preview (blurred) */
+  .content-area { position: relative; }
+  .content-preview { filter: blur(8px); pointer-events: none; user-select: none; opacity: 0.5; transition: all 0.6s; }
+  .content-preview.unlocked { filter: none; pointer-events: auto; user-select: auto; opacity: 1; }
+  .content-overlay {
+    position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: rgba(11, 11, 18, 0.7); backdrop-filter: blur(4px); border-radius: var(--radius);
+    transition: opacity 0.4s; z-index: 2;
   }
-  .btn-secondary:hover { border-color: var(--ton-blue); color: var(--ton-blue); }
+  .content-overlay.hidden { opacity: 0; pointer-events: none; }
+  .content-overlay .lock-icon { font-size: 40px; margin-bottom: 12px; }
+  .content-overlay h3 { font-size: 20px; margin-bottom: 8px; }
+  .content-overlay p { color: var(--text-dim); font-size: 14px; max-width: 300px; }
 
-  .btn-success {
-    background: var(--success);
-    color: white;
-  }
-  .btn-success:hover { opacity: 0.9; transform: translateY(-1px); }
+  .section-title { font-size: 24px; font-weight: 700; margin: 40px 0 20px; }
+  .section-sub { color: var(--text-dim); margin-bottom: 24px; font-size: 15px; }
 
-  .btn-danger {
-    background: var(--error);
-    color: white;
-  }
+  /* Content body */
+  .content-body h3 { font-size: 20px; margin: 32px 0 16px; color: var(--blue); display: flex; align-items: center; gap: 10px; }
+  .content-body h3:first-child { margin-top: 0; }
+  .content-body ul { list-style: none; padding: 0; }
+  .content-body li { padding: 14px 0; border-bottom: 1px solid var(--border); display: flex; gap: 14px; align-items: flex-start; line-height: 1.5; }
+  .content-body li:last-child { border-bottom: none; }
+  .content-body li .icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+  .content-body code { background: rgba(255,255,255,0.06); padding: 2px 8px; border-radius: 4px; font-size: 14px; color: var(--blue); font-family: 'SF Mono', 'Cascadia Code', monospace; }
 
-  /* State screens */
-  .state { display: none; }
-  .state.active { display: block; }
+  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 24px 0; }
+  .stat-card { background: var(--surface-alt); border-radius: var(--radius-sm); padding: 20px; text-align: center; border: 1px solid var(--border); }
+  .stat-card .num { font-size: 28px; font-weight: 800; color: var(--blue); }
+  .stat-card .label { font-size: 13px; color: var(--text-dim); margin-top: 4px; }
 
-  .hero-icon {
-    font-size: 64px;
-    margin-bottom: 20px;
-  }
+  /* FAQ preview */
+  .faq-item { padding: 16px 0; border-bottom: 1px solid var(--border); }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-q { font-weight: 600; margin-bottom: 6px; display: flex; gap: 10px; }
+  .faq-a { color: var(--text-dim); font-size: 14px; padding-left: 28px; }
 
-  h1 { font-size: 32px; font-weight: 800; margin-bottom: 12px; }
-  h2 { font-size: 24px; font-weight: 700; margin-bottom: 16px; }
-  p { color: var(--text-dim); margin-bottom: 16px; line-height: 1.7; }
-
-  .price-tag {
-    display: inline-block;
-    background: rgba(0, 136, 204, 0.12);
-    color: var(--ton-blue);
-    padding: 8px 20px;
-    border-radius: 20px;
-    font-weight: 700;
-    font-size: 20px;
-    margin: 20px 0;
-  }
-
-  .wallet-info {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
-    background: rgba(255,255,255,0.04);
-    border-radius: 8px;
-    margin: 16px 0;
-    font-size: 14px;
-    word-break: break-all;
-  }
-
-  .wallet-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--success);
-    flex-shrink: 0;
-  }
-
-  .error-box {
-    background: rgba(255, 69, 58, 0.1);
-    border: 1px solid rgba(255, 69, 58, 0.3);
-    border-radius: 8px;
-    padding: 12px 16px;
-    color: var(--error);
-    font-size: 14px;
-    margin: 12px 0;
-    display: none;
-  }
-  .error-box.visible { display: block; }
-
-  .success-box {
-    background: rgba(52, 199, 89, 0.1);
-    border: 1px solid rgba(52, 199, 89, 0.3);
-    border-radius: 8px;
-    padding: 16px;
-    margin: 16px 0;
-    text-align: center;
-  }
-
+  .tx-hash { font-family: monospace; font-size: 12px; color: var(--text-dim); word-break: break-all; margin-top: 8px; }
+  .success-box { background: rgba(48, 209, 88, 0.08); border: 1px solid rgba(48, 209, 88, 0.2); border-radius: var(--radius-sm); padding: 20px; text-align: center; margin-bottom: 20px; }
   .success-box .big { font-size: 48px; margin-bottom: 8px; }
 
-  .tx-hash {
-    font-family: 'SF Mono', 'Cascadia Code', monospace;
-    font-size: 12px;
-    color: var(--text-dim);
-    word-break: break-all;
-    margin-top: 8px;
-  }
+  .manual-note { background: rgba(255, 204, 0, 0.06); border: 1px solid rgba(255, 204, 0, 0.15); border-radius: var(--radius-sm); padding: 12px 16px; font-size: 13px; color: #FFCC00; margin: 12px 0; }
 
-  /* Locked content preview */
-  .locked-content {
-    position: relative;
-    filter: blur(4px);
-    pointer-events: none;
-    user-select: none;
-    opacity: 0.5;
-  }
-  .locked-content.unlocked {
-    filter: none;
-    pointer-events: auto;
-    user-select: auto;
-    opacity: 1;
-  }
+  /* Connect button container — TON Connect UI renders here */
+  #tc-button { min-height: 52px; display: flex; align-items: center; justify-content: center; margin: 16px 0; }
 
-  .content-body h3 {
-    font-size: 20px;
-    margin: 24px 0 12px;
-    color: var(--accent);
-  }
-
-  .content-body ul {
-    list-style: none;
-    padding: 0;
-  }
-
-  .content-body li {
-    padding: 12px 0;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-  }
-
-  .content-body li:last-child { border-bottom: none; }
-
-  .content-body li .emoji { font-size: 20px; flex-shrink: 0; }
-
-  .content-body code {
-    background: rgba(255,255,255,0.06);
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 14px;
-    color: var(--accent);
-  }
-
-  .feature-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin: 16px 0;
-  }
-
-  .feature-item {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 16px;
-    text-align: center;
-  }
-
-  .feature-item .num {
-    font-size: 28px;
-    font-weight: 800;
-    color: var(--accent);
-  }
-
-  .feature-item .label {
-    font-size: 13px;
-    color: var(--text-dim);
-    margin-top: 4px;
-  }
-
-  /* Footer */
-  footer {
-    text-align: center;
-    padding: 20px;
-    color: var(--text-dim);
-    font-size: 13px;
-    border-top: 1px solid var(--border);
-  }
-
-  footer a { color: var(--ton-blue); text-decoration: none; }
-
-  .steps {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin: 24px 0;
-  }
-
-  .step {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 16px;
-    border-radius: 20px;
-    background: rgba(255,255,255,0.04);
-    font-size: 14px;
-    color: var(--text-dim);
-  }
-
-  .step.active {
-    background: rgba(0, 136, 204, 0.15);
-    color: var(--ton-blue);
-  }
-
-  .step.completed {
-    background: rgba(52, 199, 89, 0.12);
-    color: var(--success);
-  }
-
-  .step .num {
-    width: 22px; height: 22px;
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: 700;
-    background: currentColor;
-    color: var(--bg);
-  }
-
-  .step.completed .num, .step.active .num {
-    background: currentColor;
-    color: var(--bg);
-  }
+  footer { text-align: center; padding: 24px; color: var(--text-dim); font-size: 13px; border-top: 1px solid var(--border); margin-top: 40px; }
+  footer a { color: var(--blue); text-decoration: none; }
 
   @media (max-width: 600px) {
-    .container { padding: 20px 16px; }
-    h1 { font-size: 24px; }
+    .hero { padding: 40px 0 24px; }
     .card { padding: 20px; }
-    .feature-grid { grid-template-columns: 1fr; }
-    .steps { flex-direction: column; align-items: stretch; }
+    .price-card { flex-direction: column; padding: 16px 24px; }
+    .stat-grid { grid-template-columns: 1fr 1fr; }
+    .steps { gap: 8px; }
+    .step { padding: 8px 14px; font-size: 13px; }
   }
-
-  /* Spinner */
-  .spinner {
-    display: inline-block;
-    width: 20px; height: 20px;
-    border: 2px solid rgba(255,255,255,0.2);
-    border-top-color: white;
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  .hidden { display: none; }
 </style>
 </head>
 <body>
+
 <div class="container">
+  <!-- Header -->
   <header>
-    <div class="logo">
-      <div class="logo-icon">🔒</div>
-      Content Vault
+    <div class="logo"><div class="logo-icon">📘</div> Content Vault</div>
+    <div class="header-right" id="headerRight">
+      <span id="headerStatus"></span>
     </div>
-    <div id="headerWallet"></div>
   </header>
 
-  <!-- Step indicator -->
-  <div class="steps" id="steps">
-    <div class="step active" id="step1"><span class="num">1</span> Connect wallet</div>
-    <div class="step" id="step2"><span class="num">2</span> Pay 0.5 TON</div>
-    <div class="step" id="step3"><span class="num">3</span> Access content</div>
-  </div>
-
-  <!-- STATE: Disconnected -->
-  <div class="state active card card-centered" id="stateDisconnected">
-    <div class="hero-icon">🔐</div>
-    <h1>Premium Content</h1>
-    <p>Connect your TON wallet to unlock exclusive earning strategies. One-time payment. Lifetime access.</p>
-    <div class="price-tag">0.5 TON</div>
-    <br>
-    <button class="btn btn-primary" id="btnConnect">Connect Wallet</button>
-    <br><br>
-    <p style="font-size:14px;">Powered by TON Connect · Tonkeeper supported</p>
-  </div>
-
-  <!-- STATE: Connected but unpaid -->
-  <div class="state card card-centered" id="stateConnected">
-    <div class="hero-icon">💎</div>
-    <h1>Ready to Unlock</h1>
-    <p>Your wallet is connected. Send 0.5 TON to unlock premium content.</p>
-
-    <div class="wallet-info">
-      <span class="wallet-dot"></span>
-      <span id="walletAddress">...</span>
+  <!-- Hero -->
+  <div class="hero">
+    <h1>Зарабатывай TON <span>без KYC и паспорта</span></h1>
+    <p>Готовый playbook: Content-locking, Telegram Mini Apps, реферальные программы STON.fi, вывод в Крыму. Настрой за вечер — получай первый платёж завтра.</p>
+    
+    <div class="price-card">
+      <div>
+        <div class="price-label">Полный доступ</div>
+        <div class="price-amount">1 TON</div>
+        <div class="price-usd">≈ $2 USD</div>
+      </div>
+      <div style="width:1px;height:40px;background:var(--border);"></div>
+      <div style="text-align:left;font-size:14px;color:var(--text-dim);">
+        <div>✅ Пожизненный доступ</div>
+        <div>✅ Обновления бесплатно</div>
+        <div>✅ Telegram support</div>
+      </div>
     </div>
 
-    <div class="price-tag">0.5 TON</div>
-    <br>
-    <button class="btn btn-primary" id="btnPay">Pay & Unlock</button>
-    <button class="btn btn-secondary" id="btnDisconnect" style="margin-left:8px;">Disconnect</button>
+    <div class="steps" id="steps">
+      <div class="step active" id="step1"><span class="step-num">1</span> Подключить кошелёк</div>
+      <div class="step" id="step2"><span class="step-num">2</span> Оплатить 1 TON</div>
+      <div class="step" id="step3"><span class="step-num">3</span> Получить гайд</div>
+    </div>
+  </div>
 
+  <!-- MAIN STATE: Disconnected -->
+  <div id="state-disconnected" class="card card-cta">
+    <p style="font-size:18px;margin-bottom:8px;">🔐 Контент locked</p>
+    <p style="color:var(--text-dim);margin-bottom:20px;">Подключи TON кошелёк, чтобы увидеть подробности и оплатить доступ.</p>
+    <div id="tc-button"></div>
+    <p style="font-size:13px;color:var(--text-dim);margin-top:12px;">Tonkeeper · Tonhub · Wallet · Поддерживаются все TON Connect кошельки</p>
+  </div>
+
+  <!-- MAIN STATE: Connected, not paid -->
+  <div id="state-connected" class="card card-cta" style="display:none;">
+    <div class="wallet-badge"><span class="dot"></span> Кошелёк подключён: <span id="walletAddr">...</span></div>
+    <p style="font-size:18px;margin-bottom:8px;">💎 Остался последний шаг</p>
+    <p style="color:var(--text-dim);margin-bottom:20px;">Отправь 1 TON — и гайд твой навсегда.</p>
+    <button class="btn btn-primary" id="btnPay">💎 Оплатить 1 TON</button>
+    <button class="btn btn-secondary btn-sm" id="btnDisconnect" style="margin-left:8px;">Отключить</button>
     <div class="error-box" id="errorBox"></div>
+    <div class="manual-note">⏳ После оплаты доступ откроется автоматически. Если что-то пошло не так — напиши в поддержку (ссылка в футере).</div>
   </div>
 
-  <!-- STATE: Payment in progress -->
-  <div class="state card card-centered" id="statePaying">
-    <div class="spinner" style="width:48px;height:48px;border-width:4px;margin-bottom:20px;"></div>
-    <h2>Confirm in Wallet</h2>
-    <p>Please approve the transaction in your TON wallet...</p>
+  <!-- MAIN STATE: Paying -->
+  <div id="state-paying" class="card card-cta" style="display:none;">
+    <div style="font-size:40px;margin-bottom:16px;">⏳</div>
+    <h3>Подтверди в кошельке</h3>
+    <p style="color:var(--text-dim);">Отправь 1 TON, нажав Confirm в окне кошелька...</p>
   </div>
 
-  <!-- STATE: Paid — content unlocked -->
-  <div class="state card" id="stateUnlocked">
+  <!-- MAIN STATE: Unlocked -->
+  <div id="state-unlocked" style="display:none;">
     <div class="success-box">
       <div class="big">🎉</div>
-      <h2 style="margin:0;">Content Unlocked!</h2>
-      <p style="margin-top:8px;">Thank you for your payment. You now have lifetime access.</p>
+      <h3 style="margin:0;">Гайд разблокирован!</h3>
+      <p style="margin-top:8px;color:var(--text-dim);">Спасибо за покупку. Всё ниже — твоё.</p>
     </div>
 
+    <!-- CONTENT -->
     <div class="content-body">
-      <h3>📘 Earning on TON: 5 Working Strategies</h3>
-      <p>Verified methods to earn TON without KYC or passport. Requires only a Tonkeeper wallet and internet access.</p>
+      <h3>📘 Что ты получил</h3>
+      <p>Этот гайд — результат разбора 15+ рабочих схем заработка на TON. Без KYC, без паспорта, без регистрации ИП. Только то, что работает из Крыма и других регионов с ограниченным банкингом.</p>
 
-      <div class="feature-grid">
-        <div class="feature-item">
-          <div class="num">0.5–5</div>
-          <div class="label">TON/day from content-locking</div>
-        </div>
-        <div class="feature-item">
-          <div class="num">5–20%</div>
-          <div class="label">Referral commissions</div>
-        </div>
-        <div class="feature-item">
-          <div class="num">15 min</div>
-          <div class="label">Setup time</div>
-        </div>
-        <div class="feature-item">
-          <div class="num">✓</div>
-          <div class="label">No KYC required</div>
-        </div>
+      <div class="stat-grid">
+        <div class="stat-card"><div class="num">5</div><div class="label">стратегий монетизации</div></div>
+        <div class="stat-card"><div class="num">15</div><div class="label">мин на настройку</div></div>
+        <div class="stat-card"><div class="num">0</div><div class="label">KYC / паспортов</div></div>
       </div>
 
-      <h3>1. Content-Locking (This Model)</h3>
-      <p>Create a static HTML page with premium content behind a TON paywall.</p>
+      <h3>📦 1. Content-Locking (эта модель)</h3>
+      <p>Статическая HTML страница с TON Connect. Хостинг — GitHub Pages (бесплатно). Принимай платежи без сервера и без комиссий.</p>
       <ul>
-        <li><span class="emoji">🔧</span> <strong>Stack:</strong> Static HTML + TON Connect + GitHub Pages (free hosting)</li>
-        <li><span class="emoji">💰</span> <strong>Earnings:</strong> Set your own price (0.5–5 TON per unlock). 10 unlocks/day = 5–50 TON</li>
-        <li><span class="emoji">🎯</span> <strong>Traffic:</strong> Telegram channels, SEO for evergreen content, X/Twitter threads</li>
-        <li><span class="emoji">🔑</span> <strong>One-time:</strong> Each user pays once, content cached in localStorage</li>
+        <li><span class="icon">🛠</span> <strong>Стек:</strong> HTML + <code>@tonconnect/ui</code> + GitHub Pages. Собрал → залил → получаешь TON</li>
+        <li><span class="icon">💰</span> <strong>Цена:</strong> Ставь 1–5 TON за доступ. 10 продаж/день = 10–50 TON (~$20–100)</li>
+        <li><span class="icon">📣</span> <strong>Трафик:</strong> Telegram каналы, SEO, X/Twitter threads, гостевые посты</li>
+        <li><span class="icon">🔁</span> <strong>LTV:</strong> Один платёж = пожизненный доступ (localStorage). Можно добавить обновления контента</li>
       </ul>
 
-      <h3>2. Telegram Mini Apps with TON Payouts</h3>
+      <h3>🤖 2. Telegram Mini App + TON Connect</h3>
       <ul>
-        <li><span class="emoji">🤖</span> <strong>Bot API:</strong> Create TG Mini App → integrate TON Connect for in-app purchases</li>
-        <li><span class="emoji">📊</span> <strong>Use case:</strong> Paid channels, premium content bots, tipping, referral contests</li>
-        <li><span class="emoji">📈</span> <strong>CPS:</strong> Telegram Ads (fragment.com/ads) to drive targeted traffic</li>
-        <li><span class="emoji">💵</span> <strong>Withdrawal:</strong> TON → Tonkeeper → KuCoin P2P or Whitebird → RUB</li>
+        <li><span class="icon">📱</span> <strong>Mini App:</strong> Создаёшь TMA (Telegram Mini App) через BotFather → встраиваешь TON Connect</li>
+        <li><span class="icon">🎯</span> <strong>Монетизация:</strong> Платный контент, премиум-каналы, tipping, pay-per-view</li>
+        <li><span class="icon">📢</span> <strong>Трафик:</strong> Telegram Ads (<code>fragment.com/ads</code>) — таргетированная реклама в TG</li>
+        <li><span class="icon">💸</span> <strong>Вывод:</strong> TON → Tonkeeper → Bybit/KuCoin P2P</li>
       </ul>
 
-      <h3>3. TON Referral Programs</h3>
+      <h3>🔗 3. Реферальные программы TON</h3>
       <ul>
-        <li><span class="emoji">🔗</span> <strong>STON.fi:</strong> DEX referral — earn 25% of swap fees from referrals. <code>app.ston.fi/referral</code></li>
-        <li><span class="emoji">🔗</span> <strong>Tonkeeper Pro:</strong> Referral program — earn % from referred Pro subscribers</li>
-        <li><span class="emoji">🔗</span> <strong>DeDust:</strong> Similar referral mechanics for swap volume</li>
+        <li><span class="icon">🔄</span> <strong>STON.fi:</strong> DEX-рефералка — 25% от swap-комиссий рефералов. <code>app.ston.fi/referral</code></li>
+        <li><span class="icon">🔄</span> <strong>Tonkeeper Pro:</strong> Реферальная программа — % от подписок привлечённых пользователей</li>
+        <li><span class="icon">🔄</span> <strong>DeDust:</strong> Аналогичная механика за swap-объёмы</li>
       </ul>
 
-      <h3>4. Content Monetization via TON</h3>
+      <h3>🌊 4. Fiat Exit (Крым / РФ)</h3>
       <ul>
-        <li><span class="emoji">📝</span> <strong>Telegram Stories:</strong> TON-paid boosts on channel stories to grow audience</li>
-        <li><span class="emoji">🎨</span> <strong>TON Diamonds / GetGems:</strong> Create & sell NFT collections with royalty (no KYC)</li>
-        <li><span class="emoji">📰</span> <strong>Paid channels:</strong> Telegram paid subscriptions (Stars → TON), no AdSense needed</li>
+        <li><span class="icon">🏦</span> <strong>Кукушка (KuCoin P2P):</strong> TON → USDT → P2P продавец → Т-Банк/Сбер. Под риском после 01.07.2026</li>
+        <li><span class="icon">🏦</span> <strong>Whitebird (Беларусь):</strong> USDT → RUB → карта МИР. До $12K, 5-6%, нужен passport KYC</li>
+        <li><span class="icon">🏦</span> <strong>Bybit P2P:</strong> TON → USDT → Bybit Spot → P2P (KYC на Bybit)</li>
       </ul>
 
-      <h3>5. Fiat Exit (Crimea-safe)</h3>
+      <h3>📈 5. Traffic & Growth</h3>
       <ul>
-        <li><span class="emoji">🔄</span> <strong>KuCoin P2P:</strong> TON → USDT → P2P seller → Sber/T-Bank (at risk after Jul 2026)</li>
-        <li><span class="emoji">🔄</span> <strong>Whitebird:</strong> USDT → RUB → MIR card (Belarus, up to $12K, 5-6% fee, passport KYC)</li>
-        <li><span class="emoji">🔄</span> <strong>Tonkeeper → Bybit:</strong> Send TON → Bybit spot → USDT → P2P (KYC on Bybit)</li>
+        <li><span class="icon">📢</span> <strong>Telegram Ads:</strong> Рекламируй свой Vault Mini App в TG-каналах (от $40 бюджет)</li>
+        <li><span class="icon">✍️</span> <strong>Контент-маркетинг:</strong> Twitter/X треды → ссылка на Vault. "How I make TON without KYC"</li>
+        <li><span class="icon">🤝</span> <strong>Cross-promo:</strong> Меняйся платными упоминаниями с другими TON-проектами</li>
+        <li><span class="icon">🔍</span> <strong>SEO:</strong> GitHub Pages + Jekyll для блога. Трафик из поиска на evergreen-контент</li>
       </ul>
 
-      <p style="margin-top:24px;font-size:14px;color:var(--text-dim);">
-        ⚠️ <strong>Disclaimer:</strong> These strategies require active effort. Results vary. Always verify current regulations in your jurisdiction. The content above is educational — crypto markets involve risk.
+      <h3>⚡ Быстрый старт (15 минут)</h3>
+      <ol style="padding-left:20px;color:var(--text-dim);">
+        <li style="padding:8px 0;">Создай <code>index.html</code> с TON Connect (скопируй эту страницу)</li>
+        <li style="padding:8px 0;">Замени <code>recipientAddress</code> на свой TON-адрес</li>
+        <li style="padding:8px 0;">Хостинг: залей на GitHub Pages / Vercel / Netlify</li>
+        <li style="padding:8px 0;">Замени контент под свою нишу</li>
+        <li style="padding:8px 0;">Запусти рекламу в Telegram — получи первый платёж</li>
+      </ol>
+
+      <p style="margin-top:24px;font-size:13px;color:var(--text-dim);border-top:1px solid var(--border);padding-top:16px;">
+        ⚠️ <strong>Disclaimer:</strong> Результаты могут отличаться. Криптовалюты волатильны. Проверяй актуальное регулирование в своей стране. Контент носит образовательный характер.
       </p>
+    </div>
+  </div>
+
+  <!-- Preview blur (shown before unlock) -->
+  <div id="preview-section" class="card content-area">
+    <div class="content-preview" id="contentPreview">
+      <div class="content-body" style="opacity:0.5;">
+        <h3>📘 Что ты получишь</h3>
+        <p>Полный гайд по заработку на TON: 5 стратегий, 15 минут на старт, 0 KYC.</p>
+        <div class="stat-grid">
+          <div class="stat-card"><div class="num">5</div><div class="label">стратегий</div></div>
+          <div class="stat-card"><div class="num">15</div><div class="label">мин на старт</div></div>
+          <div class="stat-card"><div class="num">0</div><div class="label">KYC</div></div>
+        </div>
+        <p style="font-size:14px;color:var(--text-dim);">Content-locking, Telegram Mini Apps, STON.fi referral, вывод в Крыму — всё в одном гайде.</p>
+      </div>
+    </div>
+    <div class="content-overlay" id="contentOverlay">
+      <div class="lock-icon">🔒</div>
+      <h3>Контент locked</h3>
+      <p>Подключи кошелёк и оплати доступ, чтобы разблокировать.</p>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="section-title">Частые вопросы</div>
+  <div class="card">
+    <div class="faq-item">
+      <div class="faq-q"><span style="color:var(--blue);">❓</span> Что я получу?</div>
+      <div class="faq-a">Полный гайд по 5 стратегиям заработка на TON. Каждая стратегия — с пошаговыми инструкциями, ссылками и оценкой доходности.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q"><span style="color:var(--blue);">❓</span> Как оплатить?</div>
+      <div class="faq-a">Подключи любой TON-кошелёк (Tonkeeper, Tonhub) через кнопку выше. Нажми "Оплатить 1 TON" — подтверди транзакцию в кошельке. Готово.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q"><span style="color:var(--blue);">❓</span> А если кошелёк не подключается?</div>
+      <div class="faq-a">Попробуй через Tonkeeper extension или открой эту страницу в браузере Tonkeeper (in-app browser).</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q"><span style="color:var(--blue);">❓</span> Можно вернуть деньги?</div>
+      <div class="faq-a">Это цифровой товар. Все продажи финальны. Если контент не разблокировался после оплаты — напиши в поддержку.</div>
     </div>
   </div>
 </div>
 
 <footer>
-  <a href="https://mcduck-s8.github.io/hermes-salon-landing/content-vault/tonconnect-manifest.json" target="_blank">Manifest</a> ·
-  Powered by TON Connect · <a href="https://ton.org" target="_blank">TON</a>
+  <a href="https://mcduck-s8.github.io/hermes-salon-landing/content-vault/tonconnect-manifest.json">Manifest</a> · 
+  <a href="#">Support: @contentvault</a> · 
+  Powered by TON Connect · TON
 </footer>
 
 <script type="module">
-// CONFIG — Change these for your deployment
+// === CONFIG ===
 const CONFIG = {
   manifestUrl: 'https://mcduck-s8.github.io/hermes-salon-landing/content-vault/tonconnect-manifest.json',
-  recipientAddress: 'UQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJKZ', // Replace with YOUR TON address
-  amount: '500000000', // 0.5 TON in nanograms
-  network: '-239', // mainnet
-  storageKey: 'content_vault_unlocked',
-  // Tonkeeper wallet bridge config
-  wallets: [
-    {
-      name: 'Tonkeeper',
-      universalLink: 'https://app.tonkeeper.com/ton-connect',
-      bridgeUrl: 'https://bridge.tonapi.io/bridge',
-      jsBridgeKey: 'tonkeeper'
-    }
-  ]
+  recipientAddress: 'UQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJKZ', // ← ЗАМЕНИ НА СВОЙ TON-АДРЕС
+  amount: '1000000000', // 1 TON = 1,000,000,000 nanograms
+  network: '-239', // mainnet, testnet = '-3'
+  storageKey: 'cv_unlocked',
 };
 
-// Elements
-const $ = (id) => document.getElementById(id);
-const states = {
-  disconnected: $('stateDisconnected'),
-  connected: $('stateConnected'),
-  paying: $('statePaying'),
-  unlocked: 'stateUnlocked'
+// === DOM refs ===
+const $ = id => document.getElementById(id);
+const el = {
+  steps: [1,2,3].map(i => $('step'+i)),
+  disconnected: $('state-disconnected'),
+  connected: $('state-connected'),
+  paying: $('state-paying'),
+  unlocked: $('state-unlocked'),
+  preview: $('preview-section'),
+  previewContent: $('contentPreview'),
+  previewOverlay: $('contentOverlay'),
+  btnPay: $('btnPay'),
+  btnDisconnect: $('btnDisconnect'),
+  errorBox: $('errorBox'),
+  walletAddr: $('walletAddr'),
+  headerStatus: $('headerStatus'),
+  tcButton: $('tc-button'),
 };
 
-const showState = (name) => {
-  Object.keys(states).forEach(k => {
-    const el = typeof states[k] === 'string' ? $(states[k]) : states[k];
-    el.classList.remove('active');
+const showState = name => {
+  ['disconnected','connected','paying','unlocked'].forEach(k => {
+    el[k].style.display = 'none';
   });
-  const target = typeof states[name] === 'string' ? $(states[name]) : states[name];
-  target.classList.add('active');
-};
-
-// Step indicator
-const updateSteps = (step) => {
-  for (let i = 1; i <= 3; i++) {
-    const s = $('step' + i);
-    s.className = 'step';
-    if (i < step) s.classList.add('completed');
-    else if (i === step) s.classList.add('active');
+  if (name === 'unlocked') {
+    el.unlocked.style.display = 'block';
+    el.preview.classList.add('hidden');
+    el.preview.style.display = 'none';
+    // Actually, hide the entire preview section
+  } else {
+    el.preview.style.display = 'block';
+    el.unlocked.style.display = 'none';
+    el[name].style.display = 'block';
   }
 };
 
-// Error display
-const showError = (msg) => {
-  const box = $('errorBox');
-  box.textContent = msg;
-  box.classList.add('visible');
-};
-const hideError = () => {
-  $('errorBox').classList.remove('visible');
+const updateSteps = n => {
+  el.steps.forEach((s, i) => {
+    s.className = 'step';
+    if (i+1 < n) s.classList.add('done');
+    else if (i+1 === n) s.classList.add('active');
+  });
 };
 
-// Check for existing unlock
+const showError = msg => {
+  el.errorBox.textContent = msg;
+  el.errorBox.classList.add('show');
+};
+const hideError = () => el.errorBox.classList.remove('show');
+
+// Check localStorage
 const wasUnlocked = localStorage.getItem(CONFIG.storageKey) === 'true';
 
-let connector = null;
-let currentWallet = null;
+// === TON Connect initialization ===
 let tonConnectUI = null;
+let currentWallet = null;
 
-// Import TON Connect SDK
 try {
-  const module = await import('https://cdn.jsdelivr.net/npm/@tonconnect/sdk@4.0.0/+esm');
-  const { TonConnect } = module;
+  const { TonConnectUI } = await import('https://cdn.jsdelivr.net/npm/@tonconnect/ui@3.0.0/+esm');
 
-  connector = new TonConnect({
-    manifestUrl: CONFIG.manifestUrl
+  tonConnectUI = new TonConnectUI({
+    manifestUrl: CONFIG.manifestUrl,
+    buttonRootId: 'tc-button',
+    actionsConfiguration: {
+      twaReturnUrl: window.location.href,
+    },
+    uiPreferences: {
+      theme: 'DARK',
+    },
   });
 
   // Listen for wallet changes
-  connector.onStatusChange((wallet) => {
+  tonConnectUI.onStatusChange(wallet => {
     currentWallet = wallet;
     if (wallet) {
-      // Connected
-      $('walletAddress').textContent = wallet.account.address;
-      $('headerWallet').innerHTML = '<span style="font-size:13px;color:var(--success);">● Connected</span>';
+      const addr = wallet.account.address;
+      el.walletAddr.textContent = addr.slice(0, 6) + '...' + addr.slice(-4);
+      el.headerStatus.innerHTML = '<span class="wallet-badge" style="padding:4px 12px;margin:0;font-size:12px;"><span class="dot"></span> Connected</span>';
 
       if (wasUnlocked) {
         showState('unlocked');
         updateSteps(3);
-      } else {
-        showState('connected');
-        updateSteps(2);
+        return;
       }
-    } else {
-      // Disconnected
-      currentWallet = null;
-      $('walletAddress').textContent = '...';
-      $('headerWallet').innerHTML = '';
 
-      if (!wasUnlocked) {
-        showState('disconnected');
-        updateSteps(1);
-      } else {
+      // Already connected, show pay wall
+      showState('connected');
+      updateSteps(2);
+    } else {
+      currentWallet = null;
+      el.walletAddr.textContent = '...';
+      el.headerStatus.innerHTML = '';
+      if (wasUnlocked) {
         showState('unlocked');
         updateSteps(3);
+      } else {
+        showState('disconnected');
+        updateSteps(1);
+        // Re-render the TON Connect button (it auto-removes on disconnect)
+        tonConnectUI.buttonRootId = 'tc-button';
       }
     }
   });
 
-  // Restore session if previously connected
-  if (connector.wallet) {
-    currentWallet = connector.wallet;
-  }
-
 } catch (e) {
-  console.error('TON Connect SDK failed to load:', e);
-  showError('Failed to load TON Connect SDK. Please refresh and try again.');
+  console.error('TON Connect init failed:', e);
+  el.tcButton.innerHTML = '<span style="color:var(--error);">Failed to load TON Connect. Refresh or try another browser.</span>';
 }
 
-// If already unlocked, show content right away
+// If already unlocked, show content immediately
 if (wasUnlocked) {
   showState('unlocked');
   updateSteps(3);
-  $('headerWallet').innerHTML = '<span style="font-size:13px;color:var(--success);">● Unlocked</span>';
+  el.headerStatus.innerHTML = '<span style="font-size:13px;color:var(--success);">● Unlocked</span>';
 }
 
-// --- Event Handlers ---
+// Hide overlay if already unlocked
+if (wasUnlocked) {
+  el.previewOverlay.classList.add('hidden');
+  el.previewContent.classList.add('unlocked');
+}
 
-// Connect button
-$('btnConnect').addEventListener('click', async () => {
-  if (!connector) return;
-  hideError();
-  try {
-    // Connect using Tonkeeper settings
-    const walletConfig = CONFIG.wallets[0];
-    await connector.connect({
-      universalLink: walletConfig.universalLink,
-      bridgeUrl: walletConfig.bridgeUrl
-    });
-  } catch (e) {
-    showError('Connection cancelled or failed. Make sure Tonkeeper is installed.');
-    console.error(e);
-  }
-});
-
-// Pay button
-$('btnPay').addEventListener('click', async () => {
-  if (!connector || !currentWallet) return;
+// === PAY button ===
+el.btnPay.addEventListener('click', async () => {
+  if (!tonConnectUI || !currentWallet) return;
   hideError();
   showState('paying');
   updateSteps(2);
 
   try {
-    const result = await connector.sendTransaction({
-      validUntil: Math.floor(Date.now() / 1000) + 600, // 10 min expiry
+    const result = await tonConnectUI.sendTransaction({
+      validUntil: Math.floor(Date.now() / 1000) + 600,
       network: CONFIG.network,
       messages: [{
         address: CONFIG.recipientAddress,
-        amount: CONFIG.amount
-      }]
+        amount: CONFIG.amount,
+      }],
     });
 
-    console.log('Transaction sent:', result.boc);
+    console.log('TX sent, boc:', result.boc);
 
-    // Mark as unlocked
+    // Mark unlocked
     localStorage.setItem(CONFIG.storageKey, 'true');
     updateSteps(3);
-
-    // Show success with transaction info
     showState('unlocked');
+    el.previewOverlay.classList.add('hidden');
+    el.previewContent.classList.add('unlocked');
+    el.headerStatus.innerHTML = '<span style="font-size:13px;color:var(--success);">● Unlocked</span>';
 
   } catch (e) {
-    console.error('Transaction failed:', e);
+    console.error('TX failed:', e);
     showState('connected');
-    if (e.message && e.message.includes('rejected')) {
-      showError('Transaction was rejected in wallet.');
-    } else if (e.message && e.message.includes('timeout')) {
-      showError('Transaction timed out. Please try again.');
+    updateSteps(2);
+    if (e.message?.includes('rejected')) {
+      showError('Транзакция отклонена в кошельке. Попробуй ещё раз.');
+    } else if (e.message?.includes('timeout')) {
+      showError('Таймаут. Попробуй снова.');
     } else {
-      showError('Transaction failed: ' + (e.message || 'Unknown error'));
+      showError('Ошибка: ' + (e.message || 'неизвестная ошибка'));
     }
   }
 });
 
-// Disconnect
-$('btnDisconnect').addEventListener('click', async () => {
-  if (!connector) return;
-  hideError();
+// DISCONNECT
+el.btnDisconnect.addEventListener('click', async () => {
+  if (!tonConnectUI) return;
   try {
-    await connector.disconnect();
-  } catch (e) {
-    console.error(e);
-  }
+    await tonConnectUI.disconnect();
+  } catch (e) { /* ignore */ }
 });
-
-// Handle already-unlocked state on page load with wallet
-window.addEventListener('load', () => {
-  if (wasUnlocked) {
-    showState('unlocked');
-    updateSteps(3);
-  }
-});
-
-// Force theme: dark
-document.documentElement.style.colorScheme = 'dark';
 </script>
 </body>
 </html>
