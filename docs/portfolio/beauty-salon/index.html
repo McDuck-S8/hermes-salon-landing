@@ -341,6 +341,11 @@
 <body>
     <!-- Preloader -->
     <div id="preloader"><div class="preloader-glow"></div></div>
+    <script>
+        // Immediate preloader dismissal - runs before page renders
+        const p = document.getElementById('preloader');
+        if (p) p.classList.add('loaded');
+    </script>
 
     <!-- Nav -->
     <nav id="nav">
