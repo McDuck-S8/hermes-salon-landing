@@ -83,8 +83,9 @@
         .nav-logo {
             font-family: 'Playfair Display', serif;
             font-size: 1.6rem; font-weight: 700;
-            color: var(--text); text-decoration: none;
+            color: var(--gold); text-decoration: none;
             letter-spacing: 2px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
         }
         .nav-logo span { color: var(--gold); }
         .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
@@ -94,6 +95,7 @@
             transition: color 0.2s;
         }
         .nav-links a:hover { color: var(--gold); }
+        .nav-actions { display: flex; align-items: center; gap: 16px; }
         .nav-cta {
             background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
             color: #000; border: none; border-radius: 50px;
@@ -102,12 +104,20 @@
         }
         .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 30px var(--gold)44; }
         .nav-cta:active { transform: scale(0.98); }
+        .nav-phone {
+            color: var(--text); text-decoration: none;
+            font-size: 0.85rem; font-weight: 500;
+            display: flex; align-items: center; gap: 6px;
+            padding: 8px 16px; border-radius: 50px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .nav-phone:hover { background: var(--surface); color: var(--gold); }
 
         /* ─── Hero ─── */
         .hero {
             min-height: 100vh;
             display: flex; align-items: center; justify-content: center;
-            position: relative; padding: 120px 40px 80px;
+            position: relative; padding: 160px 40px 80px;
         }
         .hero-bg {
             position: absolute; inset: 0; z-index: -1;
@@ -337,7 +347,9 @@
             nav { padding: 16px 20px; background: rgba(10,10,10,0.95); backdrop-filter: blur(20px) saturate(1.2); border-bottom: 1px solid var(--glass-border); }
             nav.scrolled { padding: 12px 20px; }
             .nav-links { display: none; }
+            .nav-actions { gap: 8px; }
             .nav-cta { padding: 10px 20px; font-size: 0.8rem; }
+            .nav-phone { display: none; }
             .hero { padding: 100px 20px 60px; }
             .hero-cta-row { flex-direction: column; align-items: center; }
             .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
@@ -362,10 +374,15 @@
         <a href="#" class="nav-logo">F<span>ARGO</span></a>
         <ul class="nav-links">
             <li><a href="#services">Послуги</a></li>
+            <li><a href="#masters">Майстри</a></li>
             <li><a href="#reviews">Відгуки</a></li>
+            <li><a href="#booking">Запис онлайн</a></li>
             <li><a href="#contact">Контакти</a></li>
         </ul>
-        <a href="#booking" class="nav-cta">Записатися онлайн</a>
+        <div class="nav-actions">
+            <a href="#booking" class="nav-cta">📅 Записатися онлайн</a>
+            <a href="tel:+380441234567" class="nav-phone">📞 +38 (044) 123-45-67</a>
+        </div>
     </nav>
 
     <!-- Hero -->
