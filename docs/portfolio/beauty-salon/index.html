@@ -639,10 +639,14 @@
     </footer>
 
     <script>
-        // Preloader
-        window.addEventListener('load', () => {
-            document.getElementById('preloader').classList.add('loaded');
-        });
+        // Preloader - handle both load event and already-loaded case
+        const preloader = document.getElementById('preloader');
+        const dismissPreloader = () => preloader.classList.add('loaded');
+        if (document.readyState === 'complete') {
+            dismissPreloader();
+        } else {
+            window.addEventListener('load', dismissPreloader);
+        }
 
         // Nav scroll effect
         const nav = document.getElementById('nav');
