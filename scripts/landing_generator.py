@@ -78,14 +78,51 @@ TEMPLATES = {
 
 
 def generate_landing(template_name: str, offer_link: str = "#", output_name: str = None):
-    """Generate a complete HTML landing page from a template."""
+    """Generate a complete HTML landing page from a template in reports/."""
     t = TEMPLATES.get(template_name)
     if not t:
         available = ", ".join(TEMPLATES.keys())
         print(f"Unknown template: {template_name}. Available: {available}")
         return None
 
-    html = f"""<!DOCTYPE html>
+    html = _build_html(t, offer_link)
+
+    name = output_name or f"landing_{template_name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.html"
+    output_dir = HERMES / "reports"
+    output_dir.mkdir(exist_ok=True)
+    output_path = output_dir / name
+    output_path.write_text(html, encoding="utf-8")
+    return str(output_path)
+
+
+def generate_for_deploy(template_name: str, offer_link: str = "#", deploy_dir: str = "docs/cpa"):
+    """Generate landing as index.html in a deploy-ready subfolder under deploy_dir."""
+    t = TEMPLATES.get(template_name)
+    if not t:
+        return None
+
+    html = _build_html(t, offer_link)
+    output_dir = HERMES / deploy_dir / template_name
+    output_dir.mkdir(parents=True, exist_ok=True)
+    output_path = output_dir / "index.html"
+    output_path.write_text(html, encoding="utf-8")
+    return str(output_path)
+
+
+def batch_deploy(offer_urls: dict = None, deploy_dir: str = "docs/cpa"):
+    """Generate all templates as deploy-ready subfolders."""
+    results = []
+    for name in TEMPLATES:
+        link = (offer_urls or {}).get(name, "#")
+        path = generate_for_deploy(name, link, deploy_dir)
+        if path:
+            results.append((name, path))
+    return results
+
+
+def _build_html(t: dict, offer_link: str) -> str:
+    """Render HTML from template dict."""
+    return f"""<!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
@@ -104,8 +141,6 @@ h1 {{ font-size: 28px; color: #1a1a2e; margin-bottom: 10px; }}
 .cta {{ display: block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; padding: 16px 40px; border-radius: 50px; font-size: 18px; font-weight: bold; margin: 20px 0; transition: transform 0.2s; }}
 .cta:hover {{ transform: scale(1.05); }}
 .footer {{ color: #999; font-size: 12px; margin-top: 20px; }}
-.offer {{ margin-top: 25px; }}
-.offer a {{ color: #667eea; font-size: 14px; }}
 </style>
 </head>
 <body>
@@ -123,13 +158,6 @@ h1 {{ font-size: 28px; color: #1a1a2e; margin-bottom: 10px; }}
 </div>
 </body>
 </html>"""
-
-    name = output_name or f"landing_{template_name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.html"
-    output_dir = HERMES / "reports"
-    output_dir.mkdir(exist_ok=True)
-    output_path = output_dir / name
-    output_path.write_text(html, encoding="utf-8")
-    return str(output_path)
 
 
 def list_templates():
@@ -175,7 +203,14 @@ if __name__ == "__main__":
             print(f"Generated {len(results)} landing pages:")
             for name, path in results:
                 print(f"  {name}: {path}")
+        elif cmd == "deploy":
+            url = sys.argv[2] if len(sys.argv) > 2 else "#"
+            results = batch_deploy({name: url for name in TEMPLATES})
+            print(f"Deploy-ready in docs/cpa/:")
+            for name, path in results:
+                print(f"  {path}")
+            print(f"\nRun: git add docs/cpa/ && git commit -m 'add CPA landings' && git push")
         else:
-            print("Usage: python landing_generator.py [list|generate|batch]")
+            print("Usage: python landing_generator.py [list|generate|batch|deploy]")
     else:
         list_templates()
