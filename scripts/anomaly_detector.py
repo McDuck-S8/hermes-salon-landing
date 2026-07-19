@@ -49,7 +49,8 @@ def _db_query(db_path: Path, sql: str, params=()) -> List[Dict]:
     if not db_path.exists():
         return []
     try:
-        conn = sqlite3.connect(str(db_path))
+        conn = sqlite3.connect(str(db_path), timeout=5)
+        conn.execute("PRAGMA journal_mode=WAL")
         conn.row_factory = sqlite3.Row
         rows = [dict(r) for r in conn.execute(sql, params).fetchall()]
         conn.close()

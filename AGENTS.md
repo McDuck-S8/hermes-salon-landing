@@ -70,6 +70,10 @@ Default section order:
 5. Run existing verification when relevant
 6. Report any docs intentionally left unchanged and why
 
+> **AUTO-TRIGGER**: If 3+ files in one directory were changed, or a script with its own AGENTS.md was modified — DOX pass is NOT optional. It runs BEFORE the next assistant response. The user does not ask for it. I do it.
+>
+> **ROOT-CAUSE FIX**: Last user correction on this topic: "почему я снова тебе напоминаю то что ты должен делать на автомате!!!" (2026-07-19). Mechanism: this trigger plus `scripts/AGENTS.md` and `skills/AGENTS.md` checked automatically on every bulk edit.
+
 ---
 
 # Hermes Agent — Project-Wide Rules
@@ -157,9 +161,40 @@ print(f"Processed: {results['processed']}, errors: {results['errors']}")
 | `hermes_hooks.py` | Wrapper: HermesEventHooks (convenient methods) |
 | `auto_recall.py` | Search: auto_recall(), recall_for_session() |
 
+## Chain Heartbeat (Event-Driven Monitoring, не демоны)
+
+5-уровневая система мониторинга, где каждый heartbeat — это событие, не процесс.
+
+```
+Level 1 — Events:   knowledge_added, new_suggestions_ready, architecture_scan_complete
+Level 2 — Modules:  24 modules, каждый бьёт heartbeat при сканировании
+Level 3 — Pipelines: 3 aggregates (knowledge, self-improvement, action)
+Level 4 — External:  BrowserOS, BrowserClaw, OpenRouter и др.
+Level 5 — System:    cache/system_heartbeat.json
+```
+
+События бьются **в момент мутации данных**, не по cron:
+
+| Куда вставлен event_beat() | Файл | Когда срабатывает |
+|---|---|---|
+| `knowledge_added` | `scripts/kc_rag.py` | `upsert()` — сразу после INSERT/UPDATE в KC |
+| `new_suggestions_ready` | `scripts/self_improvement_loop.py` | `main()` — после генерации suggestions |
+| `architecture_scan_complete` | `scripts/architecture_model.py` | после сканирования модулей |
+| `user_correction` | `scripts/hermes_hooks.py` | `on_user_correction()` |
+
+Использование при старте:
+```python
+from scripts.chain_heartbeat import system_status
+st = system_status()
+if st["summary"]["alerts_active"] > 0:
+    print(f"⚠ {st['summary']['alerts_active']} alerts")
+```
+
+Полная карта вызовов: `skills/devops/chain-heartbeat/references/event-map.md`
+
 ---
 
-<!-- BEGIN BEADS INTEGRATION v:1 profile:minimal -->
+
 ## Beads Issue Tracker
 
 This project uses **bd (beads)** for issue tracking. Run `bd prime` to see full workflow context and commands.

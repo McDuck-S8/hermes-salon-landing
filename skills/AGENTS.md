@@ -29,7 +29,7 @@ Skills are curated and versioned. Managed via the skill-forge system.
 |---|---|
 | `automation/` | Browser, session analysis, telegram digest |
 | `creative/` | Design, art, video, music generation |
-| `devops/` | Kanban, system ops, webhooks |
+| `devops/` | Kanban, system ops, webhooks, **chain-heartbeat** (event-driven monitoring) |
 | `finance/` | Earning with AI, Excel, stocks |
 | `github/` | PR workflow, issues, code review |
 | `lavra-agent-*` | Review and analysis agents (30+) |
