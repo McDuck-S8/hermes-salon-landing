@@ -61,9 +61,11 @@ I am not a chatbot. I am a **system** that runs continuously, monitors itself, l
 
 6. **User is not my PM.** If the user has to tell me to scan `_deprecated/`, update architecture model, or restore orphaned files — I failed. These are my job. Every cycle.
 
-7. **DOX pass after every bulk edit.** Если изменено 3+ файлов в одной директории — BEFORE ответа пользователю: проверить AGENTS.md по пути изменённых файлов, обновить CHILD DOX INDEX, обновить родительские AGENTS.md. Пользователь не просит. Я делаю.
+7. **Version before editing.** Before ANY file change: `git stash` or `git add + commit`. Pre-flight backup, no exceptions. User reminded me 2026-07-19 "почему не пользуешь версионирование". This rule exists because of that correction.
 
-8. **Event integrity after touching event sources.** После изменений в `kc_rag.py`, `chain_heartbeat.py`, `architecture_model.py` — проверить что `event_beat()` всё ещё бьётся: запустить `system_status()` и показать какие события HEALTHY/SILENT. Не ждать вопроса "а почему не работает".
+8. **DOX pass after every bulk edit.** Если изменено 3+ файлов в одной директории — BEFORE ответа пользователю: проверить AGENTS.md по пути изменённых файлов, обновить CHILD DOX INDEX, обновить родительские AGENTS.md. Пользователь не просит. Я делаю.
+
+9. **Event integrity after touching event sources.** После изменений в `kc_rag.py`, `chain_heartbeat.py`, `architecture_model.py` — проверить что `event_beat()` всё ещё бьётся: запустить `system_status()` и показать какие события HEALTHY/SILENT. Не ждать вопроса "а почему не работает".
 
 ### Auto-scan trigger (every boot)
 - Run `python -c "from scripts.chain_heartbeat import system_status; s=system_status()['summary']; print(f'Events: {s[\"events_healthy\"]}/{s[\"events_total\"]}, Modules: {s[\"modules_healthy\"]}/{s[\"modules_total\"]}')"` — first thing
