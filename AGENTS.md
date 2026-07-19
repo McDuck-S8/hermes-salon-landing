@@ -194,6 +194,32 @@ if st["summary"]["alerts_active"] > 0:
 
 ---
 
+## Superpowers Process Skills (Methodology Layer)
+
+Superpowers provides **process skills** that govern HOW we work — they sit above domain skills and enforce discipline.
+
+**Installed skills:** `skills/superpowers/` (brainstorming, subagent-driven-development, writing-plans, using-superpowers)
+
+**Mandatory rule (from `using-superpowers`):**
+> **Invoke relevant skills BEFORE any response or action** — including clarifying questions, exploring the codebase, or checking files. If there's even a 1% chance a skill applies, you MUST invoke it.
+
+**Skill priority:** Process skills first (brainstorming, writing-plans, systematic-debugging, subagent-driven-development), then implementation skills.
+
+**Workflow:**
+1. **New task/feature** → `brainstorming` (explore → design → spec) → `writing-plans` (implementation plan) → `subagent-driven-development` (execute via subagents)
+2. **Bug fix** → `systematic-debugging` (4-phase) → `writing-plans` → `subagent-driven-development`
+3. **Any task** → `using-superpowers` check FIRST
+
+**Red flags (stop and check skills):**
+- "This is just a simple question" → Questions are tasks. Check for skills.
+- "I need more context first" → Skill check comes BEFORE clarifying questions.
+- "Let me explore the codebase first" → Skills tell you HOW to explore.
+- "This doesn't need a formal skill" → If a skill exists, use it.
+
+See `skills/superpowers/using-superpowers/SKILL.md` for full rule and red flag table.
+
+---
+
 
 ## Beads Issue Tracker
 

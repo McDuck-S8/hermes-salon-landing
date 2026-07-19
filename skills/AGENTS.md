@@ -36,4 +36,5 @@ Skills are curated and versioned. Managed via the skill-forge system.
 | `research/` | ArXiv, patterns, wiki |
 | `self-improvement/` | Dream memory, evolution, verification |
 | `software-development/` | TDD, debugging, plans |
+| `superpowers/` | Process skills: brainstorming, subagent-driven-development, writing-plans, using-superpowers |
 | `auto-generated/` | Session-learned patterns |
