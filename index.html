@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes Studio — веб-студія</title>
+<meta property="og:title" content="Hermes Studio — розробка сайтів для малого бізнесу">
+<meta property="og:description" content="Сайти, лендінги, запис онлайн для салонів краси, кафе, медцентрів та автосервісів. Швидко, якісно, з AI.">
+<meta property="og:image" content="https://mcduck-s8.github.io/hermes-salon-landing/studio-preview.jpg">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hermes Studio">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mcduck-s8.github.io/hermes-salon-landing/studio-preview.jpg">
+<meta name="description" content="Hermes Studio — розробка сайтів для малого бізнесу. Сайти, лендінги, запис онлайн для салонів краси, кафе, медцентрів, автосервісів.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f7f8;--surface:#fff;--border:#eaeaea;--text:#1a1a1a;--muted:#888;--accent:#6c5ce7;--accent-hover:#5a4bd1;--accent-bg:#f0edff;--card-border:#eee;--card-hover:#d4ccff;--shadow:rgba(108,92,231,.08);--logo-center:#888;--cat-hover:#eeeef0;--tag-muted:#bbb;--footer-border:#eaeaea;--empty:#aaa;--nav-btn-bg:#f0f0f2;--nav-btn:#555}
+[data-theme=dark]{--bg:#121216;--surface:#1c1c22;--border:#2a2a32;--text:#e8e8ee;--muted:#88889a;--accent:#8b7cf7;--accent-hover:#9d8fff;--accent-bg:#2a2645;--card-border:#2a2a32;--card-hover:#3a3670;--shadow:rgba(139,124,247,.12);--logo-center:#666;--cat-hover:#2a2a32;--tag-muted:#555;--footer-border:#2a2a32;--empty:#555;--nav-btn-bg:#2a2a32;--nav-btn:#aaa}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);transition:background .2s,color .2s;min-height:100vh}
+
+/* HEADER */
+header{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;backdrop-filter:blur(12px);background:rgba(255,255,255,.85)}
+[data-theme=dark] header{background:rgba(28,28,34,.9)}
+.header-inner{max-width:1320px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{font-weight:800;font-size:20px;letter-spacing:-.5px;text-decoration:none;color:var(--text)}
+.logo span{color:var(--logo-center);font-weight:400}
+.logo em{font-style:normal;color:var(--accent)}
+
+/* HEADER RIGHT */
+.header-right{display:flex;align-items:center;gap:8px}
+.lang-btn,.theme-btn{padding:6px 10px;border:1px solid var(--border);border-radius:6px;background:var(--nav-btn-bg);color:var(--nav-btn);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;font-family:inherit;line-height:1}
+.lang-btn:hover,.theme-btn:hover{border-color:var(--accent);color:var(--accent)}
+.lang-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.lang-btn{min-width:32px;text-align:center;text-transform:uppercase}
+.theme-btn{font-size:16px;padding:6px 8px;line-height:1}
+
+/* HERO */
+.hero{max-width:1320px;margin:0 auto;padding:40px 24px 0}
+.hero-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:4px}
+.hero h1{font-size:32px;font-weight:800;letter-spacing:-1px}
+.hero .sub{font-size:15px;color:var(--muted);line-height:1.5;max-width:500px}
+
+/* LAYOUT */
+.layout{max-width:1320px;margin:0 auto;padding:24px;display:grid;grid-template-columns:200px 1fr;gap:28px}
+
+/* SIDEBAR */
+.sidebar{position:sticky;top:85px;align-self:start}
+.sidebar h3{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:12px;font-weight:600}
+.cat-list{list-style:none}
+.cat-list li{margin-bottom:2px}
+.cat-list a{display:block;padding:8px 12px;border-radius:8px;font-size:14px;font-weight:500;color:var(--muted);text-decoration:none;transition:all .15s;cursor:pointer}
+.cat-list a:hover{background:var(--cat-hover);color:var(--text)}
+.cat-list a.active{background:var(--accent);color:#fff;font-weight:600}
+.cat-list .count{float:right;color:var(--tag-muted);font-size:12px;font-weight:400}
+.cat-list a.active .count{color:rgba(255,255,255,.5)}
+
+/* MAIN */
+.main{min-height:50vh}
+.section-title{display:none;align-items:baseline;justify-content:space-between;margin-bottom:16px}
+.section-title.show{display:flex}
+.section-title h2{font-size:18px;font-weight:700}
+.section-title .all-link{font-size:13px;color:var(--accent);text-decoration:none;font-weight:500;cursor:pointer}
+.section-title .all-link:hover{text-decoration:underline}
+
+/* PROJECT GRID */
+.project-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:40px}
+.project-card{background:var(--surface);border-radius:12px;overflow:hidden;border:1px solid var(--card-border);transition:all .2s;text-decoration:none;color:inherit;display:block}
+.project-card:hover{border-color:var(--card-hover);box-shadow:0 4px 20px var(--shadow);transform:translateY(-2px)}
+.project-card .thumb{width:100%;height:170px;object-fit:cover;display:block;background:var(--cat-hover)}
+.project-card .info{padding:14px 16px 16px}
+.project-card .cat-tag{display:inline-block;font-size:11px;font-weight:600;color:var(--accent);background:var(--accent-bg);padding:2px 8px;border-radius:100px;margin-bottom:6px}
+.project-card h3{font-size:15px;font-weight:600;margin-bottom:4px;line-height:1.3}
+.project-card .desc{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:8px}
+.project-card .meta{font-size:12px;color:var(--tag-muted);margin-bottom:10px}
+.project-card .btn{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;background:var(--accent);color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;transition:background .15s}
+.project-card .btn:hover{background:var(--accent-hover)}
+
+/* EMPTY */
+.empty-state{text-align:center;padding:60px 20px;color:var(--empty);font-size:14px;display:none}
+.empty-state.show{display:block}
+
+/* FOOTER */
+footer{max-width:1320px;margin:0 auto;padding:32px 24px;border-top:1px solid var(--footer-border);color:var(--tag-muted);font-size:13px;text-align:center}
+
+@media(max-width:768px){
+.layout{grid-template-columns:1fr;padding:16px}
+.sidebar{position:static;margin-bottom:4px}
+.sidebar h3{display:none}
+.cat-list{display:flex;gap:4px;overflow-x:auto;padding-bottom:8px;flex-wrap:nowrap}
+.cat-list li{flex-shrink:0}
+.cat-list a{padding:6px 14px;font-size:13px;white-space:nowrap}
+.project-grid{grid-template-columns:1fr}
+.hero h1{font-size:24px}
+.hero .sub{font-size:14px}
+.header-inner{flex-wrap:wrap}
+}
+</style>
+</head>
+<body>
+
+<header>
+<div class="header-inner">
+<a href="./" class="logo">Hermes <span>//</span> <em>Studio</em></a>
+<div class="header-right">
+<button class="lang-btn active" data-lang="ru">RU</button>
+<button class="lang-btn" data-lang="uk">UA</button>
+<button class="lang-btn" data-lang="en">EN</button>
+<button class="theme-btn" id="themeToggle" title="Toggle theme">🌙</button>
+</div>
+</div>
+</header>
+
+<section class="hero">
+<div class="hero-top">
+<h1 data-i18n="title">Hermes Studio</h1>
+<span style="font-size:14px;color:var(--muted)">веб-розробка · AI · 7 проєктів</span>
+</div>
+<p class="sub" data-i18n="subtitle">Створюємо сайти для малого бізнесу, які реально працюють. Прайс з акордеоном, запис онлайн, галерея, 2 мови, SEO — під ключ. Швидше й дешевше за студії завдяки AI.</p>
+<div style="display:flex;gap:8px;margin-top:20px;flex-wrap:wrap">
+<a href="#projects" class="btn-primary" style="padding:12px 28px;background:var(--accent);color:#fff;border-radius:8px;font-weight:600;text-decoration:none;font-size:15px;transition:background .15s">⟶ Подивитись роботи</a>
+<a href="#pricing" class="btn-secondary" style="padding:12px 28px;background:var(--cat-hover);color:var(--text);border-radius:8px;font-weight:500;text-decoration:none;font-size:15px;transition:background .15s">Ціни та пакети</a>
+</div>
+</section>
+
+<div class="layout">
+
+<aside class="sidebar">
+<h3 data-i18n="categories">Категорії</h3>
+<ul class="cat-list" id="catList">
+<li><a href="#" class="active" data-cat="all" data-i18n="all"><span data-i18n="all">Усі проєкти</span> <span class="count">7</span></a></li>
+<li><a href="#" data-cat="salon"><span data-i18n="cat_salon">Салон краси</span> <span class="count">3</span></a></li>
+<li><a href="#" data-cat="cafe"><span data-i18n="cat_cafe">Кафе</span> <span class="count">1</span></a></li>
+<li><a href="#" data-cat="auto"><span data-i18n="cat_auto">Авто</span> <span class="count">1</span></a></li>
+<li><a href="#" data-cat="clinic"><span data-i18n="cat_clinic">Медицина</span> <span class="count">1</span></a></li>
+<li><a href="#" data-cat="funeral"><span data-i18n="cat_funeral">Ритуальні</span> <span class="count">1</span></a></li>
+</ul>
+</aside>
+
+<main class="main" id="projects">
+
+</main>
+</div>
+
+<!-- SERVICES -->
+<section id="services" style="max-width:1320px;margin:0 auto;padding:40px 24px;border-top:1px solid var(--border)">
+<h2 style="font-size:24px;font-weight:800;margin-bottom:24px;letter-spacing:-.5px">Що ми робимо</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px">
+<div style="background:var(--surface);border:1px solid var(--card-border);border-radius:12px;padding:20px">
+<div style="font-size:32px;margin-bottom:8px">🌐</div>
+<h3 style="font-size:15px;font-weight:700;margin-bottom:6px">Сайти під ключ</h3>
+<p style="font-size:13px;color:var(--muted);line-height:1.5">Лендінг, багатосторінковий, каталог. Адаптив, SEO, швидкість 95+ Lighthouse.</p>
+</div>
+<div style="background:var(--surface);border:1px solid var(--card-border);border-radius:12px;padding:20px">
+<div style="font-size:32px;margin-bottom:8px">📅</div>
+<h3 style="font-size:15px;font-weight:700;margin-bottom:6px">Запис онлайн</h3>
+<p style="font-size:13px;color:var(--muted);line-height:1.5">Форма з вибором дати/часу/майстра. Telegram-сповіщення про новий запис.</p>
+</div>
+<div style="background:var(--surface);border:1px solid var(--card-border);border-radius:12px;padding:20px">
+<div style="font-size:32px;margin-bottom:8px">📱</div>
+<h3 style="font-size:15px;font-weight:700;margin-bottom:6px">Інтеграції</h3>
+<p style="font-size:13px;color:var(--muted);line-height:1.5">Instagram, Google Maps, Telegram-бот, CRM, платіжні системи.</p>
+</div>
+<div style="background:var(--surface);border:1px solid var(--card-border);border-radius:12px;padding:20px">
+<div style="font-size:32px;margin-bottom:8px">🤖</div>
+<h3 style="font-size:15px;font-weight:700;margin-bottom:6px">AI-прискорення</h3>
+<p style="font-size:13px;color:var(--muted);line-height:1.5">Сайти створюються з AI-агентами — у 3-5x швидше й дешевше за звичайну студію.</p>
+</div>
+</div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section style="max-width:1320px;margin:0 auto;padding:24px 24px 40px">
+<h2 style="font-size:24px;font-weight:800;margin-bottom:24px;letter-spacing:-.5px">Як ми працюємо</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px">
+<div style="background:var(--surface);border:1px solid var(--card-border);border-radius:12px;padding:16px;text-align:center">
+<div style="width:36px;height:36px;border-radius:50%;background:var(--accent);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;margin-bottom:8px">1</div>
+<h3 style="font-size:13px;font-weight:600;margin-bottom:4px">Аналіз</h3>
+<p style="font-size:12px;color:var(--muted);line-height:1.4">Вивчаємо бізнес, конкурентів, цільову аудиторію</p>
+</div>
+<div style="background:var(--surface);border:1px solid var(--card-border);border-radius:12px;padding:16px;text-align:center">
+<div style="width:36px;height:36px;border-radius:50%;background:var(--accent);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;margin-bottom:8px">2</div>
+<h3 style="font-size:13px;font-weight:600;margin-bottom:4px">Демо</h3>
+<p style="font-size:12px;color:var(--muted);line-height:1.4">Робимо робочий прототип за 1-2 дні</p>
+</div>
+<div style="background:var(--surface);border:1px solid var(--card-border);border-radius:12px;padding:16px;text-align:center">
+<div style="width:36px;height:36px;border-radius:50%;background:var(--accent);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;margin-bottom:8px">3</div>
+<h3 style="font-size:13px;font-weight:600;margin-bottom:4px">Запуск</h3>
+<p style="font-size:12px;color:var(--muted);line-height:1.4">Деплой, SEO, OG-теги, SSL — все під ключ</p>
+</div>
+<div style="background:var(--surface);border:1px solid var(--card-border);border-radius:12px;padding:16px;text-align:center">
+<div style="width:36px;height:36px;border-radius:50%;background:var(--accent);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;margin-bottom:8px">4</div>
+<h3 style="font-size:13px;font-weight:600;margin-bottom:4px">Підтримка</h3>
+<p style="font-size:12px;color:var(--muted);line-height:1.4">Хостинг, оновлення, правки — $30-50/міс</p>
+</div>
+</div>
+</section>
+
+<!-- CTA -->
+<section id="pricing" style="max-width:1320px;margin:0 auto;padding:40px 24px;border-top:1px solid var(--border);text-align:center">
+<h2 style="font-size:24px;font-weight:800;margin-bottom:8px;letter-spacing:-.5px">Готові почати?</h2>
+<p style="color:var(--muted);font-size:15px;margin-bottom:20px;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.5">Залиште заявку — ми зробимо демо вашого майбутнього сайту безкоштовно. Якщо сподобається — домовимося про ціну.</p>
+<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+<a href="https://instagram.com/hermes.studio" target="_blank" class="btn-primary" style="padding:14px 32px;background:var(--accent);color:#fff;border-radius:8px;font-weight:600;text-decoration:none;font-size:15px;transition:background .15s">⟶ Написати в Instagram</a>
+<a href="mailto:studio@hermes.dev" style="padding:14px 32px;background:var(--cat-hover);color:var(--text);border-radius:8px;font-weight:500;text-decoration:none;font-size:15px;transition:background .15s">✉ studio@hermes.dev</a>
+</div>
+</section>
+
+<footer data-i18n="footer">Hermes Studio · нові проєкти додаються в міру створення</footer>
+
+<script>
+const LANG = {
+ru:{title:'Hermes Studio',subtitle:'Создаем сайты для малого бизнеса, которые реально работают. Прайс с аккордеоном, запись онлайн, галерея, 2 языка, SEO — под ключ. Быстрее и дешевле студий благодаря AI.',categories:'Категории',all:'Все проекты',cat_salon:'Салон красоты',cat_cafe:'Кафе',cat_auto:'Авто',cat_clinic:'Медицина',cat_funeral:'Ритуальные',footer:'Hermes Studio · новые проекты добавляются по мере создания',empty:'Здесь пока пусто. Скоро появится первый проект.'},
+uk:{title:'Hermes Studio',subtitle:'Створюємо сайти для малого бізнесу, які реально працюють. Прайс з акордеоном, запис онлайн, галерея, 2 мови, SEO — під ключ. Швидше й дешевше за студії завдяки AI.',categories:'Категорії',all:'Усі проєкти',cat_salon:'Салон краси',cat_cafe:'Кафе',cat_auto:'Авто',cat_clinic:'Медицина',cat_funeral:'Ритуальні',footer:'Hermes Studio · нові проєкти додаються в міру створення',empty:'Тут поки що пусто. Скоро з\'явиться перший проєкт.'},
+en:{title:'Hermes Studio',subtitle:'We build websites for small businesses that actually work. Accordion price list, online booking, gallery, 2 languages, SEO — turnkey. Faster and cheaper than traditional studios thanks to AI.',categories:'Categories',all:'All Projects',cat_salon:'Beauty Salon',cat_cafe:'Café',cat_auto:'Auto Service',cat_clinic:'Clinic',cat_funeral:'Funeral',footer:'Hermes Studio · new projects added as they are created',empty:'Nothing here yet. First project coming soon.'}
+};
+
+const PROJECTS = [
+{id:'fargo',cat:'salon',url:'fargo/',img:'https://images.pexels.com/photos/3992875/pexels-photo-3992875.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Fargo — салон красоты на Позняках',uk:'Fargo — салон краси на Позняках',en:'Fargo — Beauty Salon in Poznyaky'},desc:{ru:'Полноценный сайт: прайс (10 категорий, 119+ позиций), галерея, форма записи с выбором даты/времени, 2 адреса, Google Maps, акции.',uk:'Повноцінний сайт: прайс (10 категорій, 119+ позицій), галерея, форма запису з вибором дати/часу, 2 адреси, Google Maps, акції.',en:'Full website: price list (10 categories, 119+ items), gallery, booking form with date/time picker, 2 locations, Google Maps, promotions.'},meta:{ru:'Киев · 2026',uk:'Київ · 2026',en:'Kyiv · 2026'}},
+{id:'melange',cat:'salon',url:'old-salon/',img:'https://images.pexels.com/photos/7750114/pexels-photo-7750114.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'MÉLANGE — студия красоты',uk:'MÉLANGE — студія краси',en:'MÉLANGE — Beauty Studio'},desc:{ru:'Лендинг с услугами, галереей работ, отзывами клиентов, формой записи, темной темой и мобильной версией.',uk:'Лендінг з послугами, галереєю робіт, відгуками клієнтів, формою запису, темною темою та мобільною версією.',en:'Landing page with services, portfolio gallery, client reviews, booking form, dark mode, and mobile version.'},meta:{ru:'Москва · 2026',uk:'Москва · 2026',en:'Moscow · 2026'}},
+{id:'aurum',cat:'salon',url:'salon/',img:'https://images.pexels.com/photos/5069603/pexels-photo-5069603.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Aurum — Премиум салон красоты',uk:'Aurum — Преміум салон краси',en:'Aurum — Premium Beauty Salon'},desc:{ru:'Премиальный салон с темной темой и золотыми акцентами. Студийный дизайн, анимация, услуги, контакты.',uk:'Преміальний салон з темною темою та золотими акцентами. Студійний дизайн, анімація, послуги, контакти.',en:'Premium salon with dark theme and gold accents. Studio-grade design, animations, services, contact.'},meta:{ru:'2026',uk:'2026',en:'2026'}},
+{id:'patisserie',cat:'cafe',url:'bakery/',img:'https://images.pexels.com/photos/1857157/pexels-photo-1857157.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'La Pâtisserie — Кондитерская & Кафе',uk:'La Pâtisserie — Кондитерська & Кафе',en:'La Pâtisserie — Bakery & Café'},desc:{ru:'Сайт кондитерской с меню десертов, галереей, формой заказа и тёплым дизайном в природных тонах.',uk:'Сайт кондитерської з меню десертів, галереєю, формою замовлення та теплим дизайном у природних тонах.',en:'Bakery website with dessert menu, gallery, order form, and warm earthy design.'},meta:{ru:'2026',uk:'2026',en:'2026'}},
+{id:'autopro',cat:'auto',url:'auto/',img:'https://images.pexels.com/photos/3807320/pexels-photo-3807320.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'AutoPro — Автосервис',uk:'AutoPro — Автосервіс',en:'AutoPro — Auto Service'},desc:{ru:'Сайт автосервиса: услуги, запись онлайн, отзывы, контакты. Современный индустриальный дизайн.',uk:'Сайт автосервісу: послуги, запис онлайн, відгуки, контакти. Сучасний індустріальний дизайн.',en:'Auto service website: services, online booking, reviews, contacts. Modern industrial design.'},meta:{ru:'2026',uk:'2026',en:'2026'}},
+{id:'medicare',cat:'clinic',url:'clinic/',img:'https://images.pexels.com/photos/40568/medical-appointment-doctor-healthcare-40568.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'MediCare — Медицинский центр',uk:'MediCare — Медичний центр',en:'MediCare — Medical Center'},desc:{ru:'Сайт медцентра: направления, врачи, запись на приём, контакты. Чистый минималистичный дизайн.',uk:'Сайт медцентру: напрямки, лікарі, запис на прийом, контакти. Чистий мінімалістичний дизайн.',en:'Medical center website: departments, doctors, appointment booking, contacts. Clean minimalist design.'},meta:{ru:'2026',uk:'2026',en:'2026'}},
+{id:'tihiy',cat:'funeral',url:'funeral/',img:'https://images.pexels.com/photos/7241361/pexels-photo-7241361.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Тихий Дом — Ритуальные услуги',uk:'Тихий Дім — Ритуальні послуги',en:'Eternal Rest — Funeral Services'},desc:{ru:'Сайт ритуальной службы: услуги, церемонии, контакты. Сдержанный тактичный дизайн.',uk:'Сайт ритуальної служби: послуги, церемонії, контакти. Стриманий тактовний дизайн.',en:'Funeral services website: services, ceremonies, contacts. Reserved tactful design.'},meta:{ru:'2026',uk:'2026',en:'2026'}}
+];
+
+let currentLang = 'ru';
+let currentCat = 'all';
+let theme = localStorage.getItem('theme') || 'light';
+
+// Theme
+document.documentElement.setAttribute('data-theme',theme);
+document.getElementById('themeToggle').textContent = theme === 'dark' ? '☀️' : '🌙';
+document.getElementById('themeToggle').addEventListener('click',()=>{
+theme = theme === 'dark' ? 'light' : 'dark';
+document.documentElement.setAttribute('data-theme',theme);
+localStorage.setItem('theme',theme);
+document.getElementById('themeToggle').textContent = theme === 'dark' ? '☀️' : '🌙';
+});
+
+// Translate page
+function translate(lang){
+currentLang = lang;
+document.querySelectorAll('[data-i18n]').forEach(el=>{
+const key = el.dataset.i18n;
+const parts = key.split('.');
+if(parts.length === 1 && LANG[lang][key]){
+el.textContent = LANG[lang][key];
+} else if(parts.length > 1){
+// handle nested if needed
+}
+});
+document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
+renderProjects();
+}
+
+// Render projects
+function renderProjects(){
+const main = document.getElementById('projects');
+const filtered = currentCat === 'all' ? PROJECTS : PROJECTS.filter(p=>p.cat===currentCat);
+if(!filtered.length){
+main.innerHTML = `<div class="empty-state show">${LANG[currentLang].empty}</div>`;
+return;
+}
+// Group by category
+const groups = {};
+filtered.forEach(p=>{
+if(!groups[p.cat]) groups[p.cat] = [];
+groups[p.cat].push(p);
+});
+let html = '';
+for(const[cat,items] of Object.entries(groups)){
+const catName = LANG[currentLang]['cat_'+cat] || cat;
+html += `<section class="project-section" data-cat="${cat}">`;
+html += `<div class="section-title show"><h2>${catName}</h2></div>`;
+html += `<div class="project-grid">`;
+items.forEach(p=>{
+html += `<a href="${p.url}" class="project-card" target="_blank">`;
+html += `<img class="thumb" src="${p.img}" alt="" loading="lazy">`;
+html += `<div class="info">`;
+html += `<span class="cat-tag">${catName}</span>`;
+html += `<h3>${p.name[currentLang]}</h3>`;
+html += `<p class="desc">${p.desc[currentLang]}</p>`;
+html += `<div class="meta">${p.meta[currentLang]}</div>`;
+html += `<span class="btn">↗ ${currentLang === 'en' ? 'Open site' : 'Відкрити сайт'}</span>`;
+html += `</div></a>`;
+});
+html += `</div></section>`;
+}
+main.innerHTML = html;
+}
+
+// Category filter
+document.getElementById('catList').addEventListener('click',e=>{
+const a = e.target.closest('a');
+if(!a) return;
+e.preventDefault();
+document.querySelectorAll('.cat-list a').forEach(x=>x.classList.remove('active'));
+a.classList.add('active');
+currentCat = a.dataset.cat;
+renderProjects();
+});
+
+// Language buttons
+document.querySelectorAll('.lang-btn').forEach(btn=>{
+btn.addEventListener('click',()=>translate(btn.dataset.lang));
+});
+
+// Init
+translate('ru');
+</script>
+</body>
+</html>
