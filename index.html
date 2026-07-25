@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hermes Work Portfolio — All Projects</title>
+<title>Hermes Portfolio — All Projects</title>
 <style>
 :root{
   --bg:#0d0d12;--surface:#16161d;--border:#2a2a3a;--text:#e8e8ee;--muted:#88889a;
@@ -88,6 +88,15 @@ header{background:var(--surface);border-bottom:1px solid var(--border);position:
 .empty-state{text-align:center;padding:60px 20px;color:var(--empty);font-size:14px;display:none}
 .empty-state.show{display:block}
 
+/* STATS SECTION */
+#stats{max-width:1400px;margin:0 auto;padding:40px 24px;border-top:1px solid var(--border);text-align:center}
+#stats h2{font-size:24px;font-weight:800;margin-bottom:8px;letter-spacing:-.5px}
+#stats .sub{color:var(--muted);margin-bottom:24px}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;max-width:800px;margin:0 auto}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+.stat-card .num{font-size:32px;font-weight:800;color:var(--accent)}
+.stat-card .label{font-size:13px;color:var(--muted);margin-top:4px}
+
 /* FOOTER */
 footer{max-width:1400px;margin:0 auto;padding:32px 24px;border-top:1px solid var(--footer-border);color:var(--tag-muted);font-size:13px;text-align:center}
 
@@ -105,6 +114,8 @@ footer{max-width:1400px;margin:0 auto;padding:32px 24px;border-top:1px solid var
   .header-inner{flex-wrap:wrap}
 }
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -140,26 +151,14 @@ footer{max-width:1400px;margin:0 auto;padding:32px 24px;border-top:1px solid var
 <main class="main" id="projects"></main>
 </div>
 
-<section id="stats" style="max-width:1400px;margin:0 auto;padding:40px 24px;border-top:1px solid var(--border);text-align:center">
-<h2 style="font-size:24px;font-weight:800;margin-bottom:8px;letter-spacing:-.5px" data-i18n="stats_title">По цифрам</h2>
-<p style="color:var(--muted);margin-bottom:24px" data-i18n="stats_sub">Сгенерировано автоматически из структуры папок</p>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;max-width:800px;margin:0 auto">
-<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px">
-<div style="font-size:32px;font-weight:800;color:var(--accent)" id="statProjects">0</div>
-<div style="font-size:13px;color:var(--muted);margin-top:4px" data-i18n="stat_projects">Проектов</div>
-</div>
-<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px">
-<div style="font-size:32px;font-weight:800;color:var(--accent)" id="statCategories">0</div>
-<div style="font-size:13px;color:var(--muted);margin-top:4px" data-i18n="stat_categories">Категорий</div>
-</div>
-<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px">
-<div style="font-size:32px;font-weight:800;color:var(--accent)" id="statFiles">0</div>
-<div style="font-size:13px;color:var(--muted);margin-top:4px" data-i18n="stat_files">HTML файлов</div>
-</div>
-<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px">
-<div style="font-size:32px;font-weight:800;color:var(--accent)" id="statTypes">0</div>
-<div style="font-size:13px;color:var(--muted);margin-top:4px" data-i18n="stat_types">Типов работ</div>
-</div>
+<section id="stats">
+<h2 data-i18n="stats_title">По цифрам</h2>
+<p data-i18n="stats_sub">Сгенерировано автоматически из структуры папок</p>
+<div class="stats-grid">
+<div class="stat-card"><div class="num" id="statProjects">0</div><div class="label" data-i18n="stat_projects">Проектов</div></div>
+<div class="stat-card"><div class="num" id="statCategories">0</div><div class="label" data-i18n="stat_categories">Категорий</div></div>
+<div class="stat-card"><div class="num" id="statFiles">0</div><div class="label" data-i18n="stat_files">HTML файлов</div></div>
+<div class="stat-card"><div class="num" id="statTypes">0</div><div class="label" data-i18n="stat_types">Типов работ</div></div>
 </div>
 </section>
 
@@ -208,7 +207,7 @@ other:{label:{ru:'Другое',en:'Other'},color:'#dfe6e9',icon:'📦'}
 const PROJECTS = [
 {id:'fargo',cat:'beauty',url:'fargo/',img:'https://images.pexels.com/photos/3992875/pexels-photo-3992875.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Fargo — салон красоты на Позняках',en:'Fargo — Beauty Salon in Poznyaky'},desc:{ru:'Полноценный сайт: прайс (10 категорий, 119+ позиций), галерея, форма записи с выбором даты/времени, 2 адреса, Google Maps, акции.',en:'Full website: price list (10 categories, 119+ items), gallery, booking form with date/time picker, 2 locations, Google Maps, promotions.'},meta:{ru:'Киев · 2026',en:'Kyiv · 2026'}},
 {id:'melange',cat:'beauty',url:'old-salon/',img:'https://images.pexels.com/photos/7750114/pexels-photo-7750114.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'MÉLANGE — студия красоты',en:'MÉLANGE — Beauty Studio'},desc:{ru:'Лендинг с услугами, галереей работ, отзывами клиентов, формой записи, темной темой и мобильной версией.',en:'Landing page with services, portfolio gallery, client reviews, booking form, dark mode, and mobile version.'},meta:{ru:'Москва · 2026',en:'Moscow · 2026'}},
-{id:'aurum',cat:'beauty',url:'salon/',img:'https://images.pexels.com/photos/5069603/pexels-photo-5069603.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Aurum — Премиум салон красоты',en:'Aurum — Premium Beauty Salon'},desc:{ru:'Премиальный салон с темной темой и золотыми акцентами. Студийный дизайн, анимация, услуги, контакты.',en:'Premium salon with dark theme and gold accents. Studio-grade design, animations, services, contacts.'},meta:{ru:'2026',en:'2026'}},
+{id:'aurum',cat:'beauty',url:'salon/',img:'https://images.pexels.com/photos/5069603/pexels-photo-5069603.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Aurum — Премиум салон красоты',en:'Aurum — Premium Beauty Salon'},desc:{ru:'Премиальный салон с темной темой и золотыми акцентами. Студийный дизайн, анимация, услуги, контакты.',en:'Premium salon with dark theme and gold accents. Studio-grade design, animations, services, contact.'},meta:{ru:'2026',en:'2026'}},
 {id:'patisserie',cat:'cafe',url:'bakery/',img:'https://images.pexels.com/photos/1857157/pexels-photo-1857157.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'La Pâtisserie — Кондитерская & Кафе',en:'La Pâtisserie — Bakery & Café'},desc:{ru:'Сайт кондитерской с меню десертов, галереей, формой заказа и тёплым дизайном в природных тонах.',en:'Bakery website with dessert menu, gallery, order form, and warm earthy design.'},meta:{ru:'2026',en:'2026'}},
 {id:'autopro',cat:'auto',url:'auto/',img:'https://images.pexels.com/photos/3807320/pexels-photo-3807320.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'AutoPro — Автосервис',en:'AutoPro — Auto Service'},desc:{ru:'Сайт автосервиса: услуги, запись онлайн, отзывы, контакты. Современный индустриальный дизайн.',en:'Auto service website: services, online booking, reviews, contacts. Modern industrial design.'},meta:{ru:'2026',en:'2026'}},
 {id:'medicare',cat:'clinic',url:'clinic/',img:'https://images.pexels.com/photos/40568/medical-appointment-doctor-healthcare-40568.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'MediCare — Медицинский центр',en:'MediCare — Medical Center'},desc:{ru:'Сайт медцентра: направления, врачи, запись на приём, контакты. Чистый минималистичный дизайн.',en:'Medical center website: departments, doctors, appointment booking, contacts. Clean minimalist design.'},meta:{ru:'2026',en:'2026'}},
@@ -221,138 +220,120 @@ const PROJECTS = [
 {id:'cpa-dating',cat:'cpa',url:'cpa/dating/',img:'https://images.pexels.com/photos/7740912/pexels-photo-7740912.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Dating CPA лендинг',en:'Dating CPA Landing'},desc:{ru:'Лендинг для дейтинг-офферов: квиз, прелендинг, пиксель, постбэк.',en:'Dating offer landing: quiz, pre-lander, pixel, postback.'},meta:{ru:'2026',en:'2026'}},
 {id:'cpa-fintech',cat:'cpa',url:'cpa/fintech/',img:'https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Финтех CPA — кредиты/карты',en:'Fintech CPA — Loans/Cards'},desc:{ru:'Мульти-оффер лендинг: калькулятор, сравнение банков, лид-форма.',en:'Multi-offer landing: calculator, bank comparison, lead form.'},meta:{ru:'2026',en:'2026'}},
 {id:'cpa-gaming',cat:'cpa',url:'cpa/gaming/',img:'https://images.pexels.com/photos/3165335/pexels-photo-3165335.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Гейминг CPA — товары/валюта',en:'Gaming CPA — Items/Currency'},desc:{ru:'Лендинги под игровые офферы: скины, валюта, бустинг. A/B тесты заголовков.',en:'Landings for gaming offers: skins, currency, boosting. A/B headline tests.'},meta:{ru:'2026',en:'2026'}},
-{id:'cpa-survey',cat:'cpa',url:'cpa/survey/',img:'https://images.pexels.com/photos/590016/pexels-photo-590016.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Опросники CPA — Survey',en:'Survey CPA — Questionnaires'},desc:{ru:'Опросник-квизик: пошаговый воронка, квалификация лида, постбэк.',en:'Quiz-style survey: step funnel, lead qualification, postback.'},meta:{ru:'2026',en:'2026'}},
+{id:'cpa-survey',cat:'cpa',url:'cpa/survey/',img:'https://images.pexels.com/photos/590016/pexels-photo-590016.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Опросники CPA — Survey',en:'Survey CPA — Questionnaires'},desc:{ru:'Опросник-квизик: пошаговая воронка, квалификация лида, постбэк.',en:'Quiz-style survey: step funnel, lead qualification, postback.'},meta:{ru:'2026',en:'2026'}},
 {id:'cpa-vpn',cat:'cpa',url:'cpa/vpn/',img:'https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'VPN CPA лендинг',en:'VPN CPA Landing'},desc:{ru:'VPN оффер: сравнение тарифов, кнопка скачивания, гео-таргетинг.',en:'VPN offer: plan comparison, download button, geo-targeting.'},meta:{ru:'2026',en:'2026'}},
 {id:'arbitrage-spider',cat:'arbitrage',url:'arbitrage/',img:'https://images.pexels.com/photos/7688345/pexels-photo-7688345.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Арбитраж — паутина схем (Spider Web)',en:'Arbitrage — Spider Web Schemes'},desc:{ru:'Визуализация арбитражных схем как паутины: источники трафика → прелендинги → офферы → постбэки.',en:'Visualize arbitrage schemes as spider web: traffic sources → pre-landers → offers → postbacks.'},meta:{ru:'2026',en:'2026'}},
 {id:'fargo-classic',cat:'demos',url:'fargo-classic/',img:'https://images.pexels.com/photos/3992875/pexels-photo-3992875.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Fargo Classic — классическая версия',en:'Fargo Classic — Classic Version'},desc:{ru:'Первая версия Fargo: светлая тема, базовый функционал, простая структура.',en:'First Fargo version: light theme, basic functionality, simple structure.'},meta:{ru:'2026',en:'2026'}},
 {id:'fargo-trend',cat:'demos',url:'fargo-trend/',img:'https://images.pexels.com/photos/3992875/pexels-photo-3992875.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Fargo Trend — трендовая версия',en:'Fargo Trend — Trend Version'},desc:{ru:'Эксперимент с трендовым дизайном: градиенты, стекломорфизм, микро-анимации.',en:'Trendy design experiment: gradients, glassmorphism, micro-animations.'},meta:{ru:'2026',en:'2026'}},
-{id:'fargo-v2',cat:'demos',url:'fargo-v2/',img:'https://images.pexels.com/photos/3992875/pexels-photo-3992875.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Fargo v2 — вторая итерация',en:'Fargo v2 — Second Iteration'},desc:{ru:'Улучшенная архитектура: модульные компоненты, CSS переменные, mejor performance.',en:'Improved architecture: modular components, CSS variables, better performance.'},meta:{ru:'2026',en:'2026'}},
+{id:'fargo-v2',cat:'demos',url:'fargo-v2/',img:'https://images.pexels.com/photos/3992875/pexels-photo-3992875.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Fargo v2 — вторая итерация',en:'Fargo v2 — Second Iteration'},desc:{ru:'Улучшенная архитектура: модульные компоненты, CSS переменные, лучшая производительность.',en:'Improved architecture: modular components, CSS variables, better performance.'},meta:{ru:'2026',en:'2026'}},
 {id:'demos-beauty',cat:'demos',url:'demos/bezmezhbeauty-bez-mezh/',img:'https://images.pexels.com/photos/3764013/pexels-photo-3764013.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'БезмежBeauty — демо салон',en:'BezmezhBeauty — Demo Salon'},desc:{ru:'Демо-сайт салона: Hero, услуги, мастера, отзывы, запись, карта.',en:'Demo salon site: Hero, services, masters, reviews, booking, map.'},meta:{ru:'2026',en:'2026'}},
 {id:'demos-dolce',cat:'demos',url:'demos/dolce-bella-beauty-studio/',img:'https://images.pexels.com/photos/7750114/pexels-photo-7750114.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Dolce Bella — демо студия',en:'Dolce Bella — Demo Studio'},desc:{ru:'Премиальная студия: темная тема, золотые акценты, анимации.',en:'Premium studio: dark theme, gold accents, animations.'},meta:{ru:'2026',en:'2026'}},
-{id:'demos-clinic',cat:'demos',url:'demos/moya-klinika/',img:'https://images.pexels.com/photos/40568/medical-appointment-doctor-healthcare-40568.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Моя Клиника — демо медцентр',en:'Moya Klinika — Demo Clinic'},desc:{ru:'Медицинский центр: направления, врачи, запись, отзывы.',en:'Medical center: departments, doctors, booking, reviews.'},meta:{ru:'2026',en:'2026'}},
-{id:'demos-test',cat:'demos',url:'demos/testoviy-salon/',img:'https://images.pexels.com/photos/3992875/pexels-photo-3992875.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Тестовый салон — песочница',en:'Test Salon — Sandbox'},desc:{ru:'Песочница для тестов новых фич: анимации, формы, интеграции.',en:'Sandbox for testing new features: animations, forms, integrations.'},meta:{ru:'2026',en:'2026'}},
-{id:'demos-tisto',cat:'demos',url:'demos/tisto-ta-khmil/',img:'https://images.pexels.com/photos/1857157/pexels-photo-1857157.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Тисто та Хміль — демо пекарня',en:'Tisto ta Khmil — Demo Bakery'},desc:{ru:'Пекарня/кафе: меню, заказ, галерея, контакты.',en:'Bakery/cafe: menu, order, gallery, contacts.'},meta:{ru:'2026',en:'2026'}},
-{id:'portfolio-beauty',cat:'portfolio',url:'portfolio/beauty-salon/',img:'https://images.pexels.com/photos/3764013/pexels-photo-3764013.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Портфолио: Салон красоты',en:'Portfolio: Beauty Salon'},desc:{ru:'Кейс салона красоты: задача, решение, результат, метрики.',en:'Beauty salon case study: challenge, solution, results, metrics.'},meta:{ru:'2026',en:'2026'}},
-{id:'architecture',cat:'ai',url:'architecture/hermes_architecture.html',img:'https://images.pexels.com/photos/8386434/pexels-photo-8386434.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Архитектура Hermes — диаграмма',en:'Hermes Architecture — Diagram'},desc:{ru:'Интерактивная схема архитектуры: модули, события, пайплайны, память.',en:'Interactive architecture diagram: modules, events, pipelines, memory.'},meta:{ru:'2026',en:'2026'}},
-{id:'current-site',cat:'ai',url:'current-site.html',img:'https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Текущий сайт Hermes Studio',en:'Current Hermes Studio Site'},desc:{ru:'Рабочая версия портфолио студии: категории, фильтры, i18n, тёмная тема.',en:'Working studio portfolio: categories, filters, i18n, dark mode.'},meta:{ru:'2026',en:'2026'}},
-{id:'portfolio-main',cat:'portfolio',url:'portfolio.html',img:'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Портфолио — старый индекс',en:'Portfolio — Old Index'},desc:{ru:'Предыдущая версия агрегатора работ.',en:'Previous version of work aggregator.'},meta:{ru:'2026',en:'2026'}},
-{id:'old-site',cat:'portfolio',url:'old_site.html',img:'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Old Site — архив',en:'Old Site — Archive'},desc:{ru:'Архивная версия сайта.',en:'Archived site version.'},meta:{ru:'2026',en:'2026'}},
-{id:'old-salon',cat:'beauty',url:'old-salon/',img:'https://images.pexels.com/photos/3992875/pexels-photo-3992875.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Old Salon — архив',en:'Old Salon — Archive'},desc:{ru:'Архивная версия салона.',en:'Archived salon version.'},meta:{ru:'2026',en:'2026'}},
-{id:'famp-prep',cat:'experiments',url:'famp-prep/',img:'https://images.pexels.com/photos/7688345/pexels-photo-7688345.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Famp Prep — эксперимент',en:'Famp Prep — Experiment'},desc:{ru:'Экспериментальный проект Famp.',en:'Experimental Famp project.'},meta:{ru:'2026',en:'2026'}},
-{id:'knowledge-cube',cat:'ai',url:'knowledge-cube-crystal-architecture.md',img:'https://images.pexels.com/photos/8386434/pexels-photo-8386434.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Knowledge Cube + Crystal Architecture',en:'Knowledge Cube + Crystal Architecture'},desc:{ru:'Документация архитектуры памяти и самосознания Hermes.',en:'Documentation of Hermes memory and self-awareness architecture.'},meta:{ru:'2026',en:'2026'}},
-{id:'affiliate-bot-plan',cat:'ai',url:'affiliate_bot_implementation_plan.md',img:'https://images.pexels.com/photos/8386434/pexels-photo-8386434.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'План внедрения Affiliate Bot',en:'Affiliate Bot Implementation Plan'},desc:{ru:'Технический план Telegram-бота для CPA трафика.',en:'Technical plan for Telegram bot for CPA traffic.'},meta:{ru:'2026',en:'2026'}},
+{id:'demos-moya',cat:'demos',url:'demos/moya-klinika/',img:'https://images.pexels.com/photos/40568/medical-appointment-doctor-healthcare-40568.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Моя Клиника — демо медцентр',en:'Moya Klinika — Demo Clinic'},desc:{ru:'Демо медцентра: направления, врачи, запись, контакты.',en:'Demo clinic: departments, doctors, booking, contacts.'},meta:{ru:'2026',en:'2026'}},
+{id:'demos-test',cat:'demos',url:'demos/testoviy-salon/',img:'https://images.pexels.com/photos/5069603/pexels-photo-5069603.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Тестовый салон — демо',en:'Test Salon — Demo'},desc:{ru:'Тестовый проект для проверки компонентов.',en:'Test project for component verification.'},meta:{ru:'2026',en:'2026'}},
+{id:'demos-tisto',cat:'demos',url:'demos/tisto-ta-khmil/',img:'https://images.pexels.com/photos/1857157/pexels-photo-1857157.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Тисто та Хміль — демо пекарня',en:'Tisto ta Khmil — Demo Bakery'},desc:{ru:'Демо пекарни: меню, галерея, заказ.',en:'Demo bakery: menu, gallery, order.'},meta:{ru:'2026',en:'2026'}},
+{id:'portfolio-beauty',cat:'portfolio',url:'portfolio/beauty-salon/',img:'https://images.pexels.com/photos/3992875/pexels-photo-3992875.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Beauty Salon — портфолио проект',en:'Beauty Salon — Portfolio Project'},desc:{ru:'Проект портфолио: салон красоты с полным функционалом.',en:'Portfolio project: beauty salon with full functionality.'},meta:{ru:'2026',en:'2026'}},
+{id:'architecture-model',cat:'other',url:'architecture/hermes_architecture.html',img:'https://images.pexels.com/photos/7688345/pexels-photo-7688345.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Hermes Architecture Model',en:'Hermes Architecture Model'},desc:{ru:'Визуализация архитектуры Hermes системы.',en:'Hermes system architecture visualization.'},meta:{ru:'2026',en:'2026'}},
+{id:'famp-prep',cat:'other',url:'famp-prep/',img:'https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'FAMP Prep — подготовительный материал',en:'FAMP Prep — Preparation Material'},desc:{ru:'Подготовительные материалы для FAMP.',en:'Preparation materials for FAMP.'},meta:{ru:'2026',en:'2026'}},
+{id:'current-site',cat:'other',url:'current-site.html',img:'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Текущий сайт Hermes Studio',en:'Current Hermes Studio Site'},desc:{ru:'Текущая версия студийного сайта.',en:'Current studio site version.'},meta:{ru:'2026',en:'2026'}},
+{id:'portfolio-old',cat:'portfolio',url:'portfolio.html',img:'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Старый портфолио сайт',en:'Old Portfolio Site'},desc:{ru:'Предыдущая версия портфолио.',en:'Previous portfolio version.'},meta:{ru:'2026',en:'2026'}},
+{id:'old-site',cat:'other',url:'old_site.html',img:'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',name:{ru:'Старый сайт',en:'Old Site'},desc:{ru:'Архивная версия сайта.',en:'Archived site version.'},meta:{ru:'2026',en:'2026'}}
 ];
 
-let currentLang='ru';
-let currentCat='all';
-let theme=localStorage.getItem('theme')||'dark';
+let currentLang = 'ru';
+let currentCat = 'all';
+let theme = localStorage.getItem('theme') || 'light';
 
 document.documentElement.setAttribute('data-theme',theme);
-document.getElementById('themeToggle').textContent=theme==='dark'?'☀️':'🌙';
-
-// Translate
-function translate(lang){
-currentLang=lang;
-document.querySelectorAll('[data-i18n]').forEach(el=>{
-const key=el.dataset.i18n;
-if(LANG[lang][key]) el.textContent=LANG[lang][key];
-});
-document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
-renderCategories();
-renderProjects();
-}
-
-// Categories
-function renderCategories(){
-const list=document.getElementById('catList');
-const cats={};
-PROJECTS.forEach(p=>{
-if(!cats[p.cat]) cats[p.cat]=0;
-cats[p.cat]++;
-});
-let html='<li><a href="#" class="active" data-cat="all" data-i18n="all"><span data-i18n="all">Все проекты</span> <span class="count">'+PROJECTS.length+'</span></a></li>';
-for(const [cat,count] of Object.entries(cats)){
-const meta=CAT_META[cat]||{label:{ru:cat,en:cat},icon:'📦'};
-const label=meta.label[currentLang]||cat;
-html+=`<li><a href="#" data-cat="${cat}">${meta.icon} <span data-i18n="cat_${cat}">${label}</span> <span class="count">${count}</span></a></li>`;
-}
-list.innerHTML=html;
-list.querySelectorAll('a').forEach(a=>{
-a.addEventListener('click',e=>{
-e.preventDefault();
-list.querySelectorAll('a').forEach(x=>x.classList.remove('active'));
-a.classList.add('active');
-currentCat=a.dataset.cat;
-renderProjects();
-});
-});
-translate(currentLang);
-}
-
-// Projects
-function renderProjects(){
-const main=document.getElementById('projects');
-const filtered=currentCat==='all'?PROJECTS:PROJECTS.filter(p=>p.cat===currentCat);
-if(!filtered.length){
-main.innerHTML=`<div class="empty-state show">${LANG[currentLang].empty}</div>`;
-return;
-}
-const groups={};
-filtered.forEach(p=>{
-if(!groups[p.cat]) groups[p.cat]=[];
-groups[p.cat].push(p);
-});
-let html='';
-for(const [cat,items] of Object.entries(groups)){
-const meta=CAT_META[cat]||{label:{ru:cat,en:cat},icon:'📦'};
-const catName=meta.label[currentLang]||cat;
-html+=`<section class="project-section" data-cat="${cat}">`;
-html+=`<div class="section-title show"><h2>${meta.icon} ${catName}</h2></div>`;
-html+=`<div class="project-grid">`;
-items.forEach(p=>{
-html+=`<a href="${p.url}" class="project-card" target="_blank">`;
-html+=`<img class="thumb" src="${p.img}" alt="" loading="lazy">`;
-html+=`<div class="info">`;
-html+=`<span class="cat-tag">${catName}</span>`;
-html+=`<h3>${p.name[currentLang]}</h3>`;
-html+=`<p class="desc">${p.desc[currentLang]}</p>`;
-html+=`<div class="meta">${p.meta[currentLang]}</div>`;
-html+=`<span class="btn">${currentLang==='en'?'Open site':'Открыть сайт'}</span>`;
-html+=`</div></a>`;
-});
-html+=`</div></section>`;
-}
-main.innerHTML=html;
-translate(currentLang);
-}
-
-// Theme
+document.getElementById('themeToggle').textContent = theme === 'dark' ? '☀️' : '🌙';
 document.getElementById('themeToggle').addEventListener('click',()=>{
-theme=theme==='dark'?'light':'dark';
+theme = theme === 'dark' ? 'light' : 'dark';
 document.documentElement.setAttribute('data-theme',theme);
 localStorage.setItem('theme',theme);
-document.getElementById('themeToggle').textContent=theme==='dark'?'☀️':'🌙';
+document.getElementById('themeToggle').textContent = theme === 'dark' ? '☀️' : '🌙';
 });
 
-// Lang buttons
+function translate(lang){
+currentLang = lang;
+document.querySelectorAll('[data-i18n]').forEach(el=>{
+const key = el.dataset.i18n;
+if(LANG[lang][key]) el.textContent = LANG[lang][key];
+});
+document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
+renderProjects();
+}
+
+function renderProjects(){
+const main = document.getElementById('projects');
+const filtered = currentCat === 'all' ? PROJECTS : PROJECTS.filter(p=>p.cat===currentCat);
+if(!filtered.length){
+main.innerHTML = `<div class="empty-state show">${LANG[currentLang].empty}</div>`;
+return;
+}
+const groups = {};
+filtered.forEach(p=>{
+if(!groups[p.cat]) groups[p.cat] = [];
+groups[p.cat].push(p);
+});
+let html = '';
+for(const[cat,items] of Object.entries(groups)){
+const catMeta = CAT_META[cat] || {label:{ru:cat,en:cat},color:'#666',icon:'📦'};
+const catName = catMeta.label[currentLang] || cat;
+html += `<section class="project-section" data-cat="${cat}">`;
+html += `<div class="section-title show"><h2>${catMeta.icon} ${catName}</h2></div>`;
+html += `<div class="project-grid">`;
+items.forEach(p=>{
+html += `<a href="${p.url}" class="project-card" target="_blank">`;
+html += `<img class="thumb" src="${p.img}" alt="" loading="lazy">`;
+html += `<div class="info">`;
+html += `<span class="cat-tag">${catName}</span>`;
+html += `<h3>${p.name[currentLang]}</h3>`;
+html += `<p class="desc">${p.desc[currentLang]}</p>`;
+html += `<div class="meta">${p.meta[currentLang]}</div>`;
+html += `<span class="btn">↗ ${currentLang === 'en' ? 'Open' : 'Открыть'}</span>`;
+html += `</div></a>`;
+});
+html += `</div></section>`;
+}
+main.innerHTML = html;
+}
+
+document.getElementById('catList').addEventListener('click',e=>{
+const a = e.target.closest('a');
+if(!a) return;
+e.preventDefault();
+document.querySelectorAll('.cat-list a').forEach(x=>x.classList.remove('active'));
+a.classList.add('active');
+currentCat = a.dataset.cat;
+renderProjects();
+});
+
 document.querySelectorAll('.lang-btn').forEach(btn=>{
 btn.addEventListener('click',()=>translate(btn.dataset.lang));
 });
 
-// Stats
-function updateStats(){
-const cats=new Set(PROJECTS.map(p=>p.cat));
-const files=PROJECTS.filter(p=>p.url.endsWith('.html')||p.url.endsWith('/')).length;
-const types=new Set(PROJECTS.map(p=>p.cat)).size;
-document.getElementById('statProjects').textContent=PROJECTS.length;
-document.getElementById('statCategories').textContent=cats.size;
-document.getElementById('statFiles').textContent=files;
-document.getElementById('statTypes').textContent=types;
+function buildCatList(){
+const cats = [...new Set(PROJECTS.map(p=>p.cat))];
+let html = `<li><a href="#" class="active" data-cat="all" data-i18n="all"><span data-i18n="all">Все проекты</span> <span class="count">${PROJECTS.length}</span></a></li>`;
+cats.forEach(cat=>{
+const meta = CAT_META[cat] || {label:{ru:cat,en:cat},icon:'📦'};
+const count = PROJECTS.filter(p=>p.cat===cat).length;
+const label = meta.label[currentLang] || cat;
+html += `<li><a href="#" data-cat="${cat}"><span>${meta.icon} ${label}</span> <span class="count">${count}</span></a></li>`;
+});
+document.getElementById('catList').innerHTML = html;
+updateStats();
 }
 
-// Init
+function updateStats(){
+const cats = new Set(PROJECTS.map(p=>p.cat));
+document.getElementById('statProjects').textContent = PROJECTS.length;
+document.getElementById('statCategories').textContent = cats.size;
+document.getElementById('statFiles').textContent = PROJECTS.length;
+document.getElementById('statTypes').textContent = cats.size;
+}
+
 translate('ru');
-updateStats();
+buildCatList();
 </script>
 </body>
 </html>
