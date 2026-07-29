@@ -488,8 +488,8 @@ section{padding:clamp(40px,6vh,80px)0}
     updateDots(current);
     track.addEventListener('transitionend',function handler(){
       track.removeEventListener('transitionend',handler);
-      if(current<=step-1){current=totalReal-step+step-1;track.style.transition='none';track.style.transform='translateX(-'+(current*slideWidth)+'%)';requestAnimationFrame(function(){track.style.transition='transform .5s ease'})}
-      else if(current>=totalReal-step+step){current=step;track.style.transition='none';track.style.transform='translateX(-'+(current*slideWidth)+'%)';requestAnimationFrame(function(){track.style.transition='transform .5s ease'})}
+      if(current<=step-1){current=totalReal+step-1;track.style.transition='none';void track.offsetHeight;track.style.transform='translateX(-'+(current*slideWidth)+'%)';requestAnimationFrame(function(){track.style.transition='transform .5s ease'})}
+      else if(current>=totalReal+step){current=step;track.style.transition='none';void track.offsetHeight;track.style.transform='translateX(-'+(current*slideWidth)+'%)';requestAnimationFrame(function(){track.style.transition='transform .5s ease'})}
     });
   }
   window.moveSlide=function(n){goToSlide(current+n)};
