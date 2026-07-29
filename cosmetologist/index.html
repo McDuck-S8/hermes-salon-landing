@@ -234,9 +234,12 @@ section{padding:clamp(50px,8vh,80px) 0}
   .header{background:rgba(18,18,18,0.85);backdrop-filter:blur(12px);border-bottom-color:#27272a}
   .hero{background:linear-gradient(135deg,#1a2a2a 0%,#121212 50%,#1a1a2e 100%)}
   .hero p{color:#c0c0c0}
+  .header-nav{background:#1a1a1a}
 }
 @media (max-width:768px){
-  .header-nav{display:none}
+  .header-nav{display:none;position:absolute;top:100%;left:0;right:0;background:var(--white);flex-direction:column;padding:16px;box-shadow:0 4px 20px rgba(0,0,0,.08);border-radius:0 0 var(--radius) var(--radius)}
+  .header-nav.open{display:flex}
+  .header-nav a{padding:10px 0}
   .mobile-toggle{display:flex}
   .hero{grid-template-columns:1fr}
   .hero-right{min-height:50vh}
@@ -294,6 +297,9 @@ section{padding:clamp(50px,8vh,80px) 0}
 <header class="header" role="banner">
   <div class="container">
     <a href="#" class="header-logo">Косметолог<span>.</span></a>
+    <button class="mobile-toggle" aria-label="Открыть меню" onclick="this.classList.toggle('active');document.querySelector('.header-nav').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
     <nav class="header-nav" role="navigation" aria-label="Главное меню">
       <a href="#services">Услуги</a>
       <a href="#about">Обо мне</a>
@@ -567,7 +573,34 @@ function initCarousel(trackId, dotsId, visibleCount) {
   window['goToSlide'] = goTo;
   window['moveSlide'] = move;
 }
-initCarousel('carouselTrack', 'carouselDots', 3);
-</script>
+
+// Carousel responsive init
+(function(){
+  var vp = window.innerWidth;
+  var count = vp < 481 ? 1 : 3;
+  initCarousel('carouselTrack', 'carouselDots', count);
+  // Re-init on resize (debounced)
+  var rt;
+  window.addEventListener('resize', function(){
+    clearTimeout(rt);
+    rt = setTimeout(function(){
+      var nv = window.innerWidth;
+      var nc = nv < 481 ? 1 : 3;
+      if(nc !== count){
+        count = nc;
+        // Reload the page to cleanly re-init carousel
+        location.reload();
+      }
+    }, 400);
+  });
+})();
+
+// Mobile nav — close on link click
+document.querySelector('.header-nav') && document.querySelector('.header-nav').addEventListener('click', function(e){
+  if(e.target.tagName === 'A') {
+    document.querySelector('.header-nav').classList.remove('open');
+    document.querySelector('.mobile-toggle') && document.querySelector('.mobile-toggle').classList.remove('active');
+  }
+});
 </body>
 </html>
