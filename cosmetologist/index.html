@@ -113,11 +113,12 @@ section{padding:clamp(40px,6vh,80px)0}
 }
 
 /* HERO */
-.hero{min-height:90dvh;display:grid;grid-template-columns:1fr;padding-top:70px;background:linear-gradient(135deg,#f0f5f3,#f8f7f4,#f0f0ec);position:relative;overflow:hidden}
-.hero-left{display:flex;align-items:center;padding:40px 16px 20px;position:relative;z-index:2}
+.hero{display:block;padding-top:70px;background:linear-gradient(135deg,#f0f5f3,#f8f7f4,#f0f0ec)}
+.hero-inner{display:flex;flex-wrap:wrap;max-width:1100px;margin:0 auto;padding:0 16px;align-items:stretch;gap:0}
+.hero-left{flex:1 1 50%;padding:60px 24px 40px;min-width:300px}
 .hero-content{max-width:520px}
-.hero-right{position:relative;overflow:hidden;min-height:50vh;order:-1}
-.hero-right img{width:100%;height:100%;object-fit:cover}
+.hero-right{flex:1 1 50%;min-width:300px;position:relative}
+.hero-right img{width:100%;height:100%;min-height:400px;object-fit:cover;border-radius:var(--radius)0 0 var(--radius)}
 .hero .eyebrow{font-size:.7rem;font-weight:500;text-transform:uppercase;letter-spacing:.12em;color:var(--teal);margin-bottom:.75rem}
 .hero h1{font-size:clamp(1.6rem,6vw,3.2rem)}
 .hero h1 em{font-style:italic;color:var(--teal)}
@@ -125,12 +126,10 @@ section{padding:clamp(40px,6vh,80px)0}
 .hero-actions{display:flex;flex-wrap:wrap;gap:12px}
 .hero-badges{display:flex;gap:8px;margin-top:1.2rem;flex-wrap:wrap}
 .hero-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:50px;background:var(--glass-bg);backdrop-filter:var(--glass-blur);border:1px solid var(--glass-border);font-size:.78rem;color:var(--text)}
-@media(min-width:769px){
-  .hero{grid-template-columns:1fr 1fr;padding-top:80px}
-  .hero-left{padding:0 48px}
-  .hero-right{order:0;border-radius:var(--radius)0 0 var(--radius);min-height:auto}
-  .hero-right img{max-height:90dvh}
-  .hero h1{font-size:clamp(2rem,4vw,3.2rem)}
+@media(max-width:768px){
+  .hero-inner{flex-direction:column-reverse}
+  .hero-left{padding:30px 16px 40px}
+  .hero-right img{min-height:50vh;border-radius:0}
 }
 @media(prefers-color-scheme:dark){
   .hero{background:linear-gradient(135deg,#1a2a2a,#121212,#1a1a2e)}
@@ -216,12 +215,17 @@ section{padding:clamp(40px,6vh,80px)0}
 .footer .container{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:12px}
 @media(prefers-color-scheme:dark){.footer{background:#0d0d0d}}
 
-/* SCROLL REVEAL */
-.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-.reveal-d1{transition-delay:.15s}.reveal-d2{transition-delay:.3s}.reveal-d3{transition-delay:.45s}
-
-/* ===== REDUCED MOTION ===== */
+/* SCROLL REVEAL — CSS-only, no JS dependency */
+@keyframes fadeInUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@media(prefers-reduced-motion:no-preference){
+  .reveal{animation:fadeInUp .6s ease both}
+  .reveal-d1{animation-delay:.15s}
+  .reveal-d2{animation-delay:.3s}
+  .reveal-d3{animation-delay:.45s}
+}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
@@ -258,24 +262,26 @@ section{padding:clamp(40px,6vh,80px)0}
 <main id="main" role="main">
 
 <section class="hero">
-  <div class="hero-left">
-    <div class="hero-content">
-      <div class="eyebrow">Косметолог с высшим медицинским образованием</div>
-      <h1>Ваша красота — <em>моя работа</em></h1>
-      <p>Ботокс, филлеры, биоревитализация, чистки, пилинги. Работаю на дому с выездом к вам.</p>
-      <div class="hero-actions">
-        <a href="https://t.me/alliccenn" class="btn btn-primary" target="_blank">✉️ Записаться</a>
-        <a href="#services" class="btn btn-outline">Услуги</a>
-      </div>
-      <div class="hero-badges">
-        <span class="hero-badge">🎓 Высшее медицинское</span>
-        <span class="hero-badge">💉 Препараты премиум</span>
-        <span class="hero-badge">🏠 Выезд на дом</span>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-content">
+        <div class="eyebrow">Косметолог с высшим медицинским образованием</div>
+        <h1>Ваша красота — <em>моя работа</em></h1>
+        <p>Ботокс, филлеры, биоревитализация, чистки, пилинги. Работаю на дому с выездом к вам.</p>
+        <div class="hero-actions">
+          <a href="https://t.me/alliccenn" class="btn btn-primary" target="_blank">✉️ Записаться</a>
+          <a href="#services" class="btn btn-outline">Услуги</a>
+        </div>
+        <div class="hero-badges">
+          <span class="hero-badge">🎓 Высшее медицинское</span>
+          <span class="hero-badge">💉 Препараты премиум</span>
+          <span class="hero-badge">🏠 Выезд на дом</span>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="hero-right">
-    <img src="assets/master.jpg" alt="Косметолог Комсомольское" loading="eager">
+    <div class="hero-right">
+      <img src="assets/master.jpg" alt="Косметолог Комсомольское" loading="eager">
+    </div>
   </div>
 </section>
 
@@ -430,15 +436,7 @@ section{padding:clamp(40px,6vh,80px)0}
     var y=window.scrollY>40;h.classList.toggle('scrolled',y);
     if(st)st.classList.toggle('visible',window.scrollY>300)
   },{passive:true});
-|}catch(e){console.warn('scroll:',e)}})();
-
-// ===== ISOLATED: Scroll reveal =====
-(function(){try{
-  var obs=new IntersectionObserver(function(e){e.forEach(function(entry){
-    if(entry.isIntersecting){entry.target.classList.add('visible');obs.unobserve(entry.target)}
-  })},{threshold:.1});
-  document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el)});
-}catch(e){console.warn('reveal:',e)}})();
+}catch(e){console.warn('scroll:',e)}})();
 
 // ===== ISOLATED: Menu toggle =====
 (function(){try{
