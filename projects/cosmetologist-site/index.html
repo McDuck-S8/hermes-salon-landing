@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="description" content="Косметолог с высшим медицинским образованием. Ботокс, филлеры, биоревитализация, чистки, пилинги. Выезд на дом. Запись @alliccenn">
 <meta name="theme-color" content="#2d6a6a">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232d6a6a'/%3E%3Ctext x='16' y='24' text-anchor='middle' font-size='22' fill='white'%3E💉%3C/text%3E%3C/svg%3E">
 <title>Косметолог Комсомольское — ботокс, губы, биоревитализация</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -220,10 +221,17 @@ section{padding:clamp(40px,6vh,80px)0}
 .reveal.visible{opacity:1;transform:translateY(0)}
 .reveal-d1{transition-delay:.15s}.reveal-d2{transition-delay:.3s}.reveal-d3{transition-delay:.45s}
 
-/* REDUCED MOTION */
+/* ===== REDUCED MOTION ===== */
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
+
+/* ===== SCROLL TO TOP ===== */
+.scroll-top{position:fixed;bottom:24px;right:24px;z-index:99;width:44px;height:44px;border-radius:50%;background:var(--teal);color:#fff;font-size:1.2rem;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(45,106,106,.35);opacity:0;transform:translateY(16px);transition:opacity .3s,transform .3s;pointer-events:none;border:2px solid rgba(255,255,255,.2)}
+.scroll-top.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+.scroll-top:hover{background:var(--teal-dark);transform:translateY(-3px);box-shadow:0 6px 24px rgba(45,106,106,.45)}
+@media(prefers-color-scheme:dark){.scroll-top{border-color:rgba(255,255,255,.1)}}
+@media(max-width:480px){.scroll-top{bottom:16px;right:16px;width:40px;height:40px;font-size:1rem}}
 </style>
 </head>
 <body>
@@ -329,12 +337,12 @@ section{padding:clamp(40px,6vh,80px)0}
     <h2 class="reveal reveal-d1">До и после</h2>
     <div class="carousel reveal reveal-d2">
       <div class="carousel-track" id="carouselTrack">
-        <div class="carousel-slide"><img src="assets/ba_lips1.jpg" alt="Коррекция асимметрии губ" loading="lazy"><div class="carousel-label">Коррекция асимметрии губ</div></div>
-        <div class="carousel-slide"><img src="assets/ba_botox1.jpg" alt="Ботулинотерапия лба" loading="lazy"><div class="carousel-label">Ботокс лба и межбровья</div></div>
-        <div class="carousel-slide"><img src="assets/ba_lips2.jpg" alt="Биоревитализация Plinest" loading="lazy"><div class="carousel-label">Биоревитализация Plinest</div></div>
         <div class="carousel-slide"><img src="assets/ba_more1.jpg" alt="Результат процедуры" loading="lazy"><div class="carousel-label">Коррекция губ</div></div>
         <div class="carousel-slide"><img src="assets/ba_more2.jpg" alt="Результат косметологии" loading="lazy"><div class="carousel-label">Ботулинотерапия</div></div>
         <div class="carousel-slide"><img src="assets/ba_more3.jpg" alt="Результат ухода" loading="lazy"><div class="carousel-label">Комплексный уход</div></div>
+        <div class="carousel-slide"><img src="assets/ba_lips1.jpg" alt="Коррекция асимметрии губ" loading="lazy"><div class="carousel-label">Коррекция асимметрии губ</div></div>
+        <div class="carousel-slide"><img src="assets/ba_botox1.jpg" alt="Ботулинотерапия лба" loading="lazy"><div class="carousel-label">Ботокс лба и межбровья</div></div>
+        <div class="carousel-slide"><img src="assets/ba_lips2.jpg" alt="Биоревитализация Plinest" loading="lazy"><div class="carousel-label">Биоревитализация Plinest</div></div>
       </div>
       <button class="carousel-btn carousel-prev" onclick="moveSlide(-1)" aria-label="Предыдущее">‹</button>
       <button class="carousel-btn carousel-next" onclick="moveSlide(1)" aria-label="Следующее">›</button>
@@ -412,12 +420,17 @@ section{padding:clamp(40px,6vh,80px)0}
   </div>
 </footer>
 
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Наверх">↑</button>
+
 <script>
-// ===== ISOLATED: Header scroll =====
+// ===== ISOLATED: Header scroll + scroll-top =====
 (function(){try{
-  var h=document.querySelector('.header');if(!h)return;
-  window.addEventListener('scroll',function(){h.classList.toggle('scrolled',window.scrollY>40)},{passive:true});
-}catch(e){console.warn('scroll:',e)}})();
+  var h=document.querySelector('.header'),st=document.getElementById('scrollTop');if(!h)return;
+  window.addEventListener('scroll',function(){
+    var y=window.scrollY>40;h.classList.toggle('scrolled',y);
+    if(st)st.classList.toggle('visible',window.scrollY>300)
+  },{passive:true});
+|}catch(e){console.warn('scroll:',e)}})();
 
 // ===== ISOLATED: Scroll reveal =====
 (function(){try{
