@@ -479,7 +479,7 @@ section{padding:clamp(40px,6vh,80px)0}
   track.style.transform='translateX(-'+(current*slideWidth)+'%)';
   // Dots
   var dotCount=Math.ceil(totalReal/visible);
-  if(dots){for(var i=0;i<dotCount;i++){var d=document.createElement('button');d.className='carousel-dot';d.setAttribute('aria-label','Слайд '+(i+1));d.onclick=function(i){return function(){goToSlide(i)}}(i);dots.appendChild(d)}}
+  if(dots){for(var i=0;i<dotCount;i++){var d=document.createElement('button');d.className='carousel-dot';d.setAttribute('aria-label','Слайд '+(i+1));d.onclick=function(i){return function(){goToSlide(step + i * visible)}}(i);dots.appendChild(d)}}
   function updateDots(idx){if(!dots)return;var dd=dots.children;for(var i=0;i<dd.length;i++)dd[i].classList.remove('active');var real=Math.round((idx-step)/visible);if(real<0)real=0;if(real>=dd.length)real=dd.length-1;if(dd[real])dd[real].classList.add('active')}
   function goToSlide(n){
     if(!track||track.style.transition==='none')return;
