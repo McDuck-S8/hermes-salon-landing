@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тихий Дом — Ритуальные услуги</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="#" class="logo">🕊️ Тихий Дом</a>
+            <nav class="nav"><a href="#services">Услуги</a><a href="#about">О нас</a><a href="#contact">Контакты</a></nav>
+            <a href="tel:+799****8901" class="header-phone">+7 (999) 567-89-01</a>
+            <button class="nav-toggle" aria-label="Меню"><span></span><span></span><span></span></button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Помощь в трудную минуту</h1>
+            <p class="hero-subtitle">Полное сопровождение ритуала с заботой и уважением</p>
+            <div class="hero-cta">
+                <a href="tel:+799****8901" class="btn btn-primary">Позвонить</a>
+                <a href="#services" class="btn btn-outline">Узнать больше</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <div class="container">
+            <h2>Пакеты услуг</h2>
+            <div class="packages-grid">
+                <div class="package"><div class="package-header"><h3>Минимальный</h3><p class="price">от 55 000 ₽</p></div><ul><li>✅ Оформление документов</li><li>✅ Гроб стандартный</li><li>✅ Катафалк</li><li>✅ Ритуальный зал (1 час)</li><li>✅ Персональный менеджер</li></ul><a href="#contact" class="btn btn-outline">Заказать</a></div>
+                <div class="package featured"><div class="package-badge">Рекомендуем</div><div class="package-header"><h3>Стандартный</h3><p class="price">от 95 000 ₽</p></div><ul><li>✅ Всё из «Минимального»</li><li>✅ Гроб улучшенный</li><li>✅ Ритуальный зал (2 часа)</li><li>✅ Венки и цветы</li><li>✅ Городская газета</li><li>✅ Поминальный обед</li></ul><a href="#contact" class="btn btn-primary">Заказать</a></div>
+                <div class="package"><div class="package-header"><h3>Премиум</h3><p class="price">от 150 000 ₽</p></div><ul><li>✅ Всё из «Стандартного»</li><li>✅ Элитный гроб</li><li>✅ Ритуальный зал (3 часа)</li><li>✅ Памятник включён</li><li>✅ Видеосъёмка</li><li>✅ Поминальный банкет</li></ul><a href="#contact" class="btn btn-outline">Заказать</a></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <h2>Почему выбирают нас</h2>
+                    <div class="feature"><span>🤝</span><div><strong>Чуткость</strong><p>Понимаем ваше горе и действуем деликатно</p></div></div>
+                    <div class="feature"><span>⏱️</span><div><strong>24/7</strong><p>Работаем круглосуточно, без выходных</p></div></div>
+                    <div class="feature"><span>📋</span><div><strong>Полное сопровождение</strong><p>Берём на себя все документы и организацию</p></div></div>
+                    <div class="feature"><span>💰</span><div><strong>Честные цены</strong><p>Без скрытых доплат и навязанных услуг</p></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="reviews" class="reviews">
+        <div class="container">
+            <h2>Отзывы</h2>
+            <div class="reviews-grid">
+                <div class="review-card"><div class="stars">★★★★★</div><p>"Спасибо за чуткость и профессионализм в тяжёлый момент."</p><p class="author">— Виктория С.</p></div>
+                <div class="review-card"><div class="stars">★★★★★</div><p>"Организовали всё быстро и достойно."</p><p class="author">— Алексей Н.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Свяжитесь с нами</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-item"><span>📍</span><div><strong>Адрес</strong><br>ул. Тихая, 3</div></div>
+                    <div class="contact-item"><span>📞</span><div><strong>Телефон</strong><br><a href="tel:+799****8901">+7 (999) 567-89-01</a></div></div>
+                    <div class="contact-item"><span>🕐</span><div><strong>Режим работы</strong><br>Круглосуточно</div></div>
+                </div>
+                <form class="contact-form" onsubmit="event.preventDefault();alert('Заявка принята. Перезвоним в течение 15 минут.');this.reset();">
+                    <input type="text" placeholder="Ваше имя" required>
+                    <input type="tel" placeholder="Телефон" required>
+                    <textarea placeholder="Опишите ситуацию" rows="3"></textarea>
+                    <button type="submit" class="btn btn-primary">Отправить</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer"><div class="container"><p>&copy; 2026 Тихий Дом. Все права защищены.</p></div></footer>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,2 +1,8 @@
 url: https://mcduck-s8.github.io
 baseurl: /hermes-salon-landing
+defaults:
+  - scope:
+      path: "cosmetologist"
+    values:
+      layout: none
+      sitemap: false

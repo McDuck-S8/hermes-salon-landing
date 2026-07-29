@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Beauty Salon — старая версия</title>
+<style>
+body{margin:0;background:#ffefd5;font-family:'Comic Sans MS','Segoe UI',cursive,sans-serif;color:#333}
+marquee{background:linear-gradient(90deg,#ff69b4,#ff1493);color:#fff;font-size:18px;padding:8px;font-weight:bold}
+.header{background:linear-gradient(135deg,#ffb6c1,#ff69b4);padding:30px 20px;text-align:center;border-bottom:4px solid #ff1493}
+.header h1{font-size:42px;color:#fff;text-shadow:3px 3px 0 #c71585;margin:0 0 8px}
+.header p{color:#fff;font-size:18px;margin:0}
+.nav{background:#c71585;padding:12px;text-align:center}
+.nav a{color:#fff;margin:0 15px;font-size:16px;text-decoration:none;font-weight:bold}
+.nav a:hover{text-decoration:underline;color:#ffeb3b}
+.hero{background:#fff0f5;padding:40px 20px;text-align:center;border-bottom:2px solid #ffb6c1}
+.hero img{max-width:100%;height:auto;border:5px solid #ff69b4;border-radius:15px;box-shadow:0 4px 20px rgba(255,105,180,.4)}
+.hero h2{color:#c71585;font-size:28px;margin-top:15px}
+.hero p{font-size:16px;color:#666;max-width:500px;margin:10px auto}
+table{width:90%;margin:30px auto;border-collapse:collapse;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.1)}
+table th{background:linear-gradient(90deg,#ff69b4,#c71585);color:#fff;padding:12px;font-size:16px;border:1px solid #ff69b4}
+table td{padding:10px 15px;border:1px solid #ffb6c1;color:#555}
+table tr:nth-child(even){background:#fff0f5}
+.gallery{display:flex;flex-wrap:wrap;justify-content:center;gap:15px;padding:30px 20px}
+.gallery img{width:250px;height:200px;object-fit:cover;border:3px solid #ff69b4;border-radius:10px}
+.gallery img:hover{transform:scale(1.05);border-color:#ff1493}
+.cta{background:linear-gradient(135deg,#ff1493,#c71585);padding:40px;text-align:center}
+.cta h2{color:#fff;font-size:28px;margin:0 0 10px}
+.cta p{color:#ffeb3b;font-size:18px;margin:0 0 20px}
+.cta .btn{display:inline-block;background:#ffeb3b;color:#c71585;padding:14px 40px;border-radius:30px;font-size:20px;font-weight:bold;text-decoration:none;border:2px solid #fff}
+.cta .btn:hover{background:#fff;color:#ff1493}
+.footer{background:#333;color:#ccc;text-align:center;padding:20px;font-size:13px}
+.footer a{color:#ff69b4}
+.blink{animation:blink 1s infinite}
+@keyframes blink{50%{opacity:0}}
+.counter{font-family:'Courier New',monospace;color:#ff1493;font-size:14px}
+</style>
+</head>
+<body>
+
+<marquee>🌟 Добро пожаловать в наш салон красоты! Скидка 20% на первое посещение! 🌟</marquee>
+
+<div class="header">
+<h1>💅 Beauty Salon</h1>
+<p>Красота спасает мир! Работаем с 2005 года</p>
+<small class="counter">Сейчас на сайте: <span class="blink">24</span> посетителя</small>
+</div>
+
+<div class="nav">
+<a href="#">Главная</a>
+<a href="#">Услуги</a>
+<a href="#">Прайс-лист</a>
+<a href="#">Фото работ</a>
+<a href="#">Отзывы</a>
+<a href="#">Контакты</a>
+</div>
+
+<div class="hero">
+<img src="https://images.pexels.com/photos/7750114/pexels-photo-7750114.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Салон">
+<h2>Преображение начинается здесь!</h2>
+<p>Наши мастера с многолетним опытом помогут вам выглядеть на все 100%. Современные технологии, индивидуальный подход.</p>
+</div>
+
+<h2 style="text-align:center;color:#c71585;margin-top:30px">📋 Наши услуги</h2>
+<table>
+<tr><th>Услуга</th><th>Цена</th><th>Длительность</th></tr>
+<tr><td>Стрижка женская</td><td>2 500 ₽</td><td>60 мин</td></tr>
+<tr><td>Стрижка мужская</td><td>1 500 ₽</td><td>40 мин</td></tr>
+<tr><td>Окрашивание волос</td><td>от 5 000 ₽</td><td>120 мин</td></tr>
+<tr><td>Маникюр</td><td>1 800 ₽</td><td>50 мин</td></tr>
+<tr><td>Педикюр</td><td>2 200 ₽</td><td>60 мин</td></tr>
+<tr><td>Макияж</td><td>3 500 ₽</td><td>45 мин</td></tr>
+<tr><td>Чистка лица</td><td>2 800 ₽</td><td>40 мин</td></tr>
+</table>
+
+<h2 style="text-align:center;color:#c71585">📸 Наши работы</h2>
+<div class="gallery">
+<img src="https://images.pexels.com/photos/3992875/pexels-photo-3992875.jpeg?auto=compress&cs=tinysrgb&w=300" alt="work 1">
+<img src="https://images.pexels.com/photos/5069603/pexels-photo-5069603.jpeg?auto=compress&cs=tinysrgb&w=300" alt="work 2">
+<img src="https://images.pexels.com/photos/3736520/pexels-photo-3736520.jpeg?auto=compress&cs=tinysrgb&w=300" alt="work 3">
+<img src="https://images.pexels.com/photos/3993320/pexels-photo-3993320.jpeg?auto=compress&cs=tinysrgb&w=300" alt="work 4">
+</div>
+
+<div class="cta">
+<h2>📞 Запишитесь прямо сейчас!</h2>
+<p>Перезвоним в течение 15 минут</p>
+<a href="#" class="btn">✏️ Записаться</a>
+</div>
+
+<div class="footer">
+<p>&copy; 2005-2021 Beauty Salon. Все права защищены.</p>
+<p>Сделано на <font color="#ff69b4">♥</font> в студии «Веб-Дизайн Профи»</p>
+<p><a href="#">Карта сайта</a> | <a href="#">Политика конфиденциальности</a> | <a href="#">old browser</a></p>
+</div>
+
+</body>
+</html>

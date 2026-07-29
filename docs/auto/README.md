@@ -1,0 +1,1 @@
+# AutoPro\n\nАвтосервис нового поколения\n\n## Theme\nColors: {'bg': '#f8f9fa', 'surface': '#ffffff', 'accent': '#1e3a5f', 'text': '#1a1a2e', 'muted': '#6c757d'}

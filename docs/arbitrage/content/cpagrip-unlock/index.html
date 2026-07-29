@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Unlock | CPAGRIP</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #D97706; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; color: white; }
+        .container { width: 100%; max-width: 380px; }
+        
+        /* Main Card */
+        .card { background: rgba(255,255,255,0.08); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; padding: 32px 24px; text-align: center; }
+        
+        /* Hook */
+        .icon { width: 72px; height: 72px; background: linear-gradient(135deg, white 0%, rgba(255,255,255,0.2) 100%); border-radius: 20px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 32px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
+        h1 { font-size: 26px; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.02em; }
+        .subtitle { font-size: 15px; opacity: 0.8; margin-bottom: 28px; line-height: 1.4; }
+        
+        /* Benefits — Checklist style */
+        .benefits { list-style: none; text-align: left; margin-bottom: 28px; }
+        .benefits li { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .benefits li:last-child { border-bottom: none; }
+        .check { width: 28px; height: 28px; background: #059669; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 14px; }
+        .benefit-text { font-size: 15px; font-weight: 500; }
+        .benefit-text strong { font-weight: 700; }
+        
+        /* Social Proof — Minimal */
+        .social { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 16px; margin-bottom: 24px; }
+        .stars { color: #FFD700; font-size: 16px; margin-bottom: 8px; }
+        .social-text { font-size: 13px; opacity: 0.9; line-height: 1.5; font-style: italic; }
+        .social-author { font-size: 11px; opacity: 0.6; margin-top: 8px; }
+        
+        /* Urgency Bar */
+        .urgency { background: rgba(220,38,38,0.2); border: 1px solid rgba(220,38,38,0.4); border-radius: 10px; padding: 12px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 12px; font-weight: 600; }
+        .timer { font-family: 'JetBrains Mono', monospace; font-size: 16px; color: #fca5a5; }
+        
+        /* CTA — Big, Single Action */
+        .cta { width: 100%; padding: 20px; background: white; color: #D97706; border: none; border-radius: 14px; font-size: 18px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; transition: transform 0.1s, box-shadow 0.2s; position: relative; overflow: hidden; }
+        .cta::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); transition: left 0.5s; }
+        .cta:hover::before { left: 100%; }
+        .cta:active { transform: scale(0.97); }
+        
+        /* Footer */
+        .footer { text-align: center; margin-top: 20px; font-size: 10px; opacity: 0.5; line-height: 1.5; }
+        .footer a { color: rgba(255,255,255,0.7); text-decoration: none; }
+        
+        /* Pulse for urgency */
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .pulse { animation: pulse 1.5s infinite; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="icon">🎮</div>
+            <h1>Unlock Content</h1>
+            <p class="subtitle">Unlock Full Access — CPAGRIP exclusive offer</p>
+            
+            <div class="urgency pulse">
+                <span>⏱️</span>
+                <span>Offer expires in <span class="timer" id="timer">04:32</span></span>
+            </div>
+            
+            <ul class="benefits">
+                <li><span class="check">✓</span><span class="benefit-text"><strong>100% Free</strong> — No payment required</span></li>
+                <li><span class="check">✓</span><span class="benefit-text"><strong>Instant Access</strong> — No wait, no survey</span></li>
+                <li><span class="check">✓</span><span class="benefit-text"><strong>Works on Any Device</strong> — Mobile, tablet, desktop</span></li>
+                <li><span class="check">✓</span><span class="benefit-text"><strong>No Account Needed</strong> — Click and go</span></li>
+            </ul>
+            
+            <div class="social">
+                <div class="stars">★★★★★</div>
+                <div class="social-text">"Thought it was fake. Clicked, got instant access. Best content I've found this month."</div>
+                <div class="social-author">— Verified User • 15 min ago</div>
+            </div>
+            
+            <button class="cta" onclick="window.open('#','_blank')">Unlock Full Access</button>
+            
+            <p class="footer">
+                No credit card • No subscription • Cancel anytime<br>
+                Traffic: TikTok • CPC: $0.0200 • Scheme: 797e87caefda
+            </p>
+        </div>
+    </div>
+    <script>
+        // Countdown timer
+        let seconds = 272;
+        const el = document.getElementById('timer');
+        setInterval(() => {
+            seconds = Math.max(0, seconds - 1);
+            const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+            const s = (seconds % 60).toString().padStart(2, '0');
+            el.textContent = m + ':' + s;
+        }, 1000);
+    </script>
+</body>
+</html>

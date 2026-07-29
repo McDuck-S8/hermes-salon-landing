@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Pâtisserie — Кондитерская & Кафе</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="#" class="logo">🥐 La Pâtisserie</a>
+            <nav class="nav"><a href="#menu">Меню</a><a href="#about">О нас</a><a href="#reviews">Отзывы</a><a href="#contact">Контакты</a></nav>
+            <a href="tel:+799****7890" class="header-phone">+7 (999) 456-78-90</a>
+            <button class="nav-toggle" aria-label="Меню"><span></span><span></span><span></span></button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Свежая выпечка<br>каждое утро</h1>
+            <p class="hero-subtitle">Авторские торты, круассаны и десерты</p>
+            <div class="hero-cta">
+                <a href="#menu" class="btn btn-primary">Посмотреть меню</a>
+                <a href="#contact" class="btn btn-outline">Заказать торт</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="menu" class="menu">
+        <div class="container">
+            <h2>Наше меню</h2>
+            <div class="menu-grid">
+                <div class="menu-card"><div class="menu-icon">🎂</div><h3>Торт на заказ</h3><p>Любая начинка, украшение по желанию</p><p class="price">от 3 500 ₽</p></div>
+                <div class="menu-card"><div class="menu-icon">🥐</div><h3>Круассаны</h3><p>Свежие каждый день: классический, шоколадный</p><p class="price">250 ₽</p></div>
+                <div class="menu-card"><div class="menu-icon">☕</div><h3>Капучино</h3><p>Итальянский кофе, идеальная пенка</p><p class="price">350 ₽</p></div>
+                <div class="menu-card"><div class="menu-icon">🍰</div><h3>Чизкейк</h3><p>Нежный, тает во рту</p><p class="price">450 ₽</p></div>
+                <div class="menu-card"><div class="menu-icon">🍞</div><h3>Свежий хлеб</h3><p>Ржаной, бородинский, белый</p><p class="price">150 ₽</p></div>
+                <div class="menu-card"><div class="menu-icon">🧁</div><h3>Пирожные</h3><p>Эклеры, профитроли, тарталетки</p><p class="price">от 200 ₽</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <h2>О нашей кондитерской</h2>
+                    <p>Мы создаем десерты с любовью и заботой. Каждое утро наши кондитеры начинают работу в 4 утра, чтобы к открытию все было свежим и ароматным.</p>
+                    <div class="features">
+                        <div class="feature"><span>🌾</span><p>Только натуральные ингредиенты</p></div>
+                        <div class="feature"><span>👨‍🍳</span><p>Авторские рецепты</p></div>
+                        <div class="feature"><span>⏰</span><p>Выпечка каждое утро</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="reviews" class="reviews">
+        <div class="container">
+            <h2>Отзывы</h2>
+            <div class="reviews-grid">
+                <div class="review-card"><div class="stars">★★★★★</div><p>"Лучшие круассаны в городе! Выпекают каждое утро."</p><p class="author">— Андрей Л.</p></div>
+                <div class="review-card"><div class="stars">★★★★★</div><p>"Заказывала торт на день рождения — все были в восторге!"</p><p class="author">— Ирина К.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Где нас найти</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-item"><span>📍</span><div><strong>Адрес</strong><br>ул. Сладкая, 7</div></div>
+                    <div class="contact-item"><span>📞</span><div><strong>Телефон</strong><br><a href="tel:+799****7890">+7 (999) 456-78-90</a></div></div>
+                    <div class="contact-item"><span>🕐</span><div><strong>Режим работы</strong><br>Пн-Вс: 7:00-21:00</div></div>
+                </div>
+                <form class="contact-form" onsubmit="event.preventDefault();alert('Заказ принят! Перезвоним для подтверждения.');this.reset();">
+                    <input type="text" placeholder="Ваше имя" required>
+                    <input type="tel" placeholder="Телефон" required>
+                    <textarea placeholder="Ваш заказ" rows="3"></textarea>
+                    <button type="submit" class="btn btn-primary">Заказать</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer"><div class="container"><p>&copy; 2026 La Pâtisserie. Все права защищены.</p></div></footer>
+    <script src="js/main.js"></script>
+</body>
+</html>

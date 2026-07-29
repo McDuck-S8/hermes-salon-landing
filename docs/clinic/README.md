@@ -1,0 +1,1 @@
+# MediCare\n\nМедицинский центр\n\n## Theme\nColors: {'bg': '#f8fafb', 'surface': '#ffffff', 'accent': '#0a7b83', 'text': '#1a1a2e', 'muted': '#6c757d'}

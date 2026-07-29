@@ -1,0 +1,1 @@
+# La Pâtisserie\n\nКондитерская & Кафе\n\n## Theme\nColors: {'bg': '#FFF8DC', 'surface': '#ffffff', 'accent': '#8B4513', 'text': '#3e2723', 'muted': '#8d6e63'}

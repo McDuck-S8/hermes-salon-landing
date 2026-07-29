@@ -1,0 +1,92 @@
+[
+  {
+    "name": "Bez.Mezh.Beauty (Без Меж)",
+    "category": "beauty_salon",
+    "instagram": "@bez.mezh.beauty",
+    "current_site": null,
+    "issues": "Нет сайта совсем. Только Instagram-аккаунт. Невозможно найти информацию об услугах и ценах через поисковики. Теряют клиентов, которые ищут салон через Google.",
+    "location": "Київ, Позняки, вул. Драгоманова (район метро Позняки)",
+    "contact": "Instagram direct"
+  },
+  {
+    "name": "SVOЇ beauty studio",
+    "category": "beauty_salon",
+    "instagram": "@svoi.beautystudio",
+    "current_site": null,
+    "issues": "Нет сайта. Только Instagram. Упоминания на Barb.ua и Kamon.ua, но нет собственного веб-сайта. Клиенты не могут найти полный прайс и записаться онлайн через поиск.",
+    "location": "Київ, вул. Ахматової 32/18",
+    "contact": "073 888 32 18"
+  },
+  {
+    "name": "Dolce Bella Beauty Studio",
+    "category": "beauty_salon",
+    "instagram": "@dolcebella_beautystudio",
+    "current_site": "https://dolcebellabeauty.bookinbeautiful.com (только форма записи)",
+    "issues": "Нет полноценного сайта. Есть только страница бронирования на BookInBeautiful. Нет страницы с услугами, портфолио, информацией о мастерах. Полностью полагаются на Instagram.",
+    "location": "Київ, Позняки, пр. Петра Григоренка 22/20",
+    "contact": "096 927 51 83"
+  },
+  {
+    "name": "Platinum Beauty Space",
+    "category": "beauty_salon",
+    "instagram": "@platinum.beauty.space",
+    "current_site": null,
+    "issues": "Нет сайта. Только Instagram с 247 постами. Нет возможности найти салон через Google, нет прайс-листа, нет онлайн-записи.",
+    "location": "Київ (район не указан в профиле)",
+    "contact": "Instagram direct"
+  },
+  {
+    "name": "Тісто та Хміль (кафе-бар)",
+    "category": "cafe",
+    "instagram": "@tistokhmil",
+    "current_site": "https://tisto-ta-khmil.ps.me (только меню на конструкторе ps.me)",
+    "issues": "Нет полноценного сайта. Только Instagram и страница меню на ps.me (бесплатный конструктор). Нет информации о заведении, нет фото интерьера, нет возможности забронировать стол онлайн. Теряют клиентов, которые ищут кафе через Google Maps.",
+    "location": "Київ, Дарниця, вул. Павла Полуботка 26/9",
+    "contact": "093 040 26 26"
+  },
+  {
+    "name": "Наша Кав'ярня",
+    "category": "cafe",
+    "instagram": "@nasha_kaviarnia",
+    "current_site": null,
+    "issues": "Нет сайта совсем. Только Instagram. Нет меню онлайн, нет информации о расположении на картах, нет возможности заказать навынос через сайт.",
+    "location": "Київ, Позняки, пр. Петра Григоренка 3а",
+    "contact": "Instagram direct"
+  },
+  {
+    "name": "NODO Cafe Bar",
+    "category": "cafe",
+    "instagram": "@nodo.cafe.bar",
+    "current_site": "https://nodocafe.choiceqr.com (только QR-меню)",
+    "issues": "Нет полноценного сайта. Есть только страница меню на choiceqr.com. Нет информации о заведении, галереи, новостей, акций. Сайт не индексируется в поиске.",
+    "location": "Київ, Дарниця, вул. Празька 1 (Дарницька площа)",
+    "contact": "Instagram direct"
+  },
+  {
+    "name": "Моя Клініка (медицинский центр)",
+    "category": "medical_center",
+    "instagram": null,
+    "current_site": "https://mc-mk.com.ua (ОСНОВНОЙ - сломанная кодировка) / https://myclinic.kiev.ua (второй - устаревший дизайн)",
+    "issues": "Основной сайт mc-mk.com.ua полностью сломан — битая кодировка UTF-8, весь текст отображается иероглифами (кракозябры). Невозможно прочитать информацию об услугах, врачах, ценах. Второй сайт myclinic.kiev.ua — устаревший дизайн (шаблонный), неадаптивный, плохая структура. Клиника теряет пациентов из-за неработающего сайта.",
+    "location": "Київ, Осокорки, вул. Княжий Затон 21",
+    "contact": "+38 098 967 7070"
+  },
+  {
+    "name": "GIO Beauty Bar",
+    "category": "beauty_salon",
+    "instagram": "@gio.kiev",
+    "current_site": null,
+    "issues": "Нет сайта. Только Instagram (14K подписчиков) и Facebook. Нет возможности посмотреть полный прайс, портфолио работ, записаться онлайн. При хорошей активности в Instagram отсутствие сайта ограничивает приток новых клиентов через поиск.",
+    "location": "Київ, вул. Академіка Вільямса 3/7",
+    "contact": "+380 (99) 444 38 45 (из Instagram LEO Beauty Club — возможно общий)"
+  },
+  {
+    "name": "Kiev Auto STO (ГБО Сервис Киев)",
+    "category": "auto_service",
+    "instagram": "@kiev_sto",
+    "current_site": null,
+    "issues": "Нет работающего сайта. Только Instagram. Упоминания на авто-каталогах (vse-sto.com.ua, carbook.ua), но нет собственного сайта с услугами, ценами и контактами. Потенциальные клиенты не могут найти подробную информацию через поиск.",
+    "location": "Київ (район не указан, левый берег)",
+    "contact": "093 579 76 17"
+  }
+]
