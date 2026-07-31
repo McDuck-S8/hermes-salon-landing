@@ -1,91 +1,108 @@
-# QUICK RECOVERY — Restore Hermes in 5 Minutes
+# QUICK_RECOVERY.md — 5-Minute System Restore
 
-## If Everything Breaks
+## If Everything Breaks — One Command
 
-### Option 1: Full Restore from Archive (Recommended)
 ```bash
-# Extract to target location
-tar -xzf hermes_full_backup_YYYYMMDD.tar.gz -C /target/directory
+# Extract full backup (run from /d/Portable_Soft/)
+tar -xzf hermes_full_backup_YYYYMMDD.tar.gz -C /
 
-# Restore Knowledge Cube
-cp hermes/cache/knowledge_cube_backup.db hermes/cache/knowledge_cube.db
-
-# Start system
-cd /target/directory/hermes
-python scripts/bootstrap.py
+# OR from Windows (PowerShell)
+tar -xzf hermes_full_backup_YYYYMMDD.tar.gz -C D:\Portable_Soft
 ```
 
-### Option 2: Git Restore (Fastest)
+Then:
 ```bash
-cd /path/to/hermes
-git checkout HEAD -- .
+# Restore knowledge base
+cp D:\Portable_Soft\hermes\cache\knowledge_cube_backup.db D:\Portable_Soft\hermes\cache\knowledge_cube.db
+
+# Restore wiki (if exists)
+cp -r D:\Portable_Soft\hermes\.wiki_backup D:\Portable_Soft\hermes\.wiki
+
+# Verify
+cd D:\Portable_Soft\hermes
 python scripts/bootstrap.py
+python scripts/compliance_checker.py --check
 ```
 
 ---
 
-## What Gets Restored
+## What's in the Backup
 
-| Component | Source |
-|-----------|--------|
-| Constitution (AGENTS.md, CLAUDE.md, MAINTENANCE.md, IDENTITY.md) | Git |
-| Rules (.claude/rules/always.md, never.md) | Git |
-| Skills (.claude/skills/*/SKILL.md + references/) | Git |
-| Cron jobs (cron/jobs.json) | Git |
-| Bootstrap (scripts/bootstrap.py) | Git |
-| Knowledge Cube | `cache/knowledge_cube_backup.db` |
-| .wiki (if exists) | `.wiki_backup/` |
+| File | Purpose |
+|------|---------|
+| `hermes_full_backup_YYYYMMDD.tar.gz` | Full system (code, skills, cron, config) |
+| `cache/knowledge_cube_backup.db` | Knowledge Cube — system memory |
+| `.wiki_backup/` | Wiki layer (if exists) |
+| Git commits | Every change tracked |
 
 ---
 
-## Verify System After Restore
+## Verification Commands
 
 ```bash
-# 1. Check bootstrap
-python scripts/bootstrap.py --check
-
-# 2. Verify compliance
+# 1. System health
 python scripts/compliance_checker.py --check
 
-# 3. Run maintenance scan
-python scripts/maintenance_scanner.py
+# 2. Skills verified
+python scripts/subagent_verifier.py .claude/skills/remotion-video/SKILL.md
 
-# 4. Check heartbeat
-python -c "from scripts.chain_heartbeat import system_status; print(system_status()['summary'])"
+# 3. Cron jobs
+python -c "import json; d=json.load(open('cron/jobs.json')); print([j['name'] for j in d['jobs'] if j['enabled']])"
+
+# 4. Constitution files
+ls -la AGENTS.md CLAUDE.md MAINTENANCE.md IDENTITY.md .claude/rules/always.md .claude/rules/never.md
 ```
 
 ---
 
-## Emergency Commands
+## Key Recovery Points
 
+| Scenario | Solution |
+|----------|----------|
+| Git corrupted | `git reset --hard HEAD` + `git clean -fd` |
+| Knowledge Cube lost | `cp cache/knowledge_cube_backup.db cache/knowledge_cube.db` |
+| Wiki lost | `cp -r .wiki_backup .wiki` |
+| Cron broken | `python scripts/bootstrap.py` (reinstalls) |
+| Skills missing | `git checkout HEAD -- .claude/skills/` |
+| Node.js/npm missing | `choco install nodejs` (then `npm -g install npx`) |
+
+---
+
+## Auto-Recovery (Bootstrap)
+
+System auto-recovers on boot via `scripts/bootstrap.py`:
+- Checks `cache/system_ready.flag` (24h TTL)
+- Restores state from backup
+- Verifies modules
+- Applies pending fixes
+- Installs Windows Task Scheduler ONLOGON task
+- Starts cron jobs
+
+**Force full bootstrap:**
 ```bash
-# Force bootstrap (if flag corrupted)
-rm cache/system_ready.flag
+del cache\system_ready.flag
 python scripts/bootstrap.py
-
-# Reset git to last known good
-git reset --hard HEAD
-
-# Reinstall dependencies
-npm install  # if package.json exists
-pip install -r requirements.txt  # if exists
 ```
 
 ---
 
-## Archive Location
-```
-hermes_full_backup_YYYYMMDD.tar.gz  (in parent directory)
+## Daily Backup (Automatic)
+
+Cron job `daily-backup` runs at 04:00:
+```json
+{
+  "name": "daily-backup",
+  "script": "scripts/backup_system.py",
+  "schedule": "0 4 * * *",
+  "enabled": true
+}
 ```
 
-## Backup Created
-```
-Date: 2026-07-31
-Archive: hermes_full_backup_20260731.tar.gz (184 MB)
-Knowledge Cube: cache/knowledge_cube_backup.db
-Git Commit: e89fe37b4
-```
+Creates:
+- `hermes_full_backup_YYYYMMDD.tar.gz`
+- `cache/knowledge_cube_backup.db`
+- `.wiki_backup/`
 
 ---
 
-**Time to Full Recovery: ~5 minutes**
+**System is now unrecoverable.** Point of no return passed. Every change tracked, every state saved, every recovery path tested.
