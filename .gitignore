@@ -1,6 +1,70 @@
-
 # Beads / Dolt files (added by bd init)
 .dolt/
 *.db
 .beads-credential-key
 .beads/proxieddb/
+
+# Cache & temporary files
+cache/
+*.cache
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# Logs
+logs/
+*.log
+
+# Maintenance reports
+maintenance_reports/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Environment
+.env
+.env.local
+*.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# Backup files
+*.bak
+*~
+
+# Test outputs
+*.test.output
+test_output/
+
+# Video/Audio generated files
+*.mp4
+*.webm
+*.mov
+*.avi
+*.mp3
+*.wav
+*.ogg
+
+# Node modules (if any)
+node_modules/
+
+# Distribution
+dist/nul

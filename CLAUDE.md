@@ -1,3 +1,11 @@
+---
+name: claude
+description: "Auto-generated from CLAUDE.md"
+trigger: "When user asks about CLAUDE concepts"
+usage: claude
+Revisit: 2026-07-31
+---
+
 # Project Instructions for AI Agents
 
 This file provides instructions and context for AI coding agents working on this project.
@@ -75,3 +83,7 @@ _Add a brief overview of your project architecture_
 ## Conventions & Patterns
 
 _Add your project-specific conventions here_
+
+## Skills
+- **maintenance-scanner** (maintenance-scanner) — Weekly anti-rot scanner. Scans all 5 layers + substrate against blueprint, reports drift, expiry, and drift. Runs as cron (Sunday 03:00).
+- **impeccable** (impeccable) — Use when the user wants to design, redesign, shape, critique, audit, polish, clarify, distill, harden, optimize, adapt, animate, colorize, extract, or otherwise improve a frontend interface. Covers websites, landing pages, dashboards, product UI, app shells, components, forms, settings, onboarding, and empty states. Handles UX review, visual hierarchy, information architecture, cognitive load, accessibility, performance, responsive behavior, theming, anti-patterns, typography, fonts, spacing, layout, alignment, color, motion, micro-interactions, UX copy, error states, edge cases, i18n, and reusable design systems or tokens. Also use for bland designs that need to become bolder or more delightful, loud designs that should become quieter, live browser iteration on UI elements, or ambitious visual effects that should feel technically extraordinary. Not for backend-only or non-UI tasks.

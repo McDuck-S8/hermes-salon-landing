@@ -1,3 +1,11 @@
+---
+name: agents
+description: "Auto-generated from AGENTS.md"
+trigger: "When user asks about AGENTS concepts"
+usage: agents
+Revisit: 2026-07-31
+---
+
 # DOX framework — Hermes Project
 
 This project uses the DOX framework for AI agent context. Follow these instructions across any edits.
@@ -260,6 +268,20 @@ bd close <id>         # Complete work
 ## User Preferences
 
 When the user requests a durable behavior change, record it here or in the relevant child AGENTS.md.
+
+### Core Autonomy Rules (Неубиваемые директивы)
+
+**Zero Trust** — Никогда не доверяй одному источнику. Всегда перепроверять через субагента.
+- Все выводы верифицируются субагентом перед действием
+- Никаких изменений без adversarial verification
+
+**Passive Income** — Система не должна требовать внимания для поддержания жизни. Если она не приносит пользу в фоне — она не работает.
+- Крон-джебы выполняются без пользовательского подтверждения
+- Фоновые задачи приносят ценность автономно
+
+**Iterative Attack** — Каждый день атаковать одну новую нишу/задачу через систему, даже если не уверен в результате.
+- Ежедневно: одна новая автономная задача через proactive_doer
+- Обучение через действие, а не через анализ
 
 ---
 
