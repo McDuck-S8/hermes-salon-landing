@@ -1565,6 +1565,10 @@
       1785351562632886400,
       7202
     ],
+    "sales-assistant\\SKILL.md": [
+      1785550511852050100,
+      7174
+    ],
     "security\\1password\\SKILL.md": [
       1784851955861660700,
       4982
@@ -7400,6 +7404,19 @@
       "category": "response-language",
       "frontmatter_name": "response-language",
       "description": "Guidelines for responding in the user's preferred languag...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "sales-assistant",
+      "category": "sales-assistant",
+      "frontmatter_name": "sales-assistant",
+      "description": "Автономный sales-ассистент: ведёт деловую переписку с кли...",
       "platforms": [],
       "conditions": {
         "fallback_for_toolsets": [],
