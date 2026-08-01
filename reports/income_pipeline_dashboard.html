@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Income Pipeline Dashboard</title>
+<script src="../scripts/chart.umd.min.js"></script>
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0d1117; color: #e6edf3; min-height: 100vh; padding: 20px; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    h1 { font-size: 1.8rem; margin-bottom: 8px; color: #fff; }
+    .subtitle { color: #8b949e; margin-bottom: 24px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; margin-bottom: 24px; }
+    .card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 20px; }
+    .card h2 { font-size: 1.1rem; margin-bottom: 16px; color: #fff; display: flex; align-items: center; gap: 8px; }
+    .chart-wrap { position: relative; height: 300px; }
+    .table-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 20px; margin-bottom: 20px; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #30363d; }
+    th { color: #8b949e; font-weight: 600; background: #0d1117; position: sticky; top: 0; }
+    tr:hover { background: #1f2428; }
+    .status-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; }
+    .status-unverified { background: #ff6b6b; color: #fff; }
+    .status-testing { background: #ffd93d; color: #000; }
+    .status-verified { background: #6bcb77; color: #fff; }
+    .refresh-btn { background: #238636; color: #fff; border: none; padding: 10px 20px; border-radius: 6px; font-size: 0.9rem; cursor: pointer; transition: background 0.2s; margin-bottom: 20px; }
+    .refresh-btn:hover { background: #2ea043; }
+    .refresh-btn:disabled { background: #30363d; color: #8b949e; cursor: not-allowed; }
+    .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; font-size: 0.8rem; }
+    .legend-item { display: flex; align-items: center; gap: 6px; }
+    .legend-color { width: 12px; height: 12px; border-radius: 3px; }
+    .code-unblockable-badge { background: #4d96ff; color: #fff; padding: 2px 6px; border-radius: 3px; font-size: 0.7rem; }
+    @media (max-width: 768px) {
+        .grid { grid-template-columns: 1fr; }
+        .chart-wrap { height: 250px; }
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>📊 Income Pipeline Dashboard</h1>
+    <p class="subtitle">50 схем арбитража • Автообновление: запустите <code>python scripts/generate_dashboard.py</code></p>
+    
+    <button class="refresh-btn" id="refreshBtn" onclick="location.reload()">🔄 Обновить данные</button>
+
+    <div class="grid">
+        <div class="card">
+            <h2>📈 Статусы схем</h2>
+            <div class="chart-wrap">
+                <canvas id="pieChart"></canvas>
+            </div>
+            <div class="legend">
+                <span class="legend-item"><span class="legend-color" style="background:#ff6b6b"></span>UNVERIFIED (47)</span>
+                <span class="legend-item"><span class="legend-color" style="background:#ffd93d"></span>TESTING (2)</span>
+                <span class="legend-item"><span class="legend-color" style="background:#6bcb77"></span>VERIFIED (1)</span>
+                <span class="legend-item"><span class="legend-color" style="background:#4d96ff"></span>Code-unblockable (34)</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🧱 Блокеры (UNVERIFIED)</h2>
+            <div class="chart-wrap">
+                <canvas id="barChart"></canvas>
+            </div>
+            <div class="legend">
+                <span class="legend-item"><span class="legend-color" style="background:#4d96ff"></span>Code-fixable</span>
+                <span class="legend-item"><span class="legend-color" style="background:#999"></span>Требует пользователя</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-card">
+        <h2>🚀 Топ-10 готовых к запуску (Code-unblockable)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Схема</th>
+                    <th>Статус</th>
+                    <th>Блокеры</th>
+                    <th>Что разблокирует код</th>
+                    <th>Действие</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>4 TG Organic CPA — Admitad (Multi-vertical RU)</td>
+                    <td><span class="status-badge status-unverified">UNVERIFIED</span></td>
+                    <td>Landing Page, Manual Account, Ad Budget</td>
+                    <td>landing_generator.py</td>
+                    <td>Deploy → TESTING</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>5 YouTube Shorts EN → CPA VPN (Payoneer)</td>
+                    <td><span class="status-badge status-unverified">UNVERIFIED</span></td>
+                    <td>Video Script, Ad Budget</td>
+                    <td>video_scripts.py</td>
+                    <td>Deploy → TESTING</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>6 TikTok RU → CPA (FinTech / Games / Goods)</td>
+                    <td><span class="status-badge status-unverified">UNVERIFIED</span></td>
+                    <td>Landing Page, Video Script, Telegram Bot, Ad Budget</td>
+                    <td>landing_generator.py, video_scripts.py, cpa_bot_generator.py</td>
+                    <td>Deploy → TESTING</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>8 Pinterest Organic (AI пины) → CPA Goods / Travel / Finance</td>
+                    <td><span class="status-badge status-unverified">UNVERIFIED</span></td>
+                    <td>Landing Page, Ad Budget</td>
+                    <td>landing_generator.py</td>
+                    <td>Deploy → TESTING</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>10 GitHub Pages / Netlify Sites (Сетка 50+ сайтов) → AdSense / CPA / Affiliate</td>
+                    <td><span class="status-badge status-unverified">UNVERIFIED</span></td>
+                    <td>Landing Page, Telegram Bot, API Key, Ad Budget</td>
+                    <td>landing_generator.py, cpa_bot_generator.py</td>
+                    <td>Deploy → TESTING</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>11 Craigslist US → Pay-Per-Call (Insurance/Loans/Home)</td>
+                    <td><span class="status-badge status-unverified">UNVERIFIED</span></td>
+                    <td>Landing Page, Telegram Bot, Ad Budget</td>
+                    <td>landing_generator.py, cpa_bot_generator.py</td>
+                    <td>Deploy → TESTING</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>12 OLX PL/UA → CPA Nutra/Finance (COD)</td>
+                    <td><span class="status-badge status-unverified">UNVERIFIED</span></td>
+                    <td>Telegram Bot, Ad Budget</td>
+                    <td>cpa_bot_generator.py</td>
+                    <td>Deploy → TESTING</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>13 Gumtree UK/AU → CPA Local Services</td>
+                    <td><span class="status-badge status-unverified">UNVERIFIED</span></td>
+                    <td>Landing Page, Ad Budget</td>
+                    <td>landing_generator.py</td>
+                    <td>Deploy → TESTING</td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>14 Locanto Global → CPA Dating/Jobs/Education</td>
+                    <td><span class="status-badge status-unverified">UNVERIFIED</span></td>
+                    <td>Landing Page, Telegram Bot, Ad Budget</td>
+                    <td>landing_generator.py, cpa_bot_generator.py</td>
+                    <td>Deploy → TESTING</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>17 Telegram Bot SaaS — Аренда ботов для бизнеса</td>
+                    <td><span class="status-badge status-unverified">UNVERIFIED</span></td>
+                    <td>Video Script, Telegram Bot, Ad Budget</td>
+                    <td>video_scripts.py, cpa_bot_generator.py</td>
+                    <td>Deploy → TESTING</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div style="text-align: center; color: #8b949e; font-size: 0.85rem; margin-top: 20px;">
+        Данные из <code>ARBITRAGE_BONDS.md</code> • Сгенерировано: 2026-07-20 00:00:55
+    </div>
+</div>
+
+<script>
+// Debug: wait for DOM ready
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM ready, Chart loaded:', typeof Chart !== 'undefined');
+    
+    const pieData = {"labels": ["UNVERIFIED (47)", "TESTING (2)", "VERIFIED (1)", "Code-unblockable (34)"], "values": [47, 2, 1, 34], "colors": ["#ff6b6b", "#ffd93d", "#6bcb77", "#4d96ff"]};
+    const barData = {"labels": ["Ad Budget", "Landing Page", "Telegram Bot", "Video Script", "Manual Account", "API Key"], "values": [47, 25, 15, 10, 9, 4], "colors": ["#999", "#4d96ff", "#4d96ff", "#4d96ff", "#999", "#999"]};
+
+    // Pie Chart
+    const pieCanvas = document.getElementById('pieChart');
+    console.log('pieCanvas:', pieCanvas, 'size:', pieCanvas.width, pieCanvas.height);
+    new Chart(pieCanvas, {
+        type: 'pie',
+        data: {
+            labels: pieData.labels,
+            datasets: [{
+                data: pieData.values,
+                backgroundColor: pieData.colors,
+                borderWidth: 2,
+                borderColor: '#0d1117'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(ctx) {
+                            const total = ctx.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                            const pct = ((ctx.raw / total) * 100).toFixed(1);
+                            return `${ctx.label}: ${ctx.raw} (${pct}%)`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+    console.log('Pie chart created');
+
+    // Bar Chart
+    const barCanvas = document.getElementById('barChart');
+    console.log('barCanvas:', barCanvas, 'size:', barCanvas.width, barCanvas.height);
+    new Chart(barCanvas, {
+        type: 'bar',
+        data: {
+            labels: barData.labels,
+            datasets: [{
+                label: 'Количество схем',
+                data: barData.values,
+                backgroundColor: barData.colors,
+                borderRadius: 6,
+                borderSkipped: false,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            indexAxis: 'y',
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(ctx) {
+                            return `Схем: ${ctx.raw}`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    grid: { color: '#30363d' },
+                    ticks: { color: '#8b949e' }
+                },
+                y: {
+                    grid: { display: false },
+                    ticks: { color: '#e6edf3' }
+                }
+            }
+        }
+    });
+    console.log('Bar chart created');
+});
+
+// Keyboard shortcut: R to refresh
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'r' || e.key === 'R') location.reload();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+Daemon workflow: триггер→проверка→действие→лог
+ID
+e8a3d135
+Status
+ready
+Assignee
+unassigned
+Created
+12.07.2026, 15:22:35
+Description
+Разработать daemon workflow: событие (триггер) → валидация (проверка) → выполнение (действие) → запись (лог). Паттерн для event_daemon.

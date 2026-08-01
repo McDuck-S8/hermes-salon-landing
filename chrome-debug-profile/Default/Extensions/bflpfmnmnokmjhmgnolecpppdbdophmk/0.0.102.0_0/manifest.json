@@ -1,0 +1,63 @@
+{
+   "action": {
+      "default_icon": {
+         "128": "icon/128.png",
+         "16": "icon/16.png",
+         "32": "icon/32.png",
+         "48": "icon/48.png"
+      },
+      "default_title": "Ask BrowserOS"
+   },
+   "background": {
+      "service_worker": "background.js"
+   },
+   "chrome_url_overrides": {
+      "newtab": "app.html"
+   },
+   "content_scripts": [ {
+      "js": [ "content-scripts/auth.js" ],
+      "matches": [ "https://api.browseros.com/home" ],
+      "run_at": "document_start"
+   }, {
+      "js": [ "content-scripts/content.js" ],
+      "matches": [ "*://*.google.com/*" ]
+   }, {
+      "js": [ "content-scripts/glow.js" ],
+      "matches": [ "*://*/*" ],
+      "run_at": "document_start"
+   }, {
+      "js": [ "content-scripts/selection.js" ],
+      "matches": [ "*://*/*" ],
+      "run_at": "document_idle"
+   } ],
+   "description": "manifest.json description",
+   "externally_connectable": {
+      "matches": [ "https://api.browseros.com/*", "https://*.api.browseros.com/*" ]
+   },
+   "host_permissions": [ "http://127.0.0.1/*", "https://suggestqueries.google.com/*", "https://api.bing.com/*", "https://in.search.yahoo.com/*", "https://duckduckgo.com/*", "https://search.brave.com/*" ],
+   "icons": {
+      "128": "icon/128.png",
+      "16": "icon/16.png",
+      "32": "icon/32.png",
+      "48": "icon/48.png",
+      "96": "icon/96.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvBDAaDRvv61NpBeLR8etBRw82lv9VJO3sz/mA26gDzWKtVuzW4DXCl8Zfj5oWmoXLTfv3aiTigUXo/LHOoGpSucEVroMmAc7cgu2KuQ1fZPpMvYa0npD/m4h89360q8Oz0oKKaZGS905IJ04M2IkF4CuU3YEHFJBWb+cUyK9H8YVugelYbPD0IVs63T1SkGbh/t/Tfb2DpkinduSO8+x26sKydm30SRt+iZ2+7Nolcdum3LExInUiX2Pgb65Jb+mVw8NqyTVJyCEp8uq0cSHomWFQirSJ80tsDhISp4btwaRKHrXqovQx9XHQv4hCd+3LuB830eUEVMUNuCO+OyPxQIDAQAB",
+   "manifest_version": 3,
+   "name": "Assistant",
+   "options_ui": {
+      "open_in_tab": true,
+      "page": "app.html#/settings"
+   },
+   "permissions": [ "topSites", "storage", "unlimitedStorage", "scripting", "tabs", "tabGroups", "sidePanel", "bookmarks", "history", "browserOS", "alarms", "webNavigation", "downloads" ],
+   "side_panel": {
+      "default_path": "sidepanel.html"
+   },
+   "update_url": "https://cdn.browseros.com/extensions/update-manifest.xml",
+   "version": "0.0.102.0",
+   "web_accessible_resources": [ {
+      "extension_ids": [ "djhdjhlnljbjgejbndockeedocneiaei" ],
+      "matches": [ "https://browseros.com/*", "https://*.browseros.com/*" ],
+      "resources": [ "app.html" ]
+   } ]
+}

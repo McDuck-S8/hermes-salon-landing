@@ -57,6 +57,24 @@ digraph brainstorming {
 
 ## The Process
 
+## Grill Me — Task Clarification (before questions)
+
+Before ANY clarifying questions, run this 5-question grill in ONE block:
+
+1. **Goal** — Что должно быть правдой когда закончим? Одно предложение.
+2. **Constraint** — Что НЕЛЬЗЯ менять/ломать?
+3. **Scope** — Это а) только research, б) код + тесты, в) артефакт, г) фикс?
+4. **Evidence** — Как узнаем что работает? (URL, скриншот, тест, юзер подтвердит)
+5. **Priority** — Это блокирует что-то ещё? Дедлайн?
+
+**Формат:** "Grill: goal=... constraint=..." — одной порцией.
+
+**Когда скипнуть:** задача уже чёткая и однофайловая, или юзер зол и требует действий.
+
+**Why:** user doesn't want to repeat themselves. Standard 5-question format = 15s reply.
+
+---
+
 **Understanding the idea:**
 - Check out the current project state first (files, docs, recent commits)
 - Before asking detailed questions, assess scope: if the request describes multiple independent subsystems (e.g., "build a platform with chat, file storage, billing, and analytics"), flag this immediately. Don't spend questions refining details of a project that needs to be decomposed first.

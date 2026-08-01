@@ -1,0 +1,47 @@
+{
+  "timestamp": "2026-07-26T17:12:15.500698",
+  "skills_scanned": 1,
+  "files_scanned": 13,
+  "total_findings": 3,
+  "risk": {
+    "score": 75,
+    "severity": "HIGH",
+    "recommendation": "DO NOT INSTALL",
+    "critical": 0,
+    "high": 3,
+    "medium": 0,
+    "low": 0
+  },
+  "results": [
+    {
+      "skill": "arbitrage",
+      "files": 13,
+      "findings": [
+        {
+          "rule": "P6_direct_leakage",
+          "severity": "HIGH",
+          "category": "Prompt Leakage",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\arbitrage\\fractal-knowledge-wheel\\references\\verification.md",
+          "line": 172,
+          "code": "print(f'System core aspects: {len(core_green)}')"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\arbitrage\\fractal-knowledge-wheel\\scripts\\verify.py",
+          "line": 168,
+          "code": "result = subprocess.run(["
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\arbitrage\\fractal-knowledge-wheel\\scripts\\verify.py",
+          "line": 179,
+          "code": "result = subprocess.run(["
+        }
+      ]
+    }
+  ]
+}

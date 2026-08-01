@@ -77,6 +77,10 @@ MODULES = [
     "crystal_base",
     "plugins_websrch", "plugins_selfev", "plugins_icarus", "plugins_lcm",
     "config", "skills", "deprecated",
+    # Background cron modules
+    "proactive_doer", "proactive_executor", "self_healing_monitor",
+    "autonomous_agent", "pipeline_cron", "knowledge_gap_filler",
+    "anomaly_detector", "result_producer", "event_trigger",
 ]
 
 # ── Level 3: Pipelines ──
@@ -112,22 +116,62 @@ LATENCY_CRIT_MS = 5000    # 5s → CRITICAL
 # ── Storage ──
 def _load():
     if STATE_FILE.exists():
-        try:
-            with open(STATE_FILE) as f:
-                state = json.load(f)
-            state.setdefault("beats", {})
-            state.setdefault("alerts", [])
-            state.setdefault("registered", {})
-            state.setdefault("pings", {})
-            return state
-        except (json.JSONDecodeError, OSError):
-            pass
+        # Retry on partial-write corruption (multi-process writes to same JSON)
+        for attempt in range(3):
+            try:
+                with open(STATE_FILE) as f:
+                    state = json.load(f)
+                state.setdefault("beats", {})
+                state.setdefault("alerts", [])
+                state.setdefault("registered", {})
+                state.setdefault("pings", {})
+                return state
+            except (json.JSONDecodeError, OSError):
+                if attempt < 2:
+                    time.sleep(0.25 + 0.25 * attempt)
+                else:
+                    # Preserve corrupt file, do NOT silently return empty state —
+                    # an empty state + next _save() wipes all live beats.
+                    try:
+                        corrupt = STATE_FILE.with_suffix(".corrupt")
+                        STATE_FILE.replace(corrupt)
+                    except OSError:
+                        pass
     return {"beats": {}, "alerts": [], "registered": {}, "pings": {}}
 
 def _save(state):
     CACHE.mkdir(parents=True, exist_ok=True)
-    with open(STATE_FILE, "w") as f:
-        json.dump(state, f, indent=2)
+    # Atomic write: temp file + os.replace — readers never see partial JSON.
+    # On Windows, a parallel process may hold the file open (PermissionError);
+    # retry, then fall back to direct write (Windows allows it if no exclusive lock).
+    import tempfile
+    payload = json.dumps(state, indent=2)
+    for attempt in range(4):
+        fd, tmp = tempfile.mkstemp(dir=str(CACHE), suffix=".tmp")
+        try:
+            with os.fdopen(fd, "w") as f:
+                f.write(payload)
+            try:
+                os.replace(tmp, STATE_FILE)
+                return
+            except PermissionError:
+                try:
+                    os.unlink(tmp)
+                except OSError:
+                    pass
+                if attempt < 3:
+                    time.sleep(0.3 * (attempt + 1))
+                else:
+                    # Last resort: direct write (best effort on locked file)
+                    with open(STATE_FILE, "w") as f:
+                        f.write(payload)
+                    return
+        except BaseException:
+            try:
+                os.unlink(tmp)
+            except OSError:
+                pass
+            raise
 
 # ── Registration (Level 2) ──
 def register(name: str, type: str = "module", pipeline: str = None):
@@ -218,8 +262,11 @@ def check_events() -> list:
             })
     
     if alerts:
-        state["alerts"] = (state["alerts"] + alerts)[-50:]
-        _save(state)
+        existing = {(a.get("level"), a.get("name"), a.get("status")) for a in state["alerts"]}
+        fresh = [a for a in alerts if (a.get("level"), a.get("name"), a.get("status")) not in existing]
+        if fresh:
+            state["alerts"] = (state["alerts"] + fresh)[-50:]
+            _save(state)
     
     return alerts
 
@@ -235,7 +282,10 @@ def _cleanup_alerts(level: int, names: list[str]):
     before = len(state.get("alerts", []))
     state["alerts"] = [
         a for a in state.get("alerts", [])
-        if not (a.get("level") == level and a.get("name") in names)
+        if not (
+            a.get("level") == level and 
+            (a.get("name") in names or a.get("pipeline") in names)
+        )
     ]
     after = len(state["alerts"])
     if before != after:
@@ -277,8 +327,11 @@ def check_modules() -> list:
     
     # Log alerts
     if alerts:
-        state["alerts"] = (state["alerts"] + alerts)[-50:]
-        _save(state)
+        existing = {(a.get("level"), a.get("name"), a.get("status")) for a in state["alerts"]}
+        fresh = [a for a in alerts if (a.get("level"), a.get("name"), a.get("status")) not in existing]
+        if fresh:
+            state["alerts"] = (state["alerts"] + fresh)[-50:]
+            _save(state)
     
     return alerts
 
@@ -341,8 +394,11 @@ def check_pipelines() -> dict:
         }
     
     if alerts:
-        state["alerts"] = (state["alerts"] + alerts)[-50:]
-        _save(state)
+        existing = {(a.get("level"), a.get("pipeline"), a.get("status")) for a in state["alerts"]}
+        fresh = [a for a in alerts if (a.get("level"), a.get("pipeline"), a.get("status")) not in existing]
+        if fresh:
+            state["alerts"] = (state["alerts"] + fresh)[-50:]
+            _save(state)
     
     return result
 
@@ -500,16 +556,19 @@ def system_status() -> dict:
                     fut.cancel()
     
     # Level 5: Assemble
-    # Auto-cleanup: remove alerts for healthy components
-    healthy_events = [name for name, e in events.items() if e["status"] == "HEALTHY"]
-    if healthy_events:
-        _cleanup_alerts(1, healthy_events)
-    healthy_modules = [name for name, m in modules.items() if m["status"] == "HEALTHY"]
-    if healthy_modules:
-        _cleanup_alerts(2, healthy_modules)
-    healthy_services = [name for name, s in external.items() if s.get("status") == "HEALTHY"]
-    if healthy_services:
-        _cleanup_alerts(4, healthy_services)
+        # Auto-cleanup: remove alerts for healthy components
+        healthy_events = [name for name, e in events.items() if e["status"] == "HEALTHY"]
+        if healthy_events:
+            _cleanup_alerts(1, healthy_events)
+        healthy_modules = [name for name, m in modules.items() if m["status"] == "HEALTHY"]
+        if healthy_modules:
+            _cleanup_alerts(2, healthy_modules)
+        healthy_pipelines = [name for name, p in pipelines.items() if p["status"] == "HEALTHY"]
+        if healthy_pipelines:
+            _cleanup_alerts(3, healthy_pipelines)
+        healthy_services = [name for name, s in external.items() if s.get("status") == "HEALTHY"]
+        if healthy_services:
+            _cleanup_alerts(4, healthy_services)
     
     events_healthy = sum(1 for e in events.values() if e["status"] == "HEALTHY")
     events_total = sum(1 for e in events.values() if e["status"] != "MONITOR")

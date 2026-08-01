@@ -1,0 +1,27 @@
+# AI OFM Tribute — Configuration
+
+# Content style (fantasy, anime, realistic)
+default_style: fantasy
+
+# Images per session
+images_per_session: 5
+
+# Channel settings
+channel:
+  name: "Digital Elegance • AI Art Gallery"
+  description: "Ежедневная AI-галерея. Эксклюзивный контент для подписчиков."
+  type: private
+
+# Tribute subscription
+tribute:
+  price: 5  # EUR
+  currency: EUR
+  period: month
+  payment: wallet_pay  # wallet_pay | card
+
+# Image generation — Pollinations.ai (free, no API key)
+image_gen:
+  provider: pollinations
+  model: flux       # flux | seedream | turbo | nanobanana
+  base_url: "https://image.pollinations.ai/prompt"
+  aspect_ratio: portrait  # portrait | square | landscape

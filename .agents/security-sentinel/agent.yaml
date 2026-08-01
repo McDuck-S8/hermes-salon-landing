@@ -1,0 +1,15 @@
+name: security-sentinel
+description: >
+  Security code review agent. Scans Python code for injection vulnerabilities,
+  race conditions, credential leaks, and auth bypasses. Uses bandit-level
+  checks plus LLM reasoning for context-aware findings.
+trigger: pr review, code push, manual audit
+runtime:
+  max_iterations: 12
+  toolsets: [skills, file, terminal]
+inputs:
+  - target: <path>  # file or dir to audit
+outputs:
+  - report: <path>  # markdown findings report
+skills:
+  - lavra-agent-security-sentinel

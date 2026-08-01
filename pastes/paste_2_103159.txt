@@ -1,0 +1,9 @@
+D:\Portable_Soft\hermes-usb-portable-main>hermes gateway stop
+"hermes" не является внутренней или внешней
+командой, исполняемой программой или пакетным файлом.
+
+D:\Portable_Soft\hermes-usb-portable-main>     hermes gateway run
+"hermes" не является внутренней или внешней
+командой, исполняемой программой или пакетным файлом.
+
+D:\Portable_Soft\hermes-usb-portable-main>

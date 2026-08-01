@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>ЦирюльникЪ — 4 салона красоты в Симферополе | Стрижка от 299₽</title>
+    <meta name="description" content="Сеть салонов красоты ЦирюльникЪ — 4 филиала в Симферополе. Женская стрижка от 299₽, мужская от 299₽. Запишитесь онлайн.">
+
+    <!-- SEO: Open Graph -->
+    <meta property="og:title" content="ЦирюльникЪ — 4 салона красоты в Симферополе">
+    <meta property="og:description" content="Стрижка от 299₽. 885 отзывов. Рейтинг 5.0. Запишитесь онлайн.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ru_RU">
+
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BeautySalon",
+        "name": "ЦирюльникЪ",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Екатерининская 8а",
+            "addressLocality": "Симферополь",
+            "addressRegion": "Крым",
+            "addressCountry": "RU"
+        },
+        "telephone": "+7 (978) 222-74-84",
+        "priceRange": "от 299₽",
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "5.0",
+            "reviewCount": "885"
+        },
+        "openingHours": "Mo-Su 09:00-20:00"
+    }
+    </script>
+
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- Tailwind CSS (production prebuilt) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * { font-family: 'Inter', system-ui, sans-serif; }
+        .gradient-hero { background: linear-gradient(160deg, #0f0f1a 0%, #1a1a2e 40%, #16213e 100%); }
+        .glass { background: rgba(255,255,255,0.06); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); }
+        .glow-orange { box-shadow: 0 0 60px rgba(249,115,22,0.2), 0 0 120px rgba(249,115,22,0.05); }
+        .card-hover { transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
+        .card-hover:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .text-gradient { background: linear-gradient(135deg, #f97316, #fb923c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+        .float-anim { animation: float 6s ease-in-out infinite; }
+        .scroll-reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16,1,0.3,1); }
+        .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
+        .scroll-reveal.delay-1 { transition-delay: 0.1s; }
+        .scroll-reveal.delay-2 { transition-delay: 0.2s; }
+        .scroll-reveal.delay-3 { transition-delay: 0.3s; }
+        .scroll-reveal.delay-4 { transition-delay: 0.4s; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: #f97316; box-shadow: 0 0 0 3px rgba(249,115,22,0.15); }
+        /* ShinyText */
+        .shiny-text {
+            background-image: linear-gradient(120deg, #f97316 0%, #f97316 35%, #ffffff 50%, #f97316 65%, #f97316 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shiny-sweep 3s linear infinite;
+        }
+        @keyframes shiny-sweep { to { background-position: -200% center; } }
+        /* GradientText */
+        .gradient-text-anim {
+            background: linear-gradient(270deg, #f97316, #fb923c, #f59e0b, #f97316);
+            background-size: 600% 600%;
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-shift 6s ease infinite;
+        }
+        @keyframes gradient-shift { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+        /* BlurText */
+        .blur-word {
+            display: inline-block;
+            filter: blur(10px); opacity: 0; transform: translateY(15px);
+            transition: filter 0.6s cubic-bezier(0.16,1,0.3,1), opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1);
+        }
+        .blur-text-active .blur-word { filter: blur(0); opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body class="bg-white text-gray-800 antialiased">
+
+<!-- Skip to content (a11y) -->
+<a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-orange-500 text-white px-4 py-2 rounded-lg z-50 font-semibold">Перейти к содержимому</a>
+
+<!-- NAV -->
+<nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-xl border-b border-gray-100/80 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+        <a href="#" class="flex items-center gap-2.5 group">
+            <div class="w-9 h-9 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/20 group-hover:shadow-orange-500/40 transition">
+                <i class="fas fa-cut text-white text-sm"></i>
+            </div>
+            <div>
+                <span class="font-bold text-lg leading-none block">ЦирюльникЪ</span>
+                <span class="text-[10px] text-gray-400 leading-none">сеть салонов</span>
+            </div>
+        </a>
+        <div class="hidden md:flex items-center gap-7 text-sm font-medium text-gray-500">
+            <a href="#services" class="hover:text-orange-500 transition">Услуги</a>
+            <a href="#about" class="hover:text-orange-500 transition">Преимущества</a>
+            <a href="#reviews" class="hover:text-orange-500 transition">Отзывы</a>
+            <a href="#locations" class="hover:text-orange-500 transition">Адреса</a>
+            <a href="#booking" class="hover:text-orange-500 transition">Запись</a>
+        </div>
+        <a href="tel:+79782227484" class="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-5 py-2.5 rounded-full text-sm font-semibold transition shadow-lg shadow-orange-500/25 flex items-center gap-2" aria-label="Позвонить в ЦирюльникЪ">
+            <i class="fas fa-phone text-xs"></i> <span class="hidden sm:inline">+7 (978) 222-74-84</span><span class="sm:hidden">Позвонить</span>
+        </a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="gradient-hero pt-24 pb-16 md:pt-32 md:pb-24 relative overflow-hidden">
+    <!-- Decorative blobs -->
+    <div class="absolute top-10 left-[10%] w-80 h-80 bg-orange-500/8 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-0 right-[5%] w-96 h-96 bg-orange-400/5 rounded-full blur-3xl"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-orange-500/3 rounded-full blur-3xl"></div>
+
+    <div class="max-w-6xl mx-auto px-4 relative z-10 text-center">
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-orange-500/10 border border-orange-500/20 rounded-full text-orange-400 text-sm font-semibold mb-8">
+            <i class="fas fa-award"></i> Хорошее место 2026
+        </div>
+
+        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.1] mb-6 tracking-tight">
+            <span class="shiny-text">4 салона</span> <br class="sm:hidden"><span class="gradient-text-anim">рядом с вами</span>
+        </h1>
+
+        <p class="text-lg md:text-xl text-gray-400 max-w-xl mx-auto mb-10 leading-relaxed blur-text" data-delay="120">
+            Профессиональные стрижки по честным ценам. Запишитесь онлайн — перезвоним за 5 минут.
+        </p>
+
+        <!-- Stats row -->
+        <div class="flex flex-wrap justify-center gap-4 mb-10">
+            <div class="glass rounded-2xl px-6 py-4 min-w-[120px]">
+                <div class="text-3xl font-black text-white"><span class="count-up" data-target="885">0</span><span class="text-orange-400">+</span></div>
+                <div class="text-xs text-gray-400 mt-0.5">отзывов</div>
+            </div>
+            <div class="glass rounded-2xl px-6 py-4 min-w-[100px]">
+                <div class="text-3xl font-black text-white">5.0</div>
+                <div class="text-xs text-gray-400 mt-0.5">рейтинг</div>
+            </div>
+            <div class="glass rounded-2xl px-6 py-4 min-w-[100px]">
+                <div class="text-3xl font-black text-white"><span class="count-up" data-target="5">0</span></div>
+                <div class="text-xs text-gray-400 mt-0.5">филиалов</div>
+            </div>
+            <div class="glass rounded-2xl px-6 py-4 min-w-[120px]">
+                <div class="text-2xl font-black text-orange-400">от 299₽</div>
+                <div class="text-xs text-gray-400 mt-0.5">стрижка</div>
+            </div>
+        </div>
+
+        <!-- CTA buttons -->
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="#booking" class="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-8 py-4 rounded-2xl text-lg font-bold transition-all shadow-xl shadow-orange-500/25 hover:shadow-orange-500/40 hover:-translate-y-0.5">
+                <i class="fas fa-calendar-check mr-2"></i> Записаться онлайн
+            </a>
+            <a href="tel:+79782227484" class="border-2 border-white/15 hover:border-orange-400/50 hover:bg-white/5 text-white px-8 py-4 rounded-2xl text-lg font-semibold transition-all" aria-label="Позвонить">
+                <i class="fas fa-phone mr-2"></i> +7 (978) 222-74-84
+            </a>
+        </div>
+    </div>
+</section>
+
+<main id="main">
+
+<!-- SERVICES -->
+<section id="services" class="py-20 bg-gray-50/80">
+    <div class="max-w-6xl mx-auto px-4">
+        <div class="text-center mb-14 scroll-reveal">
+            <span class="text-orange-500 font-semibold text-sm uppercase tracking-wider">Наши услуги</span>
+            <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-3">Услуги и цены</h2>
+            <p class="text-gray-500 max-w-md mx-auto">Честные цены без скрытых доплат. Знаете стоимость до визита.</p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div class="bg-white rounded-2xl p-6 border border-gray-100 card-hover scroll-reveal">
+                <div class="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-venus text-orange-500 text-xl"></i></div>
+                <h3 class="font-bold text-lg mb-1">Женская стрижка</h3>
+                <p class="text-gray-500 text-sm mb-4 leading-relaxed">Моделирование, укладка, консультация стилиста</p>
+                <div class="flex items-end justify-between pt-3 border-t border-gray-100">
+                    <span class="text-2xl font-black text-orange-500">от 299₽</span>
+                    <a href="#booking" class="text-sm font-semibold text-orange-500 hover:text-orange-600 transition">Записаться →</a>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-gray-100 card-hover scroll-reveal">
+                <div class="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-mars text-orange-500 text-xl"></i></div>
+                <h3 class="font-bold text-lg mb-1">Мужская стрижка</h3>
+                <p class="text-gray-500 text-sm mb-4 leading-relaxed">Классическая, модельная, барбершоп</p>
+                <div class="flex items-end justify-between pt-3 border-t border-gray-100">
+                    <span class="text-2xl font-black text-orange-500">от 299₽</span>
+                    <a href="#booking" class="text-sm font-semibold text-orange-500 hover:text-orange-600 transition">Записаться →</a>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-gray-100 card-hover scroll-reveal">
+                <div class="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-palette text-orange-500 text-xl"></i></div>
+                <h3 class="font-bold text-lg mb-1">Окрашивание</h3>
+                <p class="text-gray-500 text-sm mb-4 leading-relaxed">Однотонное, мелирование, сложное окрашивание</p>
+                <div class="flex items-end justify-between pt-3 border-t border-gray-100">
+                    <span class="text-2xl font-black text-orange-500">от 1 500₽</span>
+                    <a href="#booking" class="text-sm font-semibold text-orange-500 hover:text-orange-600 transition">Записаться →</a>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-gray-100 card-hover scroll-reveal">
+                <div class="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-magic text-orange-500 text-xl"></i></div>
+                <h3 class="font-bold text-lg mb-1">Кератин</h3>
+                <p class="text-gray-500 text-sm mb-4 leading-relaxed">Выпрямление, восстановление, блеск</p>
+                <div class="flex items-end justify-between pt-3 border-t border-gray-100">
+                    <span class="text-2xl font-black text-orange-500">от 3 000₽</span>
+                    <a href="#booking" class="text-sm font-semibold text-orange-500 hover:text-orange-600 transition">Записаться →</a>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-gray-100 card-hover scroll-reveal">
+                <div class="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-wind text-orange-500 text-xl"></i></div>
+                <h3 class="font-bold text-lg mb-1">Химзавивка</h3>
+                <p class="text-gray-500 text-sm mb-4 leading-relaxed">Биозавивка, карвинг, объёмная завивка</p>
+                <div class="flex items-end justify-between pt-3 border-t border-gray-100">
+                    <span class="text-2xl font-black text-orange-500">от 2 500₽</span>
+                    <a href="#booking" class="text-sm font-semibold text-orange-500 hover:text-orange-600 transition">Записаться →</a>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-gray-100 card-hover scroll-reveal">
+                <div class="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-spa text-orange-500 text-xl"></i></div>
+                <h3 class="font-bold text-lg mb-1">Ботокс для волос</h3>
+                <p class="text-gray-500 text-sm mb-4 leading-relaxed">Глубокое восстановление и питание</p>
+                <div class="flex items-end justify-between pt-3 border-t border-gray-100">
+                    <span class="text-2xl font-black text-orange-500">от 3 500₽</span>
+                    <a href="#booking" class="text-sm font-semibold text-orange-500 hover:text-orange-600 transition">Записаться →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- WHY US -->
+<section id="about" class="py-20">
+    <div class="max-w-6xl mx-auto px-4">
+        <div class="text-center mb-14 scroll-reveal">
+            <span class="text-orange-500 font-semibold text-sm uppercase tracking-wider">Преимущества</span>
+            <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-3">Почему ЦирюльникЪ?</h2>
+            <p class="text-gray-500 max-w-lg mx-auto">12 лет опыта, 5 филиалов и 885 довольных клиентов.</p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="text-center p-6 rounded-2xl bg-gray-50 scroll-reveal">
+                <div class="w-16 h-16 bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-orange-500/20"><i class="fas fa-map-marker-alt text-white text-xl"></i></div>
+                <h3 class="font-bold mb-1">5 филиалов</h3>
+                <p class="text-gray-500 text-sm">Всегда есть салон рядом с вами</p>
+            </div>
+            <div class="text-center p-6 rounded-2xl bg-gray-50 scroll-reveal">
+                <div class="w-16 h-16 bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-orange-500/20"><i class="fas fa-bolt text-white text-xl"></i></div>
+                <h3 class="font-bold mb-1">Быстро</h3>
+                <p class="text-gray-500 text-sm">Стрижка за 20-30 минут</p>
+            </div>
+            <div class="text-center p-6 rounded-2xl bg-gray-50 scroll-reveal">
+                <div class="w-16 h-16 bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-orange-500/20"><i class="fas fa-wallet text-white text-xl"></i></div>
+                <h3 class="font-bold mb-1">Честные цены</h3>
+                <p class="text-gray-500 text-sm">Стрижка от 299₽ без сюрпризов</p>
+            </div>
+            <div class="text-center p-6 rounded-2xl bg-gray-50 scroll-reveal">
+                <div class="w-16 h-16 bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-orange-500/20"><i class="fas fa-heart text-white text-xl"></i></div>
+                <h3 class="font-bold mb-1">885+ отзывов</h3>
+                <p class="text-gray-500 text-sm">Рейтинг 5.0 на Яндекс.Картах</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews" class="py-20 bg-gray-50/80">
+    <div class="max-w-6xl mx-auto px-4">
+        <div class="text-center mb-14 scroll-reveal">
+            <span class="text-orange-500 font-semibold text-sm uppercase tracking-wider">Отзывы</span>
+            <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-3">Что говорят клиенты</h2>
+            <p class="text-gray-500">885+ отзывов на Яндекс.Картах — рейтинг 5.0</p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="bg-white rounded-2xl p-6 border border-gray-100 card-hover scroll-reveal">
+                <div class="flex text-amber-400 mb-3"><i class="fas fa-star text-sm"></i><i class="fas fa-star text-sm"></i><i class="fas fa-star text-sm"></i><i class="fas fa-star text-sm"></i><i class="fas fa-star text-sm"></i></div>
+                <p class="text-gray-600 mb-5 text-sm leading-relaxed">«Лучший салон в городе. Хожу третий год, всегда ухожу довольной. Мастера — профессионалы своего дела.»</p>
+                <div class="flex items-center gap-3 pt-4 border-t border-gray-100">
+                    <div class="w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-500 rounded-full flex items-center justify-center text-white font-bold text-sm">АВ</div>
+                    <div><div class="font-semibold text-sm">Анна В.</div><div class="text-gray-400 text-xs">Яндекс.Карты</div></div>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-gray-100 card-hover scroll-reveal">
+                <div class="flex text-amber-400 mb-3"><i class="fas fa-star text-sm"></i><i class="fas fa-star text-sm"></i><i class="fas fa-star text-sm"></i><i class="fas fa-star text-sm"></i><i class="fas fa-star text-sm"></i></div>
+                <p class="text-gray-600 mb-5 text-sm leading-relaxed">«Стрижка за 20 минут. Выглядит на миллион. Соотношение цена/качество — лучшее в Симферополе.»</p>
+                <div class="flex items-center gap-3 pt-4 border-t border-gray-100">
+                    <div class="w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-500 rounded-full flex items-center justify-center text-white font-bold text-sm">ДК</div>
+                    <div><div class="font-semibold text-sm">Дмитрий К.</div><div class="text-gray-400 text-xs">Яндекс.Карты</div></div>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-gray-100 card-hover scroll-reveal">
+                <div class="flex text-amber-400 mb-3"><i class="fas fa-star text-sm"></i><i class="fas fa-star text-sm"></i><i class="fas fa-star text-sm"></i><i class="fas fa-star text-sm"></i><i class="fas fa-star text-sm"></i></div>
+                <p class="text-gray-600 mb-5 text-sm leading-relaxed">«Всегда записываюсь онлайн, не звоню. Очень удобно. Филиал через дорогу от дома.»</p>
+                <div class="flex items-center gap-3 pt-4 border-t border-gray-100">
+                    <div class="w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-500 rounded-full flex items-center justify-center text-white font-bold text-sm">ЕМ</div>
+                    <div><div class="font-semibold text-sm">Елена М.</div><div class="text-gray-400 text-xs">Яндекс.Карты</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BOOKING FORM -->
+<section id="booking" class="py-20">
+    <div class="max-w-3xl mx-auto px-4">
+        <div class="text-center mb-10 scroll-reveal">
+            <span class="text-orange-500 font-semibold text-sm uppercase tracking-wider">Онлайн-запись</span>
+            <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-3">Запишитесь за 30 секунд</h2>
+            <p class="text-gray-500">Оставьте заявку — перезвоним и подберём время</p>
+        </div>
+        <form class="bg-white rounded-3xl p-8 shadow-xl shadow-gray-200/50 border border-gray-100 scroll-reveal" onsubmit="event.preventDefault(); this.querySelector('.success-msg').style.display='block'; this.querySelector('.form-fields').style.display='none';">
+            <div class="form-fields">
+                <div class="grid sm:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1.5">Ваше имя</label>
+                        <input type="text" placeholder="Как к вам обращаться" required class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm transition" aria-label="Ваше имя">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1.5">Телефон</label>
+                        <input type="tel" placeholder="+7 (___) ___-__-__" required class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm transition" aria-label="Телефон">
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-600 mb-1.5">Услуга</label>
+                    <select required class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm transition text-gray-600" aria-label="Выберите услугу">
+                        <option value="">Выберите услугу</option>
+                        <option>Женская стрижка — от 299₽</option>
+                        <option>Мужская стрижка — от 299₽</option>
+                        <option>Окрашивание — от 1 500₽</option>
+                        <option>Кератин — от 3 000₽</option>
+                        <option>Химзавивка — от 2 500₽</option>
+                        <option>Ботокс для волос — от 3 500₽</option>
+                    </select>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-600 mb-1.5">Желаемый филиал</label>
+                    <select class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm transition text-gray-600" aria-label="Филиал">
+                        <option value="">Любой ближайший</option>
+                        <option>Екатерининская 8а</option>
+                        <option>пр. Победы 226а</option>
+                        <option>Тренёва 1Б</option>
+                        <option>Козлова 1в</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white py-4 rounded-xl text-lg font-bold transition-all shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40">
+                    <i class="fas fa-calendar-check mr-2"></i> Записаться
+                </button>
+                <p class="text-center text-gray-400 text-xs mt-3">Перезвоним в течение 5 минут для подтверждения</p>
+            </div>
+            <div class="success-msg text-center py-10" style="display:none;">
+                <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4"><i class="fas fa-check text-green-500 text-3xl"></i></div>
+                <h3 class="text-xl font-bold mb-2">Заявка отправлена!</h3>
+                <p class="text-gray-500">Перезвоним в течение 5 минут для подтверждения записи.</p>
+            </div>
+        </form>
+    </div>
+</section>
+
+</main>
+
+<!-- LOCATIONS -->
+<section id="locations" class="py-20 bg-gray-50/80">
+    <div class="max-w-6xl mx-auto px-4">
+        <div class="text-center mb-14 scroll-reveal">
+            <span class="text-orange-500 font-semibold text-sm uppercase tracking-wider">Адреса</span>
+            <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-3">5 филиалов по всему Симферополю</h2>
+            <p class="text-gray-500">Всегда есть салон рядом с вами</p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-10">
+            <div class="bg-white rounded-xl p-4 text-center border border-gray-100 hover:border-orange-300 hover:shadow-md transition scroll-reveal">
+                <i class="fas fa-map-pin text-orange-500 text-lg mb-2"></i>
+                <h4 class="font-semibold text-sm mb-0.5">Екатерининская 8а</h4>
+                <p class="text-gray-400 text-xs">Центральный район</p>
+            </div>
+            <div class="bg-white rounded-xl p-4 text-center border border-gray-100 hover:border-orange-300 hover:shadow-md transition scroll-reveal">
+                <i class="fas fa-map-pin text-orange-500 text-lg mb-2"></i>
+                <h4 class="font-semibold text-sm mb-0.5">пр. Победы 226а</h4>
+                <p class="text-gray-400 text-xs">Юго-Западный район</p>
+            </div>
+            <div class="bg-white rounded-xl p-4 text-center border border-gray-100 hover:border-orange-300 hover:shadow-md transition scroll-reveal">
+                <i class="fas fa-map-pin text-orange-500 text-lg mb-2"></i>
+                <h4 class="font-semibold text-sm mb-0.5">Тренёва 1Б</h4>
+                <p class="text-gray-400 text-xs">Киевский район</p>
+            </div>
+            <div class="bg-white rounded-xl p-4 text-center border border-gray-100 hover:border-orange-300 hover:shadow-md transition scroll-reveal">
+                <i class="fas fa-map-pin text-orange-500 text-lg mb-2"></i>
+                <h4 class="font-semibold text-sm mb-0.5">Козлова 1в</h4>
+                <p class="text-gray-400 text-xs">Центральный район</p>
+            </div>
+            <div class="bg-white rounded-xl p-4 text-center border border-gray-100 hover:border-orange-300 hover:shadow-md transition scroll-reveal">
+                <i class="fas fa-map-pin text-orange-500 text-lg mb-2"></i>
+                <h4 class="font-semibold text-sm mb-0.5">+1 филиал</h4>
+                <p class="text-gray-400 text-xs">Уточняйте по телефону</p>
+            </div>
+        </div>
+        <div class="rounded-2xl overflow-hidden border border-gray-200 scroll-reveal" style="height:350px">
+            <iframe src="https://yandex.ru/map-widget/v1/?ll=34.09%2C44.95&z=12&pt=34.09,44.95,pm2rdm&text=ЦирюльникЪ%20Симферополь" width="100%" height="100%" style="border:0" allowfullscreen loading="lazy" title="Карта филиалов ЦирюльникЪ в Симферополе"></iframe>
+        </div>
+        <!-- Working hours -->
+        <div class="mt-6 text-center">
+            <p class="text-gray-500 text-sm"><i class="fas fa-clock text-orange-500 mr-1.5"></i> Режим работы: <strong>Ежедневно с 09:00 до 20:00</strong></p>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="py-20 gradient-hero relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10"><div class="absolute top-0 right-0 w-96 h-96 bg-orange-500 rounded-full blur-3xl"></div></div>
+    <div class="max-w-3xl mx-auto px-4 text-center relative z-10 scroll-reveal">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Готовы к обновлению?</h2>
+        <p class="text-gray-400 mb-8 text-lg">Запишитесь прямо сейчас — перезвоним и подберём удобное время.</p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="tel:+79782227484" class="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-8 py-4 rounded-2xl text-lg font-bold transition-all shadow-xl shadow-orange-500/25 hover:shadow-orange-500/40 flex items-center justify-center gap-2">
+                <i class="fas fa-phone"></i> Позвонить
+            </a>
+            <a href="#booking" class="border-2 border-white/15 hover:border-orange-400/50 hover:bg-white/5 text-white px-8 py-4 rounded-2xl text-lg font-semibold transition-all flex items-center justify-center gap-2">
+                <i class="fas fa-calendar-check"></i> Записаться онлайн
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="py-8 bg-gray-900 text-gray-400 text-center text-sm">
+    <p>© 2014–2026 Сеть салонов красоты «ЦирюльникЪ», Симферополь</p>
+    <p class="mt-1 text-gray-500 text-xs">Работаем для вас ежедневно с 09:00 до 20:00</p>
+</footer>
+
+<!-- STICKY MOBILE CTA -->
+<div class="fixed bottom-0 left-0 right-0 md:hidden z-50 bg-white/95 backdrop-blur-lg border-t border-gray-200 px-4 py-3 flex gap-3 safe-area-bottom">
+    <a href="tel:+79782227484" class="flex-1 bg-gradient-to-r from-orange-500 to-orange-600 text-white text-center py-3 rounded-xl font-bold text-sm shadow-lg shadow-orange-500/20" aria-label="Позвонить">
+        <i class="fas fa-phone mr-1"></i> Позвонить
+    </a>
+    <a href="#booking" class="flex-1 bg-gray-100 text-gray-800 text-center py-3 rounded-xl font-bold text-sm hover:bg-gray-200 transition">
+        <i class="fas fa-calendar-check mr-1"></i> Записаться
+    </a>
+</div>
+
+<!-- Scroll Reveal Script -->
+<script>
+    // Scroll Reveal
+    const srObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); srObserver.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.scroll-reveal').forEach(el => srObserver.observe(el));
+
+    // BlurText
+    document.querySelectorAll('.blur-text').forEach(el => {
+        const text = el.textContent.trim();
+        const delay = parseInt(el.dataset.delay || '120');
+        const words = text.split(' ');
+        el.innerHTML = words.map((w, i) =>
+            '<span class="blur-word" style="transition-delay:' + (i * delay) + 'ms">' + w + '</span>'
+        ).join(' ');
+        new IntersectionObserver(([e]) => {
+            if (e.isIntersecting) { el.classList.add('blur-text-active'); }
+        }, { threshold: 0.1 }).observe(el);
+    });
+
+    // CountUp
+    document.querySelectorAll('.count-up').forEach(el => {
+        const target = parseInt(el.dataset.target);
+        const duration = parseInt(el.dataset.duration || '2000');
+        new IntersectionObserver(([e]) => {
+            if (!e.isIntersecting) return;
+            const start = performance.now();
+            const animate = now => {
+                const p = Math.min((now - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - p, 3);
+                el.textContent = Math.round(target * eased);
+                if (p < 1) requestAnimationFrame(animate);
+            };
+            requestAnimationFrame(animate);
+        }, { threshold: 0.1 }).observe(el);
+    });
+</script>
+
+</body>
+</html>

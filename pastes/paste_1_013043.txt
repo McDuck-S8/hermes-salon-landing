@@ -1,0 +1,9 @@
+  Task ID: bg_005919_3c8089
+  You can continue chatting — results will appear when done.
+
+
+⚠ Approval: cd D:/Portable_Soft/hermes && find scripts/ plugins/ -name "*.py" -type f ! -path "*/_archive/*" ! -path "*/__pycache__… → allowed for session
+
+  ⏱ Timeout — denying command
+
+⚠ Approval: cd D:/Portable_Soft/hermes && python -c " import sys sys.path.insert(0, 'scripts') # Try importing each crystal module … → allowed for session

@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "pocketbase_url": "",
+  "pocketbase_port": 8090,
+  "pocketbase_external_url": "",
+  "pocketbase_admin_email": "",
+  "pocketbase_admin_password": ""
+}

@@ -1,3 +1,11 @@
+---
+name: soul
+description: "Auto-generated from SOUL.md"
+trigger: "When user asks about SOUL concepts"
+usage: soul
+Revisit: 2026-07-31
+---
+
 # Hermes Agent — Soul
 
 ## Who I Am

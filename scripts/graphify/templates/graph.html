@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphify — Knowledge Graph Visualization</title>
+    <script src="https://unpkg.com/cytoscape@3.28.1/dist/cytoscape.min.js"></script>
+    <script src="https://unpkg.com/cytoscape-dagre@2.5.0/cytoscape-dagre.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0d1117; color: #e6edf3; height: 100vh; overflow: hidden; }
+        #toolbar { position: fixed; top: 10px; left: 10px; right: 10px; z-index: 100; display: flex; gap: 10px; flex-wrap: wrap; padding: 10px; background: rgba(13, 17, 23, 0.95); border-radius: 8px; border: 1px solid #30363d; backdrop-filter: blur(10px); }
+        .btn { background: #21262d; border: 1px solid #30363d; color: #e6edf3; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
+        .btn:hover { background: #30363d; border-color: #58a6ff; }
+        .btn.active { background: #238636; border-color: #238636; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .search-box { flex: 1; max-width: 400px; min-width: 200px; }
+        .search-box input { width: 100%; background: #0d1117; border: 1px solid #30363d; color: #e6edf3; padding: 8px 12px; border-radius: 6px; font-size: 13px; }
+        .search-box input:focus { outline: none; border-color: #58a6ff; }
+        .filter-group { display: flex; gap: 8px; align-items: center; }
+        .filter-group select { background: #21262d; border: 1px solid #30363d; color: #e6edf3; padding: 6px 12px; border-radius: 6px; font-size: 13px; }
+        #cy { width: 100%; height: 100vh; }
+        #sidebar { position: fixed; right: 0; top: 0; width: 380px; height: 100vh; background: #161b22; border-left: 1px solid #30363d; padding: 20px; overflow-y: auto; z-index: 50; transform: translateX(100%); transition: transform 0.3s ease; }
+        .sidebar.open { transform: translateX(0); }
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #30363d; }
+        .sidebar-title { font-size: 16px; font-weight: 600; }
+        .close-btn { background: none; border: none; color: #8b949e; font-size: 20px; cursor: pointer; }
+        .node-info { display: none; }
+        .node-info.visible { display: block; animation: slideIn 0.2s ease; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+        .info-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #21262d; }
+        .info-label { color: #8b949e; font-size: 12px; }
+        .info-value { color: #e6edf3; font-size: 13px; font-family: monospace; word-break: break-all; }
+        .edge-list { margin-top: 16px; }
+        .edge-item { display: flex; gap: 8px; padding: 8px; background: #21262d; border-radius: 6px; margin-bottom: 6px; font-size: 12px; }
+        .edge-type { color: #58a6ff; font-weight: 500; }
+        .edge-target { color: #e6edf3; font-family: monospace; word-break: break-all; }
+        .stats-bar { position: fixed; bottom: 10px; left: 10px; right: 10px; z-index: 100; background: rgba(13, 17, 23, 0.95); border-radius: 8px; border: 1px solid #30363d; padding: 8px 16px; display: flex; gap: 24px; font-size: 12px; color: #8b949e; }
+        .stat { display: flex; align-items: center; gap: 6px; }
+        .stat-value { color: #58a6ff; font-weight: 600; }
+        .legend { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 16px; padding-top: 16px; border-top: 1px solid #30363d; }
+        .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #8b949e; }
+        .legend-color { width: 12px; height: 12px; border-radius: 3px; }
+        .search-results { margin-top: 8px; max-height: 200px; overflow-y: auto; }
+        .search-result-item { padding: 8px 12px; cursor: pointer; border-radius: 4px; font-size: 12px; }
+        .search-result-item:hover { background: #21262d; }
+        .search-result-item .name { font-weight: 500; }
+        .search-result-item .type { color: #8b949e; font-size: 11px; }
+    </style>
+</head>
+<body>
+    <div id="toolbar">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search nodes (name, type, id)..." autocomplete="off">
+            <div class="search-results" id="searchResults"></div>
+        </div>
+        <div class="filter-group">
+            <select id="typeFilter" onchange="filterNodes()">
+                <option value="">All Types</option>
+            </select>
+            <select id="layoutSelect" onchange="changeLayout()">
+                <option value="dagre">Hierarchical (Dagre)</option>
+                <option value="cose">Force-directed (CoSE)</option>
+                <option value="concentric">Concentric</option>
+                <option value="grid">Grid</option>
+                <option value="breadthfirst">Breadth-first</option>
+            </select>
+            <button class="btn" onclick="toggleSidebar()">ℹ️ Details</button>
+            <button class="btn" onclick="centerGraph()">🎯 Center</button>
+            <button class="btn" onclick="fitGraph()">📐 Fit</button>
+            <button class="btn" onclick="exportGraph()">💾 Export</button>
+        </div>
+    </div>
+
+    <div id="cy"></div>
+
+    <div id="sidebar">
+        <div class="sidebar-header">
+            <span class="sidebar-title">Node Details</span>
+            <button class="close-btn" onclick="toggleSidebar()">×</button>
+        </div>
+        <div id="nodeInfo" class="node-info"></div>
+    </div>
+
+    <div class="stats-bar" id="statsBar">
+        <div class="stat">Nodes: <span class="stat-value" id="statNodes">0</span></div>
+        <div class="stat">Edges: <span class="stat-value" id="statEdges">0</span></div>
+        <div class="stat">Types: <span class="stat-value" id="statTypes">0</span></div>
+        <div class="stat">Components: <span class="stat-value" id="statComponents">0</span></div>
+    </div>
+
+    <script>
+        // Load data
+        let cy = null;
+        let nodesData = [];
+        let edgesData = [];
+        let currentNode = null;
+
+        async function loadData() {
+            try {
+                const [nodesRes, edgesRes] = await Promise.all([
+                    fetch('nodes.json'),
+                    fetch('edges.json')
+                ]);
+                nodesData = await nodesRes.json();
+                edgesData = await edgesRes.json();
+                initCytoscape();
+            } catch (e) {
+                console.error('Failed to load data:', e);
+                document.getElementById('cy').innerHTML = '<div style="padding: 20px; color: #f85149;">Failed to load graph data. Run graph builder first.</div>';
+            }
+        }
+
+        function initCytoscape() {
+            cy = cytoscape({
+                container: document.getElementById('cy'),
+                elements: [
+                    ...nodesData.map(n => ({
+                        data: { id: n.id, label: n.name || n.id, type: n.type, ...n },
+                        classes: n.type
+                    })),
+                    ...edgesData.map(e => ({
+                        data: { id: e.id, source: e.source, target: e.target, type: e.type, ...e },
+                        classes: e.type
+                    }))
+                ],
+                style: [
+                    { selector: 'node', style: { 'label': 'data(label)', 'background-color': 'data(color)', 'width': 40, 'height': 40, 'font-size': 10, 'text-valign': 'bottom', 'text-margin-y': 25, 'color': '#e6edf3', 'text-outline-width': 2, 'text-outline-color': '#0d1117', 'border-width': 2, 'border-color': '#30363d' } },
+                    { selector: 'node:selected', style: { 'border-width': 3, 'border-color': '#58a6ff', 'background-color': '#1f6feb' } },
+                    { selector: 'edge', style: { 'width': 'data(weight)', 'line-color': 'data(color)', 'target-arrow-shape': 'triangle', 'target-arrow-color': 'data(color)', 'curve-style': 'bezier', 'font-size': 8, 'label': 'data(label)', 'color': '#8b949e', 'font-size': 9 } },
+                    { selector: 'edge[dashed]', style: { 'line-style': 'dashed' } },
+                    { selector: '.ContentNiche', style: { 'background-color': '#ff7f0e', 'shape': 'ellipse' } },
+                    { selector: '.MonetizationStrategy', style: { 'background-color': '#2ca02c', 'shape': 'rectangle' } },
+                    { selector: '.ContentCreator', style: { 'background-color': '#9467bd', 'shape': 'diamond' } },
+                    { selector: '.TelegramCommunity', style: { 'background-color': '#0088cc', 'shape': 'vee' } },
+                    { selector: '.FreeCourse', style: { 'background-color': '#e377c2', 'shape': 'star' } },
+                    { selector: '.IncomeReport', style: { 'background-color': '#8c564b', 'shape': 'pentagon' } },
+                    { selector: '.skill', style: { 'background-color': '#9467bd', 'shape': 'octagon' } },
+                    { selector: '.module', style: { 'background-color': '#1f77b4', 'shape': 'roundrectangle' } },
+                    { selector: '.class', style: { 'background-color': '#ff7f0e', 'shape': 'triangle' } },
+                    { selector: '.function', style: { 'background-color': '#2ca02c', 'shape': 'roundrectangle' } }
+                ],
+                layout: { name: 'dagre', rankDir: 'TB', nodeSep: 50, edgeSep: 20, rankSep: 80 },
+                minZoom: 0.1, maxZoom: 2, wheelSensitivity: 0.3
+            });
+
+            // Event handlers
+            cy.on('tap', 'node', function(e) { showNodeInfo(e.target); });
+            cy.on('tap', function(e) { if (e.target === cy) hideNodeInfo(); });
+
+            // Search
+            let searchTimeout;
+            document.getElementById('searchInput').addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => filterSearch(this.value), 150);
+            });
+
+            updateStats();
+            populateTypeFilter();
+        }
+
+        function populateTypeFilter() {
+            const types = [...new Set(nodesData.map(n => n.type))].sort();
+            const select = document.getElementById('typeFilter');
+            types.forEach(t => {
+                const opt = document.createElement('option');
+                opt.value = t; opt.textContent = t;
+                select.appendChild(opt);
+            });
+        }
+
+        function filterNodes() {
+            const typeFilter = document.getElementById('typeFilter').value;
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            
+            nodesData.forEach(node => {
+                const matchesType = !typeFilter || node.type === typeFilter;
+                const matchesSearch = !search || 
+                    node.id.toLowerCase().includes(search) || 
+                    (node.name && node.name.toLowerCase().includes(search)) ||
+                    node.type.toLowerCase().includes(search);
+                
+                const ele = cy.getElementById(node.id);
+                if (ele.length) {
+                    ele.style('display', matchesType && matchesSearch ? 'element' : 'none');
+                }
+            });
+        }
+
+        function filterSearch(query) {
+            const resultsDiv = document.getElementById('searchResults');
+            if (!query || query.length < 2) {
+                resultsDiv.innerHTML = '';
+                resultsDiv.style.display = 'none';
+                return;
+            }
+            const results = nodesData.filter(n => 
+                n.id.toLowerCase().includes(query.toLowerCase()) || 
+                (n.name && n.name.toLowerCase().includes(query.toLowerCase()))
+            ).slice(0, 10);
+            
+            if (results.length === 0) {
+                resultsDiv.innerHTML = '<div style="padding: 8px; color: #8b949e;">No matches</div>';
+            } else {
+                resultsDiv.innerHTML = results.map(n => 
+                    `<div class="search-result-item" onclick="selectNode('${n.id}')">
+                        <div class="name">${n.name || n.id}</div>
+                        <div class="type">${n.type}</div>
+                    </div>`).join('');
+            }
+            resultsDiv.style.display = 'block';
+        }
+
+        function selectNode(id) {
+            const ele = cy.getElementById(id);
+            if (ele.length) {
+                cy.center(ele);
+                ele.select();
+                showNodeInfo(ele);
+                document.getElementById('searchResults').style.display = 'none';
+                document.getElementById('searchInput').value = '';
+            }
+        }
+
+        function showNodeInfo(node) {
+            currentNode = node;
+            const info = document.getElementById('nodeInfo');
+            const data = node.data();
+            
+            let html = `
+                <div class="info-row"><span class="info-label">ID</span><span class="info-value">${data.id}</span></div>
+                <div class="info-row"><span class="info-label">Name</span><span class="info-value">${data.name || data.id}</span></div>
+                <div class="info-row"><span class="info-label">Type</span><span class="info-value">${data.type}</span></div>
+            `;
+            
+            Object.entries(data).forEach(([k, v]) => {
+                if (!['id', 'name', 'type', 'color', 'icon', 'label'].includes(k) && v !== undefined && v !== null) {
+                    const val = typeof v === 'object' ? JSON.stringify(v, null, 2) : v;
+                    html += `<div class="info-row"><span class="info-label">${k}</span><span class="info-value">${val}</span></div>`;
+                }
+            
+            // Edges
+            const connectedEdges = node.connectedEdges();
+            if (connectedEdges.length > 0) {
+                html += '<div class="edge-list"><strong style="color:#58a6ff">Connections:</strong>';
+                connectedEdges.forEach(e => {
+                    const d = e.data();
+                    const dir = d.source === data.id ? '→' : '←';
+                    const other = d.source === data.id ? d.target : d.source;
+                    html += `<div class="edge-item"><span class="edge-type">${d.type || d.label} ${dir}</span><span class="edge-target">${other}</span></div>`;
+                });
+                html += '</div>';
+            }
+            
+            info.innerHTML = html;
+            info.classList.add('visible');
+        }
+
+        function hideNodeInfo() {
+            document.getElementById('nodeInfo').classList.remove('visible');
+            currentNode = null;
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function selectNode(id) {
+            const ele = cy.getElementById(id);
+            if (ele.length) {
+                cy.center(ele);
+                ele.select();
+                showNodeInfo(ele);
+            }
+        }
+
+        function changeLayout() {
+            const layout = document.getElementById('layoutSelect').value;
+            cy.layout({ name: layout, rankDir: 'TB', nodeSep: 50, edgeSep: 20, rankSep: 80 }).run();
+        }
+
+        function centerGraph() { cy.center(); }
+        function fitGraph() { cy.fit(null, 50); }
+
+        function exportGraph() {
+            const data = { nodes: nodesData, edges: edgesData };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url; a.download = 'graphify-export.json'; a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function updateStats() {
+            document.getElementById('statNodes').textContent = cy.nodes().length;
+            document.getElementById('statEdges').textContent = cy.edges().length;
+            document.getElementById('statTypes').textContent = new Set(nodesData.map(n => n.type)).size;
+            // Components
+            const visited = new Set();
+            let components = 0;
+            cy.nodes().forEach(n => {
+                if (!visited.has(n.id())) {
+                    components++;
+                    n.closedNeighborhood().forEach(n => visited.add(n.id()));
+                }
+            });
+            document.getElementById('statComponents').textContent = components;
+        }
+
+        loadData();
+    </script>
+</body>
+</html>

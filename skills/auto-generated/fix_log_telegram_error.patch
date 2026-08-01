@@ -1,0 +1,25 @@
+# Auto-generated fix for: Log pattern 'telegram_error' seen 81 times: telegram.error.timedout: timed out
+# Issue: log_telegram_error
+# Severity: critical
+# Count: 81
+# Source: session_logs
+
+# TODO: Review and apply this patch manually
+# The self-improvement loop detected this pattern 81 times
+# Recommended actions:
+# - Add preventive guard for 'telegram_error' issues
+# - Document the fix pattern for future reference
+# - Create a test case to prevent regression
+# - Log pattern to Knowledge Cube for future reference
+
+# Example patch template:
+# *** Begin Patch
+# *** Update File: scripts/terminal_tool.py
+# @@ -45,6 +45,10 @@
+#      def execute(self, command, timeout=30):
+# +        # Guard: prevent timeout on long commands
+# +        if timeout > 60:
+# +            timeout = 60
+# +            logger.warning(f"Timeout capped at 60s (was {timeout}s)")
+#      return subprocess.run(...)
+# *** End Patch

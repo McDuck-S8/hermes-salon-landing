@@ -1,0 +1,6 @@
+ postgresql --[co_occurs_with]--> fastapi
+    docker --[uses]--> container supervision
+    fastapi --[co_occurs_with]--> hermes
+    docker --[uses]--> hermes agent docker
+    docker --[related_to]--> system
+    docker --[uses]--> why architecture

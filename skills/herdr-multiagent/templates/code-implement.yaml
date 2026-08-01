@@ -1,0 +1,36 @@
+name: code-implement
+role: coder
+description: Implement feature/fix from spec
+params:
+  - name: spec
+    type: string
+    required: true
+    description: Path to spec file or description
+  - name: files
+    type: array
+    required: false
+    description: Specific files to modify
+  - name: tests
+    type: boolean
+    default: true
+    required: false
+script: |
+  # Code Implementation Task
+  # Spec: {{spec}}
+  {% if files %}
+  # Files: {{files|join(", ")}}
+  {% endif %}
+  {% if tests %}
+  # Include tests: yes
+  {% else %}
+  # Include tests: no
+  {% endif %}
+
+  Steps:
+  1. Read spec and existing code
+  2. Plan implementation (use superpowers:writing-plans if complex)
+  3. Implement changes
+  4. Run tests
+  5. Verify with superpowers:subagent-driven-development if needed
+timeout: 600
+tags: [coding, implementation, subagent]

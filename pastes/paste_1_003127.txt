@@ -1,0 +1,11 @@
+Tools & resources mentioned:
+Instructor (567-labs): https://python.useinstructor.com/
+LiteLLM: https://github.com/BerriAI/litellm
+Outlines (dottxt-ai): https://github.com/dottxt-ai/outlines
+Crawl4AI: https://github.com/unclecode/crawl4ai
+DSPy: https://github.com/stanfordnlp/dspy
+Qdrant: https://github.com/qdrant/qdrant
+Ollama: https://github.com/ollama/ollama
+Langfuse: https://github.com/langfuse/langfuse
+Marker: https://github.com/VikParuchuri/marker
+Chonkie: https://github.com/chonkie-ai/chonkie

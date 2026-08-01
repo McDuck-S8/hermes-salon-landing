@@ -1,16 +1,13 @@
 # agent memory
 
 ## open questions
-- - g-curiosity: 44 investigate-задачи с HN
-- 148** | 0% | 27 целей "Investigate: HN/tech" — P3-P6 |
-- **Next steps for implementation**: Create GitHub repo, set up Docker dev environment, implement MyLead integration first
-- **Pitfalls (DO NOT)** — added: "Don't stop at the linked file — explore ALL directories"
+- Investigate the 1 silent event and 3 unhealthy modules
 
 ## learnings
-- **7 failed, 9 passed** — все 7 падений в `test_autonomy_diagnostics
-- **Updated Related Skills** — added cross-links to `white-spot-explorer` and `self-improvement`
-- | pytest | 7 failed | 7 failed | без изменений (pre-existing) |
-- **7 failed, 9 passed** — без изменений
-- ### Ранее в сессии: `knowledge-cube-gap-patch` (self-improvement)
+- Cron: 43 джобы уже есть — self-improvement-loop (0 5 * * *), suggestion-applier (*/30 мин), compliance-checker, event-tr
+- **Updated `self-improvement/event-driven-self-improvement-pipeline`** (the skill governing `self_improvement_loop
+- До фикса тот же INSERT падал с `IntegrityError: NOT NULL constraint failed: experiences
+- py — 2/3, 1 FAILED (test_3_weights_affect_scoring):
+- - Safety insight: suggestion_consumer reads improvement_suggestions
 
-cycles: 147
+cycles: 541

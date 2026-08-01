@@ -1,0 +1,6 @@
+Дыра 1 закрыта. Переходи ко второй.
+
+Интегрируй session_search → KC. Каждое моё сообщение с фрустрацией, командой или исправлением должно становиться записью в Кубе с source='user_voice'. Crystal должен начать их видеть через orphan_sources.
+
+Доложи когда первые записи с source='user_voice' появятся в KC. И паралельно сделай -
+[Pasted text #37: 15 lines → D:\Portable_Soft\hermes\pastes\paste_37_003238.txt]

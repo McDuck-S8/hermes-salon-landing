@@ -1,0 +1,76 @@
+# Agent spec — определяет агента из YAML
+# Загрузка: agent = load_agent_spec("schemes/revenue_researcher.yaml")
+# Формат:
+#   agent:
+#     name: ...
+#     instructions: "глобальные инструкции"
+#     capabilities:
+#       - name: ...
+#         description: ...
+#         instructions: "локальные инструкции для этой capability"
+#         tools:
+#           - name: ...        # уникальное имя инструмента
+#             type: native     # native = прокси в Hermes Agent
+#             # или
+#             type: script     # script = запуск python-скрипта
+#             path: ...        # путь относительно REPO_ROOT
+#             args: [...]      # аргументы командной строки
+#         defer_loading: false # true = скрыта до востребования
+
+agent:
+  name: revenue-researcher
+  instructions: >
+    Ты — исследователь арбитражных схем.
+    Всегда начинай со сбора свежих офферов,
+    затем считай гэпы, потом проверяй через поиск.
+    Возвращай структурированный результат.
+
+  capabilities:
+    # ── Capability 1: Поиск в интернете ─────────────────
+    - name: web_research
+      description: "Search web for offers, trends, and validation"
+      instructions: >
+        Используй web_search для поиска CPA-офферов, трендов,
+        проверки связок. Ищи на русском и английском.
+        Всегда проверяй 2-3 разных запроса.
+      tools:
+        - name: web_search
+          type: native
+          description: "Search the web by query string"
+
+    # ── Capability 2: CPA сканер (deferred) ──────────────
+    - name: cpa_scanner
+      description: "Scan CPA networks for new offers"
+      instructions: >
+        Запусти scan_offers, подожди результат,
+        отфильтруй offers с payout > $5.
+      defer_loading: true
+      tools:
+        - name: scan_offers
+          type: script
+          path: skills/finance/arbitrage-sensors/scripts/cpa_scanner.py
+          args: ["--once"]
+
+    # ── Capability 3: Калькулятор гэпов (deferred) ───────
+    - name: gap_calculator
+      description: "Calculate arbitrage gaps from scanned offers"
+      instructions: >
+        Запусти calc_gaps после сканирования офферов.
+        Отфильтруй гэпы с ROI > 50%.
+        Отсортируй по ROI DESC.
+      defer_loading: true
+      tools:
+        - name: calc_gaps
+          type: script
+          path: skills/finance/arbitrage-sensors/scripts/gap_calculator.py
+          args: ["--once"]
+
+    # ── Capability 4: Терминал (для отладки) ─────────────
+    - name: shell_access
+      description: "Run shell commands for debugging"
+      instructions: "Только для диагностики."
+      defer_loading: true
+      tools:
+        - name: run_cmd
+          type: native
+          description: "Run a shell command"

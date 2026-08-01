@@ -1,0 +1,147 @@
+Отлично! Теперь я вижу, что у вас **уже установлен и работает Hermes Agent** (не тот, из видео, а ваш собственный). И вы хотите понять, как проекты из видео повлияют на **вашу конкретную систему**.
+
+Давайте **по-простому**, без воды.
+
+---
+
+## Что у вас сейчас работает в Hermes
+
+```
+Проблема (knowledge gap) → LLM Analyst (бесплатные модели) → генерация фикса → proactive_executor → применение фикса → верификация
+```
+
+**Что уже есть:**
+- ✅ LLM анализирует проблемы и предлагает исправления
+- ✅ `proactive_executor.py` применяет фиксы (пока только отступы)
+- ✅ Верификация через синтаксис + pytest
+- ✅ Авто-ротация моделей (5 бесплатных)
+
+**Чего НЕТ:**
+- ❌ Замкнутый цикл: исправления НЕ пишутся обратно в Knowledge Cube
+- ❌ Нет генератора патчей для сложных фиксов (только индентация)
+- ❌ Cron-сервис не запущен
+
+---
+
+## Что дадут проекты из видео для ВАШЕГО Hermes
+
+### 1. **Supermemory** — ЭТО ВАШЕ СЛАБОЕ МЕСТО
+
+**Прямое попадание:** У вас открыт gap «Knowledge → KC loop not closed». Supermemory — это **готовая база знаний с векторным поиском**.
+
+**Что изменится:**
+- Сейчас: фиксы применяются, но не запоминаются.
+- С Supermemory: Каждый верифицированный фикс → автоматически в векторную БД. При следующей похожей ошибке Hermes **сразу берет готовое решение из памяти**, не гоняя LLM.
+
+**Как интегрировать:**
+```python
+# В scripts/hermes_hooks.py -> on_task_complete()
+from supermemory import MemoryClient
+mc = MemoryClient()
+mc.store(
+    content=fix_patch,
+    metadata={"verified": True, "evidence": pytest_output}
+)
+```
+
+---
+
+### 2. **Temporal** — ДЛЯ ДОЛГИХ ПРОЦЕССОВ
+
+**Прямое попадание:** Ваш `proactive_executor.py` работает синхронно. Если процесс фикса занимает >30 секунд — cron пометит как ошибку.
+
+**Что изменится:**
+- Сейчас: при падении на 3-м шаге из 5 → всё теряется.
+- С Temporal: Процесс (обнаружение проблемы → LLM анализ → генерация патча → тесты → деплой) **может длиться часы/дни**, переживая рестарты.
+
+**Пример для вас:**
+```python
+# Вместо прямого вызова proactive_executor
+@workflow.defn
+class HermesFixWorkflow:
+    @workflow.run
+    async def run(self, issue_id):
+        await workflow.execute_activity(analyze_with_llm)
+        await workflow.execute_activity(generate_patch)
+        await workflow.execute_activity(run_tests)
+        await workflow.execute_activity(deploy_fix)  # не упадет при таймауте
+```
+
+---
+
+### 3. **Trivy** — НОВАЯ КОМПЕТЕНЦИЯ
+
+**Прямое попадание:** У вас нет сканера уязвимостей. Сейчас Hermes видит только синтаксические ошибки и падающие тесты.
+
+**Что изменится:**
+- Hermes сможет **сам находить CVE-уязвимости** в зависимостях и предлагать обновления.
+- Это расширит `pending_analysis.json` новым типом проблем.
+
+**Интеграция:**
+```python
+# В proactive_executor.py добавить
+import subprocess
+result = subprocess.run(["trivy", "fs", "--format", "json", "."], capture_output=True)
+if result.returncode != 0:
+    # Пишем в pending_analysis.json как новый issue типа "security"
+```
+
+---
+
+### 4. **Parsel** — УЛУЧШЕНИЕ ПАРСИНГА
+
+**Прямое попадание:** Ваш `verify_fix_result()` сейчас использует `pytest`. Parsel позволит парсить **неструктурированные логи ошибок**.
+
+**Что изменится:**
+- Сейчас: ошибка должна быть в формате, который понимает pytest.
+- С Parsel: Hermes сможет извлекать структурированную информацию из любого текста ошибки (даже из логов nginx).
+
+**Пример:**
+```python
+# Вместо ручного regex
+from parsel import Selector
+sel = Selector(text=error_log)
+error_type = sel.css("::text").re_first(r"(\w+Error):")
+```
+
+---
+
+### 5. **Odysseus** — **ИГНОРИРОВАТЬ**
+
+Это не про ваш кейс. Не тратьте время.
+
+---
+
+## Что вам делать прямо сейчас (приоритеты для ВАШЕГО Hermes)
+
+| Приоритет | Проект | Что дает | Время интеграции |
+|-----------|--------|----------|------------------|
+| **�� КРИТИЧЕСКИ** | Supermemory | Закрывает ваш главный gap (Knowledge→KC loop) | 2-3 часа |
+| **�� ВАЖНО** | Temporal | Убирает проблему с exit code и cron | 4-5 часов |
+| **�� ПОТОМ** | Trivy | Новая возможность (безопасность) | 2 часа |
+| **�� ОПЦИОНАЛЬНО** | Parsel | Улучшение парсинга логов | 1 час |
+| **⚫ НЕ НАДО** | Odysseus | Бесполезно | 0 |
+
+---
+
+## Самый простой план действий на сегодня
+
+```bash
+# 1. Установите Supermemory (самое важное для вас)
+git clone https://github.com/supermemoryai/supermemory
+cd supermemory && docker-compose up -d
+
+# 2. Добавьте в hermes_hooks.py запись в Supermemory после verify_fix_result()
+
+# 3. Запустите ваш cron (который всё ещё не стартанул)
+hermes cron start llm-analyst
+
+# 4. Закройте exit code проблему - измените в proactive_executor.py:
+#    return 0 всегда, даже если есть issues (иначе cron ругается)
+
+# 5. Через неделю - Temporal, если процесс станет длинным
+```
+
+**Суть:** Supermemory напрямую решает вашу главную проблему («Knowledge→KC Loop Not Closed»). Остальное — апгрейды.
+
+Понятно объяснил?

@@ -1,0 +1,438 @@
+# Crimea Security Framework v2 — Default Configuration
+
+app:
+  name: "crimea-sec-v2"
+  version: "2.0.0"
+  environment: "production"  # production | staging | development
+  log_level: "INFO"
+  audit_log: true
+  audit_log_path: "logs/audit.log"
+
+# Пути
+paths:
+  config: "config/"
+  templates: "templates/"
+  evidence: "evidence/"
+  reports: "reports/"
+  logs: "logs/"
+  kb: "data/kb/"
+
+# LLM Backbone (как в T3MP3ST)
+llm:
+  default_provider: "openrouter"
+  fallback_chain: ["openrouter", "anthropic", "openai", "ollama"]
+  providers:
+    openrouter:
+      api_key_env: "OPENROUTER_API_KEY"
+      base_url: "https://openrouter.ai/api/v1"
+      models:
+        - "anthropic/claude-3.5-sonnet"
+        - "anthropic/claude-3-opus"
+        - "google/gemini-2.5-pro"
+        - "openai/gpt-4o"
+        - "meta-llama/llama-3.1-405b"
+    anthropic:
+      api_key_env: "ANTHROPIC_API_KEY"
+      models:
+        - "claude-3-5-sonnet-20241022"
+        - "claude-3-opus-20240229"
+    openai:
+      api_key_env: "OPENAI_API_KEY"
+      models:
+        - "gpt-4o"
+        - "gpt-4o-mini"
+    ollama:
+      base_url: "http://localhost:11434"
+      models:
+        - "llama3.1:70b"
+        - "qwen2.5:72b"
+        - "nemotron3-ultra"
+  safe_llm_call:
+    max_retries: 3
+    timeout: 120
+    temperature: 0.1
+    max_tokens: 8192
+
+# OPSEC Layer (взято из T3MP3ST)
+opsec:
+  default_preset: "balanced"
+  presets:
+    silent:
+      description: "Пассивный OSINT, DNS, cert transparency — нулевой шум"
+      max_detection_risk: 0.1
+      cooldown_seconds: 30
+      allowed_tool_categories: ["osint", "dns", "passive"]
+      rate_limits:
+        requests_per_second: 0.5
+        concurrent_connections: 2
+      user_agent_rotation: true
+      proxy_rotation: false
+      jitter_ms: [1000, 5000]
+
+    balanced:
+      description: "Стандартный веб-аудит: nuclei, ffuf, nmap -sS, sslscan"
+      max_detection_risk: 0.4
+      cooldown_seconds: 10
+      allowed_tool_categories: ["osint", "dns", "passive", "active-web", "network"]
+      rate_limits:
+        requests_per_second: 5
+        concurrent_connections: 10
+      user_agent_rotation: true
+      proxy_rotation: true
+      jitter_ms: [500, 2000]
+
+    aggressive:
+      description: "Полный активный скан (требует RoE=permissive)"
+      max_detection_risk: 0.7
+      cooldown_seconds: 5
+      allowed_tool_categories: ["osint", "dns", "passive", "active-web", "network", "vuln-scan", "auth"]
+      rate_limits:
+        requests_per_second: 20
+        concurrent_connections: 50
+      user_agent_rotation: true
+      proxy_rotation: true
+      jitter_ms: [100, 500]
+
+    apt:
+      description: "Low-and-slow, долгосрочная кампания"
+      max_detection_risk: 0.2
+      cooldown_seconds: 60
+      allowed_tool_categories: ["osint", "dns", "passive", "active-web", "custom"]
+      rate_limits:
+        requests_per_second: 0.1
+        concurrent_connections: 1
+      user_agent_rotation: true
+      proxy_rotation: true
+      jitter_ms: [10000, 60000]
+
+    redteam:
+      description: "Полная kill chain (требует EXPLICIT approval)"
+      max_detection_risk: 0.9
+      cooldown_seconds: 2
+      allowed_tool_categories: ["all"]
+      rate_limits:
+        requests_per_second: 50
+        concurrent_connections: 100
+      user_agent_rotation: true
+      proxy_rotation: true
+      jitter_ms: [50, 200]
+
+  detection_management:
+    enabled: true
+    thresholds:
+      waf_detected: 0.3
+      rate_limit_hit: 0.5
+      honeypot_suspected: 0.8
+      ids_alert: 0.6
+    actions:
+      waf_detected: "switch_evasion_engine"
+      rate_limit_hit: "increase_cooldown"
+      honeypot_suspected: "abort_mission"
+      ids_alert: "pause_and_reassess"
+
+  cooldown_manager:
+    enabled: true
+    base_cooldown: 5
+    max_cooldown: 300
+    backoff_multiplier: 2
+
+# Rules of Engagement (RoE)
+roe:
+  default_template: "strict"
+  templates:
+    strict:
+      name: "Strict RoE — Госорганы, КИИ"
+      require_scope_receipt: true
+      require_signed_agreement: true
+      allowed_phases: ["recon", "scan", "analyze"]
+      forbidden_actions:
+        - "exploitation"
+        - "privilege_escalation"
+        - "lateral_movement"
+        - "data_exfiltration"
+        - "persistence"
+        - "denial_of_service"
+      tool_gates:
+        nuclei:
+          max_severity: "high"
+          exclude_tags: ["dos", "fuzz", "intrusive"]
+        nmap:
+          allowed_flags: ["-sS", "-sV", "-O", "--script=vuln"]
+          forbidden_flags: ["-A", "-T4", "-T5", "--script=exploit"]
+        sqlmap:
+          allowed: false
+        ffuf:
+          max_requests_per_second: 10
+      evidence_requirements:
+        screenshot_required: true
+        curl_command_required: true
+        raw_response_required: true
+      data_handling:
+        encrypt_at_rest: true
+        pii_redaction: true
+        retention_days: 90
+      kill_switch:
+        enabled: true
+        trigger_on:
+          - "detection_risk_exceeded"
+          - "scope_violation"
+          - "unauthorized_access_attempt"
+          - "manual_abort"
+
+    permissive:
+      name: "Permissive RoE — Багбаунти, коммерческие заказчики"
+      require_scope_receipt: true
+      require_signed_agreement: true
+      allowed_phases: ["recon", "scan", "analyze", "exploit"]
+      forbidden_actions:
+        - "privilege_escalation"
+        - "lateral_movement"
+        - "data_exfiltration"
+        - "persistence"
+        - "denial_of_service"
+      tool_gates:
+        nuclei:
+          max_severity: "critical"
+          exclude_tags: ["dos"]
+        nmap:
+          allowed_flags: ["-sS", "-sV", "-O", "-A", "--script=vuln,exploit"]
+        sqlmap:
+          allowed: true
+          max_level: 2
+        ffuf:
+          max_requests_per_second: 50
+      evidence_requirements:
+        screenshot_required: true
+        curl_command_required: true
+        raw_response_required: true
+      data_handling:
+        encrypt_at_rest: true
+        pii_redaction: true
+        retention_days: 180
+      kill_switch:
+        enabled: true
+        trigger_on:
+          - "detection_risk_exceeded"
+          - "scope_violation"
+          - "manual_abort"
+
+    bugbounty:
+      name: "Bug Bounty RoE — HackerOne, Bugcrowd, Яндекс Багбаунти"
+      require_scope_receipt: true
+      require_signed_agreement: false  # scope из программы
+      allowed_phases: ["recon", "scan", "analyze"]
+      forbidden_actions:
+        - "exploitation"
+        - "privilege_escalation"
+        - "lateral_movement"
+        - "data_exfiltration"
+        - "persistence"
+        - "denial_of_service"
+        - "social_engineering"
+        - "physical_access"
+      tool_gates:
+        nuclei:
+          max_severity: "critical"
+          exclude_tags: ["dos", "fuzz", "intrusive"]
+        nmap:
+          allowed_flags: ["-sS", "-sV", "--script=vuln"]
+        sqlmap:
+          allowed: false
+        ffuf:
+          max_requests_per_second: 20
+      evidence_requirements:
+        screenshot_required: true
+        curl_command_required: true
+        raw_response_required: true
+        poc_required: true
+      data_handling:
+        encrypt_at_rest: true
+        pii_redaction: true
+        retention_days: 365
+      kill_switch:
+        enabled: true
+        trigger_on:
+          - "detection_risk_exceeded"
+          - "scope_violation"
+          - "out_of_scope_access"
+          - "manual_abort"
+
+# Mission Control
+mission:
+  tick_interval_seconds: 1
+  max_concurrent_missions: 3
+  max_tasks_per_mission: 100
+  phase_timeout_minutes: 60
+  auto_advance_phases: false
+  intelligence_sync_enabled: true
+
+# Arsenal — инструменты
+arsenal:
+  built_in_tools: 35
+  opt_in_adapters: 48
+  full_arsenal_env: "T3MP3ST_FULL_ARSENAL"
+  categories:
+    osint:
+      - "dns_lookup"
+      - "whois_lookup"
+      - "cert_transparency"
+      - "shodan_lookup"
+      - "censys_lookup"
+      - "wayback_urls"
+      - "google_dorks"
+    dns:
+      - "subdomain_enum"
+      - "dns_zone_transfer"
+      - "dnssec_check"
+    passive:
+      - "header_analysis"
+      - "technology_detect"
+      - "ssl_scan"
+      - "robots_txt"
+      - "sitemap_xml"
+    active-web:
+      - "dir_bruteforce"
+      - "vuln_scan"
+      - "xss_scan"
+      - "sqli_scan"
+      - "ssrf_scan"
+      - "open_redirect_scan"
+    network:
+      - "port_scan"
+      - "service_fingerprint"
+      - "os_fingerprint"
+    vuln-scan:
+      - "nuclei_scan"
+      - "nikto_scan"
+      - "wp_scan"
+    auth:
+      - "password_spray"
+      - "credential_stuffing"
+      - "jwt_analyze"
+    custom:
+      - "custom_script"
+
+# KnowledgeBase
+kb:
+  cve_db_path: "data/kb/cve.json"
+  mitre_db_path: "data/kb/mitre.json"
+  patterns_path: "data/kb/patterns.json"
+  auto_update: true
+  update_interval_days: 7
+  sources:
+    - "https://cve.mitre.org"
+    - "https://nvd.nist.gov"
+    - "https://attack.mitre.org"
+    - "https://github.com/projectdiscovery/nuclei-templates"
+
+# Evidence Vault
+evidence:
+  storage_path: "evidence/"
+  encryption_enabled: true
+  encryption_key_env: "EVIDENCE_ENCRYPTION_KEY"
+  max_file_size_mb: 100
+  allowed_extensions: [".json", ".txt", ".png", ".jpg", ".pcap", ".har", ".curl"]
+  pii_patterns:
+    - "email"
+    - "phone"
+    - "passport"
+    - "inn"
+    - "snils"
+    - "credit_card"
+    - "ipv4"
+    - "ipv6"
+  retention:
+    default_days: 90
+    critical_days: 365
+    legal_hold: true
+
+# Reporting
+reporting:
+  formats: ["html", "pdf", "json", "sarif", "junit"]
+  template_dir: "templates/reports/"
+  default_template: "crimea-standard"
+  include:
+    executive_summary: true
+    technical_details: true
+    evidence_appendix: true
+    remediation_guidance: true
+    compliance_mapping: true
+  pdf_engine: "weasyprint"  # or "wkhtmltopdf"
+  languages: ["ru", "en"]
+
+# MCP Server
+mcp:
+  enabled: true
+  transport: "stdio"  # stdio | http
+  http_port: 8888
+  tools:
+    - "security_recon"
+    - "security_scan"
+    - "security_analyze"
+    - "mission_start"
+    - "mission_status"
+    - "evidence_get"
+    - "report_generate"
+    - "kb_query"
+    - "roe_validate"
+    - "scope_verify"
+
+# API Server
+api:
+  enabled: true
+  host: "127.0.0.1"
+  port: 3333
+  cors_origins: ["http://localhost:3000", "http://localhost:8080"]
+  auth:
+    enabled: true
+    type: "bearer_token"
+    token_env: "CRIMEA_SEC_API_TOKEN"
+  rate_limit:
+    requests_per_minute: 60
+  endpoints:
+    health: "/api/health"
+    llm_status: "/api/llm/status"
+    tools_execute: "/api/tools/execute"
+    tools_recon: "/api/tools/recon"
+    tools_list: "/api/tools"
+    tools_history: "/api/tools/:id/history"
+    llm_chat: "/api/llm/chat"
+    llm_stream: "/api/llm/stream"
+    llm_models: "/api/llm/models"
+    missions: "/api/missions"
+    missions_start: "/api/mission/start"
+    missions_status: "/api/mission/status"
+    targets: "/api/targets"
+    findings: "/api/findings"
+    reports: "/api/reports"
+
+# Crimea-specific targets
+crimea_targets:
+  config_file: "config/crimea-targets.yaml"
+  auto_load: true
+  validate_scopes_on_start: true
+  require_authorization: true
+
+# Legal compliance (РФ)
+legal:
+  jurisdiction: "RU"
+  applicable_laws:
+    - "152-FZ"
+    - "187-FZ"
+    - "GOST-R-57580"
+    - "UK-RF-272"
+    - "UK-RF-273"
+    - "UK-RF-274"
+    - "FSTEK-21"
+  mandatory_controls:
+    scope_receipt_required: true
+    written_authorization_required: true
+    audit_log_immutable: true
+    evidence_chain_of_custody: true
+    data_localization: true
+    pii_protection: true
+  reporting_authorities:
+    - "FSTEC"
+    - "FSB"
+    - "NKCKI"
+    - "Roskomnadzor"

@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-07-12T15:22:45.184821",
+  "kanban_stats": {
+    "ready": 0,
+    "running": 0,
+    "blocked": 0,
+    "done": 0,
+    "total": 0
+  },
+  "cron_count": 35,
+  "profile_count": 1,
+  "recent_logs": []
+}

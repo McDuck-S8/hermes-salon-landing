@@ -1,0 +1,43 @@
+name: cpa-scrape
+role: browser
+description: Scrape CPA offers from network with filters
+params:
+  - name: geo
+    type: string
+    default: "IN"
+    required: true
+  - name: vertical
+    type: string
+    default: "gambling"
+    required: false
+  - name: min_payout
+    type: number
+    default: 3.0
+    required: false
+script: |
+  // CPA Scrape Task
+  // Network: adcombo/cpalead/alfaleads
+  // Geo: {{geo}}
+  // Vertical: {{vertical}}
+  // Min payout: {{min_payout}}
+
+  await navigate({url: "https://adcombo.com/offers?geo={{geo}}&vertical={{vertical}}&min_payout={{min_payout}}"})
+  await wait({for: "selector", value: ".offer-card"})
+
+  const snap = await snapshot()
+  const offers = []
+
+  for (const ref of snap.refs) {
+    if (ref.text.includes("offer") || ref.text.includes("payout")) {
+      await click({ref: ref.ref})
+      await wait({for: "selector", value: ".offer-details"})
+      const detail = await read({format: "markdown"})
+      offers.push(detail)
+      await navigate({url: "https://adcombo.com/offers?geo={{geo}}&vertical={{vertical}}&min_payout={{min_payout}}"})
+      await wait({for: "selector", value: ".offer-card"})
+    }
+  }
+
+  return offers
+timeout: 300
+tags: [cpa, scraping, adcombo]

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Арбитраж — таблица маршрутов</title>
+<style>
+body{font-family:system-ui,-apple-system,sans-serif;background:#0d0d1a;color:#e0e0e0;margin:20px;font-size:14px}
+h1{font-size:18px;margin-bottom:4px}
+h1 span{color:#60a5fa}
+.sub{color:#666;font-size:12px;margin-bottom:16px}
+
+.summary{display:flex;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.summary div{background:#111128;border:1px solid #1e1e3a;border-radius:6px;padding:6px 14px;font-size:12px}
+.summary .num{font-size:18px;font-weight:700;display:block}
+.summary .label{color:#888;font-size:10px;text-transform:uppercase}
+.summary .green .num{color:#4ade80}
+.summary .yellow .num{color:#facc15}
+.summary .red .num{color:#f87171}
+
+.filters{margin-bottom:14px;display:flex;gap:8px;align-items:center}
+.filters select{background:#1a1a30;border:1px solid #2a2a4a;color:#e0e0e0;padding:6px 12px;border-radius:4px;font-size:13px;cursor:pointer}
+.filters select:focus{border-color:#60a5fa;outline:none}
+.filters label{color:#888;font-size:12px}
+.filters .hint{color:#555;font-size:11px;margin-left:auto}
+
+table{width:100%;border-collapse:collapse;background:#111128;border-radius:8px;overflow:hidden}
+th{background:#1a1a30;color:#888;font-size:11px;text-transform:uppercase;letter-spacing:1px;padding:10px 12px;text-align:left;border-bottom:1px solid #2a2a4a}
+td{padding:10px 12px;border-bottom:1px solid #1a1a2a;font-size:13px;vertical-align:middle}
+
+tr{cursor:pointer;transition:background 0.1s}
+tr.ready td:first-child{border-left:3px solid #4ade80}
+tr.testing td:first-child{border-left:3px solid #facc15}
+tr.blocked td:first-child{border-left:3px solid #f87171}
+tr.untested td:first-child{border-left:3px solid #555}
+tr:hover{background:#1a1a30!important}
+tr.ready:hover{background:#065f4620!important}
+tr.testing:hover{background:#854d0e20!important}
+tr.blocked:hover{background:#7f1d1d20!important}
+
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}
+.tag.ready{background:#065f46;color:#4ade80}
+.tag.testing{background:#854d0e;color:#facc15}
+.tag.blocked{background:#7f1d1d;color:#f87171}
+.tag.untested{background:#2a2a4a;color:#888}
+
+.roi{font-weight:700;font-size:14px}
+.roi.high{color:#4ade80}
+.roi.mid{color:#facc15}
+.roi.low{color:#f87171}
+
+.payout{color:#60a5fa;font-size:12px}
+.blocker{color:#f87171;font-size:11px}
+.cost{color:#888;font-size:11px}
+
+/* ===== MODAL ===== */
+.modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:999;justify-content:center;align-items:center;backdrop-filter:blur(2px)}
+.modal{background:#0d0d1a;border:1px solid #2a2a4a;border-radius:10px;padding:24px;max-width:600px;width:90%;max-height:80vh;overflow-y:auto;box-shadow:0 10px 40px rgba(0,0,0,0.6)}
+.modal h2{font-size:16px;margin-bottom:4px}
+.modal .close{float:right;cursor:pointer;color:#555;font-size:20px;line-height:1}
+.modal .close:hover{color:#f87171}
+.modal .section{margin:12px 0;padding:10px 14px;background:#111128;border-radius:6px;border:1px solid #1e1e3a}
+.modal .section h3{font-size:11px;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.modal .row{display:flex;justify-content:space-between;padding:3px 0;font-size:12px}
+.modal .row .key{color:#888}
+.modal .row .val{color:#e0e0e0;font-weight:500}
+.modal .row .val.good{color:#4ade80}
+.modal .row .val.warn{color:#facc15}
+.modal .row .val.bad{color:#f87171}
+.modal .steps{margin:6px 0}
+.modal .step{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:12px;color:#aaa}
+.modal .step .num{background:#1a1a30;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#888;flex-shrink:0}
+.modal .action-btn{display:inline-block;background:#3b82f6;color:#fff;border:none;padding:8px 20px;border-radius:6px;font-size:13px;cursor:pointer;margin-top:8px;font-weight:600;text-decoration:none}
+.modal .action-btn:hover{background:#2563eb}
+.modal .action-btn.secondary{background:#1a1a30;color:#888}
+
+@media(max-width:700px){td,th{padding:6px 8px;font-size:12px}.modal{padding:16px;max-width:95%}}
+</style>
+</head>
+<body>
+
+<h1>🕸 АРБИТРАЖНЫЕ МАРШРУТЫ <span>v3</span></h1>
+<div class="sub">Александр · Крым · 2026-07-14 · Кликни строку → полная информация по ветке</div>
+
+<div class="summary">
+  <div class="green"><span class="num">2</span><span class="label">Готово</span></div>
+  <div class="yellow"><span class="num">3</span><span class="label">Тест</span></div>
+  <div class="red"><span class="num">4</span><span class="label">Блок</span></div>
+  <div><span class="num" style="color:#888">4</span><span class="label">Не тест.</span></div>
+  <div><span class="num" style="color:#60a5fa">13</span><span class="label">Всего</span></div>
+</div>
+
+<div class="filters">
+  <label for="filter">Статус:</label>
+  <select id="filter" onchange="filterTable()">
+    <option value="all">Все маршруты</option>
+    <option value="ready">✅ Готово</option>
+    <option value="testing">🔄 Тест</option>
+    <option value="blocked">⛔ Блок</option>
+    <option value="untested">⬜ Не тестировано</option>
+  </select>
+  <span class="hint">👇 кликни строку → детали ветки</span>
+</div>
+
+<table id="routes">
+<thead>
+<tr><th>Источник</th><th>Прокладка</th><th>Оффер</th><th>Платёжка</th><th>Вывод</th><th>ROI</th><th>Статус</th></tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+
+<!-- ===== MODAL ===== -->
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modalBody">
+    <span class="close" onclick="closeModal()">✕</span>
+    <h2 id="mTitle">—</h2>
+    <div style="color:#666;font-size:12px;margin-bottom:12px" id="mRoute">—</div>
+    <div id="mContent"></div>
+  </div>
+</div>
+
+<script>
+// ================================================================
+// DATA
+// ================================================================
+
+var routes = [
+  {id:"kadam-tinkoff", src:"Kadam", srcDetail:"CPC 8.5₽ · CPM 120₽ · RU", proxy:"Tilda / SEO микро-сайт", proxyDetail:"$0, 2-4ч", offer:"Тинькофф кредитка", offerDetail:"Admitad · CPA 1 500₽ · EPC 45₽", pay:"USDT TRC20 → KuCoin P2P", payDetail:"1-3% · мгновенно · Крым ✓", exit:"Т-Банк / СБП", exitDetail:"0% · мгновенно", roi:"244%", roiClass:"high", status:"ready", statusLabel:"✅ готово",
+   daily:"$2 075/день", conf:"0.2", budget:"$50", conv:"3%", approval:"65%",
+   steps:[
+     "Пополнить Kadam на $50",
+     "Создать кампанию → Тинькофф кредитка",
+     "Настроить UTM метки",
+     "Запустить A/B тест (3 креатива)",
+     "Мониторинг: 7 дней, kill если ROI < 30%"
+   ],
+   next:"Пополнить бюджет $50 и запустить кампанию",
+   blockers:[],
+   math:"Доход: 1 500₽ × 65% апрув = 975₽/лид · Расход: 8.5₽ × 33 клика = 280₽/лид · Профит: 695₽/лид"
+  },
+
+  {id:"richads-raid", src:"RichAds", srcDetail:"CPC 4.5₽ · CPM 80₽ · RU", proxy:"Tilda", proxyDetail:"$0, 2-4ч", offer:"Raid Shadow Legends", offerDetail:"Admitad · CPA 120₽ · Игры RU", pay:"USDT TRC20 → KuCoin P2P", payDetail:"1-3% · мгновенно · Крым ✓", exit:"Т-Банк / СБП", exitDetail:"0% · мгновенно", roi:"240%", roiClass:"high", status:"ready", statusLabel:"✅ готово",
+   daily:"$1 080/день", conf:"1.0", budget:"$30", conv:"—", approval:"—",
+   steps:[
+     "Пополнить RichAds на $30",
+     "Создать кампанию → Raid Shadow Legends",
+     "Настроить таргетинг: игры, 18-35",
+     "Запустить A/B тест (2 креатива)",
+     "Мониторинг: 7 дней"
+   ],
+   next:"Пополнить бюджет $30 и запустить кампанию",
+   blockers:[],
+   math:"Доход: 120₽ × 80% апрув = 96₽/лид · Расход: 4.5₽ × 22 клика = 99₽/лид · Профит: -3₽/лид (нужен CTR выше 4.5%)"
+  },
+
+  {id:"reddit-maxbounty", src:"Reddit", srcDetail:"$0 organic · РФ ✓", proxy:"GitHub Pages", proxyDetail:"$0, 1ч · Статика", offer:"MaxBounty / CityAds", offerDetail:"$10-100/lead · US · min $100", pay:"Payoneer", payDetail:"2% · 1-3 дня · РФ ✓", exit:"Т-Банк", exitDetail:"0% · мгновенно", roi:"—", roiClass:"mid", status:"testing", statusLabel:"🔄 тест",
+   daily:"—", conf:"—", budget:"$0", conv:"—", approval:"—",
+   steps:[
+     "Создать GH Pages лендинг (Hermes сделает)",
+     "Зарегистрироваться в MaxBounty",
+     "Написать посты в сабреддиты (r/beermoney, r/sidehustle)",
+     "Добавить UTM ссылки → лендинг",
+     "Собрать 7 дней статистики"
+   ],
+   next:"Создать лендинг и написать посты",
+   blockers:["Регистрация MaxBounty (ручной ввод)"],
+   math:"Organic · $0 трафика · 5 постов × 500 просмотров = 2 500 · CR 1% = 25 лидов × $10 = $250 (max)"
+  },
+
+  {id:"tg-bot-fincpa", src:"Telegram каналы", srcDetail:"$0 (свои) · РФ ✓", proxy:"Telegram Bot (Hermes)", proxyDetail:"$0, 1ч · aiogram3", offer:"FinCPA / MyLead", offerDetail:"$5-50/lead · Fintech RU · min $50", pay:"USDT TRC20 → KuCoin P2P", payDetail:"1-3% · мгновенно · Крым ✓", exit:"Т-Банк", exitDetail:"0% · мгновенно", roi:"—", roiClass:"mid", status:"testing", statusLabel:"🔄 тест",
+   daily:"—", conf:"—", budget:"$0", conv:"—", approval:"—",
+   steps:[
+     "Собрать TG бота (готов, Hermes сделает)",
+     "Зарегистрироваться в FinCPA/MyLead",
+     "Настроить ссылки в боте → CPA офферы",
+     "Разместить пост в своих каналах",
+     "Собрать 7 дней статистики"
+   ],
+   next:"Зарегистрироваться в CPA сети",
+   blockers:["Регистрация FinCPA/MyLead (ручной ввод)"],
+   math:"Organic · 1 000 подписчиков × 10% CTR = 100 кликов · CR 2% = 2 лида × $20 = $40/пост"
+  },
+
+  {id:"seo-travelpayouts", src:"SEO-сайты", srcDetail:"$0 (время) · РФ ✓", proxy:"SEO микро-сайт", proxyDetail:"$0, 2-4ч · HTML", offer:"Travelpayouts", offerDetail:"3-12% · Отели/перелёты · min $20", pay:"Payoneer", payDetail:"2% · 1-3 дня · РФ ✓", exit:"Т-Банк", exitDetail:"0% · мгновенно", roi:"—", roiClass:"mid", status:"testing", statusLabel:"🔄 тест",
+   daily:"—", conf:"—", budget:"$0", conv:"—", approval:"—",
+   steps:[
+     "Создать микро-сайт (Hotels Crimea)",
+     "Добавить партнёрские ссылки Travelpayouts",
+     "Написать 5 SEO-статей",
+     "Индексирование в Яндекс (2-4 недели)",
+     "Собирать органический трафик"
+   ],
+   next:"Создать сайт + контент",
+   blockers:["Нужен контент (Hermes может написать)"],
+   math:"Organic SEO · 100 посетителей/день × 3% CR = 3 брони × $5 комиссия = $15/день (через 1-3 мес)"
+  },
+
+  // ===== BLOCKED =====
+  {id:"tiktok-cpagrip", src:"TikTok", srcDetail:"$0 organic ⚠️VPN", proxy:"Carrd / Linktree", proxyDetail:"$0, 30мин · Мультиссылка", offer:"CPAGrip (Content Lock)", offerDetail:"$1-10/lead · Gaming · min $50", pay:"USDT TRC20 → KuCoin P2P", payDetail:"1-3% · мгновенно · Крым ✓", exit:"Т-Банк", exitDetail:"0% · мгновенно", roi:"—", roiClass:"mid", status:"blocked", statusLabel:"⛔ блок",
+   daily:"$50-200 (прогноз)", conf:"—", budget:"$0", conv:"5%", approval:"—",
+   steps:[
+     "Зарегистрироваться в CPAGrip",
+     "Создать Content Locker",
+     "Настроить видео-пайплайн (Hermes сделает скрипт)",
+     "Загрузить 5 коротких видео",
+     "Добавить ссылку в био → Carrd → Content Locker"
+   ],
+   next:"Зарегистрироваться в CPAGrip",
+   blockers:["Регистрация CPAGrip (ручной ввод)","Нужен TikTok аккаунт"],
+   math:"25K views/день × 5% CTR × 30% completion × $2 CPL = $750/день (реалистично $50-200)"
+  },
+
+  {id:"youtube-cpagrip", src:"YouTube Shorts", srcDetail:"$0 organic · РФ ✓", proxy:"Carrd / Linktree", proxyDetail:"$0, 30мин · Мультиссылка", offer:"CPAGrip (Content Lock)", offerDetail:"$1-10/lead · Gaming · min $50", pay:"USDT TRC20 → KuCoin P2P", payDetail:"1-3% · мгновенно · Крым ✓", exit:"Т-Банк", exitDetail:"0% · мгновенно", roi:"—", roiClass:"mid", status:"blocked", statusLabel:"⛔ блок",
+   daily:"$30-100 (прогноз)", conf:"—", budget:"$0", conv:"—", approval:"—",
+   steps:[
+     "Зарегистрироваться в CPAGrip",
+     "Создать Content Locker",
+     "Создать YouTube канал",
+     "Генерировать Shorts (скрипт)",
+     "Ссылка в описании → Carrd → Locker"
+   ],
+   next:"Зарегистрироваться в CPAGrip",
+   blockers:["Регистрация CPAGrip (ручной ввод)","Нужен YouTube аккаунт"],
+   math:"Аналогично TikTok, но YouTube РФ без VPN"
+  },
+
+  {id:"facebook-tinkoff", src:"Facebook Ads", srcDetail:"CPC 18₽ · ⚠️VPN", proxy:"Carrd", proxyDetail:"$0, 30мин", offer:"Тинькофф кредитка (Admitad)", offerDetail:"Admitad · CPA 1 500₽ · EPC 45₽", pay:"USDT TRC20 → KuCoin P2P", payDetail:"1-3% · мгновенно · Крым ✓", exit:"Т-Банк", exitDetail:"0% · мгновенно", roi:"62.5%", roiClass:"mid", status:"blocked", statusLabel:"⛔ блок",
+   daily:"$1 125/день", conf:"0.2", budget:"$100", conv:"—", approval:"—",
+   steps:[
+     "Создать FB Business аккаунт",
+     "Пополнить бюджет $100",
+     "Настроить рекламу → Carrd → Тинькофф",
+     "Запустить A/B тест",
+     "Мониторинг"
+   ],
+   next:"Создать FB аккаунт + бюджет",
+   blockers:["Нет FB Business аккаунта","Нужен VPN для FB Ads","Бюджет $100"],
+   math:"CPC 18₽ × 83 клика = 1 500₽ · CR 1% = 0.83 лида/83 клика · 1 лид = 1 500₽ - 1 500₽ = 0 (нужен CR > 1.2%)"
+  },
+
+  {id:"tg-miniapp", src:"Telegram Ads", srcDetail:"CPC $0.02-0.10", proxy:"TG Mini App", proxyDetail:"$0, нужно изучить API", offer:"MyLead / FinCPA", offerDetail:"$1-50/lead · Multi", pay:"USDT TRC20 → KuCoin P2P", payDetail:"1-3% · мгновенно · Крым ✓", exit:"Т-Банк", exitDetail:"0% · мгновенно", roi:"—", roiClass:"mid", status:"blocked", statusLabel:"⛔ блок",
+   daily:"—", conf:"—", budget:"$50", conv:"—", approval:"—",
+   steps:[
+     "Изучить Telegram Ads API",
+     "Создать TG Mini App",
+     "Зарегистрироваться в MyLead",
+     "Настроить рекламную кампанию",
+     "Запустить"
+   ],
+   next:"Изучить TG Ads API и зарегистрироваться",
+   blockers:["TG Ads доступ (ручной ввод)","Нужно изучить Mini Apps API"],
+   math:"—"
+  },
+
+  // ===== UNTESTED =====
+  {id:"vk-clickdealer", src:"VK Ads", srcDetail:"CPC $0.05-0.50 · РФ ✓", proxy:"Tilda", proxyDetail:"$0-15/мес", offer:"ClickDealer", offerDetail:"$20-500/lead · Gambling/Nutra · min $100", pay:"USDT TRC20 → KuCoin P2P", payDetail:"1-3% · мгновенно · Крым ✓", exit:"Т-Банк", exitDetail:"0% · мгновенно", roi:"—", roiClass:"low", status:"untested", statusLabel:"⬜",
+   daily:"—", conf:"—", budget:"$100", conv:"—", approval:"—",
+   steps:["Изучить офферы ClickDealer","Настроить VK Ads","Запустить A/B тест"],
+   next:"Изучить связку",
+   blockers:["Регистрация ClickDealer","Бюджет $100"],
+   math:"—"
+  },
+
+  {id:"pinterest-cpagrip", src:"Pinterest", srcDetail:"$0 organic · РФ ✓", proxy:"Carrd", proxyDetail:"$0, 30мин", offer:"CPAGrip / MyLead", offerDetail:"$1-20/lead", pay:"USDT TRC20 → KuCoin P2P", payDetail:"1-3% · мгновенно · Крым ✓", exit:"Т-Банк", exitDetail:"0% · мгновенно", roi:"—", roiClass:"low", status:"untested", statusLabel:"⬜",
+   daily:"—", conf:"—", budget:"$0", conv:"—", approval:"—",
+   steps:["Создать Pinterest аккаунт","Пиновать ссылки → Carrd → CPA","Набрать аудиторию"],
+   next:"Создать аккаунт",
+   blockers:["Регистрация CPA"],
+   math:"—"
+  },
+
+  {id:"kadam-moneyman", src:"Kadam", srcDetail:"CPC 8.5₽ · RU", proxy:"SEO микро-сайт", proxyDetail:"$0, 2-4ч", offer:"MoneyMan (CityAds)", offerDetail:"CityAds · CPA 950₽ · Finance RU", pay:"USDT TRC20 → KuCoin P2P", payDetail:"1-3% · мгновенно · Крым ✓", exit:"Т-Банк", exitDetail:"0% · мгновенно", roi:"78%", roiClass:"mid", status:"untested", statusLabel:"⬜",
+   daily:"$665/день", conf:"0.16", budget:"$50", conv:"—", approval:"—",
+   steps:["Пополнить Kadam","Создать кампанию → CityAds MoneyMan","Мониторинг"],
+   next:"Пополнить бюджет $50",
+   blockers:["Нужна регистрация CityAds"],
+   math:"CPA 950₽ · CPC 8.5₽ · ROI 78%"
+  },
+
+  {id:"kadam-insure", src:"Kadam", srcDetail:"CPC 8.5₽ · RU", proxy:"SEO микро-сайт", proxyDetail:"$0, 2-4ч", offer:"Страховка авто (CityAds)", offerDetail:"CityAds · CPA 650₽ · Insurance RU", pay:"USDT TRC20 → KuCoin P2P", payDetail:"1-3% · мгновенно · Крым ✓", exit:"Т-Банк", exitDetail:"0% · мгновенно", roi:"82%", roiClass:"mid", status:"untested", statusLabel:"⬜",
+   daily:"$697/день", conf:"0.24", budget:"$50", conv:"—", approval:"—",
+   steps:["Пополнить Kadam","Создать кампанию → CityAds Страховка","Мониторинг"],
+   next:"Пополнить бюджет $50",
+   blockers:["Нужна регистрация CityAds"],
+   math:"CPA 650₽ · CPC 8.5₽ · ROI 82%"
+  }
+];
+
+// ================================================================
+// RENDER
+// ================================================================
+
+function renderTable(list) {
+  var tbody = document.querySelector('#routes tbody');
+  tbody.innerHTML = '';
+  list.forEach(function(r){
+    var tr = document.createElement('tr');
+    tr.className = r.status;
+    tr.onclick = function(){ openModal(r); };
+    tr.innerHTML =
+      '<td>'+r.src+'<br><span class="payout">'+r.srcDetail+'</span></td>'+
+      '<td>'+r.proxy+'<br><span class="payout">'+r.proxyDetail+'</span></td>'+
+      '<td>'+r.offer+'<br><span class="payout">'+r.offerDetail+'</span></td>'+
+      '<td>'+r.pay+'<br><span class="payout">'+r.payDetail+'</span></td>'+
+      '<td>'+r.exit+'<br><span class="payout">'+r.exitDetail+'</span></td>'+
+      '<td><span class="roi '+r.roiClass+'">'+r.roi+'</span></td>'+
+      '<td><span class="tag '+r.status+'">'+r.statusLabel+'</span></td>';
+    tbody.appendChild(tr);
+  });
+}
+renderTable(routes);
+
+// ================================================================
+// FILTER
+// ================================================================
+
+function filterTable() {
+  var val = document.getElementById('filter').value;
+  if(val === 'all') { renderTable(routes); return; }
+  var filtered = routes.filter(function(r){ return r.status === val; });
+  renderTable(filtered);
+}
+
+// ================================================================
+// MODAL
+// ================================================================
+
+function openModal(r) {
+  document.getElementById('mTitle').textContent = r.src + ' → ' + r.offer;
+  document.getElementById('mRoute').textContent = r.proxy + ' → ' + r.pay + ' → ' + r.exit;
+
+  var html = '';
+
+  // Status + ROI
+  html += '<div class="section"><h3>Статус</h3>';
+  html += '<div class="row"><span class="key">Статус</span><span class="val '+r.status+'">'+r.statusLabel+'</span></div>';
+  html += '<div class="row"><span class="key">ROI</span><span class="val '+r.roiClass+'">'+r.roi+'</span></div>';
+  html += '<div class="row"><span class="key">Прогноз/день</span><span class="val good">'+r.daily+'</span></div>';
+  html += '<div class="row"><span class="key">Бюджет</span><span class="val">'+r.budget+'</span></div>';
+  if(r.conf) html += '<div class="row"><span class="key">Confidence</span><span class="val">'+r.conf+'</span></div>';
+  if(r.math) html += '<div class="row"><span class="key">Математика</span><span class="val" style="font-size:11px;color:#888;text-align:right;max-width:350px">'+r.math+'</span></div>';
+  html += '</div>';
+
+  // Steps
+  html += '<div class="section"><h3>Пошаговый план</h3><div class="steps">';
+  r.steps.forEach(function(s,i){
+    html += '<div class="step"><span class="num">'+(i+1)+'</span>'+s+'</div>';
+  });
+  html += '</div></div>';
+
+  // Blockers
+  if(r.blockers && r.blockers.length) {
+    html += '<div class="section" style="border-color:#7f1d1d"><h3 style="color:#f87171">⛔ Блокеры</h3>';
+    r.blockers.forEach(function(b){
+      html += '<div class="row"><span class="key" style="color:#f87171">✕</span><span class="val" style="color:#f87171">'+b+'</span></div>';
+    });
+    html += '</div>';
+  }
+
+  // Next action
+  html += '<div style="text-align:center;margin-top:14px">';
+  html += '<div class="action-btn" onclick="closeModal()">🎯 '+r.next+'</div>';
+  html += '</div>';
+
+  document.getElementById('mContent').innerHTML = html;
+  document.getElementById('modal').style.display = 'flex';
+}
+
+function closeModal() {
+  document.getElementById('modal').style.display = 'none';
+}
+
+// ESC key
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape') closeModal();
+});
+</script>
+
+</body>
+</html>

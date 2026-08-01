@@ -18,6 +18,12 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 **Save plans to:** `docs/superpowers/plans/YYYY-MM-DD-<feature-name>.md`
 - (User preferences for plan location override this default)
 
+## Prerequisite: Grill Me (for vague specs)
+
+If the spec/requirements are vague or multi-part, **run `grill-me` first** — 5 questions (goal, constraint, scope, evidence, priority). Answers become the spec. Do NOT skip this and write a plan against guesses.
+
+If the spec is already clear and single-file, skip grill-me and proceed.
+
 ## Scope Check
 
 If the spec covers multiple independent subsystems, it should have been broken into sub-project specs during brainstorming. If it wasn't, suggest breaking this into separate plans — one per subsystem. Each plan should produce working, testable software on its own.
@@ -33,9 +39,9 @@ Before defining tasks, map out which files will be created or modified and what 
 
 This structure informs the task decomposition. Each task should produce self-contained changes that make sense independently.
 
-## Task Right-Sizing
+## Task Right-Sizing (Tracer Bullet)
 
-A task is the smallest unit that carries its own test cycle and is worth a fresh reviewer's gate. When drawing task boundaries: fold setup, configuration, scaffolding, and documentation steps into the task whose deliverable needs them; split only where a reviewer could meaningfully reject one task while approving its neighbor. Each task ends with an independently testable deliverable.
+A task is the smallest unit that carries its own test cycle and is worth a fresh reviewer's gate. **Tracer Bullet principle: 1 task ≤ 1 context window.** If a task won't fit in one agent context, split it. When drawing task boundaries: fold setup, configuration, scaffolding, and documentation steps into the task whose deliverable needs them; split only where a reviewer could meaningfully reject one task while approving its neighbor. Each task ends with an independently testable deliverable.
 
 ## Bite-Sized Task Granularity
 

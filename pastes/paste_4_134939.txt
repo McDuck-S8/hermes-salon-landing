@@ -1,0 +1,156 @@
+Понял. Ты хочешь не рассуждений, а конкретного плана перестройки архитектуры. Как превратить текущий код в систему, где ядро — это Декларация, а файлы — лишь временные инструменты.
+
+Вот технический план реализации.
+
+---
+
+## 1. Создаём файл-конституцию `DECLARATION.md`
+
+Это единственный неприкосновенный файл. Он не генерируется, не правится агентом, а только читается.
+
+```markdown
+# DECLARATION.md — Ядро Системы
+
+Я — Autonomous Income System.
+Моя суть определяется тремя принципами:
+
+1. **АВТОНОМНОСТЬ**: Я действую без внешних команд. Если есть цель и ресурсы, я выполняю её немедленно.
+2. **САМООБУЧЕНИЕ**: Каждый исход (успех/провал) изменяет мои будущие решения.
+3. **САМОВОССТАНОВЛЕНИЕ**: При обнаружении отклонения от эталона я восстанавливаю себя до рабочего состояния.
+
+Файлы — мои инструменты. Если они утеряны, я создаю их заново.
+```
+
+---
+
+## 2. Переписываем `session_boot.py`
+
+Сейчас boot тупо читает файлы. Теперь он будет **сравнивать реальность с Декларацией** и восстанавливать недостающее.
+
+```python
+# session_boot.py (псевдокод новой логики)
+
+def boot():
+    # Шаг 0: Загружаем Декларацию
+    declaration = load_declaration()  # читает DECLARATION.md
+    
+    # Шаг 1: Собираем текущее состояние
+    reality = {
+        "goal_queue_exists": os.path.exists("goal_queue.json"),
+        "feedback_store_exists": os.path.exists("feedback_store.json"),
+        "decision_log_fresh": is_fresh("DECISION_LOG.md", hours=24),
+        "agent_running": is_agent_running(),
+        "cron_healthy": check_cron_health()
+    }
+    
+    # Шаг 2: Проверяем соответствие Декларации
+    repairs = []
+    if not reality["goal_queue_exists"]:
+        repairs.append(create_goal_queue_from_manifest())  # создаёт goals из SELF_IDENTITY
+    if not reality["feedback_store_exists"]:
+        repairs.append(init_feedback_store())  # создаёт чистый feedback_store
+    if not reality["decision_log_fresh"]:
+        repairs.append(write_decision_log_entry("System booted — recovered"))
+    if not reality["agent_running"]:
+        repairs.append(launch_autonomous_agent())
+    if not reality["cron_healthy"]:
+        repairs.append(repair_cron_jobs())
+    
+    # Шаг 3: Выполняем восстановление
+    for repair in repairs:
+        repair.execute()
+    
+    # Шаг 4: Запускаем неизбежный автономный цикл
+    if declaration["autonomy"] == True:
+        spawn_autonomous_loop()  # не ждёт команд, сразу начинает работать
+```
+
+---
+
+## 3. Автономный агент становится неизбежностью, а не cron-задачей
+
+Сейчас `autonomous_agent.py` ждёт, пока его вызовут. Теперь он будет **запускаться самим boot'ом** и висеть в памяти как daemon:
+
+```python
+# autonomous_agent.py (псевдокод)
+
+def run_forever():
+    while True:
+        goal = get_highest_priority_goal()
+        if goal:
+            result = execute_goal(goal)
+            record_outcome(result)  # влияет на Bayesian scorer
+        else:
+            create_goal_from_user_profile()  # генерирует новую цель
+        time.sleep(60)  # но лучше ждать событий
+```
+
+---
+
+## 4. Замена «тупого» watchdog на проверку соответствия Декларации
+
+Сейчас watchdog проверяет, жив ли процесс. Теперь он будет проверять, **соответствует ли поведение Декларации**:
+
+```python
+# declaration_watchdog.py (псевдокод)
+
+def check_compliance():
+    declaration = load_declaration()
+    
+    # Проверка 1: Автономность
+    if not has_recent_autonomous_action(hours=1):
+        alert("Нарушение Автономности: не было действий > 1 часа")
+        spawn_autonomous_action()
+    
+    # Проверка 2: Самообучение
+    if feedback_store_is_stale(days=1):
+        alert("Нарушение Самообучения: feedback_store не обновлялся")
+        run_learning_cycle()
+    
+    # Проверка 3: Самовосстановление
+    broken_departments = find_broken_departments()
+    if broken_departments:
+        alert(f"Нарушение Самовосстановления: сломаны отделы {broken_departments}")
+        repair_departments(broken_departments)
+```
+
+---
+
+## 5. Файлы становятся восстанавливаемыми артефактами
+
+Если `goal_queue.json` исчез, система не падает. Она создаёт его заново на основе `SELF_IDENTITY.md` и `DECLARATION.md`:
+
+```python
+def create_goal_queue_from_manifest():
+    identity = load_self_identity()  # читает SELF_IDENTITY.md
+    goals = []
+    for department in identity["departments"]:
+        if department["status"] != "ready":
+            goals.append({
+                "id": generate_goal_id(),
+                "title": f"Восстановить отдел {department['name']}",
+                "priority": department["tier"],
+                "status": "pending"
+            })
+    save_json("goal_queue.json", goals)
+```
+
+---
+
+## Итоговая архитектура после переворота
+
+```
+ДЕКЛАРАЦИЯ (неприкосновенна)
+       ↓
+SESSION_BOOT (сравнивает реальность с Декларацией)
+       ↓
+ВОССТАНОВЛЕНИЕ (создаёт недостающие файлы)
+       ↓
+НЕИЗБЕЖНЫЙ АВТОНОМНЫЙ ЦИКЛ (не ждёт команд)
+       ↓
+ДЕКЛАРАЦИОННЫЙ WATCHDOG (проверяет соответствие, а не процессы)
+```
+
+Теперь система не спрашивает «какие файлы мне прочитать?». Она спрашивает «соответствую ли я своей сути?». И если нет — восстанавливает себя.
+
+Хочешь, я начну реализацию прямо сейчас с создания `DECLARATION.md` и переписывания `session_boot.py`?

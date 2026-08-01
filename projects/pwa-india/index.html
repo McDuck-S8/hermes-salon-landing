@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1win Cricket - Live Betting India</title>
+    <meta name="description" content="Bet on live cricket matches with 1win. Best odds for India vs Australia and more.">
+    
+    <!-- PWA Manifest as JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "1win Cricket India",
+      "short_name": "1winCricket",
+      "start_url": "/",
+      "display": "standalone",
+      "background_color": "#0f0f23",
+      "theme_color": "#00ff88",
+      "icons": [
+        {
+          "src": "https://via.placeholder.com/192",
+          "sizes": "192x192",
+          "type": "image/png"
+        },
+        {
+          "src": "https://via.placeholder.com/512",
+          "sizes": "512x512",
+          "type": "image/png"
+        }
+      ],
+      "shortcuts": [
+        {
+          "name": "Live Scores",
+          "url": "#live"
+        },
+        {
+          "name": "Upcoming Matches",
+          "url": "#upcoming"
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #0f0f23;
+            --accent-color: #00ff88;
+            --text-color: #ffffff;
+            --card-bg: #1a1a3a;
+            --secondary-text: #b0b0c0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(180deg, #16163d 0%, var(--bg-color) 100%);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            color: var(--secondary-text);
+            font-size: 1.1rem;
+        }
+
+        .cta-button {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 20px auto;
+            padding: 15px 30px;
+            background-color: var(--accent-color);
+            color: #000;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+        }
+
+        .cta-button:active {
+            transform: scale(0.95);
+        }
+
+        .section-title {
+            color: var(--accent-color);
+            font-size: 1.3rem;
+            margin: 30px 0 15px;
+        }
+
+        .match-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--accent-color);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .match-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+        }
+
+        .team {
+            flex: 1;
+        }
+
+        .team-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .score {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin: 5px 0;
+        }
+
+        .vs {
+            font-size: 1rem;
+            color: var(--secondary-text);
+            padding: 0 15px;
+        }
+
+        #install-banner {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--accent-color);
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
+        }
+
+        #install-banner button {
+            background: var(--accent-color);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .footer {
+            margin-top: auto;
+            padding: 30px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--secondary-text);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">1WIN CRICKET</div>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h1>India's #1 Betting App</h1>
+            <p>Real-time odds, instant payouts, and exclusive bonuses.</p>
+            <a href="https://1winpartners.in" class="cta-button">JOIN NOW</a>
+        </div>
+
+        <h2 class="section-title">LIVE MATCHES</h2>
+        <div class="match-card">
+            <div class="match-header">
+                <span>T20 World Cup - LIVE</span>
+                <span>● LIVE</span>
+            </div>
+            <div class="score-board">
+                <div class="team">
+                    <div class="team-name">INDIA</div>
+                    <div class="score">184/4</div>
+                    <div style="font-size: 0.8rem">18.2 ov</div>
+                </div>
+                <div class="vs">VS</div>
+                <div class="team">
+                    <div class="team-name">AUSTRALIA</div>
+                    <div class="score">Yet to bat</div>
+                    <div style="font-size: 0.8rem">Target: 185</div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">UPCOMING</h2>
+        <div class="match-card">
+            <div class="match-header">
+                <span>IPL 2024</span>
+                <span>Tomorrow, 19:30</span>
+            </div>
+            <div class="score-board">
+                <div class="team">
+                    <div class="team-name">MI</div>
+                </div>
+                <div class="vs">VS</div>
+                <div class="team">
+                    <div class="team-name">CSK</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="install-banner">
+        <span>Install 1win App for better experience!</span>
+        <button id="install-btn">Install</button>
+    </div>
+
+    <div class="footer">
+        &copy; 2023 1win Cricket India. 18+ Gamble Responsibly.
+    </div>
+
+    <script>
+        let deferredPrompt;
+        const installBanner = document.getElementById('install-banner');
+        const installBtn = document.getElementById('install-btn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBanner.style.display = 'flex';
+        });
+
+        installBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    installBanner.style.display = 'none';
+                }
+                deferredPrompt = null;
+            }
+        });
+
+        const swCode = `
+            const CACHE_NAME = '1win-cricket-v1';
+            const ASSETS = ['/', '/index.html'];
+
+            self.addEventListener('install', (event) => {
+                event.waitUntil(
+                    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
+                );
+            });
+
+            self.addEventListener('fetch', (event) => {
+                event.respondWith(
+                    caches.match(event.request).then((response) => {
+                        return response || fetch(event.request);
+                    })
+                );
+            });
+
+            self.addEventListener('push', (event) => {
+                const options = {
+                    body: 'New match started! Check live odds on 1win.',
+                    icon: 'https://via.placeholder.com/192',
+                    badge: 'https://via.placeholder.com/192'
+                };
+                event.waitUntil(
+                    self.registration.showNotification('1win Cricket Update', options)
+                );
+            });
+        `;
+
+        if ('serviceWorker' in navigator) {
+            const blob = new Blob([swCode], { type: 'text/javascript' });
+            const swUrl = URL.createObjectURL(blob);
+            navigator.serviceWorker.register(swUrl).then(() => {
+                console.log('Service Worker Registered');
+            }).catch(err => {
+                console.error('SW Registration failed', err);
+            });
+        }
+    </script>
+</body>
+</html>

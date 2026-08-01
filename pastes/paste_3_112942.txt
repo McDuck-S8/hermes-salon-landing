@@ -1,0 +1,9 @@
+curl --request POST \
+  --url 'https://api.evermind.ai/api/v1/memories/agent' \
+  --header 'Authorization: Bearer <api_key>' \
+  --header 'Content-Type: application/json' \
+  --data '{}'     curl --request POST \
+  --url 'https://api.evermind.ai/api/v1/memories/get' \
+  --header 'Authorization: Bearer <api_key>' \
+  --header 'Content-Type: application/json' \
+  --data '{}'

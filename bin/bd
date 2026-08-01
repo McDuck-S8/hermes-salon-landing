@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# bd wrapper for MSYS2 — calls the global npm bd directly
+node "D:/npm-global/node_modules/@beads/bd/bin/bd.js" "$@"

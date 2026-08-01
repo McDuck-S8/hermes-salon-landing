@@ -241,6 +241,13 @@ def detect_script_anomalies() -> List[Dict]:
 # ── Main ─────────────────────────────────────────────────────────────────────
 
 def main():
+    # Heartbeat: module alive
+    try:
+        from chain_heartbeat import beat
+        beat("anomaly_detector")
+    except ImportError:
+        pass
+
     print(f"[RedAlert] {datetime.now().isoformat()} — scanning")
 
     all_alerts = []

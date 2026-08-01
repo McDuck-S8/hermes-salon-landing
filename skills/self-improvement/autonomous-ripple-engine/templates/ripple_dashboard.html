@@ -1,0 +1,340 @@
+# Ripple Dashboard HTML Template
+
+Base template structure for `generate_html_visualization()` in `ripple_engine.py`.
+
+This is a **reference** — the actual HTML is built programmatically in `_build_html()` method to inject dynamic data. This template shows the structure and static components.
+
+## Template Structure
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ripple Engine — Daily Map | {{DATE}}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== DESIGN TOKENS ===== */
+        :root {
+            --bg: #0A0E17;
+            --bg-secondary: #111827;
+            --bg-tertiary: #1F2937;
+            --text: #F8FAFC;
+            --text-dim: #94A3B8;
+            --text-muted: #64748B;
+            --border: #1E293B;
+            --accent-cyan: #06B6D4;
+            --accent-green: #10B981;
+            --accent-amber: #F59E0B;
+            --accent-purple: #8B5CF6;
+            --accent-red: #EF4444;
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.5);
+            --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
+            --font-display: 'Space Grotesk', sans-serif;
+        }
+
+        /* ===== RESET & BASE ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--font-mono);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Animated background */
+        body::before {
+            content: "";
+            position: fixed; inset: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 20% 0%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 80% 100%, rgba(6, 182, 212, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 30% at 50% 50%, rgba(16, 185, 129, 0.04) 0%, transparent 60%);
+            pointer-events: none; z-index: -1;
+        }
+
+        .app {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            display: flex; justify-content: space-between; align-items: flex-end;
+            margin-bottom: 48px; padding-bottom: 32px;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+        }
+        .header::after {
+            content: ""; position: absolute; bottom: -1px; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), var(--accent-purple), transparent);
+        }
+        .header-left h1 {
+            font-family: var(--font-display);
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 700; letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--text) 0%, var(--accent-cyan) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .header-left .subtitle {
+            color: var(--text-dim); font-size: 0.875rem; margin-top: 4px; font-family: var(--font-mono);
+        }
+        .header-right { display: flex; gap: 16px; align-items: center; }
+        .stat-pill {
+            background: var(--bg-tertiary); border: 1px solid var(--border);
+            padding: 8px 16px; border-radius: var(--radius-md); font-size: 0.75rem;
+        }
+        .stat-pill strong { color: var(--accent-cyan); }
+
+        /* ===== SUMMARY GRID ===== */
+        .summary-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px; margin-bottom: 48px;
+        }
+        .summary-card {
+            background: var(--bg-secondary); border: 1px solid var(--border);
+            border-radius: var(--radius-lg); padding: 24px; position: relative; overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+        }
+        .summary-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); border-color: var(--accent-cyan); }
+        .summary-card::before {
+            content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: var(--accent-color, var(--accent-cyan));
+        }
+        .summary-card:nth-child(1) { --accent-color: var(--accent-cyan); }
+        .summary-card:nth-child(2) { --accent-color: var(--accent-green); }
+        .summary-card:nth-child(3) { --accent-color: var(--accent-amber); }
+        .summary-card:nth-child(4) { --accent-color: var(--accent-purple); }
+        .summary-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+        .summary-value { font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 700; margin-top: 4px; }
+        .summary-value.actionable { color: var(--accent-green); }
+        .summary-value.high { color: var(--accent-purple); }
+
+        /* ===== SECTIONS ===== */
+        .section { margin-bottom: 48px; }
+        .section-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 24px; }
+        .section-title { font-family: var(--font-display); font-size: clamp(1.125rem, 2.5vw, 1.5rem); font-weight: 600; }
+        .section-count { color: var(--text-muted); font-size: 0.75rem; }
+
+        /* ===== GRIDS ===== */
+        .stones-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 24px; }
+        .circles-grid, .keys-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+
+        /* ===== STONE CARDS ===== */
+        .stone-card {
+            padding: 24px; display: flex; flex-direction: column;
+            transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+            position: relative; overflow: hidden;
+        }
+        .stone-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, currentColor, transparent); opacity: 0.3; }
+        .stone-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg), var(--glow, none); border-color: var(--border-focus); }
+        .stone-large { --glow: 0 0 40px rgba(139, 92, 246, 0.25); }
+        .stone-medium { --glow: 0 0 32px rgba(14, 165, 233, 0.2); }
+        .stone-small { --glow: 0 0 20px rgba(100, 116, 139, 0.15); }
+
+        .stone-header { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+        .tier-badge {
+            font-size: 0.75rem; font-weight: 600; padding: 2px 8px; border-radius: var(--radius-sm);
+            text-transform: uppercase; letter-spacing: 0.05em;
+        }
+        .tier-critical { background: rgba(220, 38, 38, 0.2); color: var(--accent-red); border: 1px solid var(--accent-red); }
+        .tier-high { background: rgba(139, 92, 246, 0.2); color: var(--accent-purple); border: 1px solid var(--accent-purple); }
+        .tier-medium { background: rgba(14, 165, 233, 0.2); color: var(--accent-cyan); border: 1px solid var(--accent-cyan); }
+        .tier-low { background: rgba(100, 116, 139, 0.2); color: var(--text-dim); border: 1px solid var(--border); }
+
+        .source-tag { font-size: 0.75rem; color: var(--text-dim); background: var(--bg-tertiary); padding: 2px 8px; border-radius: var(--radius-sm); font-family: var(--font-mono); }
+        .badge { font-size: 0.75rem; font-weight: 600; padding: 2px 8px; border-radius: var(--radius-sm); }
+        .badge.actionable { background: rgba(16, 185, 129, 0.2); color: var(--accent-green); border: 1px solid var(--accent-green); }
+
+        .stone-title { font-family: var(--font-display); font-size: clamp(1rem, 2vw, 1.25rem); font-weight: 600; line-height: 1.3; margin-bottom: 8px; color: var(--text); }
+        .stone-content { color: var(--text-dim); font-size: 0.875rem; line-height: 1.55; margin-bottom: 16px; flex: 1; }
+
+        .stone-meta { margin-bottom: 16px; }
+        .metric-row { display: flex; gap: 24px; }
+        .metric { display: flex; flex-direction: column; gap: 2px; }
+        .metric-value { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--accent-cyan); }
+        .metric-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+
+        .stone-tags { margin-bottom: 16px; }
+        .tag-group { margin-bottom: 8px; }
+        .tag-label { font-size: 0.75rem; color: var(--text-muted); margin-right: 8px; text-transform: uppercase; letter-spacing: 0.03em; }
+        .chip { display: inline-block; font-size: 0.75rem; padding: 3px 10px; border-radius: 9999px; margin: 2px 4px 2px 0; font-family: var(--font-mono); border: 1px solid transparent; }
+        .chip { background: var(--bg-tertiary); color: var(--text-dim); border-color: var(--border); }
+        .key-chip { background: rgba(139, 92, 246, 0.15); color: var(--accent-purple); border-color: rgba(139, 92, 246, 0.3); }
+        .conflict-chip { background: rgba(220, 38, 38, 0.15); color: var(--accent-red); border-color: rgba(220, 38, 38, 0.3); }
+
+        .stone-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 16px; border-top: 1px solid var(--border); margin-top: auto; }
+        .roi-estimate { font-size: 0.75rem; color: var(--text-dim); font-style: italic; }
+        .source-link { font-size: 0.75rem; color: var(--accent-cyan); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+        .source-link:hover { color: var(--accent-green); }
+
+        /* ===== CIRCLE CARDS ===== */
+        .circle-card { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; transition: all 0.2s; }
+        .circle-card:hover { border-color: var(--accent-cyan); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .circle-name { font-family: var(--font-display); font-weight: 600; margin-bottom: 4px; }
+        .circle-stats { display: flex; gap: 16px; font-size: 0.75rem; color: var(--text-dim); margin-bottom: 12px; }
+        .circle-members { display: flex; flex-wrap: wrap; gap: 4px; }
+        .circle-member { font-size: 0.75rem; background: var(--bg-tertiary); padding: 2px 8px; border-radius: var(--radius-sm); color: var(--text-dim); }
+
+        /* ===== KEY CARDS ===== */
+        .key-card { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; transition: all 0.2s; }
+        .key-card:hover { border-color: var(--accent-green); transform: translateY(-2px); box-shadow: var(--shadow-md), 0 0 24px rgba(16, 185, 129, 0.15); }
+        .key-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+        .key-name { font-family: var(--font-display); font-weight: 600; font-size: 1.125rem; }
+        .key-strength { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--accent-green); }
+        .key-metrics { display: flex; gap: 16px; font-size: 0.75rem; color: var(--text-dim); margin-bottom: 12px; }
+        .key-aspects { margin-bottom: 12px; }
+        .key-reason { font-size: 0.75rem; color: var(--text-dim); line-height: 1.5; }
+
+        /* ===== EMPTY STATE ===== */
+        .empty-state { text-align: center; padding: 48px; color: var(--text-muted); }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .stone-card, .circle-card, .key-card, .summary-card { animation: fadeInUp 0.5s ease-out backwards; }
+        .stone-card:nth-child(1) { animation-delay: 0ms; }
+        .stone-card:nth-child(2) { animation-delay: 50ms; }
+        .stone-card:nth-child(3) { animation-delay: 100ms; }
+        .stone-card:nth-child(4) { animation-delay: 150ms; }
+        .stone-card:nth-child(5) { animation-delay: 200ms; }
+        .stone-card:nth-child(6) { animation-delay: 250ms; }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <header class="header">
+            <div class="header-left">
+                <h1>Ripple Engine</h1>
+                <p class="subtitle">Daily Autonomous Processing Map — {{DATE}}</p>
+            </div>
+            <div class="header-right">
+                <span class="stat-pill"><strong>{{TOTAL_STONES}}</strong> Stones</span>
+                <span class="stat-pill"><strong>{{TOTAL_CIRCLES}}</strong> Circles</span>
+                <span class="stat-pill"><strong>{{TOTAL_KEYS}}</strong> Mature Keys</span>
+                <span class="stat-pill actionable"><strong>{{ACTIONABLE_COUNT}}</strong> Actionable</span>
+            </div>
+        </header>
+
+        <section class="summary-grid" aria-label="Summary Statistics">
+            <article class="summary-card">
+                <div class="summary-label">Avg Strength</div>
+                <div class="summary-value">{{AVG_STRENGTH}}</div>
+            </article>
+            <article class="summary-card">
+                <div class="summary-label">High Priority</div>
+                <div class="summary-value high">{{HIGH_PRIORITY}}</div>
+            </article>
+            <article class="summary-card">
+                <div class="summary-label">Actionable</div>
+                <div class="summary-value actionable">{{ACTIONABLE_COUNT}}</div>
+            </article>
+            <article class="summary-card">
+                <div class="summary-label">Circles</div>
+                <div class="summary-value">{{TOTAL_CIRCLES}}</div>
+            </article>
+        </section>
+
+        <section class="section" aria-labelledby="stones-heading">
+            <div class="section-header">
+                <h2 id="stones-heading" class="section-title">🪨 Stones Collected</h2>
+                <span class="section-count">{{TOTAL_STONES}} stones — sorted by visual weight (strength + confidence)</span>
+            </div>
+            <div class="stones-grid" role="list">
+                {{STONES_HTML}}
+            </div>
+        </section>
+
+        {{#if CIRCLES}}
+        <section class="section" aria-labelledby="circles-heading">
+            <div class="section-header">
+                <h2 id="circles-heading" class="section-title">🔄 Impact Circles</h2>
+                <span class="section-count">{{TOTAL_CIRCLES}} circles — intersecting aspects & keys</span>
+            </div>
+            <div class="circles-grid" role="list">
+                {{CIRCLES_HTML}}
+            </div>
+        </section>
+        {{/if}}
+
+        {{#if MATURE_KEYS}}
+        <section class="section" aria-labelledby="keys-heading">
+            <div class="section-header">
+                <h2 id="keys-heading" class="section-title">🔑 Mature Keys Unlocked</h2>
+                <span class="section-count">{{TOTAL_KEYS}} keys — converged from multiple stones</span>
+            </div>
+            <div class="keys-grid" role="list">
+                {{KEYS_HTML}}
+            </div>
+        </section>
+        {{/if}}
+
+        <footer style="margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--border); text-align: center; color: var(--text-muted); font-size: 0.75rem;">
+            Generated by Ripple Engine v2 · {{TIMESTAMP}} · Autonomous Daily Processing
+        </footer>
+    </div>
+</body>
+</html>
+```
+
+## Dynamic Injection Points
+
+| Placeholder | Description | Source |
+|-------------|-------------|--------|
+| `{{DATE}}` | Formatted date (dd MMM yyyy) | `datetime.now().strftime("%d %b %Y")` |
+| `{{TIMESTAMP}}` | Full timestamp | `datetime.now().strftime("%Y-%m-%d %H:%M:%S")` |
+| `{{TOTAL_STONES}}` | Stone count | `len(stones)` |
+| `{{TOTAL_CIRCLES}}` | Circle count | `len(circles)` |
+| `{{TOTAL_KEYS}}` | Mature key count | `len(mature_keys)` |
+| `{{ACTIONABLE_COUNT}}` | Actionable stones | `sum(1 for s in stones if s.actionable)` |
+| `{{HIGH_PRIORITY}}` | Critical+High tier | `sum(1 for s in stones if s.priority_tier in ("critical","high"))` |
+| `{{AVG_STRENGTH}}` | Average strength | `round(sum(s.key_strength for s in stones)/len(stones))` |
+| `{{STONES_HTML}}` | Stone cards HTML | Loop over sorted stones |
+| `{{CIRCLES_HTML}}` | Circle cards HTML | Loop over circles |
+| `{{KEYS_HTML}}` | Key cards HTML | Loop over mature keys |
+
+## Card Tier Mapping
+
+```python
+tier_gradients = {
+    "critical": "linear-gradient(135deg, #DC2626 0%, #991B1B 100%)",
+    "high": "linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%)",
+    "medium": "linear-gradient(135deg, #1E3A5F 0%, #1E4A7F 100%)",
+    "low": "linear-gradient(135deg, #1F2937 0%, #111827 100%)",
+}
+tier_glows = {
+    "critical": "0 0 32px rgba(220, 38, 38, 0.35)",
+    "high": "0 0 28px rgba(139, 92, 246, 0.3)",
+    "medium": "0 0 20px rgba(14, 165, 233, 0.25)",
+    "low": "0 0 12px rgba(100, 116, 139, 0.15)",
+}
+tier_borders = {
+    "critical": "#EF4444",
+    "high": "#8B5CF6",
+    "medium": "#06B6D4",
+    "low": "#1E293B",
+}
+```
+
+## Usage Notes
+
+- **Don't use this template directly** — it's for reference. The actual HTML is built in `RippleEngine._build_html()` using f-strings for performance.
+- **All tokens** come from `DESIGN_TOKENS` dict at top of `ripple_engine.py`
+- **Fonts** loaded from Google Fonts (JetBrains Mono + Space Grotesk)
+- **No JS required** for core display — hover/transition are CSS-only
+- **Staggered entrance** via `animation-delay` on nth-child

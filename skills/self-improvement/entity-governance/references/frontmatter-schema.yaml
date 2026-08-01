@@ -1,0 +1,160 @@
+# Frontmatter Schema for Entity Governance
+# Version: 1.0.0
+# All entity files must conform to this schema
+
+required_keys:
+  - id
+  - type
+  - namespace
+  - status
+  - version
+  - owner
+  - created
+  - summary
+  - description
+
+optional_keys:
+  - promotes_from
+  - promotes_to
+  - depends_on
+  - tags
+  - confidence
+  - retrieval_class
+  - export_class
+  - analytical_view
+  - state_stored_at
+  - candidate_max_age
+  - group
+
+valid_types:
+  - command
+  - agent
+  - skill
+  - rule
+  - workflow
+  - tool
+  - knowledge
+  - data
+  - memory
+  - output
+  - project
+
+valid_statuses:
+  - scratch
+  - research
+  - candidate
+  - canon
+  - deprecated
+  - archived
+
+valid_owners:
+  - operator
+  - agent
+
+valid_retrieval_classes:
+  - hot
+  - warm
+  - cold
+
+valid_export_classes:
+  - public
+  - private
+  - operator
+
+namespace_profiles:
+  - name: standard
+    required_surfaces:
+      - INDEX.md
+      - canon/
+      - playbooks/
+      - support/
+      - synthesis/
+    description: "Standard namespace with full surfaces"
+
+  - name: reduced
+    required_surfaces:
+      - INDEX.md
+      - canon/
+    description: "Reduced base namespace"
+    reduced_base: true
+
+  - name: tool-contract
+    required_surfaces:
+      - INDEX.md
+      - canon/
+      - core-contract.md
+    description: "Tool contract profile uses core-contract.md instead of core-doctrine.md"
+
+rules:
+  - id: canon-requires-operator
+    description: "Canon status requires operator approval (owner must be 'operator')"
+    check: "status == 'canon' and owner != 'operator'"
+    severity: error
+
+  - id: candidate-needs-source
+    description: "Candidate status should have promotes_from (source synthesis nodes)"
+    check: "status == 'candidate' and (promotes_from is null or promotes_from | length == 0)"
+    severity: warning
+
+  - id: no-self-promotion
+    description: "Entity cannot promote to itself"
+    check: "promotes_to contains id"
+    severity: error
+
+  - id: stable-id-format
+    description: "ID must be kebab-case (lowercase, alphanumeric with hyphens)"
+    check: "not id matches '^[a-z0-9-]+$'"
+    severity: error
+
+  - id: namespace-format
+    description: "Namespace must be kebab-case path (e.g., knowledge/ai-core)"
+    check: "not namespace matches '^[a-z0-9-]+(/[a-z0-9-]+)*$'"
+    severity: error
+
+  - id: version-semver
+    description: "Version must be semantic version (e.g., 1.0.0)"
+    check: "not version matches '^\\d+\\.\\d+\\.\\d+$'"
+    severity: error
+
+  - id: created-iso8601
+    description: "Created must be ISO8601 timestamp"
+    check: "not created matches '^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(Z|[+-]\\d{2}:\\d{2})?$'"
+    severity: error
+
+plumbing_patterns:
+  - "README.md"
+  - "CLAUDE.md"
+  - "AGENTS.md"
+  - "CANONICAL-GATES.md"
+  - "CONTRIBUTING.md"
+  - "START-HERE.md"
+  - "OBSIDIAN-DASHBOARD.md"
+  - ".obsidian/"
+  - "_system/"
+  - "swarms/"
+  - "docs/"
+  - "data/source-archives/"
+  - ".claude/hooks/"
+  - "entities/README.md"
+  - "sessions/"
+  - "*/waves/surfaces/dist/"
+  - "*/knowledge/*/archive/"
+  - "*/knowledge/*/support/"
+  - "*/outputs/crm-corpus/generated/"
+  - "*/outputs/crm-corpus/assets/"
+  - "node_modules/"
+  - "knowledge/*/INDEX.md"
+  - "knowledge/*/support/*"
+  - "knowledge/*/archive/*"
+  - "knowledge/*/canon/README.md"
+  - "knowledge/*/canon/agent-load-order.md"
+  - "knowledge/*/synthesis/README.md"
+  - "intake/*"
+  - "projects/README.md"
+  - "departments/README.md"
+  - "outputs/README.md"
+  - "memory/README.md"
+  - "data/README.md"
+  - "tools/README.md"
+  - "workflows/README.md"
+  - "automations/README.md"

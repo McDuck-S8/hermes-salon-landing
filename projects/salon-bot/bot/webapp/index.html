@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Запись в салон</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    :root {
+      --primary: #6C5CE7;
+      --primary-dark: #5A4BD1;
+      --secondary: #00B894;
+      --accent: #FD79A8;
+      --bg: var(--tg-theme-bg-color, #ffffff);
+      --text: var(--tg-theme-text-color, #1a1a2e);
+      --hint: var(--tg-theme-hint-color, #8e8e93);
+      --card: var(--tg-theme-secondary-bg-color, #f5f5f7);
+      --radius: 16px;
+      --shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 16px;
+      padding-bottom: 100px;
+      min-height: 100vh;
+    }
+
+    .header {
+      text-align: center;
+      padding: 20px 0 24px;
+    }
+    .header h1 {
+      font-size: 24px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .header p {
+      color: var(--hint);
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .step {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    .step.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: var(--shadow);
+      border: 2px solid transparent;
+    }
+    .card:active { transform: scale(0.98); }
+    .card.selected {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.15);
+    }
+    .card-title {
+      font-size: 16px;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .card-sub {
+      font-size: 13px;
+      color: var(--hint);
+      margin-top: 4px;
+    }
+    .card-price {
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .grid-7 {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      margin: 12px 0;
+    }
+
+    .chip {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 10px 0;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+      border: 2px solid transparent;
+      box-shadow: var(--shadow);
+    }
+    .chip:active { transform: scale(0.95); }
+    .chip.selected {
+      border-color: var(--primary);
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+    }
+    .chip.disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+    .chip.day-header {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--hint);
+      cursor: default;
+      box-shadow: none;
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 400px;
+      box-shadow: 0 8px 24px rgba(108, 92, 231, 0.35);
+    }
+    .btn-primary:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .btn-primary:active:not(:disabled) { opacity: 0.85; }
+
+    .back-btn {
+      background: none;
+      border: none;
+      color: var(--primary);
+      font-size: 15px;
+      font-weight: 500;
+      padding: 8px 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .success-screen {
+      text-align: center;
+      padding: 60px 20px;
+      display: none;
+    }
+    .success-screen.visible { display: block; }
+    .success-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+    }
+    .success-screen h2 {
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+    .success-screen p {
+      color: var(--hint);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* Tag for categories */
+    .tag {
+      display: inline-block;
+      background: rgba(108, 92, 231, 0.1);
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>✨ Салон Красоты</h1>
+    <p>Выберите услугу и время</p>
+  </div>
+
+  <!-- Step 1: Service -->
+  <div id="step-service" class="step active">
+    <div id="services-list"></div>
+  </div>
+
+  <!-- Step 2: Master -->
+  <div id="step-master" class="step">
+    <button class="back-btn" onclick="goStep('service')">← Назад</button>
+    <div id="masters-list" style="margin-top: 8px;"></div>
+  </div>
+
+  <!-- Step 3: Date -->
+  <div id="step-date" class="step">
+    <button class="back-btn" onclick="goStep('master')">← Назад</button>
+    <div id="date-picker" style="margin-top: 8px;"></div>
+  </div>
+
+  <!-- Step 4: Time -->
+  <div id="step-time" class="step">
+    <button class="back-btn" onclick="goStep('date')">← Назад</button>
+    <div id="time-slots" style="margin-top: 8px;"></div>
+  </div>
+
+  <!-- Step 5: Success -->
+  <div id="step-success" class="success-screen">
+    <div class="success-icon">✅</div>
+    <h2>Запись подтверждена!</h2>
+    <p id="success-details"></p>
+  </div>
+
+  <button id="submit-btn" class="btn-primary" disabled onclick="submitBooking()">
+    ✅ Подтвердить запись
+  </button>
+
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.expand();
+    tg.ready();
+
+    let state = {
+      serviceId: null,
+      serviceName: '',
+      servicePrice: 0,
+      serviceEmoji: '💇',
+      masterId: null,
+      masterName: '',
+      date: null,
+      time: null,
+    };
+
+    let services = [];
+    let masters = [];
+    let availableSlots = [];
+
+    // ── Init ─────────────────────────────────────────────────
+    async function init() {
+      try {
+        const resp = await fetch('https://salon-bot.example.com/api/services', {
+          headers: { 'Content-Type': 'application/json' }
+        });
+        const data = await resp.json();
+        services = data.services || [];
+        masters = data.masters || [];
+        renderServices();
+      } catch (e) {
+        // Fallback demo data when API not available
+        services = [
+          { id: 1, emoji: '💇', name: 'Женская стрижка', price: 1500, duration: 60, category: 'стрижки', color: '#6C5CE7' },
+          { id: 2, emoji: '✂️', name: 'Мужская стрижка', price: 800, duration: 45, category: 'стрижки', color: '#00B894' },
+          { id: 3, emoji: '🎨', name: 'Окрашивание', price: 3000, duration: 120, category: 'окрашивание', color: '#E17055' },
+          { id: 4, emoji: '💅', name: 'Маникюр', price: 1200, duration: 90, category: 'ногти', color: '#FD79A8' },
+          { id: 5, emoji: '🦶', name: 'Педикюр', price: 1500, duration: 90, category: 'ногти', color: '#A29BFE' },
+          { id: 6, emoji: '🌸', name: 'Укладка', price: 1000, duration: 60, category: 'укладка', color: '#00CEC9' },
+        ];
+        masters = [
+          { id: 1, name: 'Анна', bio: 'Стилист 5 лет', rating: 4.8 },
+          { id: 2, name: 'Елена', bio: 'Колорист', rating: 4.9 },
+          { id: 3, name: 'Мария', bio: 'Ногтевой мастер', rating: 4.7 },
+        ];
+        renderServices();
+      }
+    }
+
+    // ── Render Services ──────────────────────────────────────
+    function renderServices() {
+      const container = document.getElementById('services-list');
+      container.innerHTML = '';
+
+      // Group by category
+      const cats = {};
+      services.forEach(s => {
+        const cat = s.category || 'услуги';
+        if (!cats[cat]) cats[cat] = [];
+        cats[cat].push(s);
+      });
+
+      Object.entries(cats).forEach(([cat, svcs]) => {
+        const catTitle = document.createElement('h3');
+        catTitle.style.cssText = 'font-size:14px;font-weight:600;color:var(--hint);margin:12px 0 8px;';
+        catTitle.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
+        container.appendChild(catTitle);
+
+        svcs.forEach(s => {
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.onclick = () => selectService(s.id);
+          card.dataset.id = s.id;
+          card.innerHTML = `
+            <div class="card-title">
+              <span>${s.emoji || '💇'} ${s.name}</span>
+              <span class="card-price">${s.price}₽</span>
+            </div>
+            <div class="card-sub">${s.duration} мин</div>
+          `;
+          container.appendChild(card);
+        });
+      });
+    }
+
+    function selectService(id) {
+      const s = services.find(x => x.id === id);
+      if (!s) return;
+      state.serviceId = id;
+      state.serviceName = s.name;
+      state.servicePrice = s.price;
+      state.serviceEmoji = s.emoji || '💇';
+      document.querySelectorAll('#services-list .card').forEach(c => {
+        c.classList.toggle('selected', c.dataset.id == id);
+      });
+      updateButton();
+      setTimeout(() => renderMasters(), 300);
+    }
+
+    // ── Render Masters ───────────────────────────────────────
+    function renderMasters() {
+      masters.forEach(m => {
+        m.service_ids = m.service_ids || [1, 2, 3, 4, 5, 6];
+      });
+      const available = masters.filter(m =>
+        (m.service_ids || []).includes(state.serviceId)
+      );
+
+      const container = document.getElementById('masters-list');
+      container.innerHTML = '';
+      if (available.length === 0) {
+        container.innerHTML = '<p style="color:var(--hint);text-align:center;">Нет мастеров для этой услуги</p>';
+        return;
+      }
+
+      available.forEach(m => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.onclick = () => selectMaster(m.id);
+        card.dataset.id = m.id;
+        card.innerHTML = `
+          <div class="card-title">
+            <span>👩‍🎨 ${m.name}</span>
+            <span>${m.rating ? '⭐ ' + m.rating : ''}</span>
+          </div>
+          <div class="card-sub">${m.bio || ''}</div>
+        `;
+        container.appendChild(card);
+      });
+
+      goStep('master');
+    }
+
+    function selectMaster(id) {
+      const m = masters.find(x => x.id === id);
+      if (!m) return;
+      state.masterId = id;
+      state.masterName = m.name;
+      document.querySelectorAll('#masters-list .card').forEach(c => {
+        c.classList.toggle('selected', c.dataset.id == id);
+      });
+      updateButton();
+      setTimeout(() => renderDates(), 300);
+    }
+
+    // ── Render Dates ─────────────────────────────────────────
+    function renderDates() {
+      const container = document.getElementById('date-picker');
+      container.innerHTML = '';
+
+      const dayNames = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+
+      // Header
+      const header = document.createElement('div');
+      header.className = 'grid-7';
+      dayNames.forEach(d => {
+        const el = document.createElement('div');
+        el.className = 'chip day-header';
+        el.textContent = d;
+        header.appendChild(el);
+      });
+      container.appendChild(header);
+
+      // Generate 14 days
+      const today = new Date();
+      const grid = document.createElement('div');
+      grid.className = 'grid-7';
+
+      // Padding for first day of week
+      const firstDay = today.getDay() === 0 ? 6 : today.getDay() - 1;
+      for (let i = 0; i < firstDay; i++) {
+        const pad = document.createElement('div');
+        pad.style.visibility = 'hidden';
+        grid.appendChild(pad);
+      }
+
+      for (let d = 0; d < 14; d++) {
+        const dt = new Date(today);
+        dt.setDate(today.getDate() + d);
+        const chip = document.createElement('div');
+        chip.className = 'chip';
+        chip.textContent = dt.getDate();
+        if (d === 0) chip.textContent = '📌 Сегодня';
+        else if (d === 1) chip.textContent = '📌 Завтра';
+        chip.onclick = () => selectDate(dt);
+        chip.dataset.date = dt.toISOString().split('T')[0];
+        grid.appendChild(chip);
+      }
+
+      container.appendChild(grid);
+      goStep('date');
+    }
+
+    function selectDate(dt) {
+      const dateStr = dt.toISOString().split('T')[0];
+      state.date = dateStr;
+      document.querySelectorAll('#date-picker .chip').forEach(c => {
+        c.classList.toggle('selected', c.dataset.date === dateStr);
+      });
+      updateButton();
+      renderTimeSlots(dateStr);
+    }
+
+    // ── Render Time Slots ────────────────────────────────────
+    function renderTimeSlots(dateStr) {
+      const container = document.getElementById('time-slots');
+      container.innerHTML = '';
+
+      // Generate slots
+      const slots = [];
+      for (let h = 9; h < 20; h++) {
+        for (let m of [0, 30]) {
+          slots.push(`${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`);
+        }
+      }
+
+      // Group
+      const morning = slots.filter(s => parseInt(s) < 12);
+      const afternoon = slots.filter(s => parseInt(s) >= 12 && parseInt(s) < 17);
+      const evening = slots.filter(s => parseInt(s) >= 17);
+
+      const groups = [
+        ['🌅 Утро', morning],
+        ['☀️ День', afternoon],
+        ['🌆 Вечер', evening],
+      ];
+
+      let groupCount = 0;
+      groups.forEach(([title, gSlots]) => {
+        if (gSlots.length === 0) return;
+        if (groupCount > 0) {
+          const sep = document.createElement('div');
+          sep.style.cssText = 'height:1px;background:var(--card);margin:12px 0;';
+          container.appendChild(sep);
+        }
+        groupCount++;
+
+        const label = document.createElement('div');
+        label.style.cssText = 'font-size:13px;font-weight:600;color:var(--hint);margin-bottom:8px;';
+        label.textContent = title;
+        container.appendChild(label);
+
+        const grid = document.createElement('div');
+        grid.className = 'grid-3';
+        gSlots.forEach(t => {
+          const chip = document.createElement('div');
+          chip.className = 'chip';
+          chip.textContent = t;
+          chip.onclick = () => selectTime(t);
+          chip.dataset.time = t;
+          grid.appendChild(chip);
+        });
+        container.appendChild(grid);
+      });
+
+      goStep('time');
+    }
+
+    function selectTime(t) {
+      state.time = t;
+      document.querySelectorAll('#time-slots .chip').forEach(c => {
+        c.classList.toggle('selected', c.dataset.time === t);
+      });
+      updateButton();
+    }
+
+    // ── Navigation ───────────────────────────────────────────
+    function goStep(name) {
+      const map = { service: 'step-service', master: 'step-master', date: 'step-date', time: 'step-time' };
+      document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+      document.getElementById(map[name]).classList.add('active');
+      document.getElementById('step-success').classList.remove('visible');
+    }
+
+    // ── Button state ─────────────────────────────────────────
+    function updateButton() {
+      const btn = document.getElementById('submit-btn');
+      if (state.serviceId && state.masterId && state.date && state.time) {
+        btn.disabled = false;
+        btn.textContent = `✅ Подтвердить — ${state.servicePrice}₽`;
+      } else {
+        btn.disabled = true;
+        let text = '✅ Подтвердить запись';
+        if (!state.serviceId) text = '1/4 Выберите услугу';
+        else if (!state.masterId) text = '2/4 Выберите мастера';
+        else if (!state.date) text = '3/4 Выберите дату';
+        else text = '4/4 Выберите время';
+        btn.textContent = text;
+      }
+    }
+
+    // ── Submit ───────────────────────────────────────────────
+    function submitBooking() {
+      if (!state.serviceId || !state.masterId || !state.date || !state.time) return;
+
+      // Send data to Telegram bot
+      tg.sendData(JSON.stringify({
+        service_id: state.serviceId,
+        master_id: state.masterId,
+        date: state.date,
+        time: state.time,
+      }));
+
+      // Show success
+      document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+      document.getElementById('step-success').classList.add('visible');
+      document.getElementById('success-details').innerHTML = `
+        ${state.serviceEmoji} ${state.serviceName} — ${state.servicePrice}₽<br>
+        👩‍🎨 ${state.masterName}<br>
+        📅 ${state.date} в ${state.time}
+      `;
+      document.getElementById('submit-btn').style.display = 'none';
+    }
+
+    // ── Start ────────────────────────────────────────────────
+    init();
+  </script>
+</body>
+</html>

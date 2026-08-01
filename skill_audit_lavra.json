@@ -1,0 +1,39 @@
+{
+  "timestamp": "2026-07-26T17:17:51.333651",
+  "skills_scanned": 1,
+  "files_scanned": 1,
+  "total_findings": 2,
+  "risk": {
+    "score": 50,
+    "severity": "MEDIUM",
+    "recommendation": "CAUTION",
+    "critical": 0,
+    "high": 2,
+    "medium": 0,
+    "low": 0
+  },
+  "results": [
+    {
+      "skill": "lavra-agent-agent-native-reviewer",
+      "files": 1,
+      "findings": [
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\lavra-agent-agent-native-reviewer\\SKILL.md",
+          "line": 9,
+          "code": "assistant: \"I'll use the agent-native-reviewer to verify this feature is accessible to agents\""
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\lavra-agent-agent-native-reviewer\\SKILL.md",
+          "line": 13,
+          "code": "assistant: \"Let me check if this workflow is agent-native using the agent-native-reviewer\""
+        }
+      ]
+    }
+  ]
+}

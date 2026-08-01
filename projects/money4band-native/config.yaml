@@ -1,0 +1,94 @@
+# Money4Band Native — Configuration
+# ===================================
+# All your bandwidth-sharing apps in one place.
+# No Docker needed — native Python processes.
+
+# Global settings
+global:
+  log_level: INFO
+  log_dir: ./logs
+  data_dir: ./data
+  dashboard_port: 8080
+  check_interval: 60  # seconds between health checks
+  
+  # Optional: global proxy (SOCKS5/HTTP) for all apps
+  # proxy: socks5://user:pass@127.0.0.1:1080
+  
+  # Device info (used by some apps to identify this machine)
+  device:
+    name: "m4b-native-01"
+    # Device ID is auto-generated on first run
+
+# ─── App configurations ─────────────────────────────────
+# Set enabled: true and fill in your credentials to activate
+
+apps:
+  
+  honeygain:
+    enabled: false
+    # Get token from Honeygain app or API
+    email: ""
+    password: ""
+    # Or use device token directly:
+    # device_token: ""
+    # Container mode: share / sell / both
+    mode: "share"
+    # Max bandwidth to share (MB, 0=unlimited)
+    max_bandwidth: 0
+    
+  earnapp:
+    enabled: false
+    # Get from EarnApp dashboard
+    email: ""
+    # Or use redeem code from browser extension
+    redeem_code: ""
+    # Native binary path (auto-detected if installed)
+    # binary_path: /usr/local/bin/earnapp
+    
+  packetstream:
+    enabled: false
+    # Get from packetstream.io dashboard
+    psk: ""  # PacketStream API key
+    
+  pawns:
+    enabled: false
+    # Get from pawns.app
+    email: ""
+    password: ""
+    # Or use invite code
+    # invite_code: ""
+    
+  traffmonetizer:
+    enabled: false
+    # Get token from traffmonetizer.com
+    token: ""
+    
+  peer2profit:
+    enabled: false
+    # Get from t.me/peer2profit_app_bot
+    token: ""
+    
+  bitping:
+    enabled: false
+    # Get from app.bitping.com
+    email: ""
+    password: ""
+    # Or use node key
+    # node_key: ""
+    
+  grass:
+    enabled: false
+    # Grass is browser-based (WebExtension)
+    # We can manage the browser process
+    # email: ""
+    # password: ""
+
+# ─── Proxy configuration ────────────────────────────────
+# Per-app proxy overrides. Uses global proxy if not set.
+# Format: protocol://user:pass@host:port
+# Supported: socks5, socks4, http, https
+
+proxies:
+  # Example: different proxy per app
+  # honeygain: socks5://user:pass@192.168.1.1:1080
+  # earnapp: http://proxy.example.com:8080

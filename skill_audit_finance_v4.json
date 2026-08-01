@@ -1,0 +1,55 @@
+{
+  "timestamp": "2026-07-27T00:26:24.140319",
+  "skills_scanned": 1,
+  "files_scanned": 129,
+  "total_findings": 4,
+  "risk": {
+    "score": 100,
+    "severity": "CRITICAL",
+    "recommendation": "DANGEROUS",
+    "critical": 0,
+    "high": 4,
+    "medium": 0,
+    "low": 0
+  },
+  "results": [
+    {
+      "skill": "finance",
+      "files": 129,
+      "findings": [
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\finance\\arbitrage-sensors\\SKILL.md",
+          "line": 180,
+          "code": "# result = subprocess.run("
+        },
+        {
+          "rule": "E2_env_harvesting",
+          "severity": "HIGH",
+          "category": "Data Exfiltration",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\finance\\stocks\\scripts\\stocks_client.py",
+          "line": 247,
+          "code": "key = os.environ.get(\"ALPHA_VANTAGE_KEY\")  # SAFE: read from environment, no hardcoded key"
+        },
+        {
+          "rule": "E2_env_harvesting",
+          "severity": "HIGH",
+          "category": "Data Exfiltration",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\finance\\stocks\\scripts\\stocks_client.py",
+          "line": 381,
+          "code": "av_key = os.environ.get(\"ALPHA_VANTAGE_KEY\")  # SAFE: read from environment"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\finance\\excel-author\\scripts\\recalc.py",
+          "line": 45,
+          "code": "subprocess.run(  # SAFE: explicit args list, no shell, timeout protected"
+        }
+      ]
+    }
+  ]
+}

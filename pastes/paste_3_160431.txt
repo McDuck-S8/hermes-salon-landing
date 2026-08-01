@@ -1,0 +1,17 @@
+
+Openclaude Привет
+Bad gateway: Agent internal error (code -32603) ({"details":"spawn EINVAL"})
+Openclaude Привет
+Bad gateway: Agent internal error (code -32603) ({"details":"spawn EINVAL"})
+Openclaude Привет
+Bad gateway: Agent internal error (code -32603) ({"details":"spawn EINVAL"})
+Openclaude Привет
+Bad gateway: Agent internal error (code -32603) ({"details":"spawn EINVAL"})
+Openclaude Привет
+Bad gateway: Agent internal error (code -32603) ({"details":"spawn EINVAL"})
+что за хрень начни работать
+Bad gateway: Agent internal error (code -32603) ({"details":"spawn EINVAL"})
+Openclaude Привет
+Bad gateway: Agent internal error (code -32603) ({"details":"spawn EINVAL"})
+Openclaude Привет
+Agent requires authentication

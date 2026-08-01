@@ -1,0 +1,117 @@
+{
+  "id": "eval_final_test_1785278747",
+  "project_name": "final_test",
+  "project_path": "D:\\Portable_Soft\\hermes\\test_project",
+  "timestamp": "2026-07-29T01:45:47.769281",
+  "lighthouse_performance": 0,
+  "lighthouse_accessibility": 0,
+  "lighthouse_best_practices": 0,
+  "lighthouse_seo": 0,
+  "lighthouse_pwa": 0,
+  "axe_violations": 0,
+  "axe_passes": 0,
+  "axe_incomplete": 0,
+  "axe_score": 0,
+  "eslint_errors": 0,
+  "eslint_warnings": 0,
+  "w3c_errors": 0,
+  "w3c_warnings": 0,
+  "custom_checks": {
+    "has_viewport_meta": true,
+    "has_semantic_html": true,
+    "has_aria_attributes": false,
+    "has_focus_states": false,
+    "has_transitions": true,
+    "has_dark_mode": true,
+    "has_fluid_typography": false,
+    "has_container_queries": false,
+    "has_css_grid": true,
+    "has_flexbox": false,
+    "has_glassmorphism": true,
+    "has_variable_fonts": false,
+    "has_meta_description": true,
+    "has_canonical": false,
+    "has_schema": false,
+    "_score": 46
+  },
+  "overall_score": 16,
+  "passed": false,
+  "details": {
+    "thresholds": {
+      "lighthouse_performance": 80,
+      "lighthouse_accessibility": 90,
+      "lighthouse_best_practices": 85,
+      "lighthouse_seo": 80,
+      "axe_score": 90,
+      "w3c_errors": 0,
+      "eslint_errors": 0
+    },
+    "results": {
+      "lighthouse": {
+        "performance": {
+          "score": 0,
+          "threshold": 80,
+          "pass": false
+        },
+        "accessibility": {
+          "score": 0,
+          "threshold": 90,
+          "pass": false
+        },
+        "best_practices": {
+          "score": 0,
+          "threshold": 85,
+          "pass": false
+        },
+        "seo": {
+          "score": 0,
+          "threshold": 80,
+          "pass": false
+        }
+      },
+      "axe": {
+        "score": 0,
+        "threshold": 90,
+        "pass": false
+      },
+      "eslint": {
+        "errors": 0,
+        "threshold": 0,
+        "pass": true
+      },
+      "w3c": {
+        "errors": 0,
+        "threshold": 0,
+        "pass": true
+      },
+      "custom": {
+        "has_viewport_meta": true,
+        "has_semantic_html": true,
+        "has_aria_attributes": false,
+        "has_focus_states": false,
+        "has_transitions": true,
+        "has_dark_mode": true,
+        "has_fluid_typography": false,
+        "has_container_queries": false,
+        "has_css_grid": true,
+        "has_flexbox": false,
+        "has_glassmorphism": true,
+        "has_variable_fonts": false,
+        "has_meta_description": true,
+        "has_canonical": false,
+        "has_schema": false,
+        "_score": 46
+      }
+    },
+    "summary": {
+      "overall_score": 16,
+      "passed": false,
+      "areas_for_improvement": [
+        "Performance (0/80)",
+        "Accessibility (0/90)",
+        "Axe a11y (0/90)",
+        "Design checks (46/100)"
+      ]
+    }
+  }
+}

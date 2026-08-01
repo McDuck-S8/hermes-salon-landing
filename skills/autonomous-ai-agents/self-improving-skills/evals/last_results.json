@@ -1,0 +1,49 @@
+{
+  "total": 8,
+  "passed": 8,
+  "partial": 0,
+  "failed": 0,
+  "pass_rate": 1.0,
+  "results": [
+    {
+      "name": "improve_analyzes_failures",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "name": "improve_respects_safety_guards",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "name": "verify_reruns_evals",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "name": "verify_detects_regression",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "name": "eval_runs_all_cases",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "name": "eval_scores_correctly",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "name": "eval_outputs_json",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "name": "patch_applier_exists",
+      "status": "PASS",
+      "error": null
+    }
+  ]
+}

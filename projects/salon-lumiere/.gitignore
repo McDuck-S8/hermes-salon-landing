@@ -1,0 +1,7 @@
+# Salon Lumiere
+data/bookings.json
+data/bot.log
+assets/salon_raw.mp4
+__pycache__/
+*.pyc
+.env

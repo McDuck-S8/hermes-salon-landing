@@ -1,0 +1,8 @@
+# Auto-generated eval cases
+- name: "basic_functionality"
+  description: "Skill produces expected output for typical input"
+  input:
+    task: "Execute skill's primary function"
+  expect:
+    produces_output: true
+    no_errors: true

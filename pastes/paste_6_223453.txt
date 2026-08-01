@@ -1,0 +1,10 @@
+from composio import Composio
+
+composio = Composio()
+
+session = composio.create(
+    user_id="<your-user-id>",
+    manage_connections={
+        "wait_for_connections": True,
+    },
+)

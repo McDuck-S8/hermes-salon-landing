@@ -1,0 +1,10 @@
+{
+  "platform": "vc.ru",
+  "title": "Как салон красоты на Дарнице увеличил повторные записи на 40% за 2 недели без рекламы",
+  "niche": "beauty",
+  "template": "case_study",
+  "target_words": 2000,
+  "prompt": "Write a 2000-word article for vc.ru in Russian.\nTitle: Как салон красоты на Дарнице увеличил повторные записи на 40% за 2 недели без рекламы\nTemplate: case_study\nNiche: beauty (beauty salon automation)\nStructure: Hook → Context → Problem (with numbers) → Solution (step-by-step) → Results (metrics) → How-to-repeat (checklist) → Soft CTA (Telegram channel).\nStyle: Expert, concrete numbers, personal story, screenshots described.\nTags: #салонкрасоты #автоматизация #ИИ #бизнес #кейс #маркетинг\nOutput: Full article text in Markdown.",
+  "generated_at": "2026-07-29T22:38:04.222314",
+  "status": "prompt_ready"
+}

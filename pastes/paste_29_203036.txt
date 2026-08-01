@@ -1,0 +1,31 @@
+Repos Covered:
+
+10. ibelick/ui-skills — Design skills for AI coding agents
+    https://github.com/ibelick/ui-skills
+
+9. openai/codex — Terminal-native coding agent
+    https://github.com/openai/codex
+
+8. HKUDS/DeepTutor — AI-powered lifelong learning companion
+    https://github.com/HKUDS/DeepTutor
+
+7. tirth8205/code-review-graph — Token-efficient code review
+    https://github.com/tirth8205/code-rev...
+
+6. iOfficeAI/OfficeCLI — Office suite for AI agents
+    https://github.com/iOfficeAI/OfficeCLI
+
+5. HKUDS/Vibe-Trading — Natural language trading strategies
+    https://github.com/HKUDS/Vibe-Trading
+
+4. Shubhamsaboo/awesome-llm-apps — 100+ runnable AI apps
+    https://github.com/Shubhamsaboo/aweso...
+
+3. Nutlope/hallmark — Anti-AI-slop design system
+    https://github.com/Nutlope/hallmark
+
+2. mattpocock/skills — Composable engineering skills for agents
+    https://github.com/mattpocock/skills
+
+1. OpenCut-app/OpenCut — Open-source CapCut alternative
+    https://github.com/OpenCut-app/OpenCut

@@ -1,0 +1,215 @@
+{
+  "id": "free_traffic_launch",
+  "version": "1.1.0",
+  "name": "Free Traffic Launch - Week 1",
+  "description": "Автономный запуск 6 бесплатных каналов трафика (УБТ) за 1 неделю: паразитное SEO (vc.ru/TenChat/Pikabu), TikTok/Reels/Shorts ферма, Telegram канал+бот, Reddit/форумы экспертные комментарии, Instagram Reels (визуальные ниши), сбор метрик и анализ для недели 2.",
+  "inputs": {
+    "niche": { "type": "string", "required": true, "description": "Основная ниша (beauty, education, services, handmade)" },
+    "sub_niche": { "type": "string", "required": false, "description": "Под-ниша для таргетинга контента" },
+    "budget": { "type": "number", "default": 0, "description": "Бюджет на прокси/расходники (USD)" },
+    "goals": { "type": "array", "items": { "type": "string" }, "default": ["first_100_visitors", "first_10_leads", "validate_funnel"] },
+    "geo": { "type": "string", "default": "Kyiv/Crimea", "description": "Гео для локализации контента" },
+    "language": { "type": "string", "default": "ru", "description": "Язык контента" }
+  },
+  "outputs": {
+    "traffic_report": { "type": "object", "description": "Метрики по всем 6 каналам за неделю" },
+    "creatives_package": { "type": "file", "description": "assets/content_warehouse/ с видео/картинками/статьями" },
+    "leads_collected": { "type": "integer", "description": "Количество лидов в ТГ боте" },
+    "validated_channels": { "type": "array", "items": { "type": "string" }, "description": "Каналы с положительным ROI" },
+    "next_week_plan": { "type": "object", "description": "План недели 2 с фокусом на топ-2 канала" },
+    "workflow_template": { "type": "string", "description": "ID шаблона для Strategic DB" }
+  },
+  "graph": {
+    "nodes": [
+      { "id": "start", "type": "start", "name": "Free Traffic Week 1 Start" },
+      
+      { "id": "infra_setup", "type": "skill", "name": "free-traffic-scout-2026", "config": { "phase": "infrastructure" }, "timeout_seconds": 600 },
+      
+      { "id": "content_generation", "type": "skill", "name": "free-traffic-scout-2026", "config": { "phase": "content_generation" }, "depends_on": ["infra_setup"], "timeout_seconds": 900 },
+      
+      { 
+        "id": "telegram_setup", 
+        "type": "skill", 
+        "name": "telegram-channel-poster", 
+        "config": { 
+          "phase": "setup_bot_and_channels",
+          "bot_token_env": "TELEGRAM_BOT_TOKEN",
+          "channels": {
+            "max_brain_chef_official": -1003777013964,
+            "ai_frontier_you": -1003705792421,
+            "max_brain_chef_ai": -1003882833000,
+            "neuro_kitchen_ai": -1003525498743
+          },
+          "lead_magnet_files": [
+            "assets/content_warehouse/telegram/lead_magnet_checklist.html",
+            "assets/content_warehouse/telegram/case_study_darnitsa.html"
+          ],
+          "welcome_message_keyboard": {
+            "text": "🎁 ХОЧУ БОТА + ЧЕК-ЛИСТ",
+            "callback_data": "send_lead_magnet"
+          }
+        }, 
+        "depends_on": ["infra_setup"], 
+        "timeout_seconds": 600 
+      },
+      
+      { 
+        "id": "parasite_seo_submit", 
+        "type": "mini_pipeline", 
+        "name": "parasite_seo_writer", 
+        "config": { 
+          "steps": [ 
+            { "skill": "free-traffic-scout-2026", "config": { "phase": "write_article", "platform": "vc_ru", "template": "case_study" } }, 
+            { "skill": "free-traffic-scout-2026", "config": { "phase": "write_article", "platform": "tenchat", "template": "problem_solution" } }, 
+            { "skill": "free-traffic-scout-2026", "config": { "phase": "write_article", "platform": "pikabu", "template": "secret_reveal" } } 
+          ] 
+        }, 
+        "depends_on": ["content_generation"], 
+        "timeout_seconds": 600 
+      },
+      
+      { 
+        "id": "tiktok_content_prep", 
+        "type": "skill", 
+        "name": "tiktok-account-farm", 
+        "config": { 
+          "phase": "create_profiles", 
+          "count": 3, 
+          "niches": ["beauty", "education", "services"], 
+          "proxy": "socks5://127.0.0.1:10806" 
+        }, 
+        "depends_on": ["content_generation"], 
+        "timeout_seconds": 900 
+      },
+      
+      { 
+        "id": "telegram_content_plan", 
+        "type": "skill", 
+        "name": "telegram-channel-poster", 
+        "config": { 
+          "phase": "content_plan_week1",
+          "channels": ["max_brain_chef_official", "ai_frontier_you", "max_brain_chef_ai", "neuro_kitchen_ai"],
+          "channel_ids": [-1003777013964, -1003705792421, -1003882833000, -1003525498743],
+          "bot_token_env": "TELEGRAM_BOT_TOKEN",
+          "posts": [
+            {"day": 1, "template": "welcome_lead_magnet"},
+            {"day": 2, "template": "case_study_darnitsa"},
+            {"day": 3, "template": "expert_post_why_bots"},
+            {"day": 4, "template": "qa_objections"},
+            {"day": 5, "template": "quick_win_winback"},
+            {"day": 6, "template": "scale_best_formats"},
+            {"day": 7, "template": "week_audit_next_plan"}
+          ]
+        }, 
+        "depends_on": ["telegram_setup"], 
+        "timeout_seconds": 300 
+      },
+      
+      { 
+        "id": "reddit_engagement", 
+        "type": "skill", 
+        "name": "ghost-surfer", 
+        "config": { 
+          "phase": "expert_comments", 
+          "sources": 15, 
+          "comments_per_day": 5, 
+          "niches": ["beauty", "small_business", "automation"] 
+        }, 
+        "depends_on": ["content_generation"], 
+        "timeout_seconds": 600 
+      },
+      
+      { 
+        "id": "instagram_reels_if_visual", 
+        "type": "conditional", 
+        "name": "visual_niche_check", 
+        "config": { 
+          "condition": "{{ inputs.niche in ['beauty', 'handmade', 'fitness', 'food'] }}" 
+        }, 
+        "depends_on": ["content_generation"] 
+      },
+      
+      { 
+        "id": "instagram_reels_posts", 
+        "type": "skill", 
+        "name": "free-ai-surfing", 
+        "config": { 
+          "phase": "generate_reels", 
+          "platform": "instagram", 
+          "count": 3, 
+          "prompts": "references/free-traffic-templates.md" 
+        }, 
+        "depends_on": ["instagram_reels_if_visual"], 
+        "timeout_seconds": 600 
+      },
+      
+      { 
+        "id": "skip_instagram", 
+        "type": "mini_pipeline", 
+        "name": "skip_non_visual", 
+        "config": { "steps": [] }, 
+        "depends_on": ["instagram_reels_if_visual"] 
+      },
+      
+      { 
+        "id": "metrics_collection", 
+        "type": "pipeline", 
+        "name": "finance-core", 
+        "config": { 
+          "action": "collect_traffic_metrics", 
+          "channels": ["tiktok", "vc_ru", "tenchat", "telegram", "reddit", "instagram"], 
+          "kpis": ["views", "profile_clicks", "tg_subscribers", "lead_magnet_downloads", "dm_questions"] 
+        }, 
+        "depends_on": ["parasite_seo_submit", "tiktok_content_prep", "telegram_content_plan", "reddit_engagement", "instagram_reels_if_visual"], 
+        "timeout_seconds": 300 
+      },
+      
+      { 
+        "id": "analysis_and_plan", 
+        "type": "skill", 
+        "name": "free-traffic-scout-2026", 
+        "config": { 
+          "phase": "analysis", 
+          "analyze_week1": true, 
+          "select_top_channels": 2, 
+          "generate_week2_plan": true, 
+          "pivot_decision": true 
+        }, 
+        "depends_on": ["metrics_collection"], 
+        "timeout_seconds": 300 
+      },
+      
+      { "id": "end", "type": "end", "name": "Free Traffic Week 1 Complete" }
+    ],
+    "edges": [
+      { "from": "start", "to": "infra_setup" },
+      { "from": "infra_setup", "to": "content_generation" },
+      { "from": "infra_setup", "to": "telegram_setup" },
+      { "from": "content_generation", "to": "parasite_seo_submit" },
+      { "from": "content_generation", "to": "tiktok_content_prep" },
+      { "from": "content_generation", "to": "reddit_engagement" },
+      { "from": "content_generation", "to": "instagram_reels_if_visual" },
+      { "from": "telegram_setup", "to": "telegram_content_plan" },
+      { "from": "instagram_reels_if_visual", "to": "instagram_reels_posts", "condition": "true" },
+      { "from": "instagram_reels_if_visual", "to": "skip_instagram", "condition": "false" },
+      { "from": "parasite_seo_submit", "to": "metrics_collection" },
+      { "from": "tiktok_content_prep", "to": "metrics_collection" },
+      { "from": "telegram_content_plan", "to": "metrics_collection" },
+      { "from": "reddit_engagement", "to": "metrics_collection" },
+      { "from": "instagram_reels_if_visual", "to": "metrics_collection" },
+      { "from": "metrics_collection", "to": "analysis_and_plan" },
+      { "from": "analysis_and_plan", "to": "end" }
+    ]
+  },
+  "metadata": {
+    "author": "hermes-agent",
+    "tags": ["free-traffic", "ubt", "beauty", "arbitrage", "cpa", "week1"],
+    "estimated_duration_minutes": 480,
+    "priority": 8,
+    "source_template": "free_traffic_scout_2026",
+    "telegram_bot": "@max_brain_chef_bot",
+    "telegram_channels": ["max_brain_chef_official", "ai_frontier_you", "max_brain_chef_ai", "neuro_kitchen_ai"],
+    "lead_magnets_ready": true,
+    "webhook_handler": "scripts/tg_webhook_handler.py"
+  }
+}

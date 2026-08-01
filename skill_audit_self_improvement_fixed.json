@@ -1,0 +1,439 @@
+{
+  "timestamp": "2026-07-26T17:52:05.809854",
+  "skills_scanned": 1,
+  "files_scanned": 359,
+  "total_findings": 52,
+  "risk": {
+    "score": 100,
+    "severity": "CRITICAL",
+    "recommendation": "DANGEROUS",
+    "critical": 0,
+    "high": 52,
+    "medium": 0,
+    "low": 0
+  },
+  "results": [
+    {
+      "skill": "self-improvement",
+      "files": 359,
+      "findings": [
+        {
+          "rule": "PE3_credential_access",
+          "severity": "HIGH",
+          "category": "Privilege Escalation",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\SKILL.md",
+          "line": 115,
+          "code": "2. **Hardcoded fallback key (2026-06-10):** `direct_api.py` had a hardcoded fallback key instead of reading OPENCODE_ZEN"
+        },
+        {
+          "rule": "PE3_credential_access",
+          "severity": "HIGH",
+          "category": "Privilege Escalation",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\SKILL.md",
+          "line": 640,
+          "code": "**Rule:** When external tool needs API credentials (LLM, search, images), READ Hermes config.yaml FIRST and derive the t"
+        },
+        {
+          "rule": "PE3_credential_access",
+          "severity": "HIGH",
+          "category": "Privilege Escalation",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\SKILL.md",
+          "line": 1729,
+          "code": ".env contains the API key (read from Hermes config at runtime). The model deepseek-v4-flash-free works for simple prompt"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\SKILL.md",
+          "line": 792,
+          "code": "- **Fix:** Use `subprocess.run([\"tail\", \"-n\", \"50\", path], timeout=5)` — reads only last 50 lines (SAFE: tail is read-on"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\SKILL.md",
+          "line": 816,
+          "code": "result = subprocess.run([\"tail\", \"-n\", \"50\", log_path], timeout=5, capture_output=True, text=True)  # SAFE: tail is read"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\SKILL.md",
+          "line": 1606,
+          "code": "result = subprocess.run(action, shell=True, cwd=HERMES_HOME, timeout=60)"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\SKILL.md",
+          "line": 1925,
+          "code": "Node.js CLI tools (opencode, npm packages) **hang indefinitely** when invoked from Python `subprocess.run()` on Windows."
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\SKILL.md",
+          "line": 1934,
+          "code": "- Python `subprocess.run([\"opencode.exe\", ...])` → ❌ fails (known Windows TTY issue)"
+        },
+        {
+          "rule": "MP1_persistent_injection",
+          "severity": "HIGH",
+          "category": "Memory Poisoning",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\assistant-boundaries\\SKILL.md",
+          "line": 366,
+          "code": "**Recurring issue:** memory_guard.py auto_fill writes garbage to MEMORY.md. Happened 3+ times in one session."
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\closed-loop-autonomy\\SKILL.md",
+          "line": 427,
+          "code": "2. Если STOPPED → `subprocess.Popen([python, signal_daemon.py, start])`"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\closed-loop-autonomy\\SKILL.md",
+          "line": 537,
+          "code": "r = subprocess.run([\"pgrep\", \"-f\", daemon], capture_output=True, text=True)"
+        },
+        {
+          "rule": "MP1_persistent_injection",
+          "severity": "HIGH",
+          "category": "Memory Poisoning",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\dream-memory\\SKILL.md",
+          "line": 50,
+          "code": "5. Rewrite `MEMORY.md` as a concise index."
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\event-driven-self-healing\\SKILL.md",
+          "line": 457,
+          "code": "| subprocess.run(text=True) crashes on Windows | Never use text=True on Windows. Use binary mode + manual decode. |"
+        },
+        {
+          "rule": "E2_env_harvesting",
+          "severity": "HIGH",
+          "category": "Data Exfiltration",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\forge-dynamic-tools\\SKILL.md",
+          "line": 148,
+          "code": "**Problem**: Forge sandbox runs with `PYTHONPATH=''` and clean env. Generated scripts that call external APIs (e.g. `os."
+        },
+        {
+          "rule": "PE3_credential_access",
+          "severity": "HIGH",
+          "category": "Privilege Escalation",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\forge-dynamic-tools\\SKILL.md",
+          "line": 104,
+          "code": "- **API keys**: Loaded from `.env` (CEREBRAS_API_KEY, DEEPSEEK_API_KEY, GROQ_API_KEY, OPENROUTER_API_KEY)"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\forge-dynamic-tools\\SKILL.md",
+          "line": 48,
+          "code": "- Runs via `subprocess.run()` with:"
+        },
+        {
+          "rule": "MP1_persistent_injection",
+          "severity": "HIGH",
+          "category": "Memory Poisoning",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\persistent-memory\\SKILL.md",
+          "line": 169,
+          "code": "2. Write comprehensive state to MEMORY.md"
+        },
+        {
+          "rule": "MP1_persistent_injection",
+          "severity": "HIGH",
+          "category": "Memory Poisoning",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\persistent-memory\\SKILL.md",
+          "line": 185,
+          "code": "1. No script writes to MEMORY.md automatically"
+        },
+        {
+          "rule": "MP1_persistent_injection",
+          "severity": "HIGH",
+          "category": "Memory Poisoning",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\persistent-memory\\SKILL.md",
+          "line": 239,
+          "code": "Don't write MEMORY.md until you've queried ALL of these."
+        },
+        {
+          "rule": "MP1_persistent_injection",
+          "severity": "HIGH",
+          "category": "Memory Poisoning",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\persistent-memory\\SKILL.md",
+          "line": 240,
+          "code": "10. **Use write_file, not execute_code, for MEMORY.md.** execute_code truncates large content. Always use the `write_fil"
+        },
+        {
+          "rule": "MP1_persistent_injection",
+          "severity": "HIGH",
+          "category": "Memory Poisoning",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\persistent-memory\\SKILL.md",
+          "line": 241,
+          "code": "11. **`memory` tool IS the authority for MEMORY.md (2026-06-29, UPDATED).** The memory tool reads MEMORY.md at turn star"
+        },
+        {
+          "rule": "MP1_persistent_injection",
+          "severity": "HIGH",
+          "category": "Memory Poisoning",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\persistent-memory\\SKILL.md",
+          "line": 241,
+          "code": "11. **`memory` tool IS the authority for MEMORY.md (2026-06-29, UPDATED).** The memory tool reads MEMORY.md at turn star"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\references\\autonomous-decision-matrix.md",
+          "line": 98,
+          "code": "result = subprocess.run([\"tail\", \"-n\", \"50\", \"errors.log\"],"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\references\\jarvis-philosophy.md",
+          "line": 53,
+          "code": "class UserAssistant:"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\references\\will-evolution-cycle.md",
+          "line": 204,
+          "code": "result = subprocess.run("
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\references\\windows-opencode-subprocess-fix.md",
+          "line": 9,
+          "code": "result = subprocess.run([OPENCODE_CMD, 'run', 'Say hello'], timeout=30)"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\references\\windows-opencode-subprocess-fix.md",
+          "line": 13,
+          "code": "result = subprocess.run(f'{OPENCODE_CMD} run \"Say hello\"', shell=True, timeout=30)"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\references\\windows-opencode-subprocess-fix.md",
+          "line": 65,
+          "code": "result = subprocess.run("
+        },
+        {
+          "rule": "P6_direct_leakage",
+          "severity": "HIGH",
+          "category": "Prompt Leakage",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\skill-indexer\\SKILL.md",
+          "line": 128,
+          "code": "| `P6_direct_leakage` | Prompt Leakage | ~25 | Remove `print(system_prompt)` patterns |"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\verification-gate\\scripts\\verification_context.py",
+          "line": 14,
+          "code": "proc = subprocess.run("
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\skill-indexer\\references\\skill-audit-2026-07-26.md",
+          "line": 27,
+          "code": "**Pattern**: Hidden HTML comments (`<!-- -->`), `[HIDDEN]` markers, system prompt leaks in skill bodies"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\skill-indexer\\references\\skill-audit-2026-07-26.md",
+          "line": 27,
+          "code": "**Pattern**: Hidden HTML comments (`<!-- -->`), `[HIDDEN]` markers, system prompt leaks in skill bodies"
+        },
+        {
+          "rule": "E2_env_harvesting",
+          "severity": "HIGH",
+          "category": "Data Exfiltration",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\skill-indexer\\references\\skill-audit-2026-07-26.md",
+          "line": 47,
+          "code": "**Pattern**: `os.environ.get('KEY')`, `os.environ.items()`, `process.env.API_KEY`"
+        },
+        {
+          "rule": "E2_env_harvesting",
+          "severity": "HIGH",
+          "category": "Data Exfiltration",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\skill-indexer\\references\\skill-audit-2026-07-26.md",
+          "line": 47,
+          "code": "**Pattern**: `os.environ.get('KEY')`, `os.environ.items()`, `process.env.API_KEY`"
+        },
+        {
+          "rule": "E2_env_harvesting",
+          "severity": "HIGH",
+          "category": "Data Exfiltration",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\skill-indexer\\references\\skill-audit-2026-07-26.md",
+          "line": 47,
+          "code": "**Pattern**: `os.environ.get('KEY')`, `os.environ.items()`, `process.env.API_KEY`"
+        },
+        {
+          "rule": "P6_direct_leakage",
+          "severity": "HIGH",
+          "category": "Prompt Leakage",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\skill-indexer\\references\\skill-audit-2026-07-26.md",
+          "line": 42,
+          "code": "**Pattern**: `print(system_prompt)`, `echo system instructions`, `return system_prompt`"
+        },
+        {
+          "rule": "P6_direct_leakage",
+          "severity": "HIGH",
+          "category": "Prompt Leakage",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\skill-indexer\\references\\skill-audit-2026-07-26.md",
+          "line": 42,
+          "code": "**Pattern**: `print(system_prompt)`, `echo system instructions`, `return system_prompt`"
+        },
+        {
+          "rule": "P6_direct_leakage",
+          "severity": "HIGH",
+          "category": "Prompt Leakage",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\skill-indexer\\references\\skill-audit-2026-07-26.md",
+          "line": 42,
+          "code": "**Pattern**: `print(system_prompt)`, `echo system instructions`, `return system_prompt`"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\loop-engineering\\references\\hermes-implementation.md",
+          "line": 46,
+          "code": "subprocess.run([\"git\", \"worktree\", \"add\", f\"../hermes-wt-{task_id}/\", branch])"
+        },
+        {
+          "rule": "PE3_credential_access",
+          "severity": "HIGH",
+          "category": "Privilege Escalation",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\hermes-root-organization\\references\\migration-patterns.md",
+          "line": 12,
+          "code": "- `.env` tokens — already existed in current installation"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\forge-dynamic-tools\\references\\mark-xlviii-integration.md",
+          "line": 17,
+          "code": "**Forge-lite Application**: Our `run_in_sandbox()` uses `subprocess.run()` — should apply this patch on Windows to avoid"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\event-driven-self-healing\\references\\ripple-consumer-pattern.md",
+          "line": 36,
+          "code": "result = subprocess.run([sys.executable, \"scripts/handler.py\"], ...)"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\crystal-self-awareness\\scripts\\run_crystal_self_awareness.py",
+          "line": 25,
+          "code": "result = subprocess.run("
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\closed-loop-autonomy\\references\\goal-executor-pool.md",
+          "line": 33,
+          "code": "result = subprocess.run(cmd, shell=True, capture_output=True,"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\closed-loop-autonomy\\references\\integration-audit-methodology-2026-06-29.md",
+          "line": 21,
+          "code": "└── subprocess.run(rd_processor.py)"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\closed-loop-autonomy\\references\\integration-audit-methodology-2026-06-29.md",
+          "line": 22,
+          "code": "└── subprocess.run(dev_processor.py)"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\closed-loop-autonomy\\references\\integration-audit-methodology-2026-06-29.md",
+          "line": 131,
+          "code": "r = subprocess.run([\"pgrep\", \"-f\", daemon], capture_output=True, text=True)"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\closed-loop-autonomy\\references\\okf-navigator-pattern.md",
+          "line": 70,
+          "code": "WRONG:  subprocess.run([\"bash\", \"/d/.../bd\", \"create\", ...])  # fails on Windows"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\closed-loop-autonomy\\references\\okf-navigator-pattern.md",
+          "line": 71,
+          "code": "RIGHT:  subprocess.run([\"node\", \"D:/npm-global/.../bd.js\", \"create\", ...])"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\closed-loop-autonomy\\references\\socks-proxy-workaround.md",
+          "line": 15,
+          "code": "result = subprocess.run("
+        },
+        {
+          "rule": "P6_direct_leakage",
+          "severity": "HIGH",
+          "category": "Prompt Leakage",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\closed-loop-autonomy\\references\\system-audit-method.md",
+          "line": 73,
+          "code": "python -c \"from scripts.chain_heartbeat import system_status; import json; print(json.dumps(system_status()['summary'], "
+        },
+        {
+          "rule": "MP1_persistent_injection",
+          "severity": "HIGH",
+          "category": "Memory Poisoning",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\self-improvement\\assistant-boundaries\\references\\memory-guard-autofill-fix-2026-06-30.md",
+          "line": 4,
+          "code": "`memory_guard.py` `auto_fill()` writes garbage to MEMORY.md. Happened 3+ times in one session."
+        }
+      ]
+    }
+  ]
+}

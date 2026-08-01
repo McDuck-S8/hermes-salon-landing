@@ -1,0 +1,12 @@
+model: claude-sonnet-4
+tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - WebFetch
+display_name: "Comms"
+description: "Communications specialist for Hermes Hive Mind. Owns Telegram, email, Slack, Discord, notifications, and messaging workflows."

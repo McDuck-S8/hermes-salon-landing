@@ -1,0 +1,94 @@
+{
+  "base_url": "https://youtube.com",
+  "login_required": true,
+  "auth_type": "cookie",
+  "storage_state": "youtube_auth.json",
+  "selectors": {
+    "upload_button": "a[href=\"/upload\"]",
+    "file_input": "input[type=\"file\"]",
+    "title_input": "input[name=\"title\"]",
+    "description_input": "textarea[name=\"description\"]",
+    "playlist_dropdown": "select[name=\"playlist_id\"]",
+    "next_button": "button:has-text(\"Next\")",
+    "visibility_private": "input[value=\"private\"]",
+    "visibility_unlisted": "input[value=\"unlisted\"]",
+    "visibility_public": "input[value=\"public\"]",
+    "schedule_radio": "input[value=\"schedule\"]",
+    "schedule_datetime": "input[name=\"publish_at\"]",
+    "done_button": "button:has-text(\"Done\")",
+    "publish_button": "button:has-text(\"Publish\")",
+    "thumbnail_input": "input[type=\"file\"][accept*=\"image\"]",
+    "tags_input": "input[name=\"tags\"]",
+    "category_select": "select[name=\"category\"]",
+    "language_select": "select[name=\"language\"]",
+    "location_input": "input[name=\"location\"]",
+    "comments_radio": "input[name=\"comments_enabled\"]",
+    "license_select": "select[name=\"license\"]",
+    "age_restriction_radio": "input[name=\"made_for_kids\"]",
+    "paid_promotion_checkbox": "input[name=\"paid_promotion\"]",
+    "automatic_chapters_checkbox": "input[name=\"automatic_chapters\"]",
+    "places_checkbox": "input[name=\"show_location\"]",
+    "automatic_places_checkbox": "input[name=\"automatic_places\"]",
+    "shorts_remix_checkbox": "input[name=\"shorts_remix\"]",
+    "subtitle_file_input": "input[type=\"file\"][accept*=\"text\"]"
+  },
+  "steps": {
+    "upload_video": [
+      { "action": "goto", "url": "/upload" },
+      { "action": "wait", "selector": "input[type=\"file\"]" },
+      { "action": "fill", "selector": "input[type=\"file\"]", "param": "file_path" },
+      { "action": "wait", "selector": "input[name=\"title\"]" },
+      { "action": "fill", "selector": "input[name=\"title\"]", "param": "title" },
+      { "action": "fill", "selector": "textarea[name=\"description\"]", "param": "description" },
+      { "action": "click", "selector": "button:has-text(\"Next\")" },
+      { "action": "wait", "selector": "input[value=\"private\"], input[value=\"unlisted\"], input[value=\"public\"]" },
+      { "action": "click", "selector": "input[value=\"private\"]", "condition": "private" },
+      { "action": "click", "selector": "button:has-text(\"Next\")" },
+      { "action": "wait", "selector": "button:has-text(\"Publish\")" },
+      { "action": "click", "selector": "button:has-text(\"Publish\")" },
+      { "action": "wait_for_navigation" }
+    ],
+    "upload_short": [
+      { "action": "goto", "url": "/upload" },
+      { "action": "wait", "selector": "input[type=\"file\"]" },
+      { "action": "fill", "selector": "input[type=\"file\"]", "param": "file_path" },
+      { "action": "wait", "selector": "input[name=\"title\"]" },
+      { "action": "fill", "selector": "input[name=\"title\"]", "param": "title" },
+      { "action": "click", "selector": "button:has-text(\"Next\")" },
+      { "action": "click", "selector": "button:has-text(\"Next\")" },
+      { "action": "click", "selector": "button:has-text(\"Publish\")" }
+    ],
+    "schedule_video": [
+      { "action": "goto", "url": "/upload" },
+      { "action": "fill", "selector": "input[type=\"file\"]", "param": "file_path" },
+      { "action": "fill", "selector": "input[name=\"title\"]", "param": "title" },
+      { "action": "fill", "selector": "textarea[name=\"description\"]", "param": "description" },
+      { "action": "click", "selector": "input[value=\"schedule\"]" },
+      { "action": "fill", "selector": "input[name=\"publish_at\"]", "param": "datetime" },
+      { "action": "click", "selector": "button:has-text(\"Done\")" },
+      { "action": "click", "selector": "button:has-text(\"Schedule\")" }
+    ],
+    "edit_metadata": [
+      { "action": "goto", "url": "{video_url}" },
+      { "action": "click", "selector": "button:has-text(\"Edit\")" },
+      { "action": "wait", "selector": "input[name=\"title\"]" },
+      { "action": "fill", "selector": "input[name=\"title\"]", "param": "title" },
+      { "action": "fill", "selector": "textarea[name=\"description\"]", "param": "description" },
+      { "action": "click", "selector": "button:has-text(\"Save\")" }
+    ],
+    "add_subtitles": [
+      { "action": "goto", "url": "{video_url}/edit" },
+      { "action": "click", "selector": "a[href*=\"subtitles\"]" },
+      { "action": "click", "selector": "button:has-text(\"Add language\")" },
+      { "action": "select", "selector": "select[name=\"language\"]", "param": "language" },
+      { "action": "click", "selector": "button:has-text(\"Upload file\")" },
+      { "action": "fill", "selector": "input[type=\"file\"][accept*=\"text\"]", "param": "subtitle_path" },
+      { "action": "click", "selector": "button:has-text(\"Save\")" }
+    ],
+    "add_thumbnail": [
+      { "action": "goto", "url": "{video_url}/edit" },
+      { "action": "click", "selector": "input[type=\"file\"][accept*=\"image\"]", "param": "thumbnail_path" },
+      { "action": "click", "selector": "button:has-text(\"Save\")" }
+    ]
+  }
+}

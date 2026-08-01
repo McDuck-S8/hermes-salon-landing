@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Штаб арбитражника — Spider Web v3</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a14;overflow:hidden;font-family:system-ui,-apple-system,sans-serif;color:#e0e0e0;user-select:none}
+svg{width:100vw;height:100vh}
+
+/* ===== TOP BAR ===== */
+#topbar{position:fixed;top:0;left:0;right:0;height:48px;background:linear-gradient(135deg,#0d0d1a 0%,#141428 100%);border-bottom:1px solid #1e1e3a;display:flex;align-items:center;padding:0 20px;z-index:1000}
+#topbar .title{font-size:14px;font-weight:700;color:#c0c0e0;letter-spacing:1px;margin-right:24px}
+#topbar .title span{color:#60a5fa}
+#topbar .title small{font-size:10px;color:#555;font-weight:400;margin-left:8px}
+#topbar .status{padding:4px 10px;border-radius:4px;font-size:10px;font-weight:600;margin-right:8px}
+#topbar .status.ready{background:#065f4620;color:#4ade80;border:1px solid #065f46}
+#topbar .status.testing{background:#854d0e20;color:#facc15;border:1px solid #854d0e}
+#topbar .status.blocked{background:#7f1d1d20;color:#f87171;border:1px solid #7f1d1d}
+#topbar .search-wrap{display:flex;align-items:center;margin-left:auto;gap:8px}
+#topbar .search-wrap input{background:#1a1a30;border:1px solid #2a2a4a;border-radius:4px;padding:6px 12px;color:#e0e0e0;font-size:12px;width:180px;outline:none}
+#topbar .search-wrap input:focus{border-color:#60a5fa}
+#topbar .search-wrap input::placeholder{color:#555}
+#topbar .tutorial{font-size:10px;color:#555;letter-spacing:0.5px}
+
+/* ===== SIDE PANEL ===== */
+#panel{position:fixed;top:48px;right:0;width:300px;bottom:0;background:#0d0d1a;border-left:1px solid #1e1e3a;overflow-y:auto;z-index:500;padding:16px 14px}
+#panel::-webkit-scrollbar{width:4px}
+#panel::-webkit-scrollbar-track{background:#0d0d1a}
+#panel::-webkit-scrollbar-thumb{background:#2a2a4a;border-radius:2px}
+#panel h3{font-size:11px;color:#888;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px}
+.panel-section{margin-bottom:20px}
+.panel-section h4{font-size:11px;color:#60a5fa;margin-bottom:8px}
+.panel-card{background:#141428;border:1px solid #1e1e3a;border-radius:6px;padding:10px 12px;margin-bottom:8px;cursor:pointer;transition:border-color 0.15s}
+.panel-card:hover{border-color:#3b82f6}
+.panel-card .route{font-size:11px;font-weight:600;color:#e0e0e0;margin-bottom:4px}
+.panel-card .route .arrow{color:#555;margin:0 4px}
+.panel-card .meta{font-size:10px;color:#888;display:flex;gap:10px;flex-wrap:wrap}
+.panel-card .meta .tag{padding:1px 6px;border-radius:3px;font-size:9px;font-weight:600}
+.panel-card .meta .tag.roi{background:#065f4620;color:#4ade80;border:1px solid #065f46}
+.panel-card .meta .tag.wait{background:#854d0e20;color:#facc15;border:1px solid #854d0e}
+.panel-card .meta .tag.conf{background:#1e3a5f20;color:#60a5fa;border:1px solid #1e3a5f}
+.panel-card .meta .tag.block{background:#7f1d1d20;color:#f87171;border:1px solid #7f1d1d}
+
+/* ===== PANEL TABS ===== */
+.panel-tabs{display:flex;gap:4px;margin-bottom:12px;border-bottom:1px solid #1e1e3a;padding-bottom:8px}
+.panel-tab{padding:4px 10px;font-size:10px;border-radius:4px;cursor:pointer;color:#666;border:1px solid transparent;transition:all 0.15s}
+.panel-tab:hover{color:#aaa;border-color:#2a2a4a}
+.panel-tab.active{color:#60a5fa;border-color:#3b82f6;background:#1e3a5f20}
+
+/* ===== LEGEND ===== */
+#legend{position:fixed;bottom:60px;left:20px;background:#0d0d1ae0;border:1px solid #1e1e3a;border-radius:8px;padding:12px 16px;z-index:500;font-size:11px;backdrop-filter:blur(8px)}
+#legend .row{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+#legend .row:last-child{margin-bottom:0}
+#legend .dot{width:10px;height:10px;border-radius:50%;border:1px solid rgba(255,255,255,0.15)}
+#legend .line-demo{width:20px;height:2px}
+#legend .ltext{color:#aaa;font-size:10px}
+
+/* ===== ROUTE FINDER ===== */
+#route-finder{position:fixed;bottom:60px;left:200px;background:#0d0d1ae0;border:1px solid #1e1e3a;border-radius:8px;padding:10px 14px;z-index:500;font-size:11px;backdrop-filter:blur(8px);display:none}
+#route-finder .rf-row{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+#route-finder .rf-row label{color:#888;font-size:10px}
+#route-finder .rf-row input{background:#1a1a30;border:1px solid #2a2a4a;border-radius:3px;padding:4px 8px;color:#e0e0e0;font-size:11px;width:120px;outline:none}
+#route-finder .rf-result{font-size:10px;color:#4ade80;margin-top:4px}
+
+/* ===== TOOLTIP ===== */
+.tooltip{position:fixed;background:#0d0d1af0;border:1px solid #2a2a4a;border-radius:6px;padding:10px 12px;font-size:11px;z-index:9999;pointer-events:none;backdrop-filter:blur(8px);min-width:160px;max-width:240px;box-shadow:0 4px 20px rgba(0,0,0,0.5)}
+.tooltip .tt-title{font-weight:600;color:#e0e0e0;margin-bottom:4px;font-size:12px}
+.tooltip .tt-meta{color:#888;font-size:10px;line-height:1.5}
+.tooltip .tt-meta .hl{color:#60a5fa}
+.tooltip .tt-meta .good{color:#4ade80}
+.tooltip .tt-meta .warn{color:#facc15}
+.tooltip .tt-meta .bad{color:#f87171}
+.tooltip .tt-divider{border-top:1px solid #1e1e3a;margin:5px 0;padding-top:5px}
+
+/* ===== LINKS ===== */
+.link{fill:none;stroke-opacity:0.5}
+.link.untested{stroke:#f87171;stroke-dasharray:5,4;stroke-width:1.5}
+.link.testing{stroke:#facc15;stroke-width:2;stroke-dasharray:3,2}
+.link.ready{stroke:#4ade80;stroke-width:2.5}
+.link.blocked{stroke:#555;stroke-dasharray:2,4;stroke-width:1}
+.link.highlight{stroke-opacity:0.9;stroke-width:3!important}
+.link.dim{stroke-opacity:0.08!important}
+.link.dim.ready{stroke-opacity:0.15!important}
+
+/* ===== NODES ===== */
+.node{transition:opacity 0.2s}
+.node.dim{opacity:0.15!important}
+.node text{fill:#d0d0d0;font-size:10px;pointer-events:none;text-shadow:0 0 5px #000;font-weight:500;dominant-baseline:central}
+.node.highlight text{fill:#fff!important;font-weight:700!important}
+.node.highlight circle{filter:drop-shadow(0 0 12px rgba(255,255,255,0.3))!important}
+.node circle{stroke:#fff;stroke-width:1.5;cursor:pointer;transition:all 0.15s}
+.node circle:hover{stroke-width:3;filter:brightness(1.3)}
+.node .glow{opacity:0;transition:opacity 0.2s}
+.node.highlight .glow{opacity:1}
+
+/* Node colors */
+.node.traffic circle{fill:#22c55e}
+.node.traffic text{fill:#bbf7d0}
+.node.proxy circle{fill:#3b82f6}
+.node.proxy text{fill:#bfdbfe}
+.node.offer circle{fill:#a855f7}
+.node.offer text{fill:#e9d5ff}
+.node.payment circle{fill:#f97316}
+.node.payment text{fill:#fed7aa}
+.node.exit circle{fill:#ef4444}
+.node.exit text{fill:#fecaca}
+.node.income circle{fill:#eab308}
+.node.income text{fill:#fef9c3}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){#panel{width:260px;font-size:10px}#topbar .tutorial{display:none}}
+</style>
+</head>
+<body>
+
+<!-- ===== TOP BAR ===== -->
+<div id="topbar">
+  <div class="title">🕸 АРБИТРАЖНЫЙ ШТАБ <span>v3</span><small>Крым · 2026</small></div>
+  <div class="status ready">✅ 2 маршрута готовы</div>
+  <div class="status testing">🔄 3 тестируются</div>
+  <div class="status blocked">⛔ 4 заблокированы</div>
+  <div class="search-wrap">
+    <span class="tutorial">Кликни источник → кликни цель → подсветка маршрута</span>
+    <input id="search" placeholder="🔍 Поиск узла..." />
+  </div>
+</div>
+
+<!-- ===== LEGEND ===== -->
+<div id="legend">
+  <div class="row"><div class="dot" style="background:#22c55e"></div><span class="ltext">Трафик</span></div>
+  <div class="row"><div class="dot" style="background:#3b82f6"></div><span class="ltext">Прокладки</span></div>
+  <div class="row"><div class="dot" style="background:#a855f7"></div><span class="ltext">CPA/Офферы</span></div>
+  <div class="row"><div class="dot" style="background:#f97316"></div><span class="ltext">Платёжки</span></div>
+  <div class="row"><div class="dot" style="background:#ef4444"></div><span class="ltext">Вывод</span></div>
+  <div class="row"><div class="dot" style="background:#eab308"></div><span class="ltext">Прибыль</span></div>
+  <div class="row"><div style="margin:2px 0;display:flex;gap:4px">
+    <div class="line-demo" style="background:#f87171;border-top:2px dashed #f87171"></div>
+    <span class="ltext">не тест.</span>
+    <div class="line-demo" style="background:#facc15;border-top:2px dashed #facc15"></div>
+    <span class="ltext">тест</span>
+    <div class="line-demo" style="background:#4ade80;border-top:2px solid #4ade80"></div>
+    <span class="ltext">деньги</span></div></div>
+</div>
+
+<!-- ===== ROUTE FINDER STATUS ===== -->
+<div id="route-finder">
+  <div class="rf-row"><span id="rf-label">🔍 Выбери источник и цель на схеме</span></div>
+  <div class="rf-result" id="rf-result"></div>
+</div>
+
+<!-- ===== RIGHT PANEL ===== -->
+<div id="panel">
+  <div class="panel-tabs">
+    <div class="panel-tab active" data-tab="routes">🚀 Маршруты</div>
+    <div class="panel-tab" data-tab="gaps">📊 Гэпы</div>
+    <div class="panel-tab" data-tab="stats">📈 Статистика</div>
+  </div>
+
+  <!-- Routes tab -->
+  <div class="panel-tab-content" id="tab-routes">
+    <div class="panel-section">
+      <h4>🏆 ТОП-3 ГОТОВЫХ МАРШРУТА</h4>
+      <div class="panel-card" data-source="kadam" data-target="tinkoff">
+        <div class="route">kadam <span class="arrow">→</span> admitad <span class="arrow">→</span> Тинькофф</div>
+        <div class="meta">
+          <span class="tag roi">ROI 244%</span>
+          <span class="tag conf">conf 0.2</span>
+          <span class="tag wait">ждёт теста</span>
+        </div>
+        <div style="font-size:9px;color:#555;margin-top:4px">CPA 1500₽ · CPC 8.5₽ · бюджет $50</div>
+      </div>
+      <div class="panel-card" data-source="richads" data-target="raid">
+        <div class="route">richads <span class="arrow">→</span> admitad <span class="arrow">→</span> Raid SL</div>
+        <div class="meta">
+          <span class="tag roi">ROI 240%</span>
+          <span class="tag conf">conf 1.0</span>
+          <span class="tag wait">ждёт теста</span>
+        </div>
+        <div style="font-size:9px;color:#555;margin-top:4px">CPA 120₽ · CPC 4.5₽ · бюджет $30</div>
+      </div>
+      <div class="panel-card" data-source="kadam" data-target="moneyman">
+        <div class="route">kadam <span class="arrow">→</span> cityads <span class="arrow">→</span> MoneyMan</div>
+        <div class="meta">
+          <span class="tag roi">ROI 78%</span>
+          <span class="tag conf">conf 0.16</span>
+          <span class="tag wait">ждёт теста</span>
+        </div>
+        <div style="font-size:9px;color:#555;margin-top:4px">CPA 950₽ · CPC 8.5₽</div>
+      </div>
+    </div>
+
+    <div class="panel-section">
+      <h4>⛔ ТОП-3 БЛОКЕРА</h4>
+      <div class="panel-card">
+        <div class="route">Нет аккаунтов CPA-сетей</div>
+        <div class="meta"><span class="tag block">регистрация</span><span style="color:#555;font-size:10px">CPAGrip, MyLead, FinCPA</span></div>
+      </div>
+      <div class="panel-card">
+        <div class="route">Нет соцсетей для тестов</div>
+        <div class="meta"><span class="tag block">регистрация</span><span style="color:#555;font-size:10px">TikTok, YouTube, Instagram</span></div>
+      </div>
+      <div class="panel-card">
+        <div class="route">Content-Locker #1 не запущен</div>
+        <div class="meta"><span class="tag block">ждёт шаг 1</span><span style="color:#555;font-size:10px">готов скрипт, нет CPAGrip</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gaps tab -->
+  <div class="panel-tab-content" id="tab-gaps" style="display:none">
+    <div class="panel-section">
+      <h4>📊 ВСЕ ГОТОВЫЕ ГЭПЫ</h4>
+      <div class="panel-card" data-source="kadam" data-target="tinkoff">
+        <div class="route">kadam → Тинькофф кредитка</div>
+        <div class="meta"><span class="tag roi">244%</span><span class="tag conf">0.2</span><span class="tag wait">kadam</span></div>
+        <div style="font-size:9px;color:#555">$2075/день · CPA 1500₽ · CPC 8.5₽</div>
+      </div>
+      <div class="panel-card" data-source="richads" data-target="raid">
+        <div class="route">richads → Raid Shadow Legends</div>
+        <div class="meta"><span class="tag roi">240%</span><span class="tag conf">1.0</span><span class="tag wait">richads</span></div>
+        <div style="font-size:9px;color:#555">$1080/день · CPA 120₽ · CPC 4.5₽</div>
+      </div>
+      <div class="panel-card" data-source="kadam" data-target="moneyman">
+        <div class="route">kadam → MoneyMan микрозайм</div>
+        <div class="meta"><span class="tag roi">78%</span><span class="tag conf">0.16</span><span class="tag wait">cityads</span></div>
+        <div style="font-size:9px;color:#555">$665/день · CPA 950₽ · CPC 8.5₽</div>
+      </div>
+      <div class="panel-card" data-source="kadam" data-target="insure">
+        <div class="route">kadam → Страховка авто</div>
+        <div class="meta"><span class="tag roi">82%</span><span class="tag conf">0.24</span><span class="tag wait">cityads</span></div>
+        <div style="font-size:9px;color:#555">$697/день · CPA 650₽ · CPC 8.5₽</div>
+      </div>
+      <div class="panel-card" data-source="facebook" data-target="tinkoff">
+        <div class="route">facebook → Тинькофф кредитка</div>
+        <div class="meta"><span class="tag roi">62.5%</span><span class="tag conf">0.2</span><span class="tag wait">admitad</span></div>
+        <div style="font-size:9px;color:#555">$1125/день · CPC 18₽</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats tab -->
+  <div class="panel-tab-content" id="tab-stats" style="display:none">
+    <div class="panel-section">
+      <h4>📈 СИСТЕМА АРБИТРАЖА</h4>
+      <div class="panel-card">
+        <div class="route">72</div>
+        <div class="meta"><span style="color:#4ade80">гэпа найдено</span></div>
+      </div>
+      <div class="panel-card">
+        <div class="route">3</div>
+        <div class="meta"><span style="color:#facc15">теста спланировано</span></div>
+      </div>
+      <div class="panel-card">
+        <div class="route">0</div>
+        <div class="meta"><span style="color:#f87171">запущено (STARTED)</span></div>
+      </div>
+      <div class="panel-card">
+        <div class="route">6 CPA сетей</div>
+        <div class="meta">доступно, 0 зарегистрировано</div>
+      </div>
+      <div class="panel-card">
+        <div class="route">43 источника трафика</div>
+        <div class="meta">в мастерской, 0 задействовано</div>
+      </div>
+      <div class="panel-card">
+        <div class="route">$0 заработано</div>
+        <div class="meta">спираль не крутится → нужен 1-й запуск</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SVG ===== -->
+<svg id="svg"></svg>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script>
+// ==========================================================
+//  DATA
+// ==========================================================
+
+const colorByGroup = {traffic:"#22c55e", proxy:"#3b82f6", offer:"#a855f7", payment:"#f97316", exit:"#ef4444", income:"#eab308"};
+
+const nodes = [
+  // ============ TRAFFIC ============
+  {id:"tiktok", group:"traffic", label:"TikTok Shorts", meta:"Бесплатно (organic) • РФ ⚠️VPN • CPC $0", status:"untested", routes:"TikTok→Carrd→CPAGrip→Content Locker→USDT→KuCoin→ТБанк"},
+  {id:"youtube", group:"traffic", label:"YouTube Shorts", meta:"Бесплатно (organic) • РФ ✓ • CPC $0", status:"untested"},
+  {id:"tg-channels", group:"traffic", label:"Telegram каналы", meta:"Бесплатно (свои) • CPC $0 • Доступно", status:"untested"},
+  {id:"reddit", group:"traffic", label:"Reddit", meta:"Бесплатно (organic) • РФ ✓ • CPC $0", status:"testing", route_test:"Посты в сабреддитах → GH Pages → MaxBounty"},
+  {id:"pinterest", group:"traffic", label:"Pinterest", meta:"Бесплатно (organic) • РФ ✓ • CPC $0", status:"untested"},
+  {id:"seo-sites", group:"traffic", label:"SEO-сайты", meta:"Бесплатно (время) • РФ ✓ • CPC $0", status:"untested"},
+  {id:"tg-ads", group:"traffic", label:"Telegram Ads", meta:"Платно • CPC $0.02-0.10 • РФ ✓", status:"blocked", block_reason:"Нужен бюджет $50+", status:"untested"},
+  {id:"kadam", group:"traffic", label:"Kadam", meta:"Платно • CPC 8.5₽ • CPM 120₽ • RU", status:"ready", route_ready:"kadam→admitad→Тинькофф→USDT→KuCoin→ТБанк ROI 244%"},
+  {id:"facebook", group:"traffic", label:"Facebook Ads", meta:"Платно • CPC 18₽ • RU ⚠️VPN", status:"untested"},
+  {id:"richads", group:"traffic", label:"RichAds", meta:"Платно • CPC 4.5₽ • CPM 80₽ • RU", status:"ready", route_ready:"richads→admitad→Raid SL→USDT→KuCoin→ТБанк ROI 240%"},
+  {id:"vk-ads", group:"traffic", label:"VK Ads", meta:"Платно • CPC $0.05-0.50 • РФ ✓", status:"untested"},
+  {id:"telega-in", group:"traffic", label:"Telega.in", meta:"Платно • $0.001-0.05/sub • РФ ✓", status:"untested"},
+
+  // ============ PROXY ============
+  {id:"carrd", group:"proxy", label:"Carrd Landing", meta:"$0 (free) • 30 мин • РФ ✓ • Био-ссылка", status:"untested"},
+  {id:"tg-bot", group:"proxy", label:"Telegram Bot", meta:"$0 • 1 час • Python/aiogram3 • Hermes готов", status:"testing", route_test:"TG Bot→FinCPA→USDT→KuCoin→ТБанк"},
+  {id:"gh-pages", group:"proxy", label:"GitHub Pages", meta:"$0 • 1 час • Статика • РФ ✓", status:"untested"},
+  {id:"seo-micro", group:"proxy", label:"SEO микро-сайт", meta:"$0 • 2-4 часа • HTML • РФ ✓", status:"untested"},
+  {id:"tg-miniapp", group:"proxy", label:"TG Mini App", meta:"$0 • нужно изучить API • Новый канал", status:"untested"},
+  {id:"taplink", group:"proxy", label:"Taplink", meta:"$0 (free) • 15 мин • Мультиссылка • РФ ✓", status:"untested"},
+  {id:"tilda", group:"proxy", label:"Tilda", meta:"$0 (free) / $15/мес • 2-4 часа • РФ ✓", status:"untested"},
+
+  // ============ CPA OFFERS ============
+  {id:"tinkoff", group:"offer", label:"Тинькофф кредитка", meta:"Admitad • CPA 1500₽ • RU • Conv 3% • 18+", status:"ready", payout:"1500₽", roi:"244%", epc:"45₽"},
+  {id:"raid", group:"offer", label:"Raid Shadow Legends", meta:"Admitad • CPA 120₽ • RU • Игры", status:"ready", payout:"120₽", roi:"240%"},
+  {id:"moneyman", group:"offer", label:"MoneyMan микрозайм", meta:"CityAds • CPA 950₽ • RU • Finance", status:"untested", payout:"950₽", roi:"78%"},
+  {id:"insure", group:"offer", label:"Страховка авто", meta:"CityAds • CPA 650₽ • RU • Insurance", status:"untested", payout:"650₽", roi:"82%"},
+  {id:"fincpa", group:"offer", label:"FinCPA (fintech)", meta:"$5-50/lead • RU • min $50 • USDT/BTC", status:"untested"},
+  {id:"cpagrip", group:"offer", label:"CPAGrip (content)", meta:"$1-10/lead • min $50 • Gaming", status:"blocked", block_reason:"Нужна регистрация"},
+  {id:"mylead", group:"offer", label:"MyLead", meta:"$1-20/lead • min $20 • Multi", status:"blocked", block_reason:"Нужна регистрация"},
+  {id:"maxbounty", group:"offer", label:"MaxBounty", meta:"$10-100/lead • min $100 • US", status:"blocked", block_reason:"Нужна регистрация"},
+  {id:"travelpayouts", group:"offer", label:"Travelpayouts", meta:"3-12% • min $20 • Хостелы/отели", status:"testing", route_test:"SEO→Travelpayouts→Payoneer→ТБанк"},
+  {id:"clickdealer", group:"offer", label:"ClickDealer", meta:"$20-500/lead • min $100 • Gambling", status:"blocked", block_reason:"Нужна регистрация"},
+  {id:"admitad-net", group:"offer", label:"Admitad (другие)", meta:"$0.50-50/lead • 500₽ min • RU CPA", status:"untested"},
+
+  // ============ PAYMENT ============
+  {id:"usdt", group:"payment", label:"USDT TRC20", meta:"Комиссия 1-3% • Мгновенно • Крым ✓", status:"ready"},
+  {id:"payoneer", group:"payment", label:"Payoneer", meta:"Комиссия 2% • 1-3 дня • РФ ✓", status:"untested"},
+  {id:"kucoin", group:"payment", label:"KuCoin P2P", meta:"Комиссия 0% P2P • $10 мин • Крым ✓", status:"ready"},
+  {id:"okx", group:"payment", label:"OKX P2P", meta:"Комиссия 0% P2P • $10 мин • Крым ✓", status:"untested"},
+
+  // ============ EXIT ============
+  {id:"tbank", group:"exit", label:"Т-Банк карта", meta:"0% (СБП) • Мгновенно • Крым ✓", status:"ready"},
+  {id:"sbp", group:"exit", label:"СБП (любой банк)", meta:"0-0.5% • Мгновенно • РФ ✓", status:"ready"},
+  {id:"cash", group:"exit", label:"Наличка", meta:"0% • Крым ✓", status:"ready"},
+  {id:"crypto", group:"exit", label:"Криптокошелёк", meta:"Сеть TRC20/BEP20 • Крым ✓", status:"ready"},
+
+  // ============ INCOME ============
+  {id:"profit-day", group:"income", label:"💰 $50-200/день", meta:"Тестовый режим • 7-14 дней", status:"untested"},
+  {id:"profit-month", group:"income", label:"💰 $1500-6000/мес", meta:"Масштабирование • 30-90 дней", status:"untested"},
+];
+
+// Route readiness status per link: source_target -> status
+const linkStatus = {
+  "kadam_tinkoff":"ready",
+  "richads_raid":"ready",
+  "kadam_admitad-net":"untested",
+  "facebook_tinkoff":"untested",
+  "reddit_gh-pages":"testing",
+  "tg-channels_tg-bot":"testing",
+  "tg-channels_tg-miniapp":"untested",
+  "travelpayouts_payoneer":"testing",
+  "seo-sites_seo-micro":"untested",
+};
+
+const links = [
+  // TRAFFIC → PROXY
+  {s:"tiktok",t:"carrd",g:"traffic"},
+  {s:"tiktok",t:"tg-bot",g:"traffic"},
+  {s:"youtube",t:"carrd",g:"traffic"},
+  {s:"tg-channels",t:"tg-bot",g:"traffic"},
+  {s:"tg-channels",t:"tg-miniapp",g:"traffic"},
+  {s:"tg-channels",t:"taplink",g:"traffic"},
+  {s:"reddit",t:"gh-pages",g:"traffic"},
+  {s:"reddit",t:"seo-micro",g:"traffic"},
+  {s:"seo-sites",t:"seo-micro",g:"traffic"},
+  {s:"seo-sites",t:"gh-pages",g:"traffic"},
+  {s:"pinterest",t:"carrd",g:"traffic"},
+  {s:"tg-ads",t:"tg-bot",g:"traffic"},
+  {s:"tg-ads",t:"tg-miniapp",g:"traffic"},
+  {s:"facebook",t:"carrd",g:"traffic"},
+  {s:"kadam",t:"seo-micro",g:"traffic"},
+  {s:"kadam",t:"tilda",g:"traffic"},
+  {s:"richads",t:"tilda",g:"traffic"},
+  {s:"vk-ads",t:"tilda",g:"traffic"},
+  {s:"telega-in",t:"tg-bot",g:"traffic"},
+
+  // PROXY → OFFERS
+  {s:"carrd",t:"tinkoff",g:"proxy"},
+  {s:"carrd",t:"cpagrip",g:"proxy"},
+  {s:"tg-bot",t:"fincpa",g:"proxy"},
+  {s:"tg-bot",t:"mylead",g:"proxy"},
+  {s:"tg-bot",t:"tinkoff",g:"proxy"},
+  {s:"tg-miniapp",t:"cpagrip",g:"proxy"},
+  {s:"tg-miniapp",t:"mylead",g:"proxy"},
+  {s:"gh-pages",t:"maxbounty",g:"proxy"},
+  {s:"gh-pages",t:"admitad-net",g:"proxy"},
+  {s:"seo-micro",t:"admitad-net",g:"proxy"},
+  {s:"seo-micro",t:"travelpayouts",g:"proxy"},
+  {s:"seo-micro",t:"tinkoff",g:"proxy"},
+  {s:"tilda",t:"admitad-net",g:"proxy"},
+  {s:"tilda",t:"clickdealer",g:"proxy"},
+  {s:"taplink",t:"cpagrip",g:"proxy"},
+
+  // OFFERS → PAYMENT
+  {s:"tinkoff",t:"usdt",g:"offer"},
+  {s:"raid",t:"usdt",g:"offer"},
+  {s:"moneyman",t:"usdt",g:"offer"},
+  {s:"insure",t:"usdt",g:"offer"},
+  {s:"cpagrip",t:"usdt",g:"offer"},
+  {s:"mylead",t:"usdt",g:"offer"},
+  {s:"fincpa",t:"usdt",g:"offer"},
+  {s:"fincpa",t:"payoneer",g:"offer"},
+  {s:"travelpayouts",t:"payoneer",g:"offer"},
+  {s:"maxbounty",t:"payoneer",g:"offer"},
+  {s:"admitad-net",t:"usdt",g:"offer"},
+  {s:"clickdealer",t:"usdt",g:"offer"},
+
+  // PAYMENT → EXIT
+  {s:"usdt",t:"kucoin",g:"payment"},
+  {s:"usdt",t:"okx",g:"payment"},
+  {s:"kucoin",t:"tbank",g:"payment"},
+  {s:"okx",t:"tbank",g:"payment"},
+  {s:"kucoin",t:"sbp",g:"payment"},
+  {s:"okx",t:"sbp",g:"payment"},
+  {s:"payoneer",t:"tbank",g:"payment"},
+  {s:"payoneer",t:"sbp",g:"payment"},
+  {s:"usdt",t:"crypto",g:"payment"},
+
+  // EXIT → INCOME
+  {s:"tbank",t:"profit-day",g:"exit"},
+  {s:"sbp",t:"profit-day",g:"exit"},
+  {s:"cash",t:"profit-day",g:"exit"},
+  {s:"crypto",t:"profit-day",g:"exit"},
+  {s:"profit-day",t:"profit-month",g:"exit"},
+];
+
+// ==========================================================
+//  RENDER
+// ==========================================================
+
+const width = window.innerWidth, height = window.innerHeight;
+const svg = d3.select("#svg");
+
+// Add arrow markers
+Object.entries(colorByGroup).forEach(([g,c]) => {
+  svg.append("defs").append("marker")
+    .attr("id","arrow-"+g).attr("viewBox","0 -5 10 10").attr("refX",22).attr("refY",0)
+    .append("path").attr("d","M0,-5L10,0L0,5").attr("fill",c);
+});
+
+// Process links
+const processedLinks = links.map(l => {
+  const key = l.s+"_"+l.t;
+  const st = linkStatus[key] || "untested";
+  return {source:l.s, target:l.t, group:l.g, status:st};
+});
+
+// ===== TOOLTIP =====
+const tooltip = d3.select("body").append("div").attr("class","tooltip").style("display","none");
+
+function showTooltip(d, event) {
+  let html = `<div class="tt-title">${d.label}</div>`;
+  if(d.meta) html += `<div class="tt-meta">${d.meta}</div>`;
+  if(d.payout) html += `<div class="tt-meta">💰 Выплата: <span class="hl">${d.payout}</span></div>`;
+  if(d.roi) html += `<div class="tt-meta">📈 ROI: <span class="good">${d.roi}</span></div>`;
+  if(d.epc) html += `<div class="tt-meta">📊 EPC: <span class="hl">${d.epc}</span></div>`;
+  if(d.block_reason) html += `<div class="tt-divider"></div><div class="tt-meta">⛔ <span class="bad">${d.block_reason}</span></div>`;
+  if(d.route_ready) html += `<div class="tt-divider"></div><div class="tt-meta">✅ <span class="good">${d.route_ready}</span></div>`;
+  if(d.route_test) html += `<div class="tt-divider"></div><div class="tt-meta">🔄 <span class="warn">${d.route_test}</span></div>`;
+  if(d.routes) html += `<div class="tt-divider"></div><div class="tt-meta">🕸 <span class="hl">${d.routes}</span></div>`;
+  tooltip.html(html)
+    .style("left", Math.min(event.pageX+12, window.innerWidth-260)+"px")
+    .style("top", Math.min(event.pageY-10, window.innerHeight-200)+"px")
+    .style("display","block");
+}
+
+// ===== DRAW LINKS =====
+const link = svg.append("g").selectAll("line").data(processedLinks).join("line")
+  .attr("class", d => "link "+d.status)
+  .attr("stroke", d => colorByGroup[d.group] || "#555")
+  .attr("marker-end", d => "url(#arrow-"+d.group+")");
+
+// ===== DRAW NODES =====
+const nodeMap = {};
+nodes.forEach(n => nodeMap[n.id] = n);
+
+const node = svg.append("g").selectAll("g").data(nodes).join("g")
+  .attr("class", d => "node "+d.group)
+  .call(d3.drag()
+    .on("start", (e,d) => {if(!e.active) sim.alphaTarget(0.3).restart(); d.fx=d.x; d.fy=d.y;})
+    .on("drag", (e,d) => {d.fx=Math.max(30,Math.min(width-30,e.x)); d.fy=Math.max(30,Math.min(height-30,e.y));})
+    .on("end", (e,d) => {if(!e.active) sim.alphaTarget(0); d.fx=null; d.fy=null;}));
+
+node.append("circle")
+  .attr("r", d => d.group==="income" ? 18 : d.group==="payment" ? 11 : 10)
+  .attr("stroke-width", d => d.group==="income" ? 3 : 1.5)
+  .on("mouseover", function(e,d){showTooltip(d,e); d3.select(this).attr("stroke-width",3);})
+  .on("mousemove", function(e,d){tooltip.style("left", Math.min(e.pageX+12, window.innerWidth-260)+"px").style("top", Math.min(e.pageY-10, window.innerHeight-200)+"px");})
+  .on("mouseout", function(){tooltip.style("display","none"); d3.select(this).attr("stroke-width",1.5);})
+  .on("click", function(e,d){handleNodeClick(d);});
+
+node.append("text")
+  .attr("dx", d => (d.group==="income"||d.group==="payment") ? -12 : 14)
+  .attr("text-anchor", d => (d.group==="income"||d.group==="payment") ? "end" : "start")
+  .style("font-size", d => d.group==="income" ? 13 : 10)
+  .style("font-weight", d => d.group==="income" ? 700 : 500)
+  .text(d => d.label);
+
+// ===== FORCE SIMULATION =====
+const sim = d3.forceSimulation(nodes)
+  .force("link", d3.forceLink(processedLinks).id(d => d.id).distance(d => {
+    if(d.source?.group==="income"||d.target?.group==="income") return 160;
+    if(d.source?.group==="exit"||d.target?.group==="exit") return 130;
+    return 120;
+  }))
+  .force("charge", d3.forceManyBody().strength(d => d.group==="income"?-600:d.group==="exit"?-350:-250))
+  .force("center", d3.forceCenter(width/2, height/2))
+  .force("collide", d3.forceCollide(d => d.group==="income"?50:d.group==="exit"?35:28))
+  .on("tick", () => {
+    link.attr("x1",d=>d.source.x).attr("y1",d=>d.source.y)
+        .attr("x2",d=>d.target.x).attr("y2",d=>d.target.y);
+    node.attr("transform",d=>"translate("+d.x+","+d.y+")");
+  });
+
+// ==========================================================
+//  ROUTE FINDER
+// ==========================================================
+
+let selectedSource = null;
+
+function handleNodeClick(d) {
+  if(!selectedSource) {
+    // First click — select source
+    selectedSource = d;
+    d3.select("#rf-label").text("🔽 Источник: "+d.label+" — теперь кликни ЦЕЛЬ");
+    d3.select("#rf-result").text("");
+    d3.select("#route-finder").style("display","block");
+    clearHighlight();
+    highlightNode(d.id, true);
+    return;
+  }
+
+  // Second click — find route
+  const source = selectedSource;
+  const target = d;
+  selectedSource = null;
+
+  // Find all paths from source to target
+  const paths = findAllPaths(source.id, target.id);
+  if(paths.length === 0) {
+    d3.select("#rf-result").text("❌ Маршрут не найден");
+    clearHighlight();
+    return;
+  }
+
+  // Highlight the shortest path
+  const bestPath = paths[0];
+  highlightPath(bestPath);
+  d3.select("#rf-result").html("✅ Найдено "+paths.length+" маршрут(ов) · показан кратчайший");
+  d3.select("#rf-label").text("🔍 Маршрут: "+source.label+" → "+target.label);
+
+  // Calculate profit estimate
+  const profit = estimateProfit(bestPath);
+  if(profit) {
+    d3.select("#route-finder").append("div")
+      .attr("class","rf-profit")
+      .style("font-size","11px")
+      .style("color","#4ade80")
+      .style("margin-top","4px")
+      .text("💰 "+profit);
+  }
+
+  setTimeout(() => {
+    d3.select("#route-finder").style("display","none");
+    d3.select("#rf-label").text("🔍 Выбери источник и цель на схеме");
+    clearHighlight();
+  }, 6000);
+}
+
+function findAllPaths(sourceId, targetId, maxDepth=6) {
+  const adj = {};
+  processedLinks.forEach(l => {
+    const sid = typeof l.source === "object" ? l.source.id : l.source;
+    const tid = typeof l.target === "object" ? l.target.id : l.target;
+    if(!adj[sid]) adj[sid] = [];
+    adj[sid].push(tid);
+  });
+
+  const paths = [];
+  const visited = new Set();
+
+  function dfs(current, path) {
+    if(path.length > maxDepth) return;
+    if(current === targetId) {
+      paths.push([...path]);
+      return;
+    }
+    visited.add(current);
+    const neighbors = adj[current] || [];
+    for(const next of neighbors) {
+      if(!visited.has(next)) {
+        path.push(next);
+        dfs(next, path);
+        path.pop();
+      }
+    }
+    visited.delete(current);
+  }
+
+  dfs(sourceId, [sourceId]);
+  return paths.sort((a,b) => a.length - b.length);
+}
+
+function highlightPath(path) {
+  clearHighlight();
+  // Highlight nodes
+  path.forEach(id => highlightNode(id, true));
+  // Highlight links
+  link.each(function(d) {
+    const sid = typeof d.source === "object" ? d.source.id : d.source;
+    const tid = typeof d.target === "object" ? d.target.id : d.target;
+    const inPath = path.some((id, i) => i < path.length-1 && sid === id && tid === path[i+1]);
+    if(inPath) {
+      d3.select(this).attr("class","link ready highlight");
+    } else {
+      d3.select(this).attr("class","link "+d.status+" dim");
+    }
+  });
+}
+
+function highlightNode(id, state) {
+  node.each(function(d) {
+    if(d.id === id) {
+      d3.select(this).classed("highlight", state).classed("dim", !state);
+    } else {
+      d3.select(this).classed("dim", state).classed("highlight", false);
+    }
+  });
+}
+
+function clearHighlight() {
+  node.classed("highlight",false).classed("dim",false);
+  link.each(function(d) {
+    d3.select(this).attr("class","link "+d.status);
+  });
+}
+
+function estimateProfit(path) {
+  // Simple heuristic: find traffic cost and offer payout
+  let trafficNode = null;
+  let offerNode = null;
+  let paymentNode = null;
+  let exitNode = null;
+
+  path.forEach(id => {
+    const n = nodeMap[id];
+    if(!n) return;
+    if(n.group === "traffic") trafficNode = n;
+    if(n.group === "offer") offerNode = n;
+    if(n.group === "payment") paymentNode = n;
+    if(n.group === "exit") exitNode = n;
+  });
+
+  return null; // Placeholder for now
+}
+
+// ==========================================================
+//  SEARCH
+// ==========================================================
+
+d3.select("#search").on("input", function() {
+  const q = this.value.toLowerCase().trim();
+  if(!q) { clearHighlight(); return; }
+  node.each(function(d) {
+    const match = d.label.toLowerCase().includes(q) || (d.id && d.id.toLowerCase().includes(q));
+    d3.select(this).classed("dim", !match);
+    if(match) d3.select(this).classed("highlight", true);
+  });
+  link.each(function(d) {
+    const sid = typeof d.source === "object" ? d.source.id : d.source;
+    const tid = typeof d.target === "object" ? d.target.id : d.target;
+    const src = nodeMap[sid], tgt = nodeMap[tid];
+    const sMatch = src && (src.label.toLowerCase().includes(q) || src.id.includes(q));
+    const tMatch = tgt && (tgt.label.toLowerCase().includes(q) || tgt.id.includes(q));
+    d3.select(this).attr("class","link "+d.status+(sMatch||tMatch?" highlight":" dim"));
+  });
+});
+
+// ==========================================================
+//  PANEL TABS
+// ==========================================================
+
+d3.selectAll(".panel-tab").on("click", function() {
+  const tab = d3.select(this).attr("data-tab");
+  d3.selectAll(".panel-tab").classed("active", false);
+  d3.select(this).classed("active", true);
+  d3.selectAll(".panel-tab-content").style("display","none");
+  d3.select("#tab-"+tab).style("display","block");
+});
+
+// ==========================================================
+//  PANEL CARD CLICK → ROUTE FINDER
+// ==========================================================
+
+d3.selectAll(".panel-card[data-source]").on("click", function() {
+  const src = d3.select(this).attr("data-source");
+  const tgt = d3.select(this).attr("data-target");
+  if(!src || !tgt) return;
+  const sourceNode = nodeMap[src], targetNode = nodeMap[tgt];
+  if(!sourceNode || !targetNode) return;
+
+  selectedSource = sourceNode;
+  handleNodeClick({id:sourceNode.id, label:sourceNode.label, group:sourceNode.group});
+  // Simulate second click after short delay
+  setTimeout(() => {
+    handleNodeClick({id:targetNode.id, label:targetNode.label, group:targetNode.group});
+  }, 300);
+});
+
+// ==========================================================
+//  AUTO-FIT ON RESIZE
+// ==========================================================
+
+window.addEventListener("resize", () => {
+  sim.force("center", d3.forceCenter(window.innerWidth/2, window.innerHeight/2));
+  sim.alpha(0.3).restart();
+});
+
+console.log("🕸 Arbitrage HQ v3 loaded — "+nodes.length+" nodes, "+links.length+" links");
+</script>
+</body>
+</html>

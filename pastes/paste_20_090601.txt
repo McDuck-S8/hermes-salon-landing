@@ -1,0 +1,79 @@
+Income Pipeline Flow - 50 CPA/Arbitrage Schemes
+Interactive visualization of all 50 CPA/arbitrage schemes with real-time status indicators
+
+Zoom In Zoom Out Reset Zoom Download SVG Download PNG Refresh Data
+Traffic Sources
+
+Lead Capture
+
+Affiliate Offer
+
+Conversion
+
+Payout
+
+Social Media
+
+Search Engine
+
+Email List
+
+CPA Network
+
+Ad Platform
+
+Payment Processor
+
+Withdrawal System
+
+Analytics
+
+Reporting
+
+Traffic Stats
+
+Conversion Stats
+
+Risk Management
+
+Compliance Check
+
+ROI Calculation
+
+Profit Optimization
+
+Pipeline Statistics
+Total Schemes: 50
+UNVERIFIED: 47
+TESTING: 2
+VERIFIED: 1
+Code-Unblockable: 8
+Status Legend
+UNVERIFIED TESTING VERIFIED Code-Unblockable
+Interactive Features
+�� Hover over diagram elements to see detailed scheme information
+��️ Click scheme nodes to expand with full details
+�� Use zoom controls to adjust diagram view
+⬇️ Export options for SVG/PNG formats
+�� Refresh data to update from latest source
+Zoom: 100% | ＋ －
+�� Income Pipeline Flow - 50 CPA/Arbitrage Schemes
+Visualisierung komplekter Pipeline: От источника трафика → Прокладка → Оффер → Вывод
+
+Источники: ARBITRAGE_BONDS.md • Генератор: income_pipeline_flow.py • Дата: 20.07.2026
+
+�� Пересчитать �� Увеличить �� Уменьшить �� Скачать SVG ��️ Скачать PNG
+50
+Всего схем
+47
+UNVERIFIED
+2
+TESTING
+1
+VERIFIED
+�� Статусы схем:
+�� UNVERIFIED (47) �� TESTING (2) �� VERIFIED (1)
+�� Основной поток:
+SRC → PRX → OFF → WDR
+Syntax error in text
+mermaid version 11.16.0

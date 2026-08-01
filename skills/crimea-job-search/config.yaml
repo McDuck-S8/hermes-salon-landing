@@ -1,0 +1,28 @@
+hh_api:
+  base_url: "https://api.hh.ru"
+  user_agent: "Hermes-Agent-Crimea-Job-Search/1.0"
+  rate_limit: 200
+  timeout: 30
+
+search:
+  default_area: 1002
+  cities:
+    - "Симферополь"
+    - "Севастополь"
+    - "Керчь"
+    - "Евпатория"
+    - "Феодосия"
+  default_keywords: "python,django,fastapi,backend,api"
+  salary_min: 80000
+  experience: "between1And3,between3And6"
+  schedule: "remote,flexible"
+  employment: "full,part"
+
+cache:
+  db_path: "cache/vacancies.db"
+  ttl_hours: 24
+  max_entries: 10000
+
+notify:
+  telegram_enabled: true
+  telegram_chat_id: "737433175"

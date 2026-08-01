@@ -1,0 +1,28 @@
+name: omh-research
+role: researcher
+description: Deep research using OMH skills
+params:
+  - name: topic
+    type: string
+    required: true
+  - name: depth
+    type: string
+    default: "normal"
+    required: false
+  - name: auto_plan
+    type: boolean
+    default: true
+    required: false
+script: |
+  # OMH Deep Research Task
+  # Topic: {{topic}}
+  # Depth: {{depth}}
+  # Auto-plan: {{auto_plan}}
+
+  # This will use CrystalOMHResearchPipeline
+  # 1. Agent Reach scan: YouTube + Web + GitHub
+  # 2. OMH deep-research: decompose -> parallel search -> synthesize -> verify
+  # 3. OMH ralplan (if auto_plan): Planner -> Architect -> Critic consensus
+  # 4. Results -> Knowledge Cube
+timeout: 600
+tags: [research, omh, deep-research, agent-reach]

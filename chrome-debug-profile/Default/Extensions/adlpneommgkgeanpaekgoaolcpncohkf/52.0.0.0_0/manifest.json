@@ -1,0 +1,27 @@
+{
+   "action": {
+      "default_icon": {
+         "128": "assets/icon128.png",
+         "16": "assets/icon16.png",
+         "48": "assets/icon48.png"
+      },
+      "default_popup": "popup.html",
+      "default_title": "Browser Feedback"
+   },
+   "background": {
+      "service_worker": "background.js"
+   },
+   "description": "Submit bug reports and feature requests for your browser",
+   "host_permissions": [ "\u003Call_urls>" ],
+   "icons": {
+      "128": "assets/icon128.png",
+      "16": "assets/icon16.png",
+      "48": "assets/icon48.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApvsOjQw1EHFMq3AhCgs2IbmHM95V2AMmRhXxjzjJRkof34Gdy0WjMIeICesZcb4jLMNWwrkafpcdqF+aK5NB8MgpqsmjW3mN1UhCImjmuu6kVMnrCyn9qjzP5JcarSQORV4jqUKvXr6nVK/aLyFJXfaxExJa2+m1q6CahhYa9kMpMnf4/v4AyQQ/RFOU2bWZ1jISBsYNF24qpWuMeqacDguPbjKRXKl7vhABZ5BZKdL286fRa72E1JtR9vtO8yHgPAg6eF32YgAgrAixEawoUp9tNnOKt1TGtz93XbAi3FNXPGuKqR7ZtG/N4HlueWyxPpbkE4HiCQvHdZB+HS87mQIDAQAB",
+   "manifest_version": 3,
+   "name": "BrowserOS Feedback",
+   "permissions": [ "storage", "alarms", "notifications", "activeTab", "browserOS" ],
+   "update_url": "https://cdn.browseros.com/extensions/update-manifest.xml",
+   "version": "52.0.0.0"
+}

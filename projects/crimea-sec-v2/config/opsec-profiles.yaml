@@ -1,0 +1,371 @@
+# OPSEC Profiles for Crimea Security Framework
+# 5 пресетов OPSEC: Silent, Balanced, Aggressive, APT, RedTeam
+# Наследует идеологию T3MP3ST OPSEC Layer
+
+profiles:
+  # === SILENT — максимальная скрытность, минимальный шум ===
+  - id: silent
+    name: "Silent / Ghost Mode"
+    description: "Максимальная скрытность. Только пассивная разведка, никаких активных сканов. Для предварительной разведки без согласования (OSINT)."
+    detection_risk_threshold: 0.1  # 10% — любое обнаружение = abort
+    cooldown_multiplier: 3.0       # x3 паузы между действиями
+    rate_limit:
+      requests_per_second: 0.5
+      concurrent_connections: 1
+    tool_restrictions:
+      allowed_categories:
+        - "osint"
+        - "dns_passive"
+        - "whois"
+        - "certificate_transparency"
+        - "search_engines"
+        - "wayback"
+        - "shodan_api"
+        - "censys_api"
+      forbidden_categories:
+        - "port_scan"
+        - "vuln_scan"
+        - "directory_bruteforce"
+        - "fuzzing"
+        - "exploitation"
+        - "password_attack"
+        - "web_active"
+    evasion:
+      user_agent_rotation: true
+      proxy_rotation: true
+      tor_enabled: false
+      dns_over_https: true
+      tls_fingerprint_randomization: true
+      timing_jitter:
+        min_ms: 5000
+        max_ms: 15000
+      header_randomization: true
+      cookie_handling: "minimal"
+    payload_encoding:
+      enabled: true
+      encoders: ["url", "unicode", "double_url", "base64"]
+      polymorphism_level: "high"
+    waf_bypass:
+      enabled: true
+      techniques: ["chunked_encoding", "header_folding", "case_variation", "whitespace_obfuscation"]
+    logging:
+      level: "minimal"
+      sanitize_output: true
+      store_raw_responses: false
+    kill_switch:
+      enabled: true
+      triggers:
+        - "detection_risk_exceeded"
+        - "waf_block_detected"
+        - "honeypot_detected"
+        - "rate_limit_hit"
+      action: "immediate_abort_and_cleanup"
+    use_cases:
+      - "OSINT разведка до согласования"
+      - "Рекон объектов КИИ без шума"
+      - "Подготовка Scope Receipt"
+
+  # === BALANCED — стандартный рабочий профиль ===
+  - id: balanced
+    name: "Balanced / Standard"
+    description: "Сбалансированный профиль для авторизованного тестирования. Активные сканы с контролем шума."
+    detection_risk_threshold: 0.4  # 40%
+    cooldown_multiplier: 1.0
+    rate_limit:
+      requests_per_second: 10
+      concurrent_connections: 5
+    tool_restrictions:
+      allowed_categories:
+        - "osint"
+        - "dns_passive"
+        - "dns_active"
+        - "port_scan"
+        - "service_fingerprint"
+        - "web_active"
+        - "vuln_scan"
+        - "directory_bruteforce"
+        - "fuzzing"
+        - "ssl_tls_scan"
+        - "whois"
+        - "certificate_transparency"
+      forbidden_categories:
+        - "exploitation"
+        - "password_attack"
+        - "credential_stuffing"
+        - "post_exploitation"
+        - "persistence"
+        - "lateral_movement"
+        - "exfiltration"
+    evasion:
+      user_agent_rotation: true
+      proxy_rotation: false
+      tor_enabled: false
+      dns_over_https: true
+      tls_fingerprint_randomization: true
+      timing_jitter:
+        min_ms: 100
+        max_ms: 1000
+      header_randomization: false
+      cookie_handling: "normal"
+    payload_encoding:
+      enabled: true
+      encoders: ["url", "unicode"]
+      polymorphism_level: "medium"
+    waf_bypass:
+      enabled: true
+      techniques: ["chunked_encoding", "case_variation"]
+    logging:
+      level: "standard"
+      sanitize_output: true
+      store_raw_responses: true
+    kill_switch:
+      enabled: true
+      triggers:
+        - "detection_risk_exceeded"
+        - "waf_block_detected"
+        - "unauthorized_scope_access"
+      action: "pause_and_alert"
+    use_cases:
+      - "Стандартный пентест веб-приложений"
+      - "Багбаунти программы"
+      - "Аудит по 152-ФЗ / 187-ФЗ"
+      - "Ежеквартальные сканы"
+
+  # === AGGRESSIVE — агрессивное тестирование с полным согласованием ===
+  - id: aggressive
+    name: "Aggressive / Full Noise"
+    description: "Максимальная покрытость, минимальные задержки. Только для полного согласования и окон обслуживания."
+    detection_risk_threshold: 0.8  # 80%
+    cooldown_multiplier: 0.5
+    rate_limit:
+      requests_per_second: 100
+      concurrent_connections: 50
+    tool_restrictions:
+      allowed_categories:
+        - "osint"
+        - "dns_passive"
+        - "dns_active"
+        - "port_scan"
+        - "service_fingerprint"
+        - "os_fingerprint"
+        - "web_active"
+        - "vuln_scan"
+        - "directory_bruteforce"
+        - "fuzzing"
+        - "ssl_tls_scan"
+        - "password_attack"
+        - "credential_stuffing"
+        - "jwt_analyze"
+      forbidden_categories:
+        - "exploitation"
+        - "post_exploitation"
+        - "persistence"
+        - "lateral_movement"
+        - "exfiltration"
+    evasion:
+      user_agent_rotation: true
+      proxy_rotation: true
+      tor_enabled: false
+      dns_over_https: false
+      tls_fingerprint_randomization: false
+      timing_jitter:
+        min_ms: 10
+        max_ms: 100
+      header_randomization: false
+      cookie_handling: "aggressive"
+    payload_encoding:
+      enabled: false
+      polymorphism_level: "low"
+    waf_bypass:
+      enabled: true
+      techniques: ["all"]
+    logging:
+      level: "verbose"
+      sanitize_output: false
+      store_raw_responses: true
+    kill_switch:
+      enabled: true
+      triggers:
+        - "unauthorized_scope_access"
+        - "critical_system_impact"
+      action: "pause_and_alert"
+    use_cases:
+      - "Внутренний пентест с полным доступом"
+      - "Red Team упражнения (purple team)"
+      - "Окно обслуживания КИИ (с согласованием ФСТЭК)"
+      - "Нагрузочное тестирование WAF"
+
+  # === APT — имитация APT-группы, долгая игра ===
+  - id: apt
+    name: "APT Simulation / Long-term"
+    description: "Имитация продвинутого постоянного угрозы. Низкий темп, высокая скрытность, фокус на persistence и lateral movement (симуляция)."
+    detection_risk_threshold: 0.15  # 15%
+    cooldown_multiplier: 5.0
+    rate_limit:
+      requests_per_second: 0.1
+      concurrent_connections: 1
+    tool_restrictions:
+      allowed_categories:
+        - "osint"
+        - "dns_passive"
+        - "port_scan"
+        - "service_fingerprint"
+        - "web_active"
+        - "credential_stuffing"
+        - "jwt_analyze"
+      forbidden_categories:
+        - "vuln_scan"
+        - "directory_bruteforce"
+        - "fuzzing"
+        - "exploitation"
+        - "post_exploitation"
+        - "persistence"
+        - "lateral_movement"
+        - "exfiltration"
+    evasion:
+      user_agent_rotation: true
+      proxy_rotation: true
+      tor_enabled: true
+      dns_over_https: true
+      tls_fingerprint_randomization: true
+      timing_jitter:
+        min_ms: 60000
+        max_ms: 3600000  # до 1 часа между действиями
+      header_randomization: true
+      cookie_handling: "minimal"
+    payload_encoding:
+      enabled: true
+      encoders: ["url", "unicode", "double_url", "base64", "hex", "polymorphic"]
+      polymorphism_level: "maximum"
+    waf_bypass:
+      enabled: true
+      techniques: ["all", "custom_chains"]
+    logging:
+      level: "minimal"
+      sanitize_output: true
+      store_raw_responses: false
+    kill_switch:
+      enabled: true
+      triggers:
+        - "detection_risk_exceeded"
+        - "waf_block_detected"
+        - "honeypot_detected"
+        - "behavioral_anomaly_detected"
+      action: "immediate_abort_and_cleanup"
+    use_cases:
+      - "Red Team операции (авторизованные)"
+      - "Тестирование SOC/SIEM детекта"
+      - "Проверка incident response"
+      - "Имитация APT28/29, Lazarus, и т.д."
+
+  # === REDTEAM — полноценная Red Team операция ===
+  - id: redteam
+    name: "Red Team Operation"
+    description: "Полная цепочка Kill Chain. Требует отдельного согласования, выделенной инфраструктуры, purple team сопровождения."
+    detection_risk_threshold: 0.6
+    cooldown_multiplier: 1.0
+    rate_limit:
+      requests_per_second: 50
+      concurrent_connections: 20
+    tool_restrictions:
+      allowed_categories:
+        - "osint"
+        - "dns_passive"
+        - "dns_active"
+        - "port_scan"
+        - "service_fingerprint"
+        - "os_fingerprint"
+        - "web_active"
+        - "vuln_scan"
+        - "directory_bruteforce"
+        - "fuzzing"
+        - "ssl_tls_scan"
+        - "password_attack"
+        - "credential_stuffing"
+        - "jwt_analyze"
+        - "exploitation"
+        - "post_exploitation"
+        - "persistence"
+        - "lateral_movement"
+        - "exfiltration"
+      forbidden_categories: []
+    evasion:
+      user_agent_rotation: true
+      proxy_rotation: true
+      tor_enabled: false
+      dns_over_https: false
+      tls_fingerprint_randomization: true
+      timing_jitter:
+        min_ms: 50
+        max_ms: 500
+      header_randomization: true
+      cookie_handling: "aggressive"
+    payload_encoding:
+      enabled: true
+      encoders: ["all"]
+      polymorphism_level: "high"
+    waf_bypass:
+      enabled: true
+      techniques: ["all"]
+    logging:
+      level: "verbose"
+      sanitize_output: false
+      store_raw_responses: true
+    kill_switch:
+      enabled: true
+      triggers:
+        - "unauthorized_scope_access"
+        - "critical_system_impact"
+        - "data_exfiltration_attempt"
+        - "persistence_mechanism_deployed"
+      action: "immediate_abort_and_cleanup"
+    use_cases:
+      - "Полноценный Red Team (только с ROE + Scope Receipt + NDA)"
+      - "Purple Team упражнения"
+      - "Тестирование полной цепочки Kill Chain"
+    requirements:
+      - "Отдельное согласование с заказчиком"
+      - "Выделенная инфраструктура (C2, redirectors)"
+      - "Purple team сопровождение"
+      - "План отката (rollback plan)"
+      - "Кризис-коммуникации (war room)"
+
+# Общие настройки OPSEC
+global:
+  default_profile: "balanced"
+  profile_override_env: "CRIMEA_SEC_OPSEC_PROFILE"
+  detection_risk_calculation:
+    factors:
+      waf_detection: 0.3
+      ids_ips_alert: 0.4
+      honeypot_interaction: 0.5
+      rate_limit_hit: 0.2
+      anomalous_traffic: 0.3
+      failed_auth_attempts: 0.2
+    decay_rate: 0.05  # за тик (1 сек)
+  cooldown_base_seconds: 1
+  max_detection_risk: 1.0
+  burn_threshold: 0.9  # при достижении — operator burned
+  evidence_sanitization:
+    enabled: true
+    pii_patterns:
+      - "email"
+      - "phone"
+      - "passport"
+      - "inn"
+      - "snils"
+      - "credit_card"
+      - "ipv4"
+      - "ipv6"
+      - "mac_address"
+      - "jwt_token"
+      - "api_key"
+      - "password"
+    hash_sensitive_fields: true
+  infrastructure:
+    use_dedicated_vps: false
+    vps_providers: ["timeweb", "selectel", "ruvds", "vscale"]
+    domain_fronting: false
+    cdn_fronting: false
+    rotating_proxies: false
+    proxy_providers: []

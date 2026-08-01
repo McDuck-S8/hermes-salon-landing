@@ -1,0 +1,9 @@
+{
+  "last_report_path": "D:\\Portable_Soft\\hermes\\logs\\curator\\20260725-005954",
+  "last_run_at": "2026-07-25T00:59:54.626706+00:00",
+  "last_run_duration_seconds": 108.187091,
+  "last_run_summary": "auto: 2 reactivated; llm: skipped (consolidation off)",
+  "last_run_summary_shown_at": "2026-06-10T21:15:47.172127+00:00",
+  "paused": false,
+  "run_count": 7
+}

@@ -1,0 +1,9 @@
+{
+  "failures": {
+    "stale_lock": 0,
+    "broken_json": 0
+  },
+  "last_run": "2026-08-01T00:18:34.516979+00:00",
+  "fixed_count": 866,
+  "alert_count": 2986
+}

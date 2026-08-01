@@ -213,6 +213,13 @@ def restart_all_errors() -> bool:
 # ── Main ──
 
 def main():
+    # Heartbeat: module alive
+    try:
+        from chain_heartbeat import beat
+        beat("proactive_doer")
+    except ImportError:
+        pass
+
     log.info("=== Proactive DOER run ===")
     state = load_state()
     now = datetime.now(timezone.utc).isoformat()

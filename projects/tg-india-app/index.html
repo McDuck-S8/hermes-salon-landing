@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Cricket Bet India</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        :root {
+            --tg-bg: var(--tg-theme-bg-color, #1a1a1a);
+            --tg-text: var(--tg-theme-text-color, #ffffff);
+            --tg-hint: var(--tg-theme-hint-color, #aaaaaa);
+            --tg-link: var(--tg-theme-link-color, #3390ec);
+            --tg-button: var(--tg-theme-button-color, #3390ec);
+            --tg-button-text: var(--tg-theme-button-text-color, #ffffff);
+            --accent-color: #ffcc00;
+            --card-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--tg-bg);
+            color: var(--tg-text);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .header {
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, transparent 100%);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .match-container {
+            padding: 15px;
+        }
+
+        .match-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.1s ease;
+        }
+
+        .match-card:active { transform: scale(0.98); }
+
+        .match-status {
+            font-size: 12px;
+            color: #ff4d4d;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .match-status::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            background: #ff4d4d;
+            border-radius: 50%;
+            margin-right: 6px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+
+        .teams {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .score {
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--tg-hint);
+        }
+
+        .odds-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .odd-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--tg-text);
+            padding: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .odd-btn.selected {
+            background: var(--tg-button);
+            border-color: var(--tg-button);
+            color: var(--tg-button-text);
+        }
+
+        .bet-slip {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #252525;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 100;
+        }
+
+        .bet-slip.active { transform: translateY(0); }
+
+        .slip-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .slip-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,0,0,0.2);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .remove-btn {
+            color: #ff4d4d;
+            border: none;
+            background: none;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Cricket India Bet</h1>
+    </div>
+
+    <div class="match-container" id="matchList"></div>
+
+    <div class="bet-slip" id="betSlip">
+        <div class="slip-header">
+            <strong style="font-size: 18px;">Bet Slip</strong>
+            <span id="selectionCount">0 selections</span>
+        </div>
+        <div id="slipItems"></div>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+
+        const matches = [
+            { id: 1, teams: 'India vs Australia', score: 'IND 245/4 (42.1) | AUS 280/10', status: 'Live - Day 1', odds: { 'India': 1.85, 'Australia': 2.10 } },
+            { id: 2, teams: 'India A vs Australia A', score: 'TBD', status: 'Upcoming', odds: { 'India': 1.70, 'Australia': 2.30 } }
+        ];
+
+        let selections = [];
+
+        function init() {
+            const list = document.getElementById('matchList');
+            matches.forEach(match => {
+                const card = document.createElement('div');
+                card.className = 'match-card';
+                card.innerHTML = `
+                    <div class="match-status">${match.status}</div>
+                    <div class="teams">
+                        <span>${match.teams}</span>
+                        <span class="score">${match.score}</span>
+                    </div>
+                    <div class="odds-grid">
+                        <div class="odd-btn" onclick="toggleBet(${match.id}, 'India', ${match.odds.India}, this)">
+                            India ${match.odds.India}
+                        </div>
+                        <div class="odd-btn" onclick="toggleBet(${match.id}, 'Australia', ${match.odds.Australia}, this)">
+                            Australia ${match.odds.Australia}
+                        </div>
+                    </div>
+                `;
+                list.appendChild(card);
+            });
+
+            tg.MainButton.setText('PLACE BETS NOW');
+            tg.MainButton.show();
+            tg.MainButton.onClick(() => {
+                tg.HapticFeedback.impactOccurred('medium');
+                tg.openLink('https://1win.partners');
+            });
+        }
+
+        function toggleBet(matchId, team, odd, element) {
+            tg.HapticFeedback.impactOccurred('light');
+            const index = selections.findIndex(s => s.matchId === matchId);
+            
+            if (index > -1) {
+                if (selections[index].team === team) {
+                    selections.splice(index, 1);
+                    element.classList.remove('selected');
+                } else {
+                    selections[index] = { matchId, team, odd };
+                    document.querySelectorAll('.odd-btn').forEach(btn => btn.classList.remove('selected'));
+                    element.classList.add('selected');
+                }
+            } else {
+                selections.push({ matchId, team, odd });
+                element.classList.add('selected');
+            }
+            updateUI();
+        }
+
+        function removeBet(matchId) {
+            tg.HapticFeedback.impactOccurred('light');
+            selections = selections.filter(s => s.matchId !== matchId);
+            document.querySelectorAll('.odd-btn').forEach(btn => btn.classList.remove('selected'));
+            updateUI();
+        }
+
+        function updateUI() {
+            const slip = document.getElementById('betSlip');
+            const items = document.getElementById('slipItems');
+            const count = document.getElementById('selectionCount');
+            
+            items.innerHTML = '';
+            selections.forEach(s => {
+                const match = matches.find(m => m.id === s.matchId);
+                const item = document.createElement('div');
+                item.className = 'slip-item';
+                item.innerHTML = `
+                    <span>${match.teams} - <b>${s.team}</b> (@${s.odd})</span>
+                    <button class="remove-btn" onclick="removeBet(${s.matchId})">&times;</button>
+                `;
+                items.appendChild(item);
+            });
+
+            count.innerText = `${selections.length} selections`;
+            slip.classList.toggle('active', selections.length > 0);
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>

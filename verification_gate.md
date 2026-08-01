@@ -1,3 +1,11 @@
+---
+name: verification-gate
+description: "Auto-generated from verification_gate.md"
+trigger: "When user asks about verification_gate concepts"
+usage: verification-gate
+Revisit: 2026-07-31
+---
+
 # verification_gate.py — Барьер между теорией и фактом
 
 Правило: НИ ОДНА запись о revenue/profit/result не попадает 

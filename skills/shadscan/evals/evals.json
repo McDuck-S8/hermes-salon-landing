@@ -1,0 +1,66 @@
+[
+  {
+    "name": "styling-semantic-tokens",
+    "category": "styling",
+    "description": "Use semantic tokens, not raw colors",
+    "code": "<div className=\"bg-blue-500 text-white\">Button</div>",
+    "expected_violation": "Raw color bg-blue-500 should be bg-primary",
+    "fix": "<div className=\"bg-primary text-primary-foreground\">Button</div>"
+  },
+  {
+    "name": "styling-spacing-gap",
+    "category": "styling",
+    "description": "Use flex gap, not space-y",
+    "code": "<div className=\"space-y-4\"><div>1</div><div>2</div></div>",
+    "expected_violation": "space-y-4 should be flex flex-col gap-4",
+    "fix": "<div className=\"flex flex-col gap-4\"><div>1</div><div>2</div></div>"
+  },
+  {
+    "name": "styling-sizing-size",
+    "category": "styling",
+    "description": "Use size-* when width=height",
+    "code": "<Avatar className=\"w-10 h-10\" />",
+    "expected_violation": "w-10 h-10 should be size-10",
+    "fix": "<Avatar className=\"size-10\" />"
+  },
+  {
+    "name": "forms-fieldgroup-field",
+    "category": "forms",
+    "description": "Form layout uses FieldGroup + Field",
+    "code": "<div className=\"space-y-2\"><Label htmlFor=\"email\">Email</Label><Input id=\"email\" /></div>",
+    "expected_violation": "Raw div+Label should be FieldGroup+Field",
+    "fix": "<FieldGroup><Field><FieldLabel htmlFor=\"email\">Email</FieldLabel><Input id=\"email\" /></Field></FieldGroup>"
+  },
+  {
+    "name": "forms-validation-pattern",
+    "category": "forms",
+    "description": "Validation uses data-invalid on Field, aria-invalid on control",
+    "code": "<Field><Label>Email</Label><Input aria-invalid /></Field>",
+    "expected_violation": "Missing data-invalid on Field",
+    "fix": "<Field data-invalid><Label>Email</Label><Input aria-invalid /><FieldDescription>Invalid email</FieldDescription></Field>"
+  },
+  {
+    "name": "composition-select-item-in-group",
+    "category": "composition",
+    "description": "SelectItem must be inside SelectGroup",
+    "code": "<SelectContent><SelectItem value=\"a\">Option A</SelectItem></SelectContent>",
+    "expected_violation": "SelectItem outside SelectGroup",
+    "fix": "<SelectContent><SelectGroup><SelectItem value=\"a\">Option A</SelectItem></SelectGroup></SelectContent>"
+  },
+  {
+    "name": "icons-data-icon",
+    "category": "icons",
+    "description": "Icons in buttons use data-icon",
+    "code": "<Button><SearchIcon className=\"w-4 h-4\" />Search</Button>",
+    "expected_violation": "Icon has sizing classes, missing data-icon",
+    "fix": "<Button><SearchIcon data-icon=\"inline-start\" />Search</Button>"
+  },
+  {
+    "name": "cli-preset-decode",
+    "category": "cli",
+    "description": "Never decode preset manually",
+    "code": "const preset = JSON.parse(atob(code))",
+    "expected_violation": "Manual preset decode",
+    "fix": "Use: npx shadcn@latest preset decode <code>"
+  }
+]

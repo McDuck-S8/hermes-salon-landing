@@ -1,0 +1,27 @@
+{
+  "auto_start": true,
+  "check_interval": 300,
+  "log_level": "INFO",
+  "apps_enabled": {
+    "honeygain": true,
+    "earnapp": true,
+    "packetstream": true,
+    "repocket": true,
+    "earnfm": true,
+    "bitping": true,
+    "packetshare": true,
+    "iproyal_pawns": true,
+    "grass": true
+  },
+  "custom_paths": {
+    "honeygain": "",
+    "earnapp": "",
+    "packetstream": "",
+    "repocket": "",
+    "earnfm": "",
+    "bitping": "",
+    "packetshare": "",
+    "iproyal_pawns": "",
+    "grass": ""
+  }
+}

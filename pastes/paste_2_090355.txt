@@ -1,0 +1,24 @@
+  �� Just speak naturally. Pause → JARVIS responds.
+  Press Ctrl+C to stop.
+
+[JARVIS] Loading whisper model...
+[JARVIS] Whisper ready.
+Traceback (most recent call last):
+  File "D:\Portable_Soft\hermes\scripts\jarvis_voice_loop.py", line 577, in <module>
+    asyncio.run(main())
+  File "D:\Program Files\Python311\Lib\asyncio\runners.py", line 190, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "D:\Program Files\Python311\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Program Files\Python311\Lib\asyncio\base_events.py", line 653, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "D:\Portable_Soft\hermes\scripts\jarvis_voice_loop.py", line 562, in main
+    vad = VADProcessor(
+          ^^^^^^^^^^^^^
+  File "D:\Portable_Soft\hermes\scripts\jarvis_voice_loop.py", line 99, in __init__
+    import webrtcvad
+ModuleNotFoundError: No module named 'webrtcvad'
+PS D:\Portable_Soft\hermes>

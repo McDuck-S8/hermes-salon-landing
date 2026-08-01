@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Test</title></head>
+<body>
+<h1>test</h1>
+<div id="result">waiting...</div>
+<script>
+(async () => {
+  try {
+    const r = await fetch('tasks.json', { cache: 'no-store' });
+    const txt = await r.text();
+    document.getElementById('result').textContent = 'OK: ' + txt.length + ' chars, ok=' + r.ok;
+  } catch(e) {
+    document.getElementById('result').textContent = 'ERR: ' + (e.message || String(e));
+  }
+})();
+</script>
+</body>
+</html>

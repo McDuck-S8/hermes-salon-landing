@@ -1,0 +1,37 @@
+import json
+from typing import Dict, Any
+
+def solve_addition_task(a: int, b: int) -> Dict[str, Any]:
+    """
+    Adds two integers and returns the result in a structured dictionary.
+    
+    Args:
+        a (int): First operand.
+        b (int): Second operand.
+        
+    Returns:
+        Dict[str, Any]: A dictionary containing the success status and the result.
+    """
+    try:
+        result = a + b
+        return {
+            "success": True,
+            "data": result,
+            "message": f"Successfully added {a} and {b}"
+        }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e)
+        }
+
+def main() -> None:
+    """
+    Main entry point of the script.
+    """
+    # Task: Add 17 and 25
+    output = solve_addition_task(17, 25)
+    print(json.dumps(output))
+
+if __name__ == "__main__":
+    main()

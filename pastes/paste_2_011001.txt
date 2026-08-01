@@ -1,0 +1,13 @@
+C:\Users\Asus>browser-harness --doctor
+browser-harness doctor
+  platform          Windows 10
+  python            3.11.10
+  version           0.1.0 (git)
+  latest release    (could not reach github)
+  [ok  ] chrome running
+  [FAIL] daemon alive — see install.md
+  [FAIL] active browser connections — 0
+  [FAIL] profile-use installed — optional: curl -fsSL https://browser-use.com/profile.sh | sh
+  [FAIL] BROWSER_USE_API_KEY set — optional: needed only for cloud browsers / profile sync
+
+C:\Users\Asus>

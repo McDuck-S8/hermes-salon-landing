@@ -1,0 +1,82 @@
+# Hermes Branches — active conversation topics
+agentmemory:
+  status: installed, MCP untested
+  next_step: проверить MCP сервер при перезапуске Hermes
+  key_files: [~/.hermes/plugins/agentmemory/]
+aionui-openclaude:
+  status: FIXED — spawn EINVAL решён через spawnClaudeCodeProcess patch
+  next_step: перезапустить AionUi и протестировать OpenClaude
+  key_files:
+    - D:/Portable_Soft/OpenClaude-Portable-main/acp-bridge/acp-agent.js
+auxiliary-max-tokens-fix:
+  status: FIXED — _build_call_kwargs now always passes max_tokens
+  next_step: verify title generation works on next session start
+  key_files:
+    - src/hermes-agent/agent/auxiliary_client.py (line 4761)
+opengateway-gzip-fix:
+  status: FIXED — Accept-Encoding: identity workaround
+  next_step: works, but 314 sessions still without titles (historical)
+  key_files:
+    - src/hermes-agent/run_agent.py (line 3267)
+    - src/hermes-agent/agent/auxiliary_client.py (line 1844)
+self-evolution:
+  status: installed, Phase 1 done, needs API key
+  last_action: DSPy+GEPA plugin, 50 files, SKILL.md эволюция. Тест: 1791→5484 chars.
+  next_step: настроить рабочий API ключ
+  key_files:
+    - D:/Portable_Soft/hermes/plugins/self-evolution/evolution/skills/evolve_skill.py
+  context: |
+    Phase 1 ✅ Skill files, Phase 2-5 Planned.
+    ~$2-10/run, без GPU. PR-based, constraint gates.
+knowledge-cube:
+  status: running — 619 experiences, 10 domains, 31 white spots
+  last_action: SQLite DB + 3 axes + dynamic dims + white spot detection
+  next_step: обогащать из breadcrumbs.log
+  key_files:
+    - D:/Portable_Soft/hermes/cache/knowledge_cube.db
+fler-engine:
+  status: running — 509 sessions, avg tone +0.05
+  last_action: Флёр/Послевкусие/Загрязнение. ru+en лексиконы.
+  next_step: анти-загрязнение для сессий
+  key_files:
+    - D:/Portable_Soft/hermes/cache/fler_engine.db
+salon-bot:
+  status: template ready, strategy documented
+  last_action: aiogram3+SQLite. 3 метода привлечения. 15-25K₽/bot.
+  next_step: деплой пилотного бота в Крыму
+  key_files:
+    - D:/Portable_Soft/hermes/skills/finance/earning-with-ai/references/salon-bot-client-acquisition.md
+crimea-bots:
+  status: 5 value chains, zero-investment strategies
+  last_action: Сезон 2025 аномальный. 5 цепочек, cold sales.
+  next_step: найти первый отель для пилота
+  key_files:
+    - D:/Portable_Soft/hermes/plans/crimea_tourism_brainstorm.md
+    - D:/Portable_Soft/hermes/plans/crimea_real_hotels.md
+insights:
+  status: YouTube research done, SaaS model identified
+  last_action: "Ссылка на сайт → бот" модель, n8n, 7 AI-агентов.
+  next_step: упаковать услугу "AI-бот по ссылке"
+  key_files:
+    - D:/Portable_Soft/hermes/plans/youtube_research_report.md
+lavra-graph:
+  status: graph analyzed — 346 nodes, 479 edges, 38 communities
+  last_action: GRAPH_REPORT.md, graph.html, graph.json. God Nodes identified.
+  next_step: |
+    Подхватить из Lavra:
+    1. Create Agent Skills Skill — методология создания скиллов (14 edges)
+    2. Knowledge Recall/Learn — когнитивный цикл для Knowledge Cube
+    3. Lavra Triage → Work Ralph — автономная оркестрация (уже есть delegate_task)
+    4. Benchmark Suite — тестирование качества скиллов
+    5. System Prompt Design → Create Agent Skills Skill — дизайн промптов
+  key_files:
+    - D:/Portable_Soft/OpenClaude-Portable-main/engine/graphify-out/GRAPH_REPORT.md
+    - D:/Portable_Soft/OpenClaude-Portable-main/engine/graphify-out/graph.html
+    - D:/Portable_Soft/OpenClaude-Portable-main/engine/lavra/
+  context: |
+    Lavra = AI coding agent внутри OpenClaude. Ключевые паттерны:
+    - Beads = трекинг задач (аналог kanban)
+    - Knowledge JSONL = память (аналог我们的 Knowledge Cube)
+    - Triage → Work = автономный цикл (триаж → выполнение → ревью)
+    - DSPy + GEPA = оптимизация промптов (уже используем в self-evolution)
+    - 129 isolated nodes = пробелы в документации (возможности для роста)

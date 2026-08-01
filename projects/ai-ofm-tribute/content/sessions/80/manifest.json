@@ -1,0 +1,67 @@
+{
+  "session": 80,
+  "style": "fantasy",
+  "model": "seedream",
+  "count": 5,
+  "success_count": 0,
+  "fail_count": 5,
+  "timestamp": "2026-07-25T19:12:15.453054+00:00",
+  "provider": "pollinations.ai",
+  "images": [
+    {
+      "index": 1,
+      "style": "fantasy",
+      "prompt": "Ethereal fantasy woman with glowing crystal skin, detailed digital art, cinematic lighting, artstation style, symmetrical face, perfect skin, flowing magical dress, intricate jewelry, golden hour lighting, photorealistic, hyperdetailed, 8k",
+      "seed": 74508,
+      "caption": "⭐ Enchanted | Subscriber preview",
+      "model": "seedream",
+      "filename": "fantasy_80_01.jpg",
+      "filepath": "D:\\Portable_Soft\\hermes\\projects\\ai-ofm-tribute\\content\\sessions\\80\\fantasy_80_01.jpg",
+      "success": false
+    },
+    {
+      "index": 2,
+      "style": "fantasy",
+      "prompt": "Forest nymph with flower crown, dewdrop skin, emerald eyes, magical forest background, soft sunlight filtering through leaves, dreamy atmosphere, hyperdetailed portrait",
+      "seed": 563099,
+      "caption": "🌟 Magic in every detail | Premium gallery",
+      "model": "seedream",
+      "filename": "fantasy_80_02.jpg",
+      "filepath": "D:\\Portable_Soft\\hermes\\projects\\ai-ofm-tribute\\content\\sessions\\80\\fantasy_80_02.jpg",
+      "success": false
+    },
+    {
+      "index": 3,
+      "style": "fantasy",
+      "prompt": "Ethereal fantasy woman with glowing crystal skin, detailed digital art, cinematic lighting, artstation style, symmetrical face, perfect skin, flowing magical dress, intricate jewelry, golden hour lighting, photorealistic, hyperdetailed, 8k",
+      "seed": 7208,
+      "caption": "🌙 Mystical beauty | Daily exclusive",
+      "model": "seedream",
+      "filename": "fantasy_80_03.jpg",
+      "filepath": "D:\\Portable_Soft\\hermes\\projects\\ai-ofm-tribute\\content\\sessions\\80\\fantasy_80_03.jpg",
+      "success": false
+    },
+    {
+      "index": 4,
+      "style": "fantasy",
+      "prompt": "Goddess of moonlight standing on ancient temple ruins, silver-white dress, glowing eyes, mystical aura, starry night sky, fantasy art, cinematic composition, photorealistic",
+      "seed": 882422,
+      "caption": "🌟 Magic in every detail | Premium gallery",
+      "model": "seedream",
+      "filename": "fantasy_80_04.jpg",
+      "filepath": "D:\\Portable_Soft\\hermes\\projects\\ai-ofm-tribute\\content\\sessions\\80\\fantasy_80_04.jpg",
+      "success": false
+    },
+    {
+      "index": 5,
+      "style": "fantasy",
+      "prompt": "Sorceress with flowing silver hair casting a spell, magical particles around hands, dramatic lighting, fantasy portrait, intricate robe details, glowing runes, ethereal atmosphere",
+      "seed": 134813,
+      "caption": "✨ New fantasy art | Exclusive content",
+      "model": "seedream",
+      "filename": "fantasy_80_05.jpg",
+      "filepath": "D:\\Portable_Soft\\hermes\\projects\\ai-ofm-tribute\\content\\sessions\\80\\fantasy_80_05.jpg",
+      "success": false
+    }
+  ]
+}

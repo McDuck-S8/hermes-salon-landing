@@ -1,0 +1,114 @@
+[
+  {
+    "task_id": "e3d20e1f",
+    "task_title": "Salon bot: нужен второй токен от BotFather",
+    "from": "ready",
+    "to": "running",
+    "timestamp": "2026-07-13T01:27:36.237057"
+  },
+  {
+    "task_id": "e3d20e1f",
+    "task_title": "Salon bot: нужен второй токен от BotFather",
+    "from": "running",
+    "to": "done",
+    "timestamp": "2026-07-13T01:59:24.960860"
+  },
+  {
+    "task_id": "t_pinterest",
+    "task_title": "Pinterest automation: 100+ pins/day, free traffic",
+    "from": "ready",
+    "to": "done",
+    "timestamp": "2026-07-13T02:01:15.584282"
+  },
+  {
+    "task_id": "e3d20e1f",
+    "task_title": "Salon bot: нужен второй токен от BotFather",
+    "from": "done",
+    "to": "ready",
+    "timestamp": "2026-07-13T02:07:07.390093"
+  },
+  {
+    "task_id": "e3d20e1f",
+    "task_title": "Salon bot: нужен второй токен от BotFather",
+    "from": "ready",
+    "to": "done",
+    "timestamp": "2026-07-13T02:08:16.722698"
+  },
+  {
+    "task_id": "e3d20e1f",
+    "task_title": "Salon bot: нужен второй токен от BotFather",
+    "from": "done",
+    "to": "ready",
+    "timestamp": "2026-07-13T02:08:33.051292"
+  },
+  {
+    "task_id": "e3d20e1f",
+    "task_title": "Salon bot: нужен второй токен от BotFather",
+    "from": "ready",
+    "to": "running",
+    "timestamp": "2026-07-13T02:09:17.635547"
+  },
+  {
+    "task_id": "e3d20e1f",
+    "task_title": "Salon bot: нужен второй токен от BotFather",
+    "from": "running",
+    "to": "done",
+    "timestamp": "2026-07-13T02:09:46.582685"
+  },
+  {
+    "task_id": "e3d20e1f",
+    "task_title": "Salon bot: нужен второй токен от BotFather",
+    "from": "done",
+    "to": "ready",
+    "timestamp": "2026-07-13T02:09:53.574366"
+  },
+  {
+    "task_id": "565fef3d",
+    "task_title": "Hermes upstream: проверить обновления",
+    "from": "done",
+    "to": "ready",
+    "timestamp": "2026-07-13T02:10:12.370296"
+  },
+  {
+    "task_id": "t_pinterest",
+    "task_title": "Pinterest automation: 100+ pins/day, free traffic",
+    "from": "done",
+    "to": "ready",
+    "timestamp": "2026-07-13T02:44:28.463944"
+  },
+  {
+    "task_id": "t_89ed980e",
+    "task_title": "Fler — починка базы данных",
+    "from": "ready",
+    "to": "running",
+    "timestamp": "2026-07-13T02:46:54.061286"
+  },
+  {
+    "task_id": "565fef3d",
+    "task_title": "Hermes upstream: проверить обновления",
+    "from": "ready",
+    "to": "done",
+    "timestamp": "2026-07-13T04:05:43.386104"
+  },
+  {
+    "task_id": "t_99ca84d6",
+    "task_title": "Kanban multi-agent — настроить параллельных воркеров",
+    "from": "ready",
+    "to": "running",
+    "timestamp": "2026-07-13T11:28:45.641777"
+  },
+  {
+    "task_id": "t_99ca84d6",
+    "task_title": "Kanban multi-agent — настроить параллельных воркеров",
+    "from": "running",
+    "to": "done",
+    "timestamp": "2026-07-13T11:31:43.396350"
+  },
+  {
+    "task_id": "e3d20e1f",
+    "task_title": "Salon bot: нужен второй токен от BotFather",
+    "from": "ready",
+    "to": "done",
+    "timestamp": "2026-07-13T16:08:25.790572"
+  }
+]

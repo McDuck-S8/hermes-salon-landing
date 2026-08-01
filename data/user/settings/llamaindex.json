@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "retrieval_profile": "hybrid",
+  "top_k": 5,
+  "vector_top_k_multiplier": 2,
+  "bm25_top_k_multiplier": 2,
+  "chunk_size": 512,
+  "chunk_overlap": 50
+}

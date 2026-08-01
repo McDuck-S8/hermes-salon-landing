@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Process Flowchart — Tutorial → USDT</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  body{background:#0f0f1a;display:flex;flex-direction:column;align-items:center;padding:30px 20px;min-height:100vh}
+  h1{color:#e0e0ff;font-size:20px;font-weight:600;margin-bottom:6px;letter-spacing:.3px}
+  .sub{color:#8888aa;font-size:13px;margin-bottom:28px}
+  
+  .canvas{overflow-x:auto;overflow-y:visible;width:100%;max-width:1400px;padding:10px 0 40px}
+  .flow{display:flex;align-items:stretch;gap:0;min-width:1200px;position:relative}
+  
+  .stage{display:flex;flex-direction:column;align-items:center;min-width:150px;flex:1;position:relative}
+  .stage:not(:last-child)::after{content:'→';position:absolute;right:-8px;top:50%;transform:translateY(-50%);font-size:28px;color:#5555aa;z-index:2;font-weight:300}
+  
+  .block{background:linear-gradient(145deg,#1a1a30,#151528);border:1px solid #2a2a50;border-radius:12px;padding:14px 12px;width:100%;max-width:170px;text-align:center;position:relative;transition:transform .15s,box-shadow .15s}
+  .block:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(100,100,255,.12)}
+  
+  .block .phase{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;padding:2px 8px;display:inline-block;border-radius:4px}
+  .phase-input{color:#5cc9ff;background:rgba(92,201,255,.12)}
+  .phase-proc{color:#a78bfa;background:rgba(167,139,250,.12)}
+  .phase-dist{color:#f59e0b;background:rgba(245,158,11,.12)}
+  .phase-conv{color:#34d399;background:rgba(52,211,153,.12)}
+  .phase-pay{color:#f472b6;background:rgba(244,114,182,.12)}
+  
+  .block .icon{font-size:26px;margin:2px 0 4px;display:block}
+  .block .name{color:#e0e0ff;font-size:13px;font-weight:600;margin-bottom:3px}
+  .block .desc{color:#9999bb;font-size:10px;line-height:1.35;margin-bottom:6px;padding:0 2px}
+  
+  .meta{font-size:9px;line-height:1.4;border-top:1px solid #2a2a40;padding-top:5px;margin-top:3px}
+  .meta .tool{color:#6666cc}
+  .meta .kpi{color:#f59e0b;font-weight:600}
+  
+  .status{padding:2px 7px;border-radius:3px;font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;display:inline-block;margin:0 0 4px}
+  .s-ready{background:#065f46;color:#6ee7b7}
+  .s-setup{background:#78350f;color:#fcd34d}
+  .s-user{background:#7c1d1d;color:#fca5a5;animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+  
+  .pipe{font-size:10px;color:#5555aa;text-align:center;padding:4px 0;font-weight:500;letter-spacing:.3px;width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  
+  /* vertical info */
+  .lanes{display:flex;gap:0;width:100%;max-width:1400px;margin-top:10px;flex-wrap:wrap}
+  .lane{flex:1;min-width:100px;text-align:center;padding:8px;border-top:1px solid #2a2a40;margin-top:0}
+  .lane .label{font-size:9px;color:#5555aa;text-transform:uppercase;letter-spacing:1px}
+  
+  .legend{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:0 0 16px}
+  .legend span{font-size:10px;color:#8888aa;display:flex;align-items:center;gap:4px}
+  .legend .dot{display:inline-block;width:10px;height:10px;border-radius:3px}
+  .dot-ready{background:#065f46}
+  .dot-setup{background:#78350f}
+  .dot-user{background:#7c1d1d}
+</style>
+</head>
+<body>
+
+<h1>🧭 Схема процесса: Tutorial → USDT</h1>
+<p class="sub">От Veo-промпта до денег на карте. Формат: Tutorial + CTA. Бюджет: $0.</p>
+
+<div class="legend">
+  <span><span class="dot dot-ready"></span> Готово</span>
+  <span><span class="dot dot-setup"></span> Настраивается</span>
+  <span><span class="dot dot-user"></span> Требует твоего действия</span>
+</div>
+
+<div class="canvas">
+<div class="flow">
+
+<!-- STAGE 1 -->
+<div class="stage">
+  <div class="block">
+    <div class="status s-ready">Готово</div>
+    <span class="phase phase-input">ВХОД</span>
+    <span class="icon">📝</span>
+    <div class="name">Veo-промпт</div>
+    <div class="desc">Формула Google Cloud: Cinematography + Subject + Action + Context + Style</div>
+    <div class="meta">
+      <div class="tool">Инструмент: Veo 3.1</div>
+      <div class="kpi">KPI: готовый сценарий</div>
+    </div>
+  </div>
+  <div class="pipe">↓</div>
+</div>
+
+<!-- STAGE 2 -->
+<div class="stage">
+  <div class="block">
+    <div class="status s-ready">Готово</div>
+    <span class="phase phase-proc">ЦЕХ 1</span>
+    <span class="icon">🎬</span>
+    <div class="name">Генерация видео</div>
+    <div class="desc">Veo 3.1 создаёт 8-сек ролик 9:16, 720p по промпту</div>
+    <div class="meta">
+      <div class="tool">Инструмент: Composio → Gemini</div>
+      <div class="kpi">KPI: 3 видео за 5 мин</div>
+    </div>
+  </div>
+  <div class="pipe">8 сек, 9:16, MP4 →</div>
+</div>
+
+<!-- STAGE 3 -->
+<div class="stage">
+  <div class="block">
+    <div class="status s-user">Требует тебя</div>
+    <span class="phase phase-dist">ЦЕХ 2</span>
+    <span class="icon">📱</span>
+    <div class="name">Публикация TikTok</div>
+    <div class="desc">Загрузка видео на TikTok с хуком, тегами, CTA в описании</div>
+    <div class="meta">
+      <div class="tool">Инструмент: TikTok аккаунт</div>
+      <div class="kpi">KPI: 500+ views за 24ч</div>
+    </div>
+  </div>
+  <div class="pipe">х ук + теги + #usdt #crypto →</div>
+</div>
+
+<!-- STAGE 4 -->
+<div class="stage">
+  <div class="block">
+    <div class="status s-user">Требует тебя</div>
+    <span class="phase phase-dist">ЦЕХ 3</span>
+    <span class="icon">🔗</span>
+    <div class="name">Bio Link (Carrd)</div>
+    <div class="desc">Ссылка в bio → Carrd страница → перенаправление в Telegram</div>
+    <div class="meta">
+      <div class="tool">Инструмент: Carrd / Beacons</div>
+      <div class="kpi">KPI: CTR &gt; 3%</div>
+    </div>
+  </div>
+  <div class="pipe">клики →</div>
+</div>
+
+<!-- STAGE 5 -->
+<div class="stage">
+  <div class="block">
+    <div class="status s-user">Требует тебя</div>
+    <span class="phase phase-dist">ЦЕХ 4</span>
+    <span class="icon">💬</span>
+    <div class="name">Telegram канал</div>
+    <div class="desc">Прослойка: подписчик → лендинг. Посты с гайдами, USDT тизеры</div>
+    <div class="meta">
+      <div class="tool">Инструмент: @usdt_simple</div>
+      <div class="kpi">KPI: 5+ подписок/день</div>
+    </div>
+  </div>
+  <div class="pipe">переход →</div>
+</div>
+
+<!-- STAGE 6 -->
+<div class="stage">
+  <div class="block">
+    <div class="status s-setup">Настраивается</div>
+    <span class="phase phase-conv">ЦЕХ 5</span>
+    <span class="icon">🔒</span>
+    <div class="name">Content Locker</div>
+    <div class="desc">CPA locker перед контентом: email/app install/survey → доступ</div>
+    <div class="meta">
+      <div class="tool">Инструмент: CPAGrip / OGAds</div>
+      <div class="kpi">KPI: EPC &gt; $0.05</div>
+    </div>
+  </div>
+  <div class="pipe">конверсия →</div>
+</div>
+
+<!-- STAGE 7 -->
+<div class="stage">
+  <div class="block">
+    <div class="status s-ready">Готово</div>
+    <span class="phase phase-conv">ЦЕХ 6</span>
+    <span class="icon">🔄</span>
+    <div class="name">CPA оффер</div>
+    <div class="desc">USDT обменник / P2P (No KYC). Выплата за Email/App Install</div>
+    <div class="meta">
+      <div class="tool">Инструмент: CPA-сеть</div>
+      <div class="kpi">KPI: конверсия 1-5%</div>
+    </div>
+  </div>
+  <div class="pipe">лид →</div>
+</div>
+
+<!-- STAGE 8 -->
+<div class="stage">
+  <div class="block">
+    <div class="status s-ready">Готово</div>
+    <span class="phase phase-pay">ВЫХОД</span>
+    <span class="icon">💵</span>
+    <div class="name">Выплата</div>
+    <div class="desc">USDT на кошелёк от CPA-сети. Вывод на карту через P2P</div>
+    <div class="meta">
+      <div class="tool">Инструмент: USDT P2P</div>
+      <div class="kpi">KPI: $5-50/день</div>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<!-- Lanes / Status bar -->
+<div class="lanes">
+  <div class="lane"><span class="label">Этап 1: Вход</span></div>
+  <div class="lane"><span class="label">Этап 2: Производство</span></div>
+  <div class="lane"><span class="label">Этап 3: Дистрибуция</span></div>
+  <div class="lane"><span class="label">Этап 4: Удержание</span></div>
+  <div class="lane"><span class="label">Этап 5: Монетизация</span></div>
+  <div class="lane"><span class="label">Этап 6: Конверсия</span></div>
+  <div class="lane"><span class="label">Этап 7: Payout</span></div>
+  <div class="lane"><span class="label">Этап 8: Вывод</span></div>
+</div>
+
+</body>
+</html>

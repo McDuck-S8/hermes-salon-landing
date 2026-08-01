@@ -1,0 +1,33 @@
+Проблема: OpenClaude не стабильно появляется в AionUi
+
+  Что работает:
+  - AionUi установлен, работает на http://127.0.0.1:25808
+  - OpenClaude CLI (openclaude.cmd) создан и работает
+  - ACP bridge скрипт создан и протестирован — отправляет/принимает ACP протокол
+  - В базе AionUi (agent_metadata) запись openclaude01 есть, enabled=1
+  - Extension aionext-openclaude создан с manifest и bridge
+
+  Две проблемы:
+
+  1. openclaude не на PATH процесса AionUi
+
+  AionUi при старте проверяет: openclaude на $PATH? Если нет — available=false и не показывает агента.
+  - Добавил D:\Portable_Soft\OpenClaude-Portable-main в User PATH
+  - Добавил в System PATH (Machine)
+  - Но AionUi запускается из контекста, где PATH ещё не обновлён
+  - Решение: перезапустить AionUi после перелогина или перезагрузки
+
+  2. ACP bridge крашится на usage.input_tokens
+
+  OpenClaude через OpenAI API возвращает usage.prompt_tokens вместо usage.input_tokens.
+  - Пропатчил 5 мест в acp-agent.js:
+    - snapshotFromUsage() — добавил null-check
+    - totalTokens() — fallback на prompt_tokens
+    - message_delta handler — ?? {}
+    - result handler — ?? prompt_tokens ?? 0
+  - Проблема: AionUi при перезапуске пересоздаёт bridge из npm, затирая патчи
+
+  Что нужно сделать:
+  1. Перелогинься чтобы PATH обновился для всех процессов
+  2. Запусти AionUi — openclaude найдётся на PATH
+  3. Если usage.input_tokens ошибка вернётся — нужно либо патчить npm-пакет локально, либо ждать фикса от AionUi

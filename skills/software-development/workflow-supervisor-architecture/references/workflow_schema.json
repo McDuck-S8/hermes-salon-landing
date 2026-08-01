@@ -1,0 +1,157 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hermes-agent.nousresearch.com/schemas/workflow.schema.json",
+  "title": "Hermes Workflow Schema",
+  "description": "JSON Schema для валидации исполняемых графов воркфлоу Hermes Agent",
+  "type": "object",
+  "required": ["id", "version", "name", "graph"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]*$",
+      "description": "Уникальный идентификатор воркфлоу (kebab-case)"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "SemVer версия воркфлоу"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 100,
+      "description": "Читаемое название"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 500,
+      "description": "Описание цели воркфлоу"
+    },
+    "inputs": {
+      "type": "object",
+      "description": "Параметры входа (Jinja2-шаблоны поддерживаются в значениях)",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["string", "number", "integer", "boolean", "array", "object"]
+          },
+          "required": { "type": "boolean", "default": false },
+          "default": {},
+          "description": { "type": "string" }
+        },
+        "required": ["type"]
+      }
+    },
+    "outputs": {
+      "type": "object",
+      "description": "Ожидаемые выходные артефакты",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["string", "number", "integer", "boolean", "array", "object", "file"]
+          },
+          "description": { "type": "string" }
+        },
+        "required": ["type"]
+      }
+    },
+    "graph": {
+      "type": "object",
+      "required": ["nodes", "edges"],
+      "properties": {
+        "nodes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["id", "type", "name"],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]*$",
+                "description": "Уникальный ID узла в графе"
+              },
+              "type": {
+                "type": "string",
+                "enum": ["skill", "mini_pipeline", "pipeline", "conditional", "parallel", "human_review", "start", "end"],
+                "description": "Тип узла"
+              },
+              "name": {
+                "type": "string",
+                "description": "Имя навыка/пайплайна (для skill/mini_pipeline/pipeline) или описание (для conditional/human_review)"
+              },
+              "config": {
+                "type": "object",
+                "description": "Конфигурация узла (Jinja2-шаблоны в значениях)",
+                "additionalProperties": true
+              },
+              "depends_on": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "IDs узлов-предшественников (топологический порядок)"
+              },
+              "condition": {
+                "type": "string",
+                "description": "Jinja2-выражение для conditional узлов (true/false)"
+              },
+              "fallback": {
+                "type": "string",
+                "description": "ID fallback-узла при 3 провалах"
+              },
+              "timeout_seconds": {
+                "type": "integer",
+                "minimum": 10,
+                "maximum": 86400,
+                "default": 300,
+                "description": "Таймаут выполнения узла"
+              },
+              "retry": {
+                "type": "object",
+                "properties": {
+                  "max_attempts": { "type": "integer", "minimum": 1, "maximum": 5, "default": 3 },
+                  "backoff_base_seconds": { "type": "integer", "minimum": 1, "maximum": 300, "default": 5 },
+                  "backoff_multiplier": { "type": "number", "minimum": 1, "maximum": 10, "default": 3 }
+                },
+                "default": { "max_attempts": 3, "backoff_base_seconds": 5, "backoff_multiplier": 3 }
+              }
+            }
+          }
+        },
+        "edges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["from", "to"],
+            "properties": {
+              "from": { "type": "string", "description": "ID исходного узла" },
+              "to": { "type": "string", "description": "ID целевого узла" },
+              "condition": { "type": "string", "description": "Jinja2-условие перехода (опционально)" }
+            }
+          }
+        }
+      }
+    },
+    "state": {
+      "type": "string",
+      "enum": ["pending", "running", "paused", "completed", "failed"],
+      "default": "pending"
+    },
+    "created_at": { "type": "string", "format": "date-time" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "author": { "type": "string" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "estimated_duration_minutes": { "type": "integer", "minimum": 1 },
+        "priority": { "type": "integer", "minimum": 1, "maximum": 10, "default": 5 },
+        "source_template": { "type": "string" }
+      }
+    }
+  },
+  "additionalProperties": false
+}

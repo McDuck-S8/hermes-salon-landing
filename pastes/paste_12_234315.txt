@@ -1,0 +1,64 @@
+нужно чтобы агент не просто выдавал текстовый список из 50 схем, а визуализировал их: графики, сравнения, матрицы, пайплайны. Чтобы ты смотрел на картинку и сразу понимал что делать.
+
+Вот что можно взять с GitHub и как это прикрутить:
+
+1. Mermaid (уже встроен в GitHub Markdown)
+Что это: Язык разметки для диаграмм. Пишешь текстом — получаешь схему. GitHub рендерит Mermaid нативно в любом .md файле.
+
+Пример для твоих схем:
+
+
+
+
+
+
+
+
+
+
+
+
+
+Скилл на GitHub: github.com/BackMarket/mermaid-cli — конвертит Mermaid в PNG/SVG.
+
+2. Diagrams (Mingrammer) — Python
+Репозиторий: github.com/mingrammer/diagrams
+
+Что делает: Генерирует архитектурные диаграммы из Python-кода. Можешь попросить агента написать скрипт, который возьмёт его 50 схем и нарисует красивую схему в PNG.
+
+Пример для твоих схем:
+
+python
+from diagrams import Diagram, Edge, Node
+from diagrams.custom import Custom
+
+with Diagram("Income Pipeline", show=False):
+    with Cluster("50 Schemes"):
+        unverified = Custom("47 UNVERIFIED", "./red.png")
+        testing = Custom("2 TESTING", "./yellow.png")
+        verified = Custom("1 VERIFIED", "./green.png")
+    
+    with Cluster("Actions"):
+        code_unblock = Custom("34 Code-unblockable", "./blue.png")
+        manual = Custom("13 Manual only", "./gray.png")
+    
+    unverified >> Edge(label="landing_generator.py") >> testing
+    testing >> Edge(label="cpa_bot_generator.py") >> verified
+3. Chart.js + HTML (самое простое)
+Что это: JavaScript-библиотека для графиков. Агент может генерировать HTML-файл с интерактивными графиками, который ты открываешь в браузере.
+
+Пример: Круговая диаграмма статусов, столбчатая диаграмма по блокерам, матрица "готовность к запуску".
+
+Скилл на GitHub: github.com/chartjs/Chart.js — бесплатно, без зависимостей.
+
+4. Tabulate (Python) — красивые таблицы в терминале
+Репозиторий: github.com/astanin/python-tabulate
+
+Что делает: Форматирует данные в красивые таблицы прямо в терминале. Агент уже использует Python — может выводить свои 50 схем в читаемом виде.
+
+Что сказать агенту
+"Ты даёшь мне списки. Я в них не понимаю. Мне нужна визуализация.
+
+Добавь в свои ответы Mermaid-диаграммы. Для каждой сводки (статусы схем, пайплайны, приоритеты) — рисуй схему в Mermaid. GitHub рендерит их нативно.
+
+Прямо сейчас: Возьми свой отчёт про 50 схем и переделай его в Mermaid-диаграмму. Я хочу видеть не список, а схему: сколько схем, какие статусы, какие блокеры, что code-unblockable. Сразу под текстом.

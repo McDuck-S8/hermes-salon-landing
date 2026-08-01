@@ -1,0 +1,67 @@
+{
+  "session": 22,
+  "style": "fantasy",
+  "model": "seedream",
+  "count": 5,
+  "success_count": 0,
+  "fail_count": 5,
+  "timestamp": "2026-07-15T08:48:47.544827+00:00",
+  "provider": "pollinations.ai",
+  "images": [
+    {
+      "index": 1,
+      "style": "fantasy",
+      "prompt": "Mystical elf queen in enchanted forest, bioluminescent flowers, shimmering dress, elegant pose, detailed face, dappled sunlight, fantasy art, intricate details, volumetric fog",
+      "seed": 907903,
+      "caption": "🌙 Mystical beauty | Daily exclusive",
+      "model": "seedream",
+      "filename": "fantasy_22_01.jpg",
+      "filepath": "D:\\Portable_Soft\\hermes\\projects\\ai-ofm-tribute\\content\\sessions\\22\\fantasy_22_01.jpg",
+      "success": false
+    },
+    {
+      "index": 2,
+      "style": "fantasy",
+      "prompt": "Mystical elf queen in enchanted forest, bioluminescent flowers, shimmering dress, elegant pose, detailed face, dappled sunlight, fantasy art, intricate details, volumetric fog",
+      "seed": 37271,
+      "caption": "🌙 Mystical beauty | Daily exclusive",
+      "model": "seedream",
+      "filename": "fantasy_22_02.jpg",
+      "filepath": "D:\\Portable_Soft\\hermes\\projects\\ai-ofm-tribute\\content\\sessions\\22\\fantasy_22_02.jpg",
+      "success": false
+    },
+    {
+      "index": 3,
+      "style": "fantasy",
+      "prompt": "Mystical elf queen in enchanted forest, bioluminescent flowers, shimmering dress, elegant pose, detailed face, dappled sunlight, fantasy art, intricate details, volumetric fog",
+      "seed": 697478,
+      "caption": "💫 Fantasy collection | Member access only",
+      "model": "seedream",
+      "filename": "fantasy_22_03.jpg",
+      "filepath": "D:\\Portable_Soft\\hermes\\projects\\ai-ofm-tribute\\content\\sessions\\22\\fantasy_22_03.jpg",
+      "success": false
+    },
+    {
+      "index": 4,
+      "style": "fantasy",
+      "prompt": "Mystical elf queen in enchanted forest, bioluminescent flowers, shimmering dress, elegant pose, detailed face, dappled sunlight, fantasy art, intricate details, volumetric fog",
+      "seed": 82233,
+      "caption": "💫 Fantasy collection | Member access only",
+      "model": "seedream",
+      "filename": "fantasy_22_04.jpg",
+      "filepath": "D:\\Portable_Soft\\hermes\\projects\\ai-ofm-tribute\\content\\sessions\\22\\fantasy_22_04.jpg",
+      "success": false
+    },
+    {
+      "index": 5,
+      "style": "fantasy",
+      "prompt": "Sorceress with flowing silver hair casting a spell, magical particles around hands, dramatic lighting, fantasy portrait, intricate robe details, glowing runes, ethereal atmosphere",
+      "seed": 376105,
+      "caption": "✨ New fantasy art | Exclusive content",
+      "model": "seedream",
+      "filename": "fantasy_22_05.jpg",
+      "filepath": "D:\\Portable_Soft\\hermes\\projects\\ai-ofm-tribute\\content\\sessions\\22\\fantasy_22_05.jpg",
+      "success": false
+    }
+  ]
+}

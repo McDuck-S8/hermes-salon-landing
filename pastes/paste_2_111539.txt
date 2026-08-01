@@ -1,0 +1,7 @@
+Let's integrate EverOS — a memory layer for AI agents — into this project.
+
+The full API reference is at https://docs.evermind.ai/llms-full.txt — read it before proceeding.
+
+Setup:
+pip install everos
+export EVEROS_API_KEY="932ab43a-8ae2-41d0-9c28-d3b57e4274ed"

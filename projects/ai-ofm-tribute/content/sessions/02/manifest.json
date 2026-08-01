@@ -1,0 +1,23 @@
+{
+  "session": 2,
+  "style": "anime",
+  "timestamp": "2026-07-14T20:58:52.904620+00:00",
+  "images": [
+    {
+      "index": 1,
+      "style": "anime",
+      "prompt": "Anime style beautiful woman, studio ghibli inspired, soft pastel colors, detailed eyes, flowing hair, elegant outfit, cherry blossoms background, warm lighting, high quality anime art, detailed face, trending on pixiv",
+      "seed": 548813,
+      "caption": "🎨 Fresh illustration | Premium gallery",
+      "filename": "anime_02_01.jpg"
+    },
+    {
+      "index": 2,
+      "style": "anime",
+      "prompt": "Vibrant anime character design, colorful hair, stylish clothing, dynamic pose, clean lineart, cel shading, beautiful face, detailed background, high resolution anime art",
+      "seed": 564951,
+      "caption": "🌸 New anime art | Daily exclusive",
+      "filename": "anime_02_02.jpg"
+    }
+  ]
+}

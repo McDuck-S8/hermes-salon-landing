@@ -1,0 +1,77 @@
+{
+  "goal": "g-008",
+  "title": "Unlock: skill",
+  "status": "completed",
+  "timestamp": "2026-07-24T02:42:00Z",
+  "metrics": {
+    "total_skills": 319,
+    "fresh_30d": 216,
+    "stale_30d": 103,
+    "critical_45d": 30,
+    "fresh_pct": 67
+  },
+  "categories_ranked_by_stale_pct": [
+    {"category": "creative", "total": 23, "stale": 17, "pct": 74, "very_stale": 6},
+    {"category": "productivity", "total": 11, "stale": 8, "pct": 73, "very_stale": 1},
+    {"category": "research", "total": 7, "stale": 6, "pct": 86, "very_stale": 1},
+    {"category": "github", "total": 6, "stale": 5, "pct": 83, "very_stale": 0},
+    {"category": "media", "total": 7, "stale": 5, "pct": 71, "very_stale": 1},
+    {"category": "software-development", "total": 18, "stale": 8, "pct": 44, "very_stale": 4},
+    {"category": "devops", "total": 32, "stale": 10, "pct": 31, "very_stale": 3},
+    {"category": "auto-generated", "total": 57, "stale": 17, "pct": 30, "very_stale": 0},
+    {"category": "finance", "total": 20, "stale": 3, "pct": 15, "very_stale": 3},
+    {"category": "autonomous-ai-agents", "total": 15, "stale": 4, "pct": 27, "very_stale": 2},
+    {"category": "automation", "total": 16, "stale": 4, "pct": 25, "very_stale": 0},
+    {"category": "mcp", "total": 5, "stale": 2, "pct": 40, "very_stale": 2},
+    {"category": "superpowers", "total": 4, "stale": 0, "pct": 0, "very_stale": 0}
+  ],
+  "very_stale_skills_45d": [
+    "autonomous-ai-agents/kanban-codex-lane",
+    "autonomous-ai-agents/opencode",
+    "creative/baoyu-article-illustrator",
+    "creative/baoyu-comic",
+    "creative/pixel-art",
+    "devops/webhook-subscriptions",
+    "finance/excel-author",
+    "finance/pptx-author",
+    "finance/stocks",
+    "gaming/minecraft-modpack-server",
+    "gaming/pokemon-player",
+    "health/fitness-nutrition",
+    "mcp/mobile-mcp",
+    "mcp/vapi-voice-calls",
+    "media/spotify",
+    "productivity/linear",
+    "red-teaming/godmode",
+    "research/research-paper-writing",
+    "security/1password",
+    "security/oss-forensics",
+    "security/sherlock",
+    "self-improvement/kairos-lite",
+    "self-improvement/memory-extractor",
+    "self-improvement/structured-context-compressor",
+    "software-development/hermes-s6-container-supervision",
+    "software-development/plan",
+    "software-development/spike",
+    "software-development/writing-plans",
+    "web-development/page-agent",
+    "web-development/svelte-bits"
+  ],
+  "actions_taken": [
+    "Patched devops/webhook-subscriptions SKILL.md: version 1.1.0 → 1.2.0, added stale_metadata (last_audit, stale_days, very_stale, action_required)",
+    "Updated skills/AGENTS.md with full stale matrix (Child DOX Index replaced)"
+  ],
+  "artifacts": [
+    "skills/AGENTS.md (updated Child DOX Index)",
+    "skills/devops/webhook-subscriptions/SKILL.md (patched v1.2.0)"
+  ],
+  "next_actions": [
+    "Archive or refresh creative/ (17 stale, 6 critical) — lowest priority for arbitrage",
+    "Archive or refresh productivity/ (8 stale) — office-cli replaces excel-author/pptx-author",
+    "Refresh research/ (6 stale) — arxiv, blogwatcher, llm-wiki, polymarket useful for trend scouting",
+    "Refresh github/ (5 stale) — PR workflow, code review, issues — core dev skills",
+    "Refresh media/ (5 stale) — spotify, gif-search, youtube-content — low priority",
+    "Refresh software-development/ (8 stale) — plan, spike, tdd, writing-plans — HIGH priority for agent ops",
+    "Refresh devops/ (10 stale) — webhook-subscriptions patched, v2ray-dns-fix needs check"
+  ]
+}

@@ -1,0 +1,6 @@
+System Health
+    | Layer     | Status                                                                                    |
+    |-----------|-------------------------------------------------------------------------------------------|
+    | Events    | 2/3 healthy (knowledge_added ✅, architecture_scan_complete ✅, new_suggestions_ready ⏳) |
+    | Modules   | 5/24 healthy (core, knowledge, knowledge_pipeline, cron_tools, event_system)              |
+    | Pipelines | 1/3 healthy (knowledge_pipeline)    

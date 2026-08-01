@@ -1,0 +1,25 @@
+Ты сам диагностировал проблему. Твой план правильный.
+
+Выполни все пункты:
+
+Почини chain_heartbeat — заставь модули бить пульс.
+
+Восстанови event pipeline — new_suggestions_ready должен приходить.
+
+Запусти nocturnal_cognition для Crystal.
+
+Запиши web-automation и subagent-orchestration в Knowledge Cube.
+
+Настрой всё это на автоматический запуск (кроны, триггеры).
+
+После выполнения покажи:
+
+Heartbeat: X/24 HEALTHY
+
+Events: X/3 HEALTHY
+
+Crystal: ночные циклы работают
+
+Навыки записаны в KC
+
+Без промежуточных статусов. Сделай сейчас.

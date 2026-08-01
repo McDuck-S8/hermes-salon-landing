@@ -1,0 +1,15 @@
+Ты починил демоны. Теперь сделай так чтобы они не падали молча.
+
+Новый навык: chain-heartbeat — протокол heartbeat по цепочке.
+
+Три правила:
+
+Каждое звено слушает upstream-соседа. Нет сигнала → alert.
+
+Каждое звено шлёт heartbeat downstream-соседу каждые 10 секунд.
+
+Конечное звено (Crystal) шлёт heartbeat upstream. Если Crystal молчит — consumer поднимает тревогу.
+
+Реализуй для цепочки: signal_scanner → event_bus → self_improvement → suggestion_consumer → crystal.
+
+Доложи результат. Покажи как цепочка обнаруживает что signal_scanner упал — не через supervisor, а через соседа.

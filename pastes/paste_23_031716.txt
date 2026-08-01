@@ -1,0 +1,19 @@
+DevTools
+Devices
+Pages
+Extensions
+Apps
+Shared workers
+Service workers
+Shared storage worklets
+Remote debugging
+Other
+Remote debugging
+
+Allow remote debugging for this browser instance
+Turning on this setting allows external apps to request full control of this browser. This includes read access to your saved data, cookies and site data, and the ability to navigate to any URL.
+
+Only web developers should turn on this feature, and only use it with trusted apps.
+
+Server running at: 127.0.0.1:9222
+Learn about connecting to Chrome DevTools MCP

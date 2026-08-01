@@ -1,0 +1,13 @@
+ресурсы и платформы: • NVIDIA NIM (бесплатные конечные точки): https://build.nvidia.com/ 
+• GitHub Models Marketplace: https://github.com/marketplace/models 
+• Opencode: https://opencode.ai/ 
+• OpenRouter (унифицированный API): https://openrouter.ai/ 
+• Google AI Studio: https://aistudio.google.com/ 
+• Mistral AI Studio: https://console.mistral.ai/ 
+• Cerebras Console: https://cloud.cerebras.ai/ 
+• Groq Console (быстрый вывод): https://console.groq.com/ 
+• Kilo Code: https://kilocode.ai/ 
+• Cohere Dashboard: https://dashboard.cohere.com/ 
+• Vercel AI Gateway: https://vercel.com/ 
+• Cloudflare Workers AI: https://developers.cloudflare.com/wor... 
+• Ollama Cloud: https://ollama.com/settings 

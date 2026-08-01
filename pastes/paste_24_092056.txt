@@ -1,0 +1,17 @@
+Создай скилл web-automation для взаимодействия с веб-интерфейсами через браузерную автоматизацию (Playwright + Ghost-surfer).
+
+Структура:
+
+.claude/skills/web-automation/SKILL.md — описание, триггеры, инструкции.
+
+scripts/web_automation.py — основной движок (инициализация браузера, выполнение действий, логирование).
+
+scripts/config_loader.py — загрузка конфигов сайтов.
+
+configs/github.json, gitlab.json, youtube.json, dzen.json, vc_ru.json — селекторы и шаги для типовых действий (создание репозитория, загрузка файла, публикация статьи, заливка видео).
+
+references/site_structure.md — общие принципы работы с сайтами.
+
+Используй существующий Ghost-surfer для антидетекта и прокси v2rayN (socks5://127.0.0.1:10806). Если Ghost-surfer не доступен — добавь fallback на Playwright в режиме stealth.
+
+После создания покажи пример работы: создай тестовый репозиторий на GitHub (или, если нет доступа, имитируй шаги и покажи лог). Проверь через subagent_verifier и compliance_checker. Без промежуточных статусов. Сделай сейчас.

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Арбитраж — таблица маршрутов</title>
+<style>
+body{font-family:system-ui,-apple-system,sans-serif;background:#0d0d1a;color:#e0e0e0;margin:20px;font-size:14px}
+h1{font-size:18px;margin-bottom:4px}
+h1 span{color:#60a5fa}
+.sub{color:#666;font-size:12px;margin-bottom:20px}
+.filters{margin-bottom:16px}
+.filters select{background:#1a1a30;border:1px solid #2a2a4a;color:#e0e0e0;padding:6px 12px;border-radius:4px;font-size:13px;cursor:pointer}
+.filters select:focus{border-color:#60a5fa;outline:none}
+.filters label{color:#888;margin-right:6px;font-size:12px}
+table{width:100%;border-collapse:collapse;background:#111128;border-radius:8px;overflow:hidden}
+th{background:#1a1a30;color:#888;font-size:11px;text-transform:uppercase;letter-spacing:1px;padding:10px 12px;text-align:left;border-bottom:1px solid #2a2a4a}
+td{padding:10px 12px;border-bottom:1px solid #1a1a2a;font-size:13px;vertical-align:middle}
+tr.ready{background:#065f4610}
+tr.ready td:first-child{border-left:3px solid #4ade80}
+tr.testing{background:#854d0e10}
+tr.testing td:first-child{border-left:3px solid #facc15}
+tr.blocked{background:#7f1d1d10}
+tr.blocked td:first-child{border-left:3px solid #f87171}
+tr.untested td:first-child{border-left:3px solid #555}
+tr:hover{background:#1a1a30}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}
+.tag.ready{background:#065f46;color:#4ade80}
+.tag.testing{background:#854d0e;color:#facc15}
+.tag.blocked{background:#7f1d1d;color:#f87171}
+.tag.untested{background:#2a2a4a;color:#888}
+.roi{font-weight:700;font-size:14px}
+.roi.high{color:#4ade80}
+.roi.mid{color:#facc15}
+.roi.low{color:#f87171}
+.blocker{color:#f87171;font-size:11px}
+.payout{color:#60a5fa;font-size:12px}
+.summary{display:flex;gap:16px;margin-bottom:16px;flex-wrap:wrap}
+.summary div{background:#111128;border:1px solid #1e1e3a;border-radius:6px;padding:8px 14px;font-size:12px}
+.summary .num{font-size:20px;font-weight:700;display:block}
+.summary .label{color:#888;font-size:10px;text-transform:uppercase}
+.summary .green .num{color:#4ade80}
+.summary .yellow .num{color:#facc15}
+.summary .red .num{color:#f87171}
+@media(max-width:700px){td,th{padding:6px 8px;font-size:12px}}
+</style>
+</head>
+<body>
+
+<h1>🕸 АРБИТРАЖНЫЕ МАРШРУТЫ <span>v3</span></h1>
+<div class="sub">Регион · Дата · Все маршруты</div>
+
+<div class="summary">
+  <div class="green"><span class="num">0</span><span class="label">Готово</span></div>
+  <div class="yellow"><span class="num">0</span><span class="label">Тест</span></div>
+  <div class="red"><span class="num">0</span><span class="label">Блок</span></div>
+  <div><span class="num" style="color:#888">0</span><span class="label">Не тест.</span></div>
+</div>
+
+<div class="filters">
+  <label for="filter">Статус:</label>
+  <select id="filter" onchange="filterTable()">
+    <option value="all">Все маршруты</option>
+    <option value="ready">✅ Готово</option>
+    <option value="testing">🔄 Тест</option>
+    <option value="blocked">⛔ Блок</option>
+    <option value="untested">⬜ Не тестировано</option>
+  </select>
+</div>
+
+<table id="routes">
+<thead>
+<tr>
+  <th>Источник</th>
+  <th>Прокладка</th>
+  <th>Оффер</th>
+  <th>Платёжка</th>
+  <th>Вывод</th>
+  <th>ROI</th>
+  <th>Статус</th>
+  <th>Что делать</th>
+</tr>
+</thead>
+<tbody>
+  <!-- Пример: 
+  <tr class="ready">
+    <td>Kadam<br><span class="payout">CPC 8.5₽</span></td>
+    <td>Tilda</td>
+    <td>Тинькофф кредитка<br><span class="payout">CPA 1500₽</span></td>
+    <td>USDT → KuCoin</td>
+    <td>Т-Банк</td>
+    <td><span class="roi high">244%</span></td>
+    <td><span class="tag ready">✅ готово</span></td>
+    <td><span class="blocker">Нужен бюджет $50</span></td>
+  </tr>
+  -->
+  <tr><td colspan="8" style="text-align:center;color:#555;padding:30px">← Заполни строки под свои маршруты</td></tr>
+</tbody>
+</table>
+
+<script>
+function filterTable() {
+  var val = document.getElementById('filter').value;
+  var rows = document.querySelectorAll('#routes tbody tr');
+  for(var i = 0; i < rows.length; i++) {
+    if(val === 'all' || rows[i].className === val) {
+      rows[i].style.display = '';
+    } else {
+      rows[i].style.display = 'none';
+    }
+  }
+}
+</script>
+
+</body>
+</html>

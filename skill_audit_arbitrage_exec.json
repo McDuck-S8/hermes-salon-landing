@@ -1,0 +1,87 @@
+{
+  "timestamp": "2026-07-26T17:12:53.868838",
+  "skills_scanned": 1,
+  "files_scanned": 15,
+  "total_findings": 8,
+  "risk": {
+    "score": 100,
+    "severity": "CRITICAL",
+    "recommendation": "DANGEROUS",
+    "critical": 0,
+    "high": 8,
+    "medium": 0,
+    "low": 0
+  },
+  "results": [
+    {
+      "skill": "arbitrage-execution",
+      "files": 15,
+      "findings": [
+        {
+          "rule": "E2_env_harvesting",
+          "severity": "HIGH",
+          "category": "Data Exfiltration",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\arbitrage-execution\\references\\hermes-deployment-stack-2026-07-10.md",
+          "line": 62,
+          "code": "1. os.environ.get(\"PEXELS_API_KEY\") → Pexels API (real photos)"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\arbitrage-execution\\references\\hermes-deployment-stack-2026-07-10.md",
+          "line": 43,
+          "code": "subprocess.run([\"taskkill\", \"/F\", \"/PID\", str(pid)], capture_output=True, timeout=5)"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\arbitrage-execution\\references\\hermes-deployment-stack-2026-07-10.md",
+          "line": 49,
+          "code": "result = subprocess.run([\"tasklist\", \"/FI\", f\"PID eq {pid}\"], capture_output=True, timeout=5)"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\arbitrage-execution\\references\\hermes-deployment-stack-2026-07-10.md",
+          "line": 79,
+          "code": "check = subprocess.run([\"tasklist\", \"/FI\", f\"PID eq {pid}\"],"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\arbitrage-execution\\references\\hermes-deployment-stack-2026-07-10.md",
+          "line": 84,
+          "code": "proc = subprocess.Popen([sys.executable, \"scripts/<name>.py\"])"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\arbitrage-execution\\scripts\\arbitrage_engine.py",
+          "line": 728,
+          "code": "subprocess.run(["
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\arbitrage-execution\\scripts\\arbitrage_engine.py",
+          "line": 802,
+          "code": "subprocess.run(["
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\arbitrage-execution\\scripts\\daemon_arbitrage.py",
+          "line": 215,
+          "code": "self.process = subprocess.Popen("
+        }
+      ]
+    }
+  ]
+}

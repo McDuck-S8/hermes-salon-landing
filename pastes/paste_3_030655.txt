@@ -1,0 +1,43 @@
+Вот ссылка на репозиторий **CC Harness Skills**:
+
+�� **[github.com/LearnPrompt/cc-harness-skills](https://github.com/LearnPrompt/cc-harness-skills)** 
+
+---
+
+### �� Что внутри (6 скиллов)
+
+| Скилл | Что делает | Для каких хостов |
+| :--- | :--- | :--- |
+| `dream-memory` | Консолидирует логи и сессии в долговременную память | Claude Code, Codex, OpenClaw |
+| `memory-extractor` | Извлекает из диалога user-фидбек, проектные ограничения, референсы | Claude Code, Codex, OpenClaw |
+| `verification-gate` | Проверяет, что задача реально сделана, а не "заявлена как сделанная" | Claude Code, Codex |
+| `swarm-coordinator` | Разбивает большую работу на 4 фазы (research → synthesis → implementation → verification) | Claude Code, Codex, OpenClaw |
+| `structured-context-compressor` | Сжимает длинные сессии в 9-частную структурированную выжимку | Claude Code, Codex, OpenClaw |
+| `kairos-lite` | Легковесные проактивные задания с расписанием, сном, экспайри | Claude Code, OpenClaw |
+
+---
+
+### �� Как установить
+
+Репозиторий работает как **набор портируемых скиллов**, которые не зависят от конкретного рантайма. Можно устанавливать в:
+
+- **Claude Code** (через плагины или вручную в `.claude/skills/`)
+- **Codex** (скиллы читаются как обычные `SKILL.md`)
+- **OpenClaw**
+- **Cursor** (через копирование)
+
+Пример установки `dream-memory` в Claude Code:
+```bash
+git clone https://github.com/LearnPrompt/cc-harness-skills.git
+cp -r cc-harness-skills/skills/dream-memory ~/.claude/skills/
+```
+
+---
+
+### ⭐ Совет
+
+Авторы репозитория рекомендуют начать с трёх скиллов — это даст максимально быстрое ощущение полезности :
+
+1. **`dream-memory`** — чтобы память не тухла
+2. **`verification-gate`** — чтобы агент не врал про "всё готово"
+3. **`structured-context-compressor`** — чтобы контекст не раздувался до бесконечности

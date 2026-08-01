@@ -1,0 +1,72 @@
+{
+  "session": 61,
+  "style": "fantasy",
+  "model": "turbo",
+  "count": 5,
+  "success_count": 5,
+  "fail_count": 0,
+  "timestamp": "2026-07-23T05:29:03.202852+00:00",
+  "provider": "pollinations.ai",
+  "images": [
+    {
+      "index": 1,
+      "style": "fantasy",
+      "prompt": "Mystical elf queen in enchanted forest, bioluminescent flowers, shimmering dress, elegant pose, detailed face, dappled sunlight, fantasy art, intricate details, volumetric fog",
+      "seed": 585773,
+      "caption": "💫 Fantasy collection | Member access only",
+      "model": "turbo",
+      "filename": "fantasy_61_01.jpg",
+      "filepath": "D:\\Portable_Soft\\hermes\\projects\\ai-ofm-tribute\\content\\sessions\\61\\fantasy_61_01.jpg",
+      "success": true,
+      "file_size": 107237
+    },
+    {
+      "index": 2,
+      "style": "fantasy",
+      "prompt": "Forest nymph with flower crown, dewdrop skin, emerald eyes, magical forest background, soft sunlight filtering through leaves, dreamy atmosphere, hyperdetailed portrait",
+      "seed": 549940,
+      "caption": "⭐ Enchanted | Subscriber preview",
+      "model": "turbo",
+      "filename": "fantasy_61_02.jpg",
+      "filepath": "D:\\Portable_Soft\\hermes\\projects\\ai-ofm-tribute\\content\\sessions\\61\\fantasy_61_02.jpg",
+      "success": true,
+      "file_size": 83463
+    },
+    {
+      "index": 3,
+      "style": "fantasy",
+      "prompt": "Mystical elf queen in enchanted forest, bioluminescent flowers, shimmering dress, elegant pose, detailed face, dappled sunlight, fantasy art, intricate details, volumetric fog",
+      "seed": 233181,
+      "caption": "⭐ Enchanted | Subscriber preview",
+      "model": "turbo",
+      "filename": "fantasy_61_03.jpg",
+      "filepath": "D:\\Portable_Soft\\hermes\\projects\\ai-ofm-tribute\\content\\sessions\\61\\fantasy_61_03.jpg",
+      "success": true,
+      "file_size": 88948
+    },
+    {
+      "index": 4,
+      "style": "fantasy",
+      "prompt": "Mystical elf queen in enchanted forest, bioluminescent flowers, shimmering dress, elegant pose, detailed face, dappled sunlight, fantasy art, intricate details, volumetric fog",
+      "seed": 468253,
+      "caption": "✨ New fantasy art | Exclusive content",
+      "model": "turbo",
+      "filename": "fantasy_61_04.jpg",
+      "filepath": "D:\\Portable_Soft\\hermes\\projects\\ai-ofm-tribute\\content\\sessions\\61\\fantasy_61_04.jpg",
+      "success": true,
+      "file_size": 101504
+    },
+    {
+      "index": 5,
+      "style": "fantasy",
+      "prompt": "Forest nymph with flower crown, dewdrop skin, emerald eyes, magical forest background, soft sunlight filtering through leaves, dreamy atmosphere, hyperdetailed portrait",
+      "seed": 152748,
+      "caption": "🌙 Mystical beauty | Daily exclusive",
+      "model": "turbo",
+      "filename": "fantasy_61_05.jpg",
+      "filepath": "D:\\Portable_Soft\\hermes\\projects\\ai-ofm-tribute\\content\\sessions\\61\\fantasy_61_05.jpg",
+      "success": true,
+      "file_size": 72750
+    }
+  ]
+}

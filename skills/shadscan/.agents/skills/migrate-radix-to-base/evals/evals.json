@@ -1,0 +1,74 @@
+[
+  {
+    "name": "migration-aschild-to-render",
+    "category": "migration",
+    "description": "asChild pattern must become render prop",
+    "code": "<SelectTrigger asChild><Button>Open</Button></SelectTrigger>",
+    "expected_violation": "asChild on Base UI component",
+    "fix": "<SelectTrigger render={({ref, ...props}) => <Button ref={ref} {...props} />}>"
+  },
+  {
+    "name": "migration-overlay-popup-wrapper",
+    "category": "migration",
+    "description": "Overlay components need Popup wrapper",
+    "code": "<DialogContent><DialogTitle>Title</DialogTitle></DialogContent>",
+    "expected_violation": "DialogContent directly in Dialog, missing Popup",
+    "fix": "<DialogPopup><DialogContent><DialogTitle>Title</DialogTitle></DialogContent></DialogPopup>"
+  },
+  {
+    "name": "migration-menu-dir-to-direction",
+    "category": "migration",
+    "description": "dir prop renamed to direction on menus",
+    "code": "<DropdownMenu dir=\"rtl\">...</DropdownMenu>",
+    "expected_violation": "dir prop should be direction",
+    "fix": "<DropdownMenu direction=\"rtl\">..."
+  },
+  {
+    "name": "migration-data-radix-to-data-base",
+    "category": "migration",
+    "description": "data-radix-* attributes become data-base-*",
+    "code": "<div data-radix-popper-content-wrapper></div>",
+    "expected_violation": "data-radix- prefix should be data-base-",
+    "fix": "<div data-base-popper-content-wrapper></div>"
+  },
+  {
+    "name": "migration-forceMount-removed",
+    "category": "migration",
+    "description": "forceMount prop removed in Base UI",
+    "code": "<Dialog forceMount><DialogTrigger>Open</DialogTrigger><DialogContent>...</DialogContent></Dialog>",
+    "expected_violation": "forceMount not supported in Base UI",
+    "fix": "<Dialog><DialogTrigger>Open</DialogTrigger><DialogContent>...</DialogContent></Dialog>"
+  },
+  {
+    "name": "migration-unstyled-removed",
+    "category": "migration",
+    "description": "unstyled prop removed in Base UI",
+    "code": "<Select unstyled>...</Select>",
+    "expected_violation": "unstyled not supported in Base UI",
+    "fix": "<Select>..."
+  },
+  {
+    "name": "migration-consumer-props-asChild",
+    "category": "migration",
+    "description": "Consumer call sites using asChild must be updated",
+    "code": "<SelectTrigger asChild><Button>Open</Button></SelectTrigger>",
+    "expected_violation": "asChild on consumer side should be removed (wrapper handles render)",
+    "fix": "<SelectTrigger><Button>Open</Button></SelectTrigger>"
+  },
+  {
+    "name": "migration-submenu-popup-wrapper",
+    "category": "migration",
+    "description": "SubContent needs SubPopup wrapper",
+    "code": "<DropdownMenu.SubContent><DropdownMenu.SubViewport><DropdownMenu.Item>Sub</DropdownMenu.Item></DropdownMenu.SubViewport></DropdownMenu.SubContent>",
+    "expected_violation": "SubContent directly in SubPopup, missing wrapper",
+    "fix": "<DropdownMenu.SubPopup><DropdownMenu.SubContent><DropdownMenu.SubViewport>..."
+  },
+  {
+    "name": "migration-legacy-style-classification",
+    "category": "migration",
+    "description": "Legacy styles (new-york, default) have no Base counterpart",
+    "code": "components.json has style: \"new-york\"",
+    "expected_violation": "Legacy style detected - no Base UI counterpart",
+    "fix": "Classify customizations via radix golden, transform on user's file using universal-patterns.md"
+  }
+]

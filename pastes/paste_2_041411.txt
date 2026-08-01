@@ -1,0 +1,147 @@
+Отличный анализ! Вот что пишет система и что нужно сделать:
+
+## Диагноз из логов:
+
+**Корень проблемы:** `spawn EINVAL` — это Windows-специфичная ошибка, которая возникает когда:
+1. Путь к исполняемому файлу содержит пробелы или спецсимволы
+2. Передан неправильный формат аргументов (массив vs строка)
+3. Рабочая директория (cwd) указана неверно
+4. **ИЛИ** когда spawn пытается запустить `.cmd`/`.bat` без `shell: true`
+
+## Почему Hermes работает, а OpenClaude — нет:
+
+| Hermes | OpenClaude |
+|--------|------------|
+| `hermes-acp.exe` (бинарник) | `openclaude.cmd` (batch-скрипт) |
+| Можно spawn напрямую | Требует `shell: true` или вызов через `cmd.exe` |
+| Передается как `["hermes-acp.exe"]` | Передается как `["openclaude.cmd"]` → EINVAL |
+
+## Решение (3 варианта):
+
+### Вариант 1 (быстрый) — добавить shell: true в bridge
+
+Отредактируй `D:\AionUi\resources\hub\aionext-openclaude\bridge.js`:
+
+```javascript
+const { spawn } = require('child_process');
+
+const proc = spawn('cmd.exe', ['/c', 'openclaude.cmd', 'serve', '--acp'], {
+  shell: true,  // КЛЮЧЕВОЙ ПАРАМЕТР для .cmd файлов
+  stdio: ['pipe', 'pipe', 'pipe', 'ipc'],
+  cwd: 'D:\\Portable_Soft\\OpenClaude-Portable-main'
+});
+
+proc.on('error', (err) => {
+  console.error('Failed to start OpenClaude:', err);
+});
+```
+
+### Вариант 2 (лучший) — создать прямой вызов node.exe без .cmd
+
+Создай `D:\AionUi\resources\hub\openclaude-acp-direct.cmd`:
+
+```batch
+@echo off
+set OPENCLAUDE_ROOT=D:\Portable_Soft\OpenClaude-Portable-main
+"%OPENCLAUDE_ROOT%\engine\node-win-x64\node.exe" "%OPENCLAUDE_ROOT%\engine\index.js" serve --acp
+```
+
+И в `manifest.json`:
+```json
+{
+  "cliCommand": "D:\\AionUi\\resources\\hub\\openclaude-acp-direct.cmd",
+  "args": []
+}
+```
+
+### Вариант 3 (чистый) — создать символическую ссылку
+
+```powershell
+# Создаем link на node.exe как "openclaude-node.exe"
+New-Item -ItemType SymbolicLink -Path "D:\Portable_Soft\OpenClaude-Portable-main\openclaude-node.exe" -Target "D:\Portable_Soft\OpenClaude-Portable-main\engine\node-win-x64\node.exe"
+
+# Теперь manifest:
+{
+  "cliCommand": "D:\\Portable_Soft\\OpenClaude-Portable-main\\openclaude-node.exe",
+  "args": ["D:\\Portable_Soft\\OpenClaude-Portable-main\\engine\\index.js", "serve", "--acp"]
+}
+```
+
+## Немедленные действия:
+
+### 1. Проверь точную команду из логов:
+```powershell
+# Найди последние логи
+Get-Content "C:\Users\Asus\AppData\Roaming\AionUi\logs\*.log" | Select-String "spawn" -Context 3
+```
+
+### 2. Проверь работоспособность node.exe:
+```powershell
+& "D:\Portable_Soft\OpenClaude-Portable-main\engine\node-win-x64\node.exe" --version
+# Должно вывести v18.x.x или подобное
+```
+
+### 3. Примени фикс (вариант 2 рекомендован):
+```powershell
+# Создай прямой запускатор
+$content = @'
+@echo off
+set OPENCLAUDE_ROOT=D:\Portable_Soft\OpenClaude-Portable-main
+"%OPENCLAUDE_ROOT%\engine\node-win-x64\node.exe" "%OPENCLAUDE_ROOT%\engine\index.js" serve --acp
+'@
+$content | Out-File -FilePath "D:\AionUi\resources\hub\openclaude-acp-direct.cmd" -Encoding ascii
+```
+
+### 4. Обнови aion-extension.json:
+```json
+{
+  "id": "openclaude",
+  "name": "OpenClaude",
+  "agents": [{
+    "id": "openclaude01",
+    "name": "OpenClaude AI",
+    "cliCommand": "D:\\AionUi\\resources\\hub\\openclaude-acp-direct.cmd",
+    "args": [],
+    "env": {
+      "NODE_PATH": "D:\\Portable_Soft\\OpenClaude-Portable-main\\engine\\node_modules"
+    }
+  }]
+}
+```
+
+### 5. Перезапусти AionUi
+
+## Дополнительная проверка:
+
+Если все еще не работает, добавь отладку в bridge:
+
+```javascript
+// bridge-debug.js
+const { spawn } = require('child_process');
+const path = require('path');
+
+const nodePath = 'D:\\Portable_Soft\\OpenClaude-Portable-main\\engine\\node-win-x64\\node.exe';
+const scriptPath = 'D:\\Portable_Soft\\OpenClaude-Portable-main\\engine\\index.js';
+
+console.error(`[DEBUG] Spawning: ${nodePath} ${scriptPath} serve --acp`);
+console.error(`[DEBUG] Node exists: ${require('fs').existsSync(nodePath)}`);
+console.error(`[DEBUG] Script exists: ${require('fs').existsSync(scriptPath)}`);
+
+const proc = spawn(nodePath, [scriptPath, 'serve', '--acp'], {
+  stdio: ['pipe', 'pipe', 'pipe', 'ipc'],
+  cwd: 'D:\\Portable_Soft\\OpenClaude-Portable-main'
+});
+
+proc.on('spawn', () => console.error('[DEBUG] Process spawned successfully'));
+proc.on('error', (err) => console.error('[DEBUG] Spawn error:', err));
+proc.stdout.on('data', (d) => console.error('[DEBUG] stdout:', d.toString()));
+proc.stderr.on('data', (d) => console.error('[DEBUG] stderr:', d.toString()));
+```
+
+## Итог:
+
+**Главная причина:** AionUi (написан на Rust) при spawn не включает `shell: true` для `.cmd` файлов.
+
+**Решение:** Использовать прямой вызов `node.exe index.js serve --acp` вместо `openclaude.cmd`.
+
+Попробуй вариант 2 — он наиболее надежный и не требует изменения кода AionUi.

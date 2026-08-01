@@ -1,0 +1,23 @@
+C:\Users\Asus>cd /d D:\Portable_Soft\freellmapi\server
+
+D:\Portable_Soft\freellmapi\server>npx tsx src/index.ts
+◇ injected env (2) from ..\.env // tip: ⌘ override existing { override: true }
+Error: The module '\\?\D:\Portable_Soft\freellmapi\node_modules\better-sqlite3\build\Release\better_sqlite3.node'
+was compiled against a different Node.js version using
+NODE_MODULE_VERSION 127. This version of Node.js requires
+NODE_MODULE_VERSION 137. Please try re-compiling or re-installing
+the module (for instance, using `npm rebuild` or `npm install`).
+    at Object..node (node:internal/modules/cjs/loader:2012:18)
+    at Module.load (node:internal/modules/cjs/loader:1577:32)
+    at Module._load (node:internal/modules/cjs/loader:1379:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1600:12)
+    at require (node:internal/modules/helpers:153:16)
+    at bindings (D:\Portable_Soft\freellmapi\node_modules\bindings\bindings.js:112:48)
+    at new Database (D:\Portable_Soft\freellmapi\node_modules\better-sqlite3\lib\database.js:48:64)
+    at initDb (D:\Portable_Soft\freellmapi\server\src\db\index.ts:31:8)
+    at main (D:\Portable_Soft\freellmapi\server\src\index.ts:9:3) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+
+D:\Portable_Soft\freellmapi\server>

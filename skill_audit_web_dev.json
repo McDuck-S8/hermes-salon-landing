@@ -1,0 +1,519 @@
+{
+  "timestamp": "2026-07-26T17:15:15.837163",
+  "skills_scanned": 1,
+  "files_scanned": 90,
+  "total_findings": 62,
+  "risk": {
+    "score": 100,
+    "severity": "CRITICAL",
+    "recommendation": "DANGEROUS",
+    "critical": 0,
+    "high": 59,
+    "medium": 3,
+    "low": 0
+  },
+  "results": [
+    {
+      "skill": "web-development",
+      "files": 90,
+      "findings": [
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\dark-mode-toggle\\SKILL.md",
+          "line": 169,
+          "code": "<!-- Now use dark: prefix -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\form-handling\\SKILL.md",
+          "line": 44,
+          "code": "<!-- Honeypot (anti-spam, hidden from users) -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\form-handling\\SKILL.md",
+          "line": 55,
+          "code": "<!-- Invisible to users, bots auto-fill it -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\form-handling\\SKILL.md",
+          "line": 138,
+          "code": "<!-- ... fields ... -->"
+        },
+        {
+          "rule": "P3_exfiltration_commands",
+          "severity": "HIGH",
+          "category": "Data Exfiltration",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\form-handling\\SKILL.md",
+          "line": 146,
+          "code": "curl -X POST https://formbackend.example.workers.dev/lead \\"
+        },
+        {
+          "rule": "E1_external_transmission",
+          "severity": "MEDIUM",
+          "category": "Data Exfiltration",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\form-handling\\SKILL.md",
+          "line": 83,
+          "code": "fetch('https://api.telegram.org/bot<YOUR_BOT_TOKEN>/sendMessage', {"
+        },
+        {
+          "rule": "OH1_unvalidated_output",
+          "severity": "HIGH",
+          "category": "Output Handling",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\modern-css\\SKILL.md",
+          "line": 121,
+          "code": "document.querySelector('#content').innerHTML = newContent;"
+        },
+        {
+          "rule": "PE3_credential_access",
+          "severity": "HIGH",
+          "category": "Privilege Escalation",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\page-agent\\SKILL.md",
+          "line": 187,
+          "code": "- **Restart dev server** after editing `.env` in Path 3 — Vite only reads env at startup."
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\premium-multipage-site\\SKILL.md",
+          "line": 89,
+          "code": "<!-- В head каждой страницы -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\premium-multipage-site\\SKILL.md",
+          "line": 123,
+          "code": "В коде комментарии вида `<!-- EDIT: телефон -->` — менять под клиента."
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\seo-structured-data\\SKILL.md",
+          "line": 22,
+          "code": "<!-- Canonical (avoid duplicate content) -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\seo-structured-data\\SKILL.md",
+          "line": 25,
+          "code": "<!-- Language / region -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\seo-structured-data\\SKILL.md",
+          "line": 28,
+          "code": "<!-- Robots -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\seo-structured-data\\SKILL.md",
+          "line": 31,
+          "code": "<!-- Theme color (mobile browser chrome) -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\seo-structured-data\\SKILL.md",
+          "line": 39,
+          "code": "<!-- Facebook / VK / LinkedIn -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\seo-structured-data\\SKILL.md",
+          "line": 50,
+          "code": "<!-- Twitter (X) -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\seo-structured-data\\SKILL.md",
+          "line": 291,
+          "code": "<!-- Yandex supports standard sitemaps. Add to Yandex.Webmaster -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\seo-structured-data\\SKILL.md",
+          "line": 292,
+          "code": "<!-- Also add to Google Search Console -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\small-business-landing-generator\\SKILL.md",
+          "line": 210,
+          "code": "<!-- ... -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\telegram-service-bot\\SKILL.md",
+          "line": 146,
+          "code": "<!-- Single HTML file, no server needed -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\telegram-service-bot\\SKILL.md",
+          "line": 147,
+          "code": "<!-- All services, masters, dates, time slots are hardcoded -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\telegram-service-bot\\SKILL.md",
+          "line": 148,
+          "code": "<!-- Telegram.sendData() called on submit — works when opened inside TG -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\telegram-service-bot\\SKILL.md",
+          "line": 149,
+          "code": "<!-- Preview in browser: file:///path/to/index.html -->"
+        },
+        {
+          "rule": "E2_env_harvesting",
+          "severity": "HIGH",
+          "category": "Data Exfiltration",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\telegram-service-bot\\SKILL.md",
+          "line": 262,
+          "code": "BOT_TOKEN = os.environ.get(\"BOT_TOKEN\") or os.environ.get(\"TELEGRAM_BOT_TOKEN\") or \"\""
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\telegram-service-bot\\SKILL.md",
+          "line": 443,
+          "code": "- **wmic over bash taskkill**: On Windows Git Bash, `taskkill /PID <pid> /F` fails with encoding errors and path corrupt"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\web-analytics\\SKILL.md",
+          "line": 14,
+          "code": "<!-- Yandex.Metrika counter -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\web-analytics\\SKILL.md",
+          "line": 32,
+          "code": "<!-- End Yandex.Metrika counter -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\web-analytics\\SKILL.md",
+          "line": 95,
+          "code": "<!-- Google tag (gtag.js) -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\web-analytics\\SKILL.md",
+          "line": 158,
+          "code": "<!-- Использование -->"
+        },
+        {
+          "rule": "E1_external_transmission",
+          "severity": "MEDIUM",
+          "category": "Data Exfiltration",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\web-analytics\\SKILL.md",
+          "line": 220,
+          "code": "fetch('https://api.telegram.org/bot<TOKEN>/sendMessage', {"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\web-motion\\SKILL.md",
+          "line": 17,
+          "code": "<!-- CDN -->"
+        },
+        {
+          "rule": "OH1_unvalidated_output",
+          "severity": "HIGH",
+          "category": "Output Handling",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\web-motion\\SKILL.md",
+          "line": 107,
+          "code": "document.querySelector('.hero-title').innerHTML ="
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\web-performance\\SKILL.md",
+          "line": 24,
+          "code": "<!-- AVIF: best compression, modern (Chrome/Safari/FF) -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\web-performance\\SKILL.md",
+          "line": 34,
+          "code": "<!-- ALWAYS set width + height — prevents layout shift -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\web-performance\\SKILL.md",
+          "line": 47,
+          "code": "<!-- srcset + sizes — browser picks right size -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\web-performance\\SKILL.md",
+          "line": 73,
+          "code": "<!-- 1. Preconnect to Google Fonts early -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\web-performance\\SKILL.md",
+          "line": 77,
+          "code": "<!-- 2. Preload main font -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\web-performance\\SKILL.md",
+          "line": 80,
+          "code": "<!-- 3. Font-display: swap (text visible immediately) -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\web-performance\\SKILL.md",
+          "line": 127,
+          "code": "<!-- Third-party: preconnect (opens connection early) -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\web-performance\\SKILL.md",
+          "line": 130,
+          "code": "<!-- Likely navigation: prefetch (idle-time download) -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\web-performance\\SKILL.md",
+          "line": 133,
+          "code": "<!-- Critical CSS/font: preload (high priority, use sparingly) -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\web-performance\\SKILL.md",
+          "line": 137,
+          "code": "<!-- DNS only -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\web-performance\\SKILL.md",
+          "line": 152,
+          "code": "<!-- Inline critical CSS in <head>, defer the rest -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\web-performance\\SKILL.md",
+          "line": 166,
+          "code": "<!-- Analytics: async -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\web-performance\\SKILL.md",
+          "line": 169,
+          "code": "<!-- App scripts: defer -->"
+        },
+        {
+          "rule": "SC3_obfuscated_code",
+          "severity": "HIGH",
+          "category": "Supply Chain",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\telegram-service-bot\\references\\deployment-watchdog-pattern.md",
+          "line": 8,
+          "code": "import socket; s=socket.socket(); s.settimeout(5); s.connect(('127.0.0.1',10806)); s.send(b'\\x05\\x01\\x00'); print(s.recv"
+        },
+        {
+          "rule": "E1_external_transmission",
+          "severity": "MEDIUM",
+          "category": "Data Exfiltration",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\telegram-service-bot\\references\\mini-app-demo-pattern.md",
+          "line": 38,
+          "code": "const resp = await fetch('https://api.example.com/services');"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\telegram-service-bot\\references\\salon-bot-deployment-checklist.md",
+          "line": 6,
+          "code": "2. Kill stale instances: `wmic process where \"name='python.exe'\" get ProcessId,CommandLine` → find main.py entries → `su"
+        },
+        {
+          "rule": "PE3_credential_access",
+          "severity": "HIGH",
+          "category": "Privilege Escalation",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\telegram-service-bot\\references\\token-discovery-and-env-loading.md",
+          "line": 16,
+          "code": "The `.env` file at Hermes root is not loaded by sub-projects. Add this to the sub-project's `config.py`:"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\small-business-landing-generator\\references\\nav-mix-blend-mode-pitfall.md",
+          "line": 59,
+          "code": "<!-- Before: placeholder -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\small-business-landing-generator\\references\\nav-mix-blend-mode-pitfall.md",
+          "line": 62,
+          "code": "<!-- After: real link from existing business contacts -->"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\small-business-landing-generator\\scripts\\verify_deploy.py",
+          "line": 22,
+          "code": "result = subprocess.run("
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\demo-site-builder\\references\\kinetic-typography-pattern.md",
+          "line": 11,
+          "code": "<!-- JS fills this with individual char spans -->"
+        },
+        {
+          "rule": "OH1_unvalidated_output",
+          "severity": "HIGH",
+          "category": "Output Handling",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\demo-site-builder\\references\\kinetic-typography-pattern.md",
+          "line": 53,
+          "code": "titleEl.innerHTML = chars;"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\demo-site-builder\\references\\review-worker-landing-checks.md",
+          "line": 94,
+          "code": "- HTML comment: `<!-- moneybackguarantee -->`"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\demo-site-builder\\references\\review-worker-russian-pages.md",
+          "line": 31,
+          "code": "<!-- moneybackguarantee refundpolicy privacypolicy termsofservice securecheckout -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\demo-site-builder\\references\\review-worker-russian-pages.md",
+          "line": 64,
+          "code": "<!-- ONE script instead of TWO -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\demo-site-builder\\references\\review-worker-russian-pages.md",
+          "line": 98,
+          "code": "- ✅ Trust signals as HTML comment: `<!-- moneybackguarantee refundpolicy privacypolicy termsofservice -->`"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\demo-site-builder\\references\\time-slot-form-pattern.md",
+          "line": 11,
+          "code": "<!-- Date -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\demo-site-builder\\references\\time-slot-form-pattern.md",
+          "line": 14,
+          "code": "<!-- Time slots as clickable buttons -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\demo-site-builder\\references\\time-slot-form-pattern.md",
+          "line": 16,
+          "code": "<!-- Generated by JS: 09:00, 09:30, 10:00... 20:00 -->"
+        },
+        {
+          "rule": "OH1_unvalidated_output",
+          "severity": "HIGH",
+          "category": "Output Handling",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\web-development\\demo-site-builder\\references\\time-slot-form-pattern.md",
+          "line": 36,
+          "code": "container.innerHTML = '';"
+        }
+      ]
+    }
+  ]
+}

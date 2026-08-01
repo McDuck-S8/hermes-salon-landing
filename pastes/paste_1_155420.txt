@@ -1,0 +1,65 @@
+● каков процесс при старте ● продолжай
+Initializing agent...  опиши что туда входит?
+
+────────────────────────────────────────
+
+╭─ ⚕ Hermes ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+    Разбираю что реально происходит при старте. Смотрю код:
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+  ┊ �� preparing read_file…
+  ┊ �� preparing read_file…
+  ┊ �� preparing read_file…
+  ┊ �� read      D:/Portable_Soft/hermes/scripts/session_boot.py  3.2s
+  ┊ �� read      D:/Portable_Soft/hermes/memory_system/boot.py  2.9s
+  ┊ �� read      D:/Portable_Soft/hermes/BOOT_SEQUENCE.md  3.0s
+
+╭─ ⚕ Hermes ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+    Вот что реально происходит при старте Hermes Agent. Три слоя:
+
+    Слой 1: Hermes Framework (системный промпт)
+    Это НЕ python-код. Это инжектируется в system prompt автоматически:
+    - AGENTS.md / CLAUDE.md — контракты проекта
+    - MEMORY.md / USER.md — память из предыдущих сессий
+    - SOUL.md — личность, правила, арбитражный сетап
+    - Skills catalog — список всех доступных скиллов
+    - Available tools — список инструментов
+
+    Слой 2: session_boot.py (12 шагов)
+    Это python-скрипт, который ДОЛЖЕН запускаться при старте:
+
+
+    Step 0:  BOOT_SEQUENCE.md → загрузить правила мышления (13 политик)
+    Step 0.6: AUTO-REPAIR → SELF_IDENTITY.md, найти degraded отделы, починить
+    Step 1:  Ingest dumps → новые дампы сессий → Knowledge Cube
+    Step 2:  Conversations → извлечь знания из переписок
+    Step 3:  Classify KC → разложить неразмеченные записи по доменам
+    Step 4:  Goal Queue → оценить активные цели, создать новые
+    Step 5:  Memory sync → синхронизировать KC → MCP memory graph
+    Step 6:  Session context → что было в прошлых сессиях
+    Step 6a: Tool catalog → загрузить catalog инструментов
+    Step 6b: User needs → сканировать потребности пользователя
+    Step 6c: Knowledge graph → проверить graphify graph
+    Step 7:  Error backlog → последние ошибки из errors.log
+    Step 8:  Context files → DECISION_LOG.md, ALERTS.md, SELF_AUDIT.md, agent_policies.md
+    Step 9:  Reality Gate → честная проверка (gateway, cron, сеть, скрипты)
+    Step 10: Session manifest → проверить что изменения прошлой сессии на месте
+    Step 11: Event bus → emit boot_completed
+    Step 12: Classifier + Chain → классифицировать boot-event, выполнить цепочку
+
+
+    Слой 3: memory_system/boot.py (файловая память)
+    Отдельный скрипт, читает markdown-файлы:
+    - learnings.md — что агент выучил
+    - goals.md — активные цели
+    - observations.md — наблюдения
+    - data/daily-logs/*.md — дневники за последние 3 дня
+
+    Итого на практике
+
+    Когда ты пишешь /new или запускаешь Hermes:
+    1. Системный промпт формируется из AGENTS.md + MEMORY.md + SOUL.md + skills (мгновенно)
+    2. session_boot.py запускается → 12 шагов, проверяет реальное состояние
+    3. memory boot читает learnings/goals из markdown-файлов
+    4. Агент появляется с полным контекстом: кто он, что делал, что сломано, какие цели
+
+    Главная проблема, которую BOOT_SEQUENCE.md честно описывает: раньше boot только ЧИТАЛ, но не ДЕЛАЛ. Теперь Step 0.6 (auto-repair) и Step 9 (reality gate) заставляют реально проверять и чинить.

@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Money Plan — План монетизации Hermes Agent</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: #0a0a0f;
+    color: #ffffff;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container { max-width: 1300px; margin: 0 auto; padding: 0 24px; }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, #0a0a0f 0%, #0d1f1a 50%, #0a0a0f 100%);
+    padding: 80px 0 60px;
+    text-align: center;
+    border-bottom: 1px solid rgba(0,212,170,0.15);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 50%, rgba(0,212,170,0.04) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .hero h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #00d4aa, #00a884);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .hero p {
+    font-size: 1.2rem;
+    color: #8899aa;
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  /* Section */
+  .section { padding: 60px 0; }
+  .section-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 32px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid rgba(0,212,170,0.2);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-title .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: #00d4aa;
+    color: #0a0a0f;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  /* Summary Table */
+  .summary-table-wrap {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 900px;
+    font-size: 0.9rem;
+  }
+  .summary-table th {
+    background: rgba(0,212,170,0.12);
+    color: #00d4aa;
+    padding: 14px 12px;
+    text-align: left;
+    font-weight: 600;
+    white-space: nowrap;
+    border-bottom: 2px solid rgba(0,212,170,0.2);
+  }
+  .summary-table td {
+    padding: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    vertical-align: top;
+  }
+  .summary-table tr:hover td { background: rgba(0,212,170,0.04); }
+  .summary-table .num-col { color: #00d4aa; font-weight: 600; text-align: center; width: 36px; }
+  .summary-table .highlight { color: #00d4aa; font-weight: 600; }
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+  .badge-green { background: rgba(0,212,170,0.15); color: #00d4aa; }
+  .badge-blue { background: rgba(64, 156, 255, 0.15); color: #409cff; }
+  .badge-orange { background: rgba(255, 184, 0, 0.15); color: #ffb800; }
+  .badge-purple { background: rgba(180, 100, 255, 0.15); color: #b464ff; }
+  .badge-red { background: rgba(255, 80, 80, 0.15); color: #ff5050; }
+
+  /* Cards */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px;
+    padding: 24px;
+    transition: all 0.3s ease;
+  }
+  .card:hover {
+    background: rgba(0,212,170,0.04);
+    border-color: rgba(0,212,170,0.2);
+    transform: translateY(-2px);
+  }
+  .card .card-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: rgba(0,212,170,0.15);
+    color: #00d4aa;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .card h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #ffffff;
+  }
+  .card .stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .card .stat-item {
+    background: rgba(0,0,0,0.3);
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+  .card .stat-label {
+    font-size: 0.72rem;
+    color: #667788;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .card .stat-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #00d4aa;
+  }
+  .card .stat-value.white { color: #ffffff; }
+  .card p {
+    color: #99aabb;
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  /* Compatibility Table */
+  .compat-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .compat-table th {
+    background: rgba(0,212,170,0.12);
+    color: #00d4aa;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid rgba(0,212,170,0.2);
+  }
+  .compat-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .compat-table tr:hover td { background: rgba(0,212,170,0.04); }
+  .difficulty-bar {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .difficulty-bar .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+  }
+  .difficulty-bar .dot.filled { background: #00d4aa; }
+  .auto-bar {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .auto-bar .track {
+    width: 80px;
+    height: 6px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .auto-bar .fill {
+    height: 100%;
+    background: #00d4aa;
+    border-radius: 3px;
+  }
+
+  /* Roadmap */
+  .roadmap {
+    position: relative;
+  }
+  .roadmap::before {
+    content: '';
+    position: absolute;
+    left: 32px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, #00d4aa, rgba(0,212,170,0.1));
+  }
+  .roadmap-phase {
+    position: relative;
+    padding-left: 76px;
+    margin-bottom: 40px;
+  }
+  .roadmap-phase:last-child { margin-bottom: 0; }
+  .roadmap-phase .phase-dot {
+    position: absolute;
+    left: 22px;
+    top: 4px;
+    width: 22px;
+    height: 22px;
+    background: #00d4aa;
+    border: 4px solid #0a0a0f;
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px #00d4aa;
+  }
+  .roadmap-phase .phase-label {
+    display: inline-block;
+    padding: 4px 16px;
+    background: rgba(0,212,170,0.12);
+    color: #00d4aa;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .roadmap-phase h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .roadmap-phase p {
+    color: #99aabb;
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+  }
+  .roadmap-phase ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .roadmap-phase ul li {
+    background: rgba(255,255,255,0.04);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 0.84rem;
+    color: #ccddee;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  /* First Steps */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  .step-card {
+    background: rgba(0,212,170,0.04);
+    border: 1px solid rgba(0,212,170,0.12);
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+  }
+  .step-card .step-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(0,212,170,0.12);
+    color: #00d4aa;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .step-card h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .step-card p {
+    color: #99aabb;
+    font-size: 0.85rem;
+  }
+
+  /* Highlight box */
+  .highlight-box {
+    background: linear-gradient(135deg, rgba(0,212,170,0.08), rgba(0,168,132,0.04));
+    border: 1px solid rgba(0,212,170,0.15);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin: 32px 0;
+  }
+  .highlight-box h3 {
+    color: #00d4aa;
+    margin-bottom: 10px;
+  }
+  .highlight-box ul {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 8px;
+  }
+  .highlight-box ul li {
+    padding: 6px 0;
+    color: #ccddee;
+    font-size: 0.9rem;
+  }
+  .highlight-box ul li::before {
+    content: '▸ ';
+    color: #00d4aa;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 40px 0;
+    color: #445566;
+    font-size: 0.85rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  /* TOC */
+  .toc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    padding: 30px 0;
+  }
+  .toc a {
+    color: #8899aa;
+    text-decoration: none;
+    padding: 8px 18px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+  }
+  .toc a:hover {
+    border-color: #00d4aa;
+    color: #00d4aa;
+    background: rgba(0,212,170,0.06);
+  }
+
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 2rem; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .section-title { font-size: 1.4rem; }
+    .roadmap-phase { padding-left: 56px; }
+    .roadmap::before { left: 24px; }
+    .roadmap-phase .phase-dot { left: 16px; }
+    .steps-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <h1>AI Money Plan</h1>
+    <p>План монетизации Hermes Agent — 10 методов заработка на AI-автоматизации.<br>От быстрых денег до пассивного дохода.</p>
+  </div>
+</section>
+
+<!-- TOC -->
+<div class="container">
+  <div class="toc">
+    <a href="#methods">10 методов</a>
+    <a href="#cards">Детали методов</a>
+    <a href="#compat">Совместимость с Hermes</a>
+    <a href="#roadmap">Дорожная карта</a>
+    <a href="#steps">Первые шаги</a>
+  </div>
+</div>
+
+<!-- Summary Table -->
+<section class="section" id="methods">
+  <div class="container">
+    <h2 class="section-title"><span class="num">1</span> Сводная таблица всех 10 методов</h2>
+    <div class="summary-table-wrap">
+      <table class="summary-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Метод</th>
+            <th>Старт</th>
+            <th>Доход/мес</th>
+            <th>Авто</th>
+            <th>Срок</th>
+            <th>Тип</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="num-col">1</td>
+            <td>AI-агентство автоматизации бизнеса</td>
+            <td>30–50 т.р.</td>
+            <td class="highlight">200K–1.5 млн</td>
+            <td>85%</td>
+            <td>4–8 нед</td>
+            <td><span class="badge badge-orange">Быстрый</span></td>
+          </tr>
+          <tr>
+            <td class="num-col">2</td>
+            <td>Чат-боты на заказ (Telegram/WhatsApp AI)</td>
+            <td>0–10 т.р.</td>
+            <td class="highlight">100–350K</td>
+            <td>90%</td>
+            <td>1–2 нед</td>
+            <td><span class="badge badge-orange">Быстрый</span></td>
+          </tr>
+          <tr>
+            <td class="num-col">3</td>
+            <td>AI-контент-сайт / блог (Multi-Agent)</td>
+            <td>5–15 т.р.</td>
+            <td class="highlight">40–400K</td>
+            <td>95%</td>
+            <td>8–16 нед</td>
+            <td><span class="badge badge-purple">Пассивный</span></td>
+          </tr>
+          <tr>
+            <td class="num-col">4</td>
+            <td>Faceless YouTube-канал (AI Automation)</td>
+            <td>4–15 т.р./мес</td>
+            <td class="highlight">85K–3.8 млн</td>
+            <td>80%</td>
+            <td>12–24 нед</td>
+            <td><span class="badge badge-purple">Пассивный</span></td>
+          </tr>
+          <tr>
+            <td class="num-col">5</td>
+            <td>AI-генерация лидов (Lead Gen Service)</td>
+            <td>10–30 т.р.</td>
+            <td class="highlight">170–850K</td>
+            <td>92%</td>
+            <td>3–6 нед</td>
+            <td><span class="badge badge-green">Смешанный</span></td>
+          </tr>
+          <tr>
+            <td class="num-col">6</td>
+            <td>Голосовой AI-агент (Voice AI Call Center)</td>
+            <td>15–50 т.р.</td>
+            <td class="highlight">250K–1.5 млн</td>
+            <td>88%</td>
+            <td>4–8 нед</td>
+            <td><span class="badge badge-orange">Быстрый</span></td>
+          </tr>
+          <tr>
+            <td class="num-col">7</td>
+            <td>Нишевой SaaS / Цифровые продукты</td>
+            <td>5–20 т.р.</td>
+            <td class="highlight">85–850K</td>
+            <td>90%</td>
+            <td>4–12 нед</td>
+            <td><span class="badge badge-purple">Пассивный</span></td>
+          </tr>
+          <tr>
+            <td class="num-col">8</td>
+            <td>AI-консалтинг и обучение</td>
+            <td>0–5 т.р.</td>
+            <td class="highlight">200K–2 млн+</td>
+            <td>40%</td>
+            <td>4–12 нед</td>
+            <td><span class="badge badge-orange">Быстрый</span></td>
+          </tr>
+          <tr>
+            <td class="num-col">9</td>
+            <td>Мониторинг цен / Конкурентная разведка</td>
+            <td>20–50 т.р.</td>
+            <td class="highlight">170–700K</td>
+            <td>93%</td>
+            <td>3–6 нед</td>
+            <td><span class="badge badge-green">Смешанный</span></td>
+          </tr>
+          <tr>
+            <td class="num-col">10</td>
+            <td>White-Label AI-студия контента</td>
+            <td>5–10 т.р.</td>
+            <td class="highlight">300K–2.5 млн</td>
+            <td>88%</td>
+            <td>4–8 нед</td>
+            <td><span class="badge badge-green">Смешанный</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="highlight-box">
+      <h3>Ключевые выводы</h3>
+      <ul>
+        <li>Лучшая автономность: Мониторинг (93%), Lead Gen (92%), Чат-боты (90%)</li>
+        <li>Быстрые деньги (1–2 нед): Чат-боты, AI-агентство, Консалтинг</li>
+        <li>Пассивный доход (6–12 мес): Контент-сайты, YouTube, SaaS</li>
+        <li>Максимум дохода: White-label (до 2.5 млн/мес), Консалтинг (до 2 млн/мес)</li>
+        <li>Бесплатный LLM (opencode.ai/zen/v1) = 90%+ маржинальность</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Cards -->
+<section class="section" id="cards">
+  <div class="container">
+    <h2 class="section-title"><span class="num">2</span> Детали каждого метода</h2>
+    <div class="cards-grid">
+
+      <div class="card">
+        <div class="card-num">1</div>
+        <h3>AI-агентство автоматизации бизнеса</h3>
+        <div class="stats">
+          <div class="stat-item"><div class="stat-label">Старт</div><div class="stat-value">30–50 т.р.</div></div>
+          <div class="stat-item"><div class="stat-label">Доход/мес</div><div class="stat-value">200K–1.5 млн</div></div>
+          <div class="stat-item"><div class="stat-label">Автономность</div><div class="stat-value">85%</div></div>
+          <div class="stat-item"><div class="stat-label">Срок выхода</div><div class="stat-value">4–8 нед</div></div>
+        </div>
+        <p>Создайте агентство по внедрению AI-решений для малого и среднего бизнеса. Используйте Hermes для автоматизации отчётности, обработки заявок, CRM-интеграций и чат-поддержки. Модель — подписка + разовые внедрения.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-num">2</div>
+        <h3>Чат-боты на заказ (Telegram/WhatsApp AI)</h3>
+        <div class="stats">
+          <div class="stat-item"><div class="stat-label">Старт</div><div class="stat-value">0–10 т.р.</div></div>
+          <div class="stat-item"><div class="stat-label">Доход/мес</div><div class="stat-value">100–350K</div></div>
+          <div class="stat-item"><div class="stat-label">Автономность</div><div class="stat-value">90%</div></div>
+          <div class="stat-item"><div class="stat-label">Срок выхода</div><div class="stat-value">1–2 нед</div></div>
+        </div>
+        <p>Разрабатывайте AI-чат-ботов для бизнеса на Telegram и WhatsApp. Hermes + opencode.ai/zen/v1 дают готовую инфраструктуру. Минимальный старт — сделайте демо-бота и предложите local-бизнесу.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-num">3</div>
+        <h3>AI-контент-сайт / блог (Multi-Agent Pipeline)</h3>
+        <div class="stats">
+          <div class="stat-item"><div class="stat-label">Старт</div><div class="stat-value">5–15 т.р.</div></div>
+          <div class="stat-item"><div class="stat-label">Доход/мес</div><div class="stat-value">40–400K</div></div>
+          <div class="stat-item"><div class="stat-label">Автономность</div><div class="stat-value">95%</div></div>
+          <div class="stat-item"><div class="stat-label">Срок выхода</div><div class="stat-value">8–16 нед</div></div>
+        </div>
+        <p>Multi-Agent пайплайн на Hermes: research → генерация → SEO → публикация. Монетизация через Ezoic, Adsense, партнёрки. 95% автономности — только контроль качества раз в неделю.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-num">4</div>
+        <h3>Faceless YouTube-канал (AI Automation)</h3>
+        <div class="stats">
+          <div class="stat-item"><div class="stat-label">Старт</div><div class="stat-value">4–15 т.р./мес</div></div>
+          <div class="stat-item"><div class="stat-label">Доход/мес</div><div class="stat-value">85K–3.8 млн</div></div>
+          <div class="stat-item"><div class="stat-label">Автономность</div><div class="stat-value">80%</div></div>
+          <div class="stat-item"><div class="stat-label">Срок выхода</div><div class="stat-value">12–24 нед</div></div>
+        </div>
+        <p>AI-генерация сценариев, озвучки и видео. Hermes с cron-задачами автоматически выгружает контент. 3–6 месяцев до первой монетизации, но потенциал до 3.8 млн/мес на топовых каналах.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-num">5</div>
+        <h3>AI-генерация лидов (Lead Gen Service)</h3>
+        <div class="stats">
+          <div class="stat-item"><div class="stat-label">Старт</div><div class="stat-value">10–30 т.р.</div></div>
+          <div class="stat-item"><div class="stat-label">Доход/мес</div><div class="stat-value">170–850K</div></div>
+          <div class="stat-item"><div class="stat-label">Автономность</div><div class="stat-value">92%</div></div>
+          <div class="stat-item"><div class="stat-label">Срок выхода</div><div class="stat-value">3–6 нед</div></div>
+        </div>
+        <p>Сервис по сбору и квалификации лидов с помощью AI. Hermes + парсинг + opencode.ai для обработки данных. B2B-модель: платят за лиды или подписку. Почти полностью автоматизировано.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-num">6</div>
+        <h3>Голосовой AI-агент (Voice AI Call Center)</h3>
+        <div class="stats">
+          <div class="stat-item"><div class="stat-label">Старт</div><div class="stat-value">15–50 т.р.</div></div>
+          <div class="stat-item"><div class="stat-label">Доход/мес</div><div class="stat-value">250K–1.5 млн</div></div>
+          <div class="stat-item"><div class="stat-label">Автономность</div><div class="stat-value">88%</div></div>
+          <div class="stat-item"><div class="stat-label">Срок выхода</div><div class="stat-value">4–8 нед</div></div>
+        </div>
+        <p>Голосовые AI-агенты для колл-центров: обработка входящих, обзвон, квалификация. Требует интеграции с SIP/телефонией. Высокий чек и сильная конкуренция, но огромный рынок.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-num">7</div>
+        <h3>Нишевой SaaS / Цифровые продукты</h3>
+        <div class="stats">
+          <div class="stat-item"><div class="stat-label">Старт</div><div class="stat-value">5–20 т.р.</div></div>
+          <div class="stat-item"><div class="stat-label">Доход/мес</div><div class="stat-value">85–850K</div></div>
+          <div class="stat-item"><div class="stat-label">Автономность</div><div class="stat-value">90%</div></div>
+          <div class="stat-item"><div class="stat-label">Срок выхода</div><div class="stat-value">4–12 нед</div></div>
+        </div>
+        <p>Создайте микро-SaaS или продавайте цифровые продукты (шаблоны, промпты, AI-курсы). Hermes как платформа для развёртывания. После разработки — полностью пассивный доход.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-num">8</div>
+        <h3>AI-консалтинг и обучение</h3>
+        <div class="stats">
+          <div class="stat-item"><div class="stat-label">Старт</div><div class="stat-value">0–5 т.р.</div></div>
+          <div class="stat-item"><div class="stat-label">Доход/мес</div><div class="stat-value">200K–2 млн+</div></div>
+          <div class="stat-item"><div class="stat-label">Автономность</div><div class="stat-value">40%</div></div>
+          <div class="stat-item"><div class="stat-label">Срок выхода</div><div class="stat-value">4–12 нед</div></div>
+        </div>
+        <p>Консультируйте бизнесы по внедрению AI. Минимальный старт — используйте Hermes как demo-стенд. Самый быстрый путь к деньгам, но низкая автономность (40%) — требует личного участия.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-num">9</div>
+        <h3>Мониторинг цен / Конкурентная разведка</h3>
+        <div class="stats">
+          <div class="stat-item"><div class="stat-label">Старт</div><div class="stat-value">20–50 т.р.</div></div>
+          <div class="stat-item"><div class="stat-label">Доход/мес</div><div class="stat-value">170–700K</div></div>
+          <div class="stat-item"><div class="stat-label">Автономность</div><div class="stat-value">93%</div></div>
+          <div class="stat-item"><div class="stat-label">Срок выхода</div><div class="stat-value">3–6 нед</div></div>
+        </div>
+        <p>Сервис мониторинга цен конкурентов с AI-аналитикой. Hermes + browser automation + cron. Максимальная автономность (93%). B2B-модель с регулярными отчётами.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-num">10</div>
+        <h3>White-Label AI-студия контента</h3>
+        <div class="stats">
+          <div class="stat-item"><div class="stat-label">Старт</div><div class="stat-value">5–10 т.р.</div></div>
+          <div class="stat-item"><div class="stat-label">Доход/мес</div><div class="stat-value">300K–2.5 млн</div></div>
+          <div class="stat-item"><div class="stat-label">Автономность</div><div class="stat-value">88%</div></div>
+          <div class="stat-item"><div class="stat-label">Срок выхода</div><div class="stat-value">4–8 нед</div></div>
+        </div>
+        <p>Студия по производству контента под white-label для агентств. Статьи, посты, видео, графика — всё через AI пайплайны Hermes. Максимальный потолок дохода — 2.5 млн/мес.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Compatibility -->
+<section class="section" id="compat">
+  <div class="container">
+    <h2 class="section-title"><span class="num">3</span> Совместимость с Hermes Agent</h2>
+    <p style="color:#8899aa; margin-bottom:20px;">Оценка сложности внедрения и уровня автономности для каждого метода на платформе Hermes.</p>
+    <div style="overflow-x:auto;">
+      <table class="compat-table">
+        <thead>
+          <tr>
+            <th>Метод</th>
+            <th>Сложность внедрения</th>
+            <th>Автономность</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Разработка AI-чат-ботов</td>
+            <td>
+              <div class="difficulty-bar">
+                <span class="dot filled"></span>
+                <span class="dot filled"></span>
+                <span class="dot filled"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span style="color:#8899aa;font-size:0.8rem;margin-left:4px;">3/10</span>
+              </div>
+            </td>
+            <td>
+              <div class="auto-bar">
+                <span class="track"><span class="fill" style="width:70%"></span></span>
+                <span>70%</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>AI-контент для Telegram/SMM</td>
+            <td>
+              <div class="difficulty-bar">
+                <span class="dot filled"></span>
+                <span class="dot filled"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span style="color:#8899aa;font-size:0.8rem;margin-left:4px;">2/10</span>
+              </div>
+            </td>
+            <td>
+              <div class="auto-bar">
+                <span class="track"><span class="fill" style="width:85%"></span></span>
+                <span>85%</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>AI Automation as a Service</td>
+            <td>
+              <div class="difficulty-bar">
+                <span class="dot filled"></span>
+                <span class="dot filled"></span>
+                <span class="dot filled"></span>
+                <span class="dot filled"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span style="color:#8899aa;font-size:0.8rem;margin-left:4px;">4/10</span>
+              </div>
+            </td>
+            <td>
+              <div class="auto-bar">
+                <span class="track"><span class="fill" style="width:75%"></span></span>
+                <span>75%</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Фриланс AI-услуг</td>
+            <td>
+              <div class="difficulty-bar">
+                <span class="dot filled"></span>
+                <span class="dot filled"></span>
+                <span class="dot filled"></span>
+                <span class="dot filled"></span>
+                <span class="dot filled"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span style="color:#8899aa;font-size:0.8rem;margin-left:4px;">5/10</span>
+              </div>
+            </td>
+            <td>
+              <div class="auto-bar">
+                <span class="track"><span class="fill" style="width:60%"></span></span>
+                <span>60%</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Монетизация Telegram-каналов</td>
+            <td>
+              <div class="difficulty-bar">
+                <span class="dot filled"></span>
+                <span class="dot filled"></span>
+                <span class="dot filled"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span style="color:#8899aa;font-size:0.8rem;margin-left:4px;">3/10</span>
+              </div>
+            </td>
+            <td>
+              <div class="auto-bar">
+                <span class="track"><span class="fill" style="width:80%"></span></span>
+                <span>80%</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>AI-аналитика данных</td>
+            <td>
+              <div class="difficulty-bar">
+                <span class="dot filled"></span>
+                <span class="dot filled"></span>
+                <span class="dot filled"></span>
+                <span class="dot filled"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span style="color:#8899aa;font-size:0.8rem;margin-left:4px;">4/10</span>
+              </div>
+            </td>
+            <td>
+              <div class="auto-bar">
+                <span class="track"><span class="fill" style="width:70%"></span></span>
+                <span>70%</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Инфопродукты / Курсы</td>
+            <td>
+              <div class="difficulty-bar">
+                <span class="dot filled"></span>
+                <span class="dot filled"></span>
+                <span class="dot filled"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span style="color:#8899aa;font-size:0.8rem;margin-left:4px;">3/10</span>
+              </div>
+            </td>
+            <td>
+              <div class="auto-bar">
+                <span class="track"><span class="fill" style="width:80%"></span></span>
+                <span>80%</span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="highlight-box" style="margin-top:24px;">
+      <h3>Что донастроить в Hermes</h3>
+      <ul>
+        <li>Платёжные шлюзы: ЮMoney / Crypto Bot</li>
+        <li>Telegram Ads для монетизации каналов</li>
+        <li>Шаблоны демо-ботов для быстрых продаж</li>
+        <li>Интеграция CRM для лид-генерации</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Roadmap -->
+<section class="section" id="roadmap">
+  <div class="container">
+    <h2 class="section-title"><span class="num">4</span> Дорожная карта на 6 месяцев</h2>
+    <div class="roadmap">
+
+      <div class="roadmap-phase">
+        <div class="phase-dot"></div>
+        <div class="phase-label">Фаза 1 — Месяц 1</div>
+        <h3>Быстрый старт &amp; Фундамент</h3>
+        <p>Запуск первых клиентов и настройка инфраструктуры. Фокус на методах с минимальным стартом и быстрым выходом.</p>
+        <ul>
+          <li>Настроить платёжные шлюзы (ЮMoney/Crypto Bot)</li>
+          <li>Создать 2–3 демо-бота для Telegram</li>
+          <li>Запустить AI-консалтинг — первые 2–3 клиента</li>
+          <li>Собрать портфолио кейсов</li>
+          <li>Доход: от 50–100 т.р.</li>
+        </ul>
+      </div>
+
+      <div class="roadmap-phase">
+        <div class="phase-dot"></div>
+        <div class="phase-label">Фаза 2 — Месяц 2</div>
+        <h3>Масштабирование услуг</h3>
+        <p>Расширение линейки услуг и выход на регулярные подписки. Запуск лид-генерации.</p>
+        <ul>
+          <li>Запустить AI-агентство (первые B2B-клиенты)</li>
+          <li>Lead Gen сервис — 2–3 клиента на подписке</li>
+          <li>Telegram-канал с AI-контентом (ежедневные посты)</li>
+          <li>Начать мониторинг цен для 1–2 клиентов</li>
+          <li>Доход: от 150–300 т.р.</li>
+        </ul>
+      </div>
+
+      <div class="roadmap-phase">
+        <div class="phase-dot"></div>
+        <div class="phase-label">Фаза 3 — Месяц 3–4</div>
+        <h3>Пассивные потоки &amp; Автоматизация</h3>
+        <p>Запуск проектов с высокой автономностью. Доведение процессов до автопилота.</p>
+        <ul>
+          <li>Запустить контент-сайт (Multi-Agent пайплайн)</li>
+          <li>Начать Faceless YouTube-канал</li>
+          <li>Разработать нишевый SaaS / цифровой продукт</li>
+          <li>White-Label студия — первые агентства-партнёры</li>
+          <li>Доход: от 300–700 т.р.</li>
+        </ul>
+      </div>
+
+      <div class="roadmap-phase">
+        <div class="phase-dot"></div>
+        <div class="phase-label">Фаза 4 — Месяц 5–6</div>
+        <h3>Рост &amp; Оптимизация</h3>
+        <p>Масштабирование успешных направлений, оптимизация всех процессов, выход на плато пассивного дохода.</p>
+        <ul>
+          <li>Масштабировать топ-3 метода (по ROI)</li>
+          <li>AI-контент-сайты: 2–3 ниши</li>
+          <li>YouTube: 2 канала в разных нишах</li>
+          <li>Автоматизировать консалтинг через инфопродукты</li>
+          <li>Доход: от 500K–1.5 млн+</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- First Steps -->
+<section class="section" id="steps">
+  <div class="container">
+    <h2 class="section-title"><span class="num">5</span> Первые шаги — что сделать прямо сейчас</h2>
+    <div class="steps-grid">
+
+      <div class="step-card">
+        <div class="step-icon">1</div>
+        <h4>Настройте платёжные шлюзы</h4>
+        <p>Подключите ЮMoney и Crypto Bot для приёма платежей от клиентов. Это основа любого метода.</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-icon">2</div>
+        <h4>Создайте демо-бота</h4>
+        <p>Разработайте универсального Telegram-бота на Hermes. Используйте его как продающий инструмент для первых клиентов.</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-icon">3</div>
+        <h4>Запустите Telegram-канал</h4>
+        <p>Начните публиковать AI-контент ежедневно. Используйте cron + Knowledge Cube для автопостинга.</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-icon">4</div>
+        <h4>Найдите первого клиента на консалтинг</h4>
+        <p>Предложите бесплатный аудит AI-автоматизации local-бизнесу. Конвертируйте в платную подписку.</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-icon">5</div>
+        <h4>Запустите Lead Gen воронку</h4>
+        <p>Настройте browser automation + LLM для сбора и квалификации лидов в выбранной нише.</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-icon">6</div>
+        <h4>Создайте первый контент-сайт</h4>
+        <p>Разверните Multi-Agent пайплайн на Hermes для генерации SEO-контента. Выберите нишу с высоким CPC.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<div class="footer">
+  <div class="container">
+    <p>AI Money Plan — План монетизации Hermes Agent</p>
+    <p>Создано с использованием opencode.ai/zen/v1 (бесплатный LLM)</p>
+  </div>
+</div>
+
+</body>
+</html>

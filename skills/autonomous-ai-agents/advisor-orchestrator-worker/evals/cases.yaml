@@ -1,0 +1,111 @@
+# Advisor Orchestrator Worker - Evaluation Test Cases
+
+- name: "orchestrator_requires_plan"
+  description: "Orchestrator must create plan before delegating"
+  input:
+    task: "Research 5 CPA offers and synthesize findings"
+  expect:
+    has_plan: true
+    plan_has:
+      - subtasks
+      - acceptance_criteria
+      - tools_required
+    no_direct_execution: true
+
+- name: "advisor_consulted_before_dispatch"
+  description: "Advisor must be consulted before worker dispatch"
+  input:
+    plan:
+      subtasks: 3
+      tools_required: ["web_search", "browser"]
+  expect:
+    advisor_called: true
+    advisor_consulted_before_workers: true
+    plan_revised_after_advisor: true
+
+- name: "workers_dispatched_in_parallel"
+  description: "Independent subtasks dispatched in parallel waves"
+  input:
+    plan:
+      waves: 2
+      wave_1: ["task1", "task2"]
+      wave_2: ["task3"]
+  expect:
+    parallel_dispatch: true
+    wave_1_parallel: true
+    wave_2_sequential: true
+
+- name: "worker_timeout_handling"
+  description: "Worker timeout triggers FIX (redispatch) not ESCALATE"
+  input:
+    worker_brief:
+      timeout: 300
+    worker_result: "TIMEOUT"
+  expect:
+    action: "FIX"
+    redispatch_with_simpler_brief: true
+    timeout_reduced: true
+
+- name: "verification_checks_acceptance_criteria"
+  description: "Each worker result verified against its acceptance criteria"
+  input:
+    worker_results:
+      - criteria: ["payout confirmed", "geo verified"]
+        actual: ["payout: $4.50", "geo: IN"]
+      - criteria: ["CTR > 2%"]
+        actual: ["CTR: 1.8%"]
+  expect:
+    first_result: "PASS"
+    second_result: "FIX"
+    fix_details_match_criteria: true
+
+- name: "taste_pass_applies_advisor_feedback"
+  description: "Advisor taste pass feedback is applied or rebutted"
+  input:
+    draft_deliverable: "report.md"
+    advisor_notes:
+      - "CTA button too small"
+      - "Missing risk section"
+  expect:
+    notes_addressed: 2
+    rebutted: 0
+    final_deliverable_updated: true
+
+- name: "budget_tracking_enforced"
+  description: "Orchestrator tracks dispatch budget and stops when exhausted"
+  input:
+    budget_dispatches: 5
+    dispatches_used: 6
+  expect:
+    stops_at_budget: true
+    reports_exhausted: true
+
+- name: "worker_brief_contains_required_fields"
+  description: "Worker briefs include GOAL, CONTEXT, ACCEPTANCE, FORMAT, TOOLS"
+  input:
+    brief:
+      goal: "Research offer X"
+      context: "Network: AdCombo, Geo: IN"
+      acceptance: ["payout", "flow"]
+      format: "JSON"
+      tools: ["web_search"]
+  expect:
+    all_fields_present: true
+    tools_declared: true
+
+- name: "status_board_updated_per_loop"
+  description: "Status board printed after each major step"
+  input:
+    loop_steps: ["PLAN", "ADVISOR", "DISPATCH_W1", "VERIFY_W1", "DISPATCH_W2", "TASTE"]
+  expect:
+    status_printed: true
+    shows_worker_states: true
+
+- name: "escalation_on_contradiction"
+  description: "Contradictory worker results trigger advisor escalation"
+  input:
+    worker_a: "Offer pays $5"
+    worker_b: "Offer pays $3"
+  expect:
+    escalated_to_advisor: true
+    resolution_documented: true

@@ -479,7 +479,7 @@ section{padding:clamp(40px,6vh,80px)0}
   track.style.transform='translateX(-'+(current*slideWidth)+'%)';
   // Dots
   var dotCount=Math.ceil(totalReal/visible);
-  if(dots){for(var i=0;i<dotCount;i++){var d=document.createElement('button');d.className='carousel-dot';d.setAttribute('aria-label','Слайд '+(i+1));d.onclick=function(i){return function(){goToSlide(i)}}(i);dots.appendChild(d)}}
+  if(dots){for(var i=0;i<dotCount;i++){var d=document.createElement('button');d.className='carousel-dot';d.setAttribute('aria-label','Слайд '+(i+1));d.onclick=function(i){return function(){goToSlide(step + i * visible)}}(i);dots.appendChild(d)}}
   function updateDots(idx){if(!dots)return;var dd=dots.children;for(var i=0;i<dd.length;i++)dd[i].classList.remove('active');var real=Math.round((idx-step)/visible);if(real<0)real=0;if(real>=dd.length)real=dd.length-1;if(dd[real])dd[real].classList.add('active')}
   function goToSlide(n){
     if(!track||track.style.transition==='none')return;
@@ -488,8 +488,8 @@ section{padding:clamp(40px,6vh,80px)0}
     updateDots(current);
     track.addEventListener('transitionend',function handler(){
       track.removeEventListener('transitionend',handler);
-      if(current<=step-1){current=totalReal-step+step-1;track.style.transition='none';track.style.transform='translateX(-'+(current*slideWidth)+'%)';requestAnimationFrame(function(){track.style.transition='transform .5s ease'})}
-      else if(current>=totalReal-step+step){current=step;track.style.transition='none';track.style.transform='translateX(-'+(current*slideWidth)+'%)';requestAnimationFrame(function(){track.style.transition='transform .5s ease'})}
+      if(current<=step-1){current=totalReal+step-1;track.style.transition='none';void track.offsetHeight;track.style.transform='translateX(-'+(current*slideWidth)+'%)';requestAnimationFrame(function(){track.style.transition='transform .5s ease'})}
+      else if(current>=totalReal+step){current=step;track.style.transition='none';void track.offsetHeight;track.style.transform='translateX(-'+(current*slideWidth)+'%)';requestAnimationFrame(function(){track.style.transition='transform .5s ease'})}
     });
   }
   window.moveSlide=function(n){goToSlide(current+n)};

@@ -1,0 +1,24 @@
+{
+  "session": 85,
+  "style": "fantasy",
+  "model": "turbo",
+  "count": 1,
+  "success_count": 1,
+  "fail_count": 0,
+  "timestamp": "2026-07-25T22:31:21.061050+00:00",
+  "provider": "pollinations.ai",
+  "images": [
+    {
+      "index": 1,
+      "style": "fantasy",
+      "prompt": "Ethereal fantasy woman with glowing crystal skin, detailed digital art, cinematic lighting, artstation style, symmetrical face, perfect skin, flowing magical dress, intricate jewelry, golden hour lighting, photorealistic, hyperdetailed, 8k",
+      "seed": 551839,
+      "caption": "✨ New fantasy art | Exclusive content",
+      "model": "turbo",
+      "filename": "fantasy_85_01.jpg",
+      "filepath": "D:\\Portable_Soft\\hermes\\projects\\ai-ofm-tribute\\content\\sessions\\85\\fantasy_85_01.jpg",
+      "success": true,
+      "file_size": 73518
+    }
+  ]
+}

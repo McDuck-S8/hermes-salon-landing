@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; line-height: 1.6; }
+h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+h2 { color: #34495e; margin-top: 30px; }
+h3 { color: #7f8c8d; }
+table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+th { background: #3498db; color: white; }
+code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; }
+pre { background: #2c3e50; color: #ecf0f1; padding: 15px; border-radius: 5px; overflow-x: auto; }
+blockquote { border-left: 4px solid #3498db; padding-left: 15px; color: #7f8c8d; margin: 20px 0; }
+ul, ol { padding-left: 20px; }
+li { margin: 8px 0; }
+hr { border: 0; border-top: 1px solid #eee; margin: 30px 0; }
+</style>
+</head>
+<body>
+<h1>Чек-лист: Автозапись в салоне за 15 минут (0 рублей)</h1>
+<h2>🎯 Цель</h2>
+<p>Настроить бесплатного бота в Telegram, который:
+- Принимает записи 24/7 без администратора
+- Само напоминает клиентам за 24ч и за 2ч (no-show -80%)
+- Автоматически возвращает «спящих» клиентов через 21 день со скидкой
+- Увеличивает повторные записи на +40%</p>
+<hr />
+<h2>🛠 Инструменты (все бесплатно)</h2>
+<table>
+<thead>
+<tr>
+<th>Инструмент</th>
+<th>Для чего</th>
+<th>Ссылка</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>@BotFather</strong></td>
+<td>Создать бота, получить токен</td>
+<td>https://t.me/BotFather</td>
+</tr>
+<tr>
+<td><strong>@Manybot</strong> / <strong>@Chatfuel</strong></td>
+<td>Конструктор ботов без кода</td>
+<td>https://manybot.io / https://chatfuel.com</td>
+</tr>
+<tr>
+<td><strong>Google Таблицы</strong></td>
+<td>CRM база записей</td>
+<td>https://sheets.google.com</td>
+</tr>
+<tr>
+<td><strong>v2rayN</strong></td>
+<td>Прокси для стабильной работы</td>
+<td>Ваш локальный 10806</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>⚡ Пошаговая настройка (15 минут)</h2>
+<h3>1. Создание бота (2 минуты)</h3>
+<ol>
+<li>Откройте @BotFather в Telegram</li>
+<li>Напишите <code>/newbot</code></li>
+<li>Придумайте имя: <code>МойСалон Бот</code></li>
+<li>Придумайте username: <code>moysalon_bot</code> (должен оканчиваться на <code>_bot</code>)</li>
+<li><strong>Сохраните токен</strong> — он выглядит как <code>123456789:ABCdefGhIJKlmNoPQRsTUVwxyZ</code></li>
+</ol>
+<h3>2. Подключение к конструктору (3 минуты)</h3>
+<p><strong>Вариант А — @Manybot (проще):</strong>
+1. Откройте @Manybot
+2. Напишите <code>/addbot</code>
+3. Пришлите токен от @BotFather
+4. Бот подключен ✅</p>
+<p><strong>Вариант Б — @Chatfuel (гибче):</strong>
+1. Зайдите на chatfuel.com
+2. Войдите через Telegram
+3. Create Bot → Connect to Telegram → вставьте токен
+4. Бот подключен ✅</p>
+<h3>3. Настройка 3-х цепочек (10 минут)</h3>
+<h4>Цепочка 1: Приветствие + Запись</h4>
+<pre><code>Блок 1 (Текст):
+👋 Привет! Я бот салона «{Название}».
+Здесь можно записаться 24/7, выбрать мастера и услугу.
+
+Блок 2 (Кнопки):
+[📅 Записаться] → Блок 3
+[📋 Мои записи] → Блок 4
+[ℹ️ О салоне] → Блок 5
+
+Блок 3 (Календарь/Google Таблица):
+Выберите дату и время:
+[Календарь из Google Таблиц]
+
+Блок 4 (Мои записи):
+Ваши записи:
+1. 15.01 14:00 — Маникюр (Мастер Аня)
+[❌ Отменить] [🔄 Перенести]
+
+Блок 5 (Инфо):
+📍 Адрес: г. Киев, ул. Примерная 1
+⏰ Пн-Пт 10:00-20:00, Сб 10:00-18:00
+📞 +380 XX XXX XX XX
+</code></pre>
+<h4>Цепочка 2: Напоминания (авто)</h4>
+<p><strong>Настройка в Manybot/Chatfuel:</strong>
+- Триггер: «За 24 часа до записи»
+- Сообщение:</p>
+<pre><code>⏰ Напоминание: завтра в {время} у вас запись к {мастер} на {услуга}.
+Адрес: {адрес}
+
+[✅ Приду] [🔄 Перенести] [❌ Отменить]
+</code></pre>
+<ul>
+<li>Триггер: «За 2 часа до записи»</li>
+<li>Сообщение:</li>
+</ul>
+<pre><code>🔔 Через 2 часа ваша запись к {мастер} на {услуга}.
+Ждём вас! 😊
+
+[✅ Приду] [🔄 Перенести]
+</code></pre>
+<h4>Цепочка 3: Возврат «спящих» (авто, раз в 21 день)</h4>
+<p><strong>Триггер:</strong> клиент не записывался &gt; 21 дня
+<strong>Сообщение:</strong></p>
+<pre><code>😊 Привет! Давно не виделись.
+У нас новое покрытие / мастер / акция.
+Скидка 20% на любую услугу до {дата} — жми кнопку, записаюсь:
+
+[🎁 Записаться со скидкой 20%]
+</code></pre>
+<p><em>Настройка: сегмент «не было записи &gt; 21 день» → рассылка раз в неделю</em></p>
+<hr />
+<h2>📊 Google Таблица как CRM (5 минут)</h2>
+<p>Создайте таблицу с колонками:
+| Дата | Время | Клиент | Телефон | Мастер | Услуга | Статус | Примечание |
+|------|-------|--------|---------|--------|--------|--------|------------|</p>
+<p>В Manybot/Chatfuel: <strong>Integrations → Google Sheets</strong> → авторизация → выберите таблицу → маппинг полей.</p>
+<hr />
+<h2>✅ Чек-лист проверки перед запуском</h2>
+<ul>
+<li>[ ] Бот отвечает на <code>/start</code> — приветствие + кнопки</li>
+<li>[ ] Кнопка «Записаться» → открывается календарь/таблица</li>
+<li>[ ] Тестовая запись проходит → попадает в Google Таблицу</li>
+<li>[ ] Напоминание за 24ч уходит (тест: поставьте запись на завтра)</li>
+<li>[ ] Напоминание за 2ч уходит</li>
+<li>[ ] Кнопка «Приду/Перенести/Отменить» меняет статус в таблице</li>
+<li>[ ] Возврат «спящих» настроен на сегмент &gt; 21 дня</li>
+<li>[ ] Бот добавлен в профиль Instagram / на сайт / в визитку</li>
+</ul>
+<hr />
+<h2>🔗 Готовые ссылки для вставки</h2>
+<p><strong>Кнопка в профиле Instagram / на сайте:</strong></p>
+<pre><code>https://t.me/ВАШ_БОТ_username?start=booking
+</code></pre>
+<p><strong>QR-код для визитки/стенда:</strong></p>
+<pre><code>https://api.qrserver.com/v1/create-qr-code/?size=200x200&amp;data=https://t.me/ВАШ_БОТ_username
+</code></pre>
+<hr />
+<h2>💡 Продвинутые фишки (после запуска)</h2>
+<table>
+<thead>
+<tr>
+<th>Фишка</th>
+<th>Как сделать</th>
+<th>Эффект</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Апсейл после записи</strong></td>
+<td>После подтверждения: «Добавить укрепление за -30%?»</td>
+<td>+15-20% чек</td>
+</tr>
+<tr>
+<td><strong>Отзыв после визита</strong></td>
+<td>Триггер «через 2ч после записи» → просьба об отзыве</td>
+<td>Репутация</td>
+</tr>
+<tr>
+<td><strong>День рождения</strong></td>
+<td>Сегмент «дата рождения = завтра» → скидка 30%</td>
+<td>Лояльность</td>
+</tr>
+<tr>
+<td><strong>Рефералка</strong></td>
+<td>Кнопка «Приведи подругу — 500 грн каждой»</td>
+<td>Виральность</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>🆘 Частые проблемы</h2>
+<table>
+<thead>
+<tr>
+<th>Проблема</th>
+<th>Решение</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Бот не отвечает</td>
+<td>Проверьте токен в Manybot/Chatfuel, переподключите</td>
+</tr>
+<tr>
+<td>Не уходят напоминания</td>
+<td>Проверьте таймзону в настройках бота (MSK/UTC)</td>
+</tr>
+<tr>
+<td>Запись не попадает в таблицу</td>
+<td>Проверьте маппинг полей в Integrations → Google Sheets</td>
+</tr>
+<tr>
+<td>Клиент не видит кнопки</td>
+<td>Обновите приложение Telegram / проверьте версию бота</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>📞 Поддержка</h2>
+<ul>
+<li>Канал с кейсами: @max_brain_chef_official</li>
+<li>Бот-пример: @max_brain_chef_bot</li>
+<li>Вопросы: пишите в ЛС канала</li>
+</ul>
+<hr />
+<p><strong>Версия:</strong> 1.0 | <strong>Дата:</strong> 2026-07-29 | <strong>Для ниши:</strong> Beauty / Salon Automation</p>
+</body>
+</html>

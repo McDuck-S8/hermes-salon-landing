@@ -1,3 +1,11 @@
+---
+name: agents
+description: "Auto-generated from AGENTS.md"
+trigger: "When user asks about AGENTS concepts"
+usage: agents
+Revisit: 2026-07-31
+---
+
 browser-harness is a thin layer that connects agents to browsers via an editable CDP harness.
 
 # Code priorities

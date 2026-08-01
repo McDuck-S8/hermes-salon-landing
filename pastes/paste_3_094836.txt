@@ -1,0 +1,64 @@
+Это **ошибка выполнения в вашем Python-скрипте** `jarvis_voice_loop.py`, который пытается работать как голосовой ассистент (похожий на JARVIS). Ошибка возникает в функции обработки звука (`audio_callback`).
+
+## Что именно произошло:
+
+**Проблема:** в строке 245 вашего кода вы пытаетесь увеличить переменную `utterance_count` на 1:
+```python
+utterance_count += 1
+```
+
+**Но:** Python не может найти эту переменную внутри функции — она не объявлена как локальная, не передана в функцию и не глобальная.
+
+## Почему так происходит:
+
+Вероятно, вы объявили `utterance_count` **вне** функции `audio_callback`, а внутри функции пытаетесь её изменить. В Python это требует явного указания `global utterance_count` или `nonlocal utterance_count`.
+
+## Как исправить:
+
+### Вариант 1 (простой — глобальная переменная):
+```python
+utterance_count = 0  # вне функции
+
+def audio_callback(...):
+    global utterance_count  # <-- добавьте эту строку
+    utterance_count += 1
+```
+
+### Вариант 2 (лучше — через замыкание или класс):
+```python
+class AudioProcessor:
+    def __init__(self):
+        self.utterance_count = 0
+    
+    def audio_callback(self, ...):
+        self.utterance_count += 1
+```
+
+### Вариант 3 (использовать изменяемый объект):
+```python
+from collections import Counter
+context = Counter(utterance_count=0)
+
+def audio_callback(...):
+    context['utterance_count'] += 1
+```
+
+## Что означают другие строки ошибки:
+
+- **sounddevice.py** — библиотека для записи звука с микрофона
+- **cffi callback** — механизм вызова Python-функции из C-кода (здесь — обработка аудиопотока в реальном времени)
+- **UnboundLocalError** — Python не может найти локальную переменную, которую вы пытаетесь использовать
+
+## Быстрое решение прямо сейчас:
+
+Откройте файл `jarvis_voice_loop.py`, найдите строку `utterance_count += 1` и **перед ней** добавьте:
+```python
+global utterance_count
+```
+
+А убедитесь, что где-то выше (вне функции) переменная инициализирована:
+```python
+utterance_count = 0
+```
+
+Это починит ваш «голосовой JARVIS».

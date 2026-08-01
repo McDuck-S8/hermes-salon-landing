@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SalonBot — Telegram-бот для салона красоты</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  :root {
+    --bg: #0a0a0f;
+    --card: #12121a;
+    --border: #1e1e2e;
+    --text: #e8e8f0;
+    --muted: #7a7a8a;
+    --accent: #8b5cf6;
+    --accent2: #06d6a0;
+    --accent3: #f472b6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  
+  /* Hero */
+  .hero {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(139,92,246,0.08) 0%, transparent 70%);
+    top: -200px;
+    right: -200px;
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 32px;
+    width: fit-content;
+  }
+  .hero-badge span { color: var(--accent2); }
+  .hero h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 24px;
+    max-width: 800px;
+  }
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--accent), var(--accent3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero p {
+    font-size: 1.15rem;
+    color: var(--muted);
+    max-width: 580px;
+    margin-bottom: 40px;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+  }
+  .btn-primary:hover { background: #7c3aed; transform: translateY(-1px); }
+  .btn-secondary {
+    background: var(--card);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-secondary:hover { border-color: var(--accent); background: #1a1a2e; }
+
+  /* Features */
+  .section { padding: 100px 0; }
+  .section-label {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .section h2 {
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .section > .subtitle {
+    color: var(--muted);
+    font-size: 1.05rem;
+    max-width: 600px;
+    margin-bottom: 48px;
+  }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: #2a2a3e; }
+  .card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+  .card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 8px; }
+  .card p { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
+
+  /* Pricing */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 16px;
+  }
+  .pricing-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    position: relative;
+  }
+  .pricing-card.popular {
+    border-color: var(--accent);
+    background: linear-gradient(135deg, #12121a 0%, #1a1035 100%);
+  }
+  .pricing-card.popular::before {
+    content: 'Рекомендуем';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent);
+    color: white;
+    padding: 4px 16px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .pricing-name { font-size: 1.1rem; font-weight: 600; margin-bottom: 4px; }
+  .pricing-price { font-size: 2.5rem; font-weight: 800; margin: 12px 0; }
+  .pricing-price span { font-size: 1rem; font-weight: 400; color: var(--muted); }
+  .pricing-desc { color: var(--muted); font-size: 0.9rem; margin-bottom: 20px; }
+  .pricing-features { list-style: none; padding: 0; margin: 0 0 24px; }
+  .pricing-features li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .pricing-features li:last-child { border-bottom: none; }
+  .pricing-features .check { color: var(--accent2); }
+
+  /* How it works */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+    counter-reset: step;
+  }
+  .step {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    position: relative;
+  }
+  .step-num {
+    font-size: 3rem;
+    font-weight: 800;
+    color: rgba(139,92,246,0.15);
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    line-height: 1;
+  }
+  .step h3 { font-size: 1rem; font-weight: 600; margin-bottom: 6px; }
+  .step p { font-size: 0.85rem; color: var(--muted); }
+
+  /* CTA */
+  .cta-section {
+    text-align: center;
+    padding: 100px 0;
+    position: relative;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    width: 800px;
+    height: 400px;
+    background: radial-gradient(ellipse, rgba(139,92,246,0.06) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .cta-section h2 { font-size: clamp(1.8rem, 3vw, 2.8rem); margin-bottom: 16px; }
+  .cta-section p { color: var(--muted); max-width: 500px; margin: 0 auto 32px; }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 0;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+
+  /* Stats */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 20px;
+    margin: 40px 0;
+  }
+  .stat {
+    text-align: center;
+    padding: 20px;
+  }
+  .stat-num {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 4px; }
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">
+      ⚡ Работает на Hermes AI · <span>автономный агент</span>
+    </div>
+    <h1>Ваш салон красоты<br>работает <em>24/7</em></h1>
+    <p>Telegram-бот для записи клиентов. Авто-напоминания, статистика, управление мастерами. Всё включено — без ежемесячных платежей за CRM.</p>
+    <div class="hero-actions">
+      <a href="#pricing" class="btn btn-primary">🔥 Начать</a>
+      <a href="#features" class="btn btn-secondary">Как работает</a>
+    </div>
+  </div>
+</section>
+
+<!-- Stats -->
+<div class="container">
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num">-30%</div>
+      <div class="stat-label">неявок благодаря напоминаниям</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">+25%</div>
+      <div class="stat-label">записей (онлайн 24/7)</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">10ч</div>
+      <div class="stat-label">экономии администратора в неделю</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">24/7</div>
+      <div class="stat-label">самозапись без участия персонала</div>
+    </div>
+  </div>
+</div>
+
+<!-- Features -->
+<section class="section" id="features">
+  <div class="container">
+    <div class="section-label">Возможности</div>
+    <h2>Всё что нужно салону</h2>
+    <p class="subtitle">Клиенты записываются сами. Мастера видят расписание. Вы управляете бизнесом.</p>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-icon" style="background: rgba(139,92,246,0.15);">📅</div>
+        <h3>Запись в 2 клика</h3>
+        <p>Услуга → Мастер → Дата → Время. Клиент записывается сам, без звонков администратору.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background: rgba(6,214,160,0.15);">⏰</div>
+        <h3>Авто-напоминания</h3>
+        <p>Бот сам напоминает клиенту о записи за 24 и 2 часа. Неявок становится на 30% меньше.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background: rgba(244,114,182,0.15);">📊</div>
+        <h3>Статистика</h3>
+        <p>Доход, количество записей, загрузка мастеров — вся аналитика в одном месте.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background: rgba(251,191,36,0.15);">👥</div>
+        <h3>Кабинет мастера</h3>
+        <p>Мастер заходит по коду, видит свои записи на день/неделю, отмечает выполнение.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background: rgba(139,92,246,0.15);">🔧</div>
+        <h3>Админ-панель</h3>
+        <p>Управление услугами, мастерами, генерация кодов доступа. Вся власть в ваших руках.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background: rgba(6,214,160,0.15);">🔄</div>
+        <h3>Клиенты сами себе</h3>
+        <p>Просмотр своих записей, отмена/перенос — без звонков администратору.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">Как это работает</div>
+    <h2>3 шага до работающего бота</h2>
+    <p class="subtitle">От заявки до запуска — меньше недели.</p>
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">1</span>
+        <h3>📝 Заявка</h3>
+        <p>Вы говорите какие услуги, мастера и время работы. Я настраиваю бота под вас.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">2</span>
+        <h3>⚙️ Настройка</h3>
+        <p>Разворачиваю бота, тестирую все сценарии, добавляю ваших мастеров.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">3</span>
+        <h3>🚀 Запуск</h3>
+        <p>Вы получаете ссылку на бота, клиенты записываются. Я слежу за работой 24/7.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section class="section" id="pricing">
+  <div class="container">
+    <div class="section-label">Тарифы</div>
+    <h2>Прозрачные цены</h2>
+    <p class="subtitle">Никаких скрытых платежей. Всё включено.</p>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-name">Базовый</div>
+        <div class="pricing-price">$1 500 <span>₽ 135 000</span></div>
+        <div class="pricing-desc">Для небольших салонов до 3 мастеров</div>
+        <ul class="pricing-features">
+          <li><span class="check">✓</span> Бот с бронированием</li>
+          <li><span class="check">✓</span> Авто-напоминания</li>
+          <li><span class="check">✓</span> Админ-панель</li>
+          <li><span class="check">✓</span> Кабинет мастера</li>
+          <li><span class="check">✓</span> Базовая статистика</li>
+        </ul>
+        <a href="#" class="btn btn-primary" style="width:100%;justify-content:center;">Выбрать</a>
+      </div>
+      <div class="pricing-card popular">
+        <div class="pricing-name">Продвинутый</div>
+        <div class="pricing-price">$2 500 <span>₽ 225 000</span></div>
+        <div class="pricing-desc">Для салонов с 3-10 мастерами</div>
+        <ul class="pricing-features">
+          <li><span class="check">✓</span> Всё из Базового</li>
+          <li><span class="check">✓</span> Telegram Mini App</li>
+          <li><span class="check">✓</span> Система лояльности</li>
+          <li><span class="check">✓</span> Отзывы и рейтинг</li>
+          <li><span class="check">✓</span> Интеграция с оплатой</li>
+        </ul>
+        <a href="#" class="btn btn-primary" style="width:100%;justify-content:center;">Выбрать</a>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-name">Подписка</div>
+        <div class="pricing-price">$40 <span>/мес</span></div>
+        <div class="pricing-desc">Поддержка и хостинг</div>
+        <ul class="pricing-features">
+          <li><span class="check">✓</span> Техподдержка</li>
+          <li><span class="check">✓</span> Обновления и новые фичи</li>
+          <li><span class="check">✓</span> Хостинг и мониторинг</li>
+          <li><span class="check">✓</span> Ежемесячная аналитика</li>
+          <li><span class="check">✓</span> Приоритетная поддержка</li>
+        </ul>
+        <a href="#" class="btn btn-secondary" style="width:100%;justify-content:center;">Подключить</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <h2>Готовы начать?</h2>
+    <p>Напишите мне в Telegram. Запустим бота за 3 дня.</p>
+    <a href="#" class="btn btn-primary">✉️ Написать в Telegram</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>Hermes AI · Салон-бот · 2026</p>
+  </div>
+</footer>
+
+</body>
+</html>

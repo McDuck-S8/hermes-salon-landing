@@ -1,0 +1,1 @@
+[2026-07-14 00:00] Completed t_affiliate_bot - Build affiliate bot: adapt Tara Bot for RF market - Forked Tara Bot (https://github.com/thaolst/tara-bot), adapted for RU market with CPA networks: MyLead, Admitad, KMA.biz. Created complete project structure at D:/Portable_Soft/hermes/tara-bot-ru/ with all source files, configs, deployment docs, and GitHub Actions workflow.

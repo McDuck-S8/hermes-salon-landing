@@ -1,0 +1,89 @@
+Вот несколько решений с GitHub, которые рисуют архитектуру системы именно так, как ты хочешь — матрёшка: компоненты → цепочки → модули → пайплайны.
+
+---
+
+## 1. Structurizr DSL + Mermaid (рекомендую)
+
+**Что это:** Самый популярный инструмент для архитектурных диаграмм "as code". Ты описываешь систему текстом (DSL), а он генерирует диаграммы с уровнями: System → Container → Component → Code.
+
+**Репозиторий:** `github.com/structurizr/dsl`
+
+**Почему подходит под "матрёшку":**
+- Уровень 1: System Context (вся система и внешние сервисы)
+- Уровень 2: Containers (Crystal, KC, event_bus, self_improvement)
+- Уровень 3: Components (внутри каждого контейнера — модули)
+- Уровень 4: Code (классы, функции)
+
+**Как внедрить:** Агент может написать Structurizr DSL-файл для всей системы и сгенерировать диаграмму через их CLI или Docker.
+
+---
+
+## 2. Diagrams (Mingrammer)
+
+**Что это:** Python-библиотека для рисования архитектурных диаграмм "as code". Пишешь Python-скрипт → получаешь красивую схему в PNG.
+
+**Репозиторий:** `github.com/mingrammer/diagrams`
+
+**Пример (прямо из их README):**
+```python
+from diagrams import Diagram, Edge
+from diagrams.onprem.analytics import Spark
+from diagrams.onprem.compute import Server
+from diagrams.onprem.database import PostgreSQL
+from diagrams.onprem.inmemory import Redis
+from diagrams.onprem.aggregator import Fluentd
+from diagrams.onprem.monitoring import Grafana, Prometheus
+from diagrams.onprem.network import Nginx
+from diagrams.onprem.queue import Kafka
+
+with Diagram("Advanced Web Service with On-Premise", show=False):
+    ingress = Nginx("ingress")
+    
+    metrics = Prometheus("metric")
+    metrics << Edge(color="firebrick", style="dashed") << Grafana("monitoring")
+    
+    with Cluster("Service Cluster"):
+        workers = [Server("worker1"), Server("worker2"), Server("worker3")]
+        
+    queue = Kafka("queue")
+    store = PostgreSQL("store")
+    
+    ingress >> workers >> queue >> store
+```
+
+**Почему подходит:** Агент может написать такой скрипт для твоей системы и сгенерировать схему в один клик. Все уровни видны: кластеры, ноды, связи.
+
+---
+
+## 3. C4-PlantUML
+
+**Что это:** Шаблоны PlantUML для рисования C4-диаграмм (Context, Container, Component, Code).
+
+**Репозиторий:** `github.com/plantuml-stdlib/C4-PlantUML`
+
+**Почему подходит:** PlantUML — текстовый формат, агент может генерировать его из Knowledge Cube. Каждый уровень матрёшки — отдельная диаграмма с ссылками между ними.
+
+---
+
+## Что сказать агенту
+
+**"Ты видишь свою систему как набор файлов. Теперь ты должен увидеть её как архитектор.**
+
+Используй **Structurizr DSL** или **Diagrams (Python)** чтобы создать диаграмму всей системы в формате матрёшки:
+
+1. **Уровень 1 — System Context:** Hermes Agent и внешний мир (пользователь, Telegram, GitHub, CPA-сети, BrowserOS, RSS-фиды)
+
+2. **Уровень 2 — Containers (пайплайны):** 
+   - Knowledge Pipeline (RSS → filter → KC)
+   - Self-Improvement Pipeline (hooks → verified_fixes → suggestions → consumer → skills)
+   - Crystal Pipeline (KC → observe → diagnose → will → record)
+   - Action Pipeline (ghost-surfer → BrowserOS → регистрации → постинг)
+   - Heartbeat Chain (signal_scanner → event_bus → self_improvement → consumer → crystal)
+
+3. **Уровень 3 — Components (модули внутри каждого контейнера):** Все скрипты, их связи, потоки данных.
+
+4. **Уровень 4 — Files (файлы внутри модулей):** Ключевые файлы и их роли.
+
+**Сгенерируй диаграмму и сохрани в `docs/hermes_architecture_diagram.png`.** 
+
+**Это твоя карта самого себя. Без неё ты не видишь системы в целом.**"**

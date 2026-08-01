@@ -1,0 +1,141 @@
+PS D:\Portable_Soft\hermes> wsl python3 /mnt/d/Portable_Soft/hermes/scripts/crystal.py --status
+╔══ КРИСТАЛЛ ══ 2026-06-15T07:52:36 ══╗
+
+�� KC: 4117 записей  рост: 1д=+705 7д=+3498
+   snapshot           696
+   indexed            675
+   will_action        588
+   user_query         430
+   success            427
+   сирот: 297 (7%)
+
+�� EE: 14781 сущностей, 11999 связей
+   Александр: 11×  Я: 712×
+   Совесть: 15×  Кристалл: 692×
+
+�� FL: 17 сессий (+17/7д) tone=+0.52 E=0.9 T=0.2
+
+�� Fabric: 0 файлов
+
+──────────────────────────────────────────
+�� Рост KC: +3498 за 7д (85%)
+�� Доминанта KC: snapshot (696)
+⚠ [low] Fabric пуст
+�� 68% связей EE — co_occurs_with (автоматические)
+
+�� === САМОПОНИМАНИЕ ===
+Последние 9 решений:
+  [bridge_tactical_research] [will:bridge_tactical_research] [BRIDGE] Передал задачу 'tactical_research' Hermes: Фаза Growth (302
+  [bridge_tactical_analyze_kc] [will:bridge_tactical_analyze_kc] [BRIDGE] Передал задачу 'tactical_analyze_kc' Hermes: Проанализиро
+  [user_value_125235] [will:user_value_125235] Воля: выбрано 'user_value_125235' — Подумать чем быть полезным пользователю
+  [self_aware_slow_learning] [will:self_aware_slow_learning] Самосознание Level 2: документация не найдена
+  [bridge_everos_integration_20260614] [will:bridge_everos_integration_20260614] [BRIDGE] Передал задачу 'everos_integration_20260614' Herm
+  [bridge_everos_launch_20260614] [will:bridge_everos_launch_20260614] [BRIDGE] Взял задачу 'everos_launch_20260614': [BRIDGE] everos_
+  [bridge_everos_first_run_20260614] [will:bridge_everos_first_run_20260614] [BRIDGE] Взял задачу 'everos_first_run_20260614': [BRIDGE] e
+  [bridge_self_upgrade_level3] [will:bridge_self_upgrade_level3] [BRIDGE] Взял задачу 'self_upgrade_level3': [BRIDGE] self_upgrade_
+  [bridge_everos_setup_20260614] [will:bridge_everos_setup_20260614] [BRIDGE] Взял задачу 'everos_setup_20260614': [BRIDGE] everos_se
+Сейчас: KC=4117 EE=0 связей=11999
+Сироты: 297 (7%)
+Не тронутые источники: {'state_db': 293, 'NULL': 4}
+→ [BRIDGE] Передал задачу 'tactical_report_20260612' Hermes: Сформировать дневной отчёт о состоянии с
+
+──────── ПРОГНОЗ ────────────────────────────
+Скорость: 499.7 зап/день
+Пик актив: 3:00
+�� 3000 ≈ -2 дней (13.06)
+�� 5000 ≈ 1 дней (17.06)
+⚠ Стагнируют: version, web-extract, your
+
+════════ ГОРИЗОНТ ════════════════════════════
+�� Фаза: �� Growth — Быстрый рост, расширение доменов
+�� Следующая: �� Structure (78% к переходу)
+   ✅ Сирот 7% — в пределах нормы
+   �� Рост 500 зап/день — фаза ускорения
+   �� Доменов: 149 — достаточное разнообразие
+   �� Связность EE: 0.81 — хорошая интеграция
+�� Почему:
+   Рост 78% к фазе �� Structure
+   Связность в норме — можно фокусироваться на расширении
+──────────────────────────────────────────
+PS D:\Portable_Soft\hermes> ps aux | grep web_research.py | grep -v grep
+grep : Имя "grep" не распознано как имя командлета, функции, файла сценария или выполняемой программы. Проверьте правильность
+написания имени, а также наличие и правильность пути, после чего повторите попытку.
+строка:1 знак:10
++ ps aux | grep web_research.py | grep -v grep
++          ~~~~
+    + CategoryInfo          : ObjectNotFound: (grep:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS D:\Portable_Soft\hermes> curl -s http://localhost:8788/rss.xml | head -30
+head : Имя "head" не распознано как имя командлета, функции, файла сценария или выполняемой программы. Проверьте правильность
+написания имени, а также наличие и правильность пути, после чего повторите попытку.
+строка:1 знак:41
++ curl -s http://localhost:8788/rss.xml | head -30
++                                         ~~~~
+    + CategoryInfo          : ObjectNotFound: (head:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS D:\Portable_Soft\hermes> wsl sqlite3 /mnt/d/Portable_Soft/hermes/cache/knowledge_cube.db "SELECT COUNT(*), source FROM experiences WHERE ts > datetime('now', '-8 hours') GROUP BY source;"
+/bin/bash: line 1: sqlite3: command not found
+PS D:\Portable_Soft\hermes> wsl sqlite3 /mnt/d/Portable_Soft/hermes/cache/knowledge_cube.db "SELECT raw_text FROM experiences WHERE source='web_research' AND domain='passive-income' AND ts > datetime('now', '-8 hours') LIMIT 5;"
+/bin/bash: line 1: sqlite3: command not found
+PS D:\Portable_Soft\hermes> wsl python3 /mnt/d/Portable_Soft/hermes/scripts/crystal.py --orchestrator-logs --last 10
+╔══ КРИСТАЛЛ ══ 2026-06-15T07:56:52 ══╗
+
+�� KC: 4119 записей  рост: 1д=+707 7д=+3500
+   snapshot           697
+   indexed            675
+   will_action        589
+   user_query         430
+   success            427
+   сирот: 297 (7%)
+
+�� EE: 14781 сущностей, 11999 связей
+   Александр: 11×  Я: 713×
+   Совесть: 15×  Кристалл: 693×
+
+�� FL: 17 сессий (+17/7д) tone=+0.52 E=0.9 T=0.2
+
+�� Fabric: 0 файлов
+
+──────────────────────────────────────────
+�� Рост KC: +3500 за 7д (85%)
+�� Доминанта KC: snapshot (697)
+⚠ [low] Fabric пуст
+�� 68% связей EE — co_occurs_with (автоматические)
+
+�� === САМОПОНИМАНИЕ ===
+Последние 9 решений:
+  [bridge_tactical_report_20260612] [will:bridge_tactical_report_20260612] [BRIDGE] Передал задачу 'tactical_report_20260612' Hermes: Сф
+  [bridge_tactical_research] [will:bridge_tactical_research] [BRIDGE] Передал задачу 'tactical_research' Hermes: Фаза Growth (302
+  [bridge_tactical_analyze_kc] [will:bridge_tactical_analyze_kc] [BRIDGE] Передал задачу 'tactical_analyze_kc' Hermes: Проанализиро
+  [user_value_125235] [will:user_value_125235] Воля: выбрано 'user_value_125235' — Подумать чем быть полезным пользователю
+  [self_aware_slow_learning] [will:self_aware_slow_learning] Самосознание Level 2: документация не найдена
+  [bridge_everos_integration_20260614] [will:bridge_everos_integration_20260614] [BRIDGE] Передал задачу 'everos_integration_20260614' Herm
+  [bridge_everos_launch_20260614] [will:bridge_everos_launch_20260614] [BRIDGE] Взял задачу 'everos_launch_20260614': [BRIDGE] everos_
+  [bridge_everos_first_run_20260614] [will:bridge_everos_first_run_20260614] [BRIDGE] Взял задачу 'everos_first_run_20260614': [BRIDGE] e
+  [bridge_self_upgrade_level3] [will:bridge_self_upgrade_level3] [BRIDGE] Взял задачу 'self_upgrade_level3': [BRIDGE] self_upgrade_
+Сейчас: KC=4119 EE=0 связей=11999
+Сироты: 297 (7%)
+Не тронутые источники: {'state_db': 293, 'NULL': 4}
+→ [BRIDGE] Передал задачу 'tactical_report_20260613' Hermes: Сформировать дневной отчёт о состоянии с
+
+──────── ПРОГНОЗ ────────────────────────────
+Скорость: 500.0 зап/день
+Пик актив: 3:00
+�� 3000 ≈ -2 дней (13.06)
+�� 5000 ≈ 1 дней (17.06)
+⚠ Стагнируют: version, web-extract, your
+
+════════ ГОРИЗОНТ ════════════════════════════
+�� Фаза: �� Growth — Быстрый рост, расширение доменов
+�� Следующая: �� Structure (78% к переходу)
+   ✅ Сирот 7% — в пределах нормы
+   �� Рост 500 зап/день — фаза ускорения
+   �� Доменов: 149 — достаточное разнообразие
+   �� Связность EE: 0.81 — хорошая интеграция
+�� Почему:
+   Рост 78% к фазе �� Structure
+   Связность в норме — можно фокусироваться на расширении
+──────────────────────────────────────────
+PS D:\Portable_Soft\hermes>

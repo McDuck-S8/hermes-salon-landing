@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Arbitrage 3D Spider Web</title>
+<style>
+body{margin:0;overflow:hidden;background:#0a0a1a;font-family:system-ui}
+#info{
+  position:fixed;top:16px;left:16px;color:#888;font-size:13px;z-index:10;
+  background:rgba(0,0,0,0.7);padding:12px 16px;border-radius:8px;
+  border:1px solid #333;pointer-events:none;
+}
+#info h2{color:#ddd;margin:0 0 6px;font-size:16px}
+#info span{display:inline-block;margin-right:12px}
+#legend{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+  color:#ccc;font-size:12px;z-index:10;
+  background:rgba(0,0,0,0.8);padding:10px 20px;border-radius:8px;
+  border:1px solid #333;display:flex;gap:14px;pointer-events:none;
+}
+.legend-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:middle}
+</style>
+</head>
+<body>
+<div id="info">
+  <h2>🕸 Arbitrage 3D Spider Web</h2>
+  <span style="color:#4ade80">● Входы Z0</span>
+  <span style="color:#60a5fa">● Прокладки Z1</span>
+  <span style="color:#c084fc">● CPA Z2</span>
+  <span style="color:#fbbf24">● Рефералки Z3</span>
+  <span style="color:#fb923c">● P2P Z4</span>
+  <span style="color:#ef4444">● Вывод Z5</span>
+  <span style="color:#34d399">├── переходы между плоскостями</span>
+</div>
+<div id="legend">🖱 мышь/тач — вращать · колёсико — зум · таскать узлы можно</div>
+
+<script src="https://cdn.jsdelivr.net/npm/3d-force-graph@1"></script>
+<script>
+// ============ ПЛОСКОСТИ ПО ВЫСОТЕ ============
+const Z = { traffic:0, proxy:1, cpa:2, referral:3, p2p:4, cashout:5 };
+
+const nodes = [
+  // ===== Z0: ВХОДЫ — трафик =====
+  { id:"tiktok",    label:"TikTok Shorts",           group:"traffic",  z:Z.traffic },
+  { id:"youtube",   label:"YouTube Shorts",          group:"traffic",  z:Z.traffic },
+  { id:"telegram",  label:"TG каналы (Крым)",        group:"traffic",  z:Z.traffic },
+  { id:"reddit",    label:"Reddit",                  group:"traffic",  z:Z.traffic },
+  { id:"pinterest", label:"Pinterest",               group:"traffic",  z:Z.traffic },
+  { id:"seo",       label:"SEO-сайты",               group:"traffic",  z:Z.traffic },
+
+  // ===== Z1: ПРОКЛАДКИ =====
+  { id:"carrd",     label:"Carrd Landing",            group:"proxy",   z:Z.proxy },
+  { id:"tgbot",     label:"Telegram Bot",             group:"proxy",   z:Z.proxy },
+  { id:"ghpages",   label:"GitHub Pages",             group:"proxy",   z:Z.proxy },
+  { id:"seosite",   label:"SEO микро-сайт",           group:"proxy",   z:Z.proxy },
+  { id:"instabot",  label:"Instagram Bot",            group:"proxy",   z:Z.proxy },
+
+  // ===== Z2: CPA =====
+  { id:"cpagrip",   label:"CPAGrip $2-5",            group:"cpa",     z:Z.cpa },
+  { id:"mylead",    label:"MyLead",                  group:"cpa",     z:Z.cpa },
+  { id:"fincpa",    label:"FinCPANetwork $5-50",     group:"cpa",     z:Z.cpa },
+  { id:"travel",    label:"Travelpayouts 3-12%",     group:"cpa",     z:Z.cpa },
+  { id:"maxbounty", label:"MaxBounty",               group:"cpa",     z:Z.cpa },
+
+  // ===== Z3: РЕФЕРАЛКИ =====
+  { id:"kucoin-ref",label:"KuCoin RevShare 20-40%", group:"referral", z:Z.referral },
+  { id:"okx-ref",   label:"OKX RevShare 20-40%",    group:"referral", z:Z.referral },
+  { id:"exch-ref",  label:"Обменники рефки",         group:"referral", z:Z.referral },
+
+  // ===== Z4: P2P АРБИТРАЖ =====
+  { id:"kucoin-p2p",label:"KuCoin P2P спреды",       group:"p2p",     z:Z.p2p },
+  { id:"okx-p2p",   label:"OKX P2P спреды",          group:"p2p",     z:Z.p2p },
+  { id:"p2p-cycle", label:"P2P цикл (купил-продал)", group:"p2p",     z:Z.p2p },
+
+  // ===== Z5: ВЫВОД =====
+  { id:"tbank",     label:"Т-Банк карта",            group:"cashout", z:Z.cashout },
+  { id:"crypto",    label:"Крипта (USDT хранение)",  group:"cashout", z:Z.cashout },
+  { id:"cash",      label:"Наличка",                 group:"cashout", z:Z.cashout },
+  { id:"profit",    label:"💰 ПРИБЫЛЬ",             group:"cashout", z:Z.cashout },
+];
+
+// ============ СВЯЗИ ============
+const links = [
+  // Z0 → Z1 (трафик → прокладки)
+  { source:"tiktok",   target:"carrd" },
+  { source:"tiktok",   target:"tgbot" },
+  { source:"youtube",  target:"carrd" },
+  { source:"telegram", target:"tgbot" },
+  { source:"telegram", target:"carrd" },
+  { source:"reddit",   target:"ghpages" },
+  { source:"reddit",   target:"seosite" },
+  { source:"seo",      target:"seosite" },
+  { source:"pinterest",target:"carrd" },
+  { source:"pinterest",target:"instabot" },
+
+  // Z1 → Z2 (прокладки → CPA)
+  { source:"carrd",    target:"cpagrip" },
+  { source:"carrd",    target:"mylead" },
+  { source:"tgbot",    target:"fincpa" },
+  { source:"tgbot",    target:"mylead" },
+  { source:"ghpages",  target:"maxbounty" },
+  { source:"seosite",  target:"travel" },
+  { source:"seosite",  target:"cpagrip" },
+  { source:"instabot", target:"cpagrip" },
+
+  // Z2 → Z3 (CPA → рефералки — реинвест трафика)
+  { source:"cpagrip",  target:"kucoin-ref" },
+  { source:"mylead",   target:"kucoin-ref" },
+  { source:"fincpa",   target:"kucoin-ref" },
+  { source:"travel",   target:"exch-ref" },
+
+  // Z2 → Z4 (CPA → P2P — пул USDT)
+  { source:"cpagrip",  target:"kucoin-p2p" },
+  { source:"mylead",   target:"kucoin-p2p" },
+  { source:"fincpa",   target:"kucoin-p2p" },
+  { source:"maxbounty",target:"kucoin-p2p" },
+
+  // Z3 → Z4 (реф. комиссии → P2P)
+  { source:"kucoin-ref", target:"kucoin-p2p" },
+  { source:"okx-ref",    target:"okx-p2p" },
+
+  // Z4 → Z4 (P2P между биржами)
+  { source:"kucoin-p2p", target:"okx-p2p" },
+  { source:"kucoin-p2p", target:"p2p-cycle" },
+  { source:"okx-p2p",    target:"p2p-cycle" },
+
+  // Z4 → Z5 (P2P → вывод)
+  { source:"kucoin-p2p", target:"tbank" },
+  { source:"okx-p2p",    target:"tbank" },
+  { source:"p2p-cycle",  target:"tbank" },
+
+  // Z3 → Z5 (реф. напрямую на вывод)
+  { source:"kucoin-ref", target:"tbank" },
+  { source:"okx-ref",    target:"crypto" },
+
+  // Z5 → Z5 (аккумуляция в прибыль)
+  { source:"tbank",      target:"profit" },
+  { source:"crypto",     target:"profit" },
+  { source:"cash",       target:"profit" },
+  
+  // Cross-plane jumps:
+  // Z0 → Z2 (трафик сразу на CPA, минуя прокладку)
+  { source:"tiktok",   target:"cpagrip" },
+  { source:"telegram", target:"fincpa" },
+  
+  // Z0 → Z3 (трафик сразу на рефералку биржи)
+  { source:"youtube",  target:"kucoin-ref" },
+  { source:"telegram", target:"kucoin-ref" },
+
+  // Z2 → Z0 (реинвест: прибыль с CPA → в новый трафик)
+  { source:"cpagrip",  target:"tiktok" },
+  { source:"fincpa",   target:"telegram" },
+  { source:"travel",   target:"seo" },
+
+  // Z4 → Z0 (прибыль с P2P → реинвест в трафик)
+  { source:"p2p-cycle", target:"tiktok" },
+  { source:"kucoin-p2p",target:"telegram" },
+
+  // Z2 → Z5 (CPA напрямую на карту, минуя P2P)
+  { source:"cpagrip",  target:"tbank" },
+  { source:"fincpa",   target:"tbank" },
+
+  // Z1 → Z3 (прокладка может вести на реф. ссылку)
+  { source:"tgbot",    target:"kucoin-ref" },
+  { source:"carrd",    target:"okx-ref" },
+];
+
+// ============ ЦВЕТА ПО ГРУППАМ ============
+const colorMap = {
+  traffic:  "#4ade80",
+  proxy:    "#60a5fa",
+  cpa:      "#c084fc",
+  referral: "#fbbf24",
+  p2p:      "#fb923c",
+  cashout:  "#ef4444",
+};
+
+// ============ 3D FORCE GRAPH ============
+const elem = document.getElementById("info");
+
+const Graph = ForceGraph3D()
+  (document.body)
+  .graphData({ nodes, links })
+  .nodeId("id")
+  .nodeLabel(d => `${d.label}  [Z${d.z}]`)
+  .nodeColor(d => colorMap[d.group] || "#888")
+  .nodeVal(d => d.group==="cashout" && d.id==="profit" ? 2 : 1)
+  .nodeOpacity(0.9)
+  .linkColor(() => "#34d399")
+  .linkOpacity(0.3)
+  .linkWidth(0.5)
+  .linkDirectionalArrowLength(4)
+  .linkDirectionalArrowRelPos(1)
+  .linkDirectionalParticles(2)
+  .linkDirectionalParticleWidth(2)
+  .linkDirectionalParticleSpeed(0.005)
+  .backgroundColor("#0a0a1a")
+  .d3AlphaDecay(0.02)
+  .d3VelocityDecay(0.3)
+  .d3Force("z", (alpha) => {
+    // Притягиваем узлы к их плоскости Z
+    const strength = 0.3;
+    nodes.forEach(n => {
+      const targetY = (n.z - 2.5) * 140; // центр между Z0-Z5
+      n.vy += (targetY - n.y) * strength * alpha;
+    });
+  })
+  .onNodeClick(node => {
+    // Подсветить связи при клике
+    const connected = new Set();
+    links.forEach(l => {
+      if(l.source.id===node.id) connected.add(l.target.id||l.target);
+      if(l.target.id===node.id) connected.add(l.source.id||l.source);
+    });
+    Graph.nodeColor(n => connected.has(n.id) ? "#fff" : colorMap[n.group])
+      .linkColor(l => (l.source.id||l.source)===node.id||(l.target.id||l.target)===node.id ? "#ff0" : "#34d399")
+      .linkOpacity(l => (l.source.id||l.source)===node.id||(l.target.id||l.target)===node.id ? 0.8 : 0.15)
+      .linkWidth(l => (l.source.id||l.source)===node.id||(l.target.id||l.target)===node.id ? 2 : 0.5);
+    // Через 3 сек сброс
+    setTimeout(() => {
+      Graph.nodeColor(d => colorMap[d.group])
+        .linkColor(() => "#34d399")
+        .linkOpacity(0.3)
+        .linkWidth(0.5);
+    }, 3000);
+  })
+  .onNodeRightClick(node => {
+    // ПКМ — центрировать
+    Graph.centerAt(node.x, node.y, 800);
+    Graph.zoomToFit(400, 60, n => n.id===node.id);
+  });
+
+// ============ ДУБЛИРУЕМ УЗЛЫ ДЛЯ ПЛОСКОСТЕЙ ============
+// Добавляем "теневые" узлы-плоскости для подписей
+const planeLabels = [
+  { id:"__Z0", label:"▬ Z0 ВХОДЫ (TikTok, TG, YouTube...)", group:"traffic", z:-0.3 },
+  { id:"__Z1", label:"▬ Z1 ПРОКЛАДКИ (Carrd, TG Bot...)", group:"proxy", z:0.7 },
+  { id:"__Z2", label:"▬ Z2 CPA (CPAGrip, MyLead...)", group:"cpa", z:1.7 },
+  { id:"__Z3", label:"▬ Z3 РЕФЕРАЛКИ (KuCoin 20-40%)", group:"referral", z:2.7 },
+  { id:"__Z4", label:"▬ Z4 P2P АРБИТРАЖ (спреды)", group:"p2p", z:3.7 },
+  { id:"__Z5", label:"▬ Z5 ВЫВОД (Т-Банк, крипта)", group:"cashout", z:4.7 },
+];
+
+planeLabels.forEach(p => {
+  nodes.push(p);
+  // Лёгкое притяжение к позиции
+  p.fx = 0;
+  p.fy = (p.z - 2.5) * 140;
+  p.fz = -300;
+});
+
+// Полупрозрачные линии-разделители плоскостей
+const separators = [];
+for(let zi=0; zi<6; zi++){
+  const y = (zi - 2.5) * 140;
+  separators.push({y, label:`Z${zi}`});
+}
+
+// Добавляем линии-разделители через дополнительную геометрию
+// (просто как визуальный элемент с помощью Canvas overlay не получится в Three.js cleanly)
+// Но для простоты — не будем заморачиваться, граф сам разложит по высоте
+</script>
+</body>
+</html>

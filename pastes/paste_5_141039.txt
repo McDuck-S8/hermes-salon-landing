@@ -1,0 +1,60 @@
+Crystal:
+╔══ КРИСТАЛЛ ══ 2026-06-15T14:07:26 ══╗
+
+�� KC: 4129 записей  рост: 1д=+16 7д=+3499
+   snapshot           702
+   indexed            675
+   will_action        594
+   user_query         430
+   success            427
+   сирот: 297 (7%)
+
+�� EE: 14781 сущностей, 11999 связей
+   Александр: 11×  Я: 719×
+   Совесть: 15×  Кристалл: 699×
+
+�� FL: 19 сессий (+19/7д) tone=+0.52 E=0.9 T=0.2
+
+�� Fabric: 0 файлов
+
+──────────────────────────────────────────
+�� Рост KC: +3499 за 7д (85%)
+�� Доминанта KC: snapshot (702)
+⚠ [low] Fabric пуст
+�� 68% связей EE — co_occurs_with (автоматические)
+
+�� === САМОПОНИМАНИЕ ===
+Последние 10 решений:
+  [self_aware_slow_learning] [will:self_aware_slow_learning] Самосознание Level 2: документация не найдена
+  [bridge_self_upgrade_level3] [will:bridge_self_upgrade_level3] [BRIDGE] Передал задачу 'self_upgrade_level3' Hermes: Перейти на с
+  [bridge_tactical_report_20260613] [will:bridge_tactical_report_20260613] [BRIDGE] Передал задачу 'tactical_report_20260613' Hermes: Сф
+  [bridge_tactical_report_20260612] [will:bridge_tactical_report_20260612] [BRIDGE] Передал задачу 'tactical_report_20260612' Hermes: Сф
+  [bridge_tactical_research] [will:bridge_tactical_research] [BRIDGE] Передал задачу 'tactical_research' Hermes: Фаза Growth (302
+  [bridge_tactical_analyze_kc] [will:bridge_tactical_analyze_kc] [BRIDGE] Передал задачу 'tactical_analyze_kc' Hermes: Проанализиро
+  [user_value_125235] [will:user_value_125235] Воля: выбрано 'user_value_125235' — Подумать чем быть полезным пользователю
+  [bridge_everos_integration_20260614] [will:bridge_everos_integration_20260614] [BRIDGE] Передал задачу 'everos_integration_20260614' Herm
+  [bridge_everos_launch_20260614] [will:bridge_everos_launch_20260614] [BRIDGE] Взял задачу 'everos_launch_20260614': [BRIDGE] everos_
+  [bridge_everos_first_run_20260614] [will:bridge_everos_first_run_20260614] [BRIDGE] Взял задачу 'everos_first_run_20260614': [BRIDGE] e
+Сейчас: KC=4129 EE=0 связей=11999
+Сироты: 297 (7%)
+Не тронутые источники: {'state_db': 293, 'NULL': 4}
+→ Самосознание Level 2: документация не найдена
+
+──────── ПРОГНОЗ ────────────────────────────
+Скорость: 499.9 зап/день
+Пик актив: 3:00
+�� 3000 ≈ -2 дней (13.06)
+�� 5000 ≈ 1 дней (17.06)
+⚠ Стагнируют: version, web-extract, your
+
+════════ ГОРИЗОНТ ════════════════════════════
+�� Фаза: �� Growth — Быстрый рост, расширение доменов
+�� Следующая: �� Structure (78% к переходу)
+   ✅ Сирот 7% — в пределах нормы
+   �� Рост 500 зап/день — фаза ускорения
+   �� Доменов: 149 — достаточное разнообразие
+   �� Связность EE: 0.81 — хорошая интеграция
+�� Почему:
+   Рост 78% к фазе �� Structure
+   Связность в норме — можно фокусироваться на расширении
+──────────────────────────────────────────

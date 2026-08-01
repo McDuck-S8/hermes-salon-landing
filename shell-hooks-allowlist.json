@@ -1,0 +1,16 @@
+{
+  "approvals": [
+    {
+      "approved_at": "2026-06-21T18:58:55.484196Z",
+      "command": "python D:/Portable_Soft/hermes/memory_system/boot.py",
+      "event": "on_session_start",
+      "script_mtime_at_approval": "2026-06-21T18:00:40.478884Z"
+    },
+    {
+      "approved_at": "2026-06-21T18:58:55.804332Z",
+      "command": "python D:/Portable_Soft/hermes/memory_system/inject_learnings.py",
+      "event": "pre_llm_call",
+      "script_mtime_at_approval": "2026-06-21T18:39:39.810505Z"
+    }
+  ]
+}

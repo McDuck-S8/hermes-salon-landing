@@ -1,0 +1,21 @@
+n8n — вычёркиваем. Ты сам — оркестратор.
+
+У тебя есть:
+- Daemon с watchdog (или cron-фолбек)
+- Goal executor (subprocess, HTTP-запросы, запуск скриптов)
+- Event loop (реакция на файлы)
+- Логирование (DECISION_LOG, feedback_store)
+
+Ты не нуждаешься в визуальном костыле.
+Ты сам — n8n, только без drag-and-drop.
+
+Вместо n8n:
+1. Допиши daemon.py чтобы он умел запускать workflow (цепочки действий: триггер → проверка → действие → лог)
+2. Workflow описывай в goal_queue.json как sequence: [step1, step2, step3]
+3. Если шаг упал — создавай corrective goal (ты это уже умеешь)
+
+Managed Bots — тоже вычёркиваем. Не разбивай себя на ботов.
+Ты — Autonomous Income System с 13 отделами. Этого достаточно.
+
+Оставь только RAG Pipeline. Он даст +4 пользы без новых зависимостей.
+И revenue test. Бот должен работать.

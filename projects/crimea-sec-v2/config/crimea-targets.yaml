@@ -1,0 +1,333 @@
+# Crimea Targets Configuration
+# Скоупы для легального тестирования безопасности в Республике Крым
+# КАЖДЫЙ scope ДОЛЖЕН иметь подтверждённое письменное разрешение
+
+scopes:
+  # === ГОСУДАРСТВЕННЫЕ ПОРТАЛЫ ===
+  - id: crimea-gov-main
+    name: "Официальный портал Республики Крым"
+    type: webapp
+    category: "KII-category-2"
+    organization: "Правление Республики Крым"
+    contacts:
+      - role: "CISO"
+        email: "ciso@crimea.gov.ru"
+        phone: "+7 (978) XXX-XX-XX"
+      - role: "Tech Lead"
+        email: "tech@crimea.gov.ru"
+    urls:
+      - "https://crimea.gov.ru"
+      - "https://www.crimea.gov.ru"
+    authorized: true
+    authorization_ref: "Акт согласования №123 от 2026-01-15"
+    roe_template: "strict"
+    opsec_preset: "balanced"
+    scope_details:
+      in_scope:
+        - "*.crimea.gov.ru"
+        - "*.gov.crimea.ru"
+      out_of_scope:
+        - "*.crimea.gov.ru/bitrix/*"
+        - "*.crimea.gov.ru/upload/*"
+        - "*.crimea.gov.ru/admin/*"
+    compliance:
+      - "152-FZ"
+      - "187-FZ"
+      - "GOST-R-57580"
+    notes: "Госуслуги Крыма, портал открытых данных, реестры"
+
+  - id: crimea-gov-services
+    name: "Портал госуслуг Республики Крым"
+    type: webapp
+    category: "KII-category-2"
+    organization: "Министерство цифрового развития Республики Крым"
+    contacts:
+      - role: "CISO"
+        email: "security@mincifry.crimea.ru"
+    urls:
+      - "https://e-crimea.ru"
+      - "https://uslugi.crimea.gov.ru"
+    authorized: true
+    authorization_ref: "Договор №456 от 2026-02-01"
+    roe_template: "strict"
+    opsec_preset: "balanced"
+    scope_details:
+      in_scope:
+        - "e-crimea.ru"
+        - "uslugi.crimea.gov.ru"
+        - "api.e-crimea.ru"
+      out_of_scope:
+        - "e-crimea.ru/bitrix/*"
+        - "e-crimea.ru/local/*"
+    compliance:
+      - "152-FZ"
+      - "187-FZ"
+
+  - id: crimea-open-data
+    name: "Портал открытых данных Республики Крым"
+    type: webapp
+    category: "public"
+    organization: "Министерство цифрового развития Республики Крым"
+    contacts:
+      - role: "Data Officer"
+        email: "opendata@mincifry.crimea.ru"
+    urls:
+      - "https://data.crimea.gov.ru"
+    authorized: true
+    authorization_ref: "Письмо согласования от 2026-03-10"
+    roe_template: "strict"
+    opsec_preset: "silent"
+    scope_details:
+      in_scope:
+        - "data.crimea.gov.ru"
+      out_of_scope: []
+
+  # === ТУРИЗМ И ЭКОНОМИКА ===
+  - id: crimea-tourism-main
+    name: "Официальный туристический портал Крыма"
+    type: webapp
+    category: "commercial"
+    organization: "Государственный комитет Республики Крым по туризме"
+    contacts:
+      - role: "IT Director"
+        email: "it@crimea-tourism.ru"
+    urls:
+      - "https://visitcrimea.ru"
+      - "https://krym.travel"
+      - "https://crimea.travel"
+    authorized: true
+    authorization_ref: "Соглашение о тестировании №789 от 2026-01-20"
+    roe_template: "bugbounty"
+    opsec_preset: "balanced"
+    scope_details:
+      in_scope:
+        - "visitcrimea.ru"
+        - "krym.travel"
+        - "crimea.travel"
+        - "api.visitcrimea.ru"
+      out_of_scope:
+        - "*.yandex.ru/*"
+        - "*.google.com/*"
+    compliance:
+      - "152-FZ"
+    bug_bounty_program: "https://hackerone.com/visitcrimea"
+
+  - id: crimea-investment
+    name: "Инвестиционный портал Крыма"
+    type: webapp
+    category: "commercial"
+    organization: "Министерство экономического развития Республики Крым"
+    contacts:
+      - role: "CISO"
+        email: "security@minec.crimea.ru"
+    urls:
+      - "https://invest.crimea.ru"
+    authorized: true
+    authorization_ref: "Договор №321 от 2026-02-15"
+    roe_template: "strict"
+    opsec_preset: "balanced"
+
+  # === БАНКОВСКИЙ СЕКТОР (требует координации с ЦБ РФ и ФСТЭК) ===
+  - id: rncb-bank
+    name: "РНКБ Банк (ПАО)"
+    type: network
+    category: "KII-category-1"
+    organization: "ПАО «РНКБ Банк»"
+    contacts:
+      - role: "CISO"
+        email: "ciso@rncb.ru"
+      - role: "SOC"
+        email: "soc@rncb.ru"
+    cidrs:
+      - "91.200.0.0/16"
+      - "185.0.0.0/16"
+      - "95.163.0.0/16"
+    authorized: false
+    authorization_ref: "ТРЕБУЕТСЯ: Согласование с ЦБ РФ + ФСТЭК + подписанный NDA"
+    roe_template: "strict"
+    opsec_preset: "silent"
+    scope_details:
+      in_scope:
+        - "External perimeter only"
+        - "Web applications: ibank.rncb.ru, rncb.ru"
+      out_of_scope:
+        - "Internal network"
+        - "Core banking systems"
+        - "ATM network"
+        - "SWIFT infrastructure"
+    compliance:
+      - "152-FZ"
+      - "187-FZ"
+      - "CBR-382-P"
+      - "FSTEK-21"
+    notes: "Критически важный объект. Тестирование ТОЛЬКО после полного согласования."
+
+  - id: crimea-fund
+    name: "Крымский фонд развития"
+    type: webapp
+    category: "commercial"
+    organization: "АО «Крымский фонд развития»"
+    contacts:
+      - role: "IT Security"
+        email: "security@crimea-fund.ru"
+    urls:
+      - "https://crimea-fund.ru"
+    authorized: false
+    authorization_ref: "ТРЕБУЕТСЯ: Согласование с заказчиком"
+    roe_template: "permissive"
+    opsec_preset: "balanced"
+
+  # === КРИТИЧЕСКАЯ ИНФРАСТРУКТУРА (КИИ) ===
+  - id: crimea-energy
+    name: "Энергетика Крыма (Крымэнерго, Севастопольэнерго)"
+    type: network
+    category: "KII-category-1"
+    organization: "ПАО «Крымэнерго», ФГУП «Севастопольэнерго»"
+    contacts:
+      - role: "CISO Крымэнерго"
+        email: "security@krymenergo.ru"
+      - role: "CISO Севастопольэнерго"
+        email: "security@sevenergo.ru"
+    cidrs:
+      - "ТРЕБУЕТСЯ УТОЧНЕНИЕ У ЗАКАЗЧИКА"
+    authorized: false
+    authorization_ref: "ТРЕБУЕТСЯ: Приказ ФСТЭК + согласование НКЦКИ + НДА"
+    roe_template: "strict"
+    opsec_preset: "apt"
+    scope_details:
+      in_scope: []
+      out_of_scope:
+        - "SCADA systems"
+        - "PLC/RTU"
+        - "Protective relays"
+        - "Substation automation"
+    compliance:
+      - "187-FZ"
+      - "GOST-R-57580"
+      - "FSTEK-21"
+      - "IEC-62443"
+    notes: "Объекты КИИ категории 1. Тестирование только в окне обслуживания, с сопровождением инженера заказчика."
+
+  - id: crimea-water
+    name: "Водоснабжение Крыма (Водоканал Крыма, Северокрымский канал)"
+    type: network
+    category: "KII-category-2"
+    organization: "ГУП РК «Водоканал Крыма»"
+    contacts:
+      - role: "IT Security"
+        email: "security@vodokanal-crimea.ru"
+    authorized: false
+    authorization_ref: "ТРЕБУЕТСЯ: Согласование с ФСТЭК"
+    roe_template: "strict"
+    opsec_preset: "silent"
+
+  - id: crimea-transport
+    name: "Транспортная инфраструктура (Крымский мост, ЖД, автовокзалы, порты)"
+    type: network
+    category: "KII-category-1"
+    organization: "ФГУП «Крымский мост», РЖД, Морской порт Керчь/Севастополь/Ялта"
+    contacts: []
+    authorized: false
+    authorization_ref: "ТРЕБУЕТСЯ: ФСБ + ФСТЭК + Минтранс + НДА"
+    roe_template: "strict"
+    opsec_preset: "apt"
+    notes: "Объекты первостепенного значения. Тестирование исключительно в координированных окнах."
+
+  # === ОБРАЗОВАНИЕ И НАУКА ===
+  - id: kf-university
+    name: "Крымский федеральный университет им. В.И. Вернадского"
+    type: webapp
+    category: "education"
+    organization: "КФУ"
+    contacts:
+      - role: "CISO"
+        email: "ciso@cfuv.ru"
+    urls:
+      - "https://cfuv.ru"
+      - "https://lms.cfuv.ru"
+      - "https://portal.cfuv.ru"
+    authorized: false
+    authorization_ref: "ТРЕБУЕТСЯ: Договор с университетом"
+    roe_template: "permissive"
+    opsec_preset: "balanced"
+
+  # === TELECOM ===
+  - id: rostelecom-crimea
+    name: "Ростелеком Крым (филиал)"
+    type: network
+    category: "KII-category-2"
+    organization: "ПАО «Ростелеком» — ЮФО"
+    contacts:
+      - role: "SOC"
+        email: "soc-yfo@rostelecom.ru"
+    authorized: false
+    authorization_ref: "ТРЕБУЕТСЯ: Корпоративное согласование"
+    roe_template: "strict"
+    opsec_preset: "silent"
+
+  # === BUG BOUNTY ПРОГРАММЫ (публичные) ===
+  - id: yandex-bugbounty
+    name: "Яндекс Багбаунти (Крымские сервисы: Яндекс.Карты, Навигатор, Такси, Еда в Крыму)"
+    type: webapp
+    category: "bugbounty"
+    organization: "Яндекс"
+    contacts:
+      - role: "Bug Bounty Team"
+        email: "bugbounty@yandex-team.ru"
+    urls:
+      - "https://yandex.ru/bugbounty"
+    authorized: true
+    authorization_ref: "Публичная программа: https://yandex.ru/bugbounty/rules"
+    roe_template: "bugbounty"
+    opsec_preset: "balanced"
+    bug_bounty_platform: "HackerOne / Яндекс Багбаунти"
+    scope_details:
+      in_scope:
+        - "*.yandex.ru (Крымские поддомены: maps.yandex.ru/*, taxi.yandex.ru/crimea/*, eda.yandex.ru/crimea/*)"
+      out_of_scope:
+        - "*.yandex.net"
+        - "Infrastructure"
+    notes: "Тестировать ТОЛЬКО в рамках публичной программы. Не выходить за scope."
+
+  - id: positive-technologies
+    name: "Positive Technologies Bug Bounty (PT Expert, PT ISIM, PT MultiScanner)"
+    type: webapp
+    category: "bugbounty"
+    organization: "Positive Technologies"
+    contacts:
+      - role: "Bug Bounty"
+        email: "bugbounty@ptsecurity.com"
+    urls:
+      - "https://hackerone.com/ptsecurity"
+    authorized: true
+    authorization_ref: "HackerOne программа"
+    roe_template: "bugbounty"
+    opsec_preset: "balanced"
+    bug_bounty_platform: "HackerOne"
+
+  - id: solar-dozor
+    name: "Solar Dozor / Solar JSOC Bug Bounty"
+    type: webapp
+    category: "bugbounty"
+    organization: "ГК «Солар» (Ростелеком)"
+    contacts:
+      - role: "Bug Bounty"
+        email: "bugbounty@solar.ru"
+    urls:
+      - "https://hackerone.com/solar"
+    authorized: true
+    authorization_ref: "HackerOne программа"
+    roe_template: "bugbounty"
+    opsec_preset: "balanced"
+    bug_bounty_platform: "HackerOne"
+
+# Глобальные настройки
+global:
+  default_roe: "strict"
+  default_opsec: "balanced"
+  require_authorization_for_all: true
+  auto_validate_on_load: true
+  audit_every_mission: true
+  legal_jurisdiction: "RU"
+  data_residency: "RU"
+  language: "ru"

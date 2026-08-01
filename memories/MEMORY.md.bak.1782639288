@@ -1,0 +1,57 @@
+# Agent Memory
+
+## System State (2026-06-28)
+
+### Architecture
+- **Event-driven pipeline**: signal_daemon.py → event_bus.py → rd_processor.py + dev_processor.py
+- **Bayesian scorer**: bayesian_scorer.py — P(H|E) = P(E|H) * P(H) / P(E)
+- **3 git worktrees**: hermes (main), hermes-sandbox (experiments), hermes-deploy (production)
+- **BOOT_SEQUENCE Step 0.8**: memory health check on boot
+- **BOOT_SEQUENCE Step 14**: signal daemon auto-start on boot
+
+### Key Scripts
+- `signal_daemon.py` — event-driven HN/GitHub scanner (adaptive backoff 60s↔600s)
+- `signal_scanner.py` — --run/--watch/--status modes, curl+SOCKS proxy
+- `bayesian_scorer.py` — signal scoring, flow health, goal priority
+- `rd_processor.py` — signals → workshop bricks (with Bayesian filter)
+- `dev_processor.py` — bricks → goals (Bayesian priority)
+- `deploy_salon.py` — salon bot deployment helper
+- `memory_guard.py` — prevents MEMORY.md amnesia
+
+### Cron Jobs (as of 2026-06-28)
+- `weekly-lessons` (641901e67135): Monday 9:00 — extract lessons from DECISION_LOG
+- `daily-metrics-check` (7963a772d5ba): 23:00 — Bayesian flow health
+- `ai-tools-hub-poster` (183211c9b883): every 4h — TG channel posts
+- `memory-watchdog` (b223c2d80f84): every 6h — check MEMORY.md size
+
+### Goals
+- g-017 (salon bot): PAUSED — needs separate BOT_TOKEN
+- 8 completed goals (g-006, g-007, g-008, g-brick-*, etc.)
+
+### Network
+- SOCKS5 proxy: 127.0.0.1:10806 (port open, sometimes 503)
+- HTTP proxy: 127.0.0.1:10809
+- Use curl for HTTP requests (urllib times out)
+
+### Decisions
+- Real-time over cron (user rejected cron 3 times)
+- Bayesian scorer in every loop (user: "Мы оба забыли")
+- Event-driven architecture (event_bus DIRECT_EVENT_HANDLERS)
+- Git worktrees for isolation (sandbox, deploy)
+- Memory guard to prevent amnesia (MEMORY.md was empty)
+
+## Learnings
+- PySocks installed in Python 3.11, venv is 3.13 — use curl subprocess for proxy
+- HN API: 500 top stories, detail fetches slow — limit items
+- GitHub trending: needs date filter, returns 30 items
+- signal_scanner.py: --run mode needs short timeout (8s per request)
+- Memory tool: max 2200 chars, batch operations, declarative facts only
+- session_search: FTS5 for conversation history, but loses context
+- MEMORY.md: must be updated every session or amnesia occurs
+
+## User Preferences (from USER.md)
+- Russian language, direct communication
+- HATES: reinstalling, docs instead of code, analyzing instead of doing
+- FREE MODELS ONLY — no paid APIs
+- Event-driven over cron polling
+- "Будь готов" = be ready to react, not build infra

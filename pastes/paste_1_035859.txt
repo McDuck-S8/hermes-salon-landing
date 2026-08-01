@@ -1,0 +1,7 @@
+Остановлены мёртвые задачи:
+     - uncertainty-observer — paused (никогда не запускалась)
+     - self-improvement-loop — paused (никогда не запускалась)
+     - Trend Scout - Morning — paused (никогда не запускалась) Остановлены мёртвые задачи:
+     - uncertainty-observer — paused (никогда не запускалась)
+     - self-improvement-loop — paused (никогда не запускалась)
+     - Trend Scout - Morning — paused (никогда не запускалась)

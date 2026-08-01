@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-07-27T00:28:49.070254",
+  "skills_scanned": 1,
+  "files_scanned": 129,
+  "total_findings": 1,
+  "risk": {
+    "score": 25,
+    "severity": "MEDIUM",
+    "recommendation": "CAUTION",
+    "critical": 0,
+    "high": 1,
+    "medium": 0,
+    "low": 0
+  },
+  "results": [
+    {
+      "skill": "finance",
+      "files": 129,
+      "findings": [
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\finance\\excel-author\\scripts\\recalc.py",
+          "line": 45,
+          "code": "subprocess.run(  # SAFE: explicit args list, no shell, timeout protected"
+        }
+      ]
+    }
+  ]
+}

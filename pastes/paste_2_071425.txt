@@ -1,0 +1,7 @@
+Multiple skills named 'page-agent' found:
+┏━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Source   ┃ Trust    ┃ Identifier                          ┃
+┡━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ official │ official │ official/web-development/page-agent │
+│ official │ official │ official/web-development\page-agent │
+└──────────┴──────────┴─────────────────────────────────────┘

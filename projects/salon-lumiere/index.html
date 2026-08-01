@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUMIÈRE — Премиум салон красоты</title>
+    <meta name="description" content="LUMIÈRE — премиум салон красоты в Москве. Стрижки, окрашивание, маникюр, макияж. Запишитесь онлайн.">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <meta property="og:title" content="LUMIÈRE — Премиум салон красоты">
+    <meta property="og:description" content="Стрижки, окрашивание, маникюр, макияж. Запишитесь онлайн.">
+    <meta property="og:image" content="assets/og-image.png">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['Playfair Display', 'Georgia', 'serif'],
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        gold: { 50:'#fdf8ef',100:'#f9edcf',200:'#f3d99e',300:'#ecc06d',400:'#e5a63d',500:'#d4901f',600:'#b87218',700:'#935416',800:'#7a4319',900:'#663818' },
+                        cream: { 50:'#fefdfb',100:'#fcf8f0',200:'#f8efe0',300:'#f2e2c8' },
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 3s ease-in-out infinite alternate',
+                        'slide-up': 'slideUp 0.8s ease-out',
+                        'slide-left': 'slideLeft 0.8s ease-out',
+                        'fade-in': 'fadeIn 1s ease-out',
+                    },
+                    keyframes: {
+                        float: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-20px)' } },
+                        glow: { '0%': { boxShadow: '0 0 20px rgba(212,144,31,0.2)' }, '100%': { boxShadow: '0 0 40px rgba(212,144,31,0.4)' } },
+                        slideUp: { '0%': { opacity:'0', transform:'translateY(40px)' }, '100%': { opacity:'1', transform:'translateY(0)' } },
+                        slideLeft: { '0%': { opacity:'0', transform:'translateX(40px)' }, '100%': { opacity:'1', transform:'translateX(0)' } },
+                        fadeIn: { '0%': { opacity:'0' }, '100%': { opacity:'1' } },
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Glassmorphism */
+        .glass { background: rgba(255,255,255,0.08); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.12); }
+        .glass-dark { background: rgba(0,0,0,0.4); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.08); }
+        .glass-card { background: rgba(255,255,255,0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(212,144,31,0.15); }
+
+        /* Gold gradient text */
+        .gold-text { background: linear-gradient(135deg, #d4901f 0%, #ecc06d 40%, #d4901f 60%, #b87218 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+        /* Scroll reveal */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-left { opacity: 0; transform: translateX(-30px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+        .reveal-left.visible { opacity: 1; transform: translateX(0); }
+
+        /* Micro-interaction cards */
+        .service-card { transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
+        .service-card::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(212,144,31,0.08), transparent); transition: left 0.6s; }
+        .service-card:hover::before { left: 100%; }
+        .service-card:hover { transform: translateY(-12px) scale(1.02); box-shadow: 0 30px 60px -15px rgba(212,144,31,0.2); }
+
+        /* Cursor glow */
+        .cursor-glow { position: fixed; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(212,144,31,0.08) 0%, transparent 70%); pointer-events: none; z-index: 0; transform: translate(-50%, -50%); transition: opacity 0.3s; }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1a1a1a; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #d4901f, #935416); border-radius: 4px; }
+
+        /* Animated border */
+        .border-glow { position: relative; }
+        .border-glow::after { content: ''; position: absolute; inset: -2px; border-radius: inherit; background: linear-gradient(135deg, #d4901f, transparent, #d4901f); z-index: -1; opacity: 0; transition: opacity 0.4s; }
+        .border-glow:hover::after { opacity: 1; }
+
+        /* Star rating animation */
+        .stars span { display: inline-block; animation: starPop 0.3s ease-out forwards; opacity: 0; }
+        .stars span:nth-child(1) { animation-delay: 0.1s; }
+        .stars span:nth-child(2) { animation-delay: 0.2s; }
+        .stars span:nth-child(3) { animation-delay: 0.3s; }
+        .stars span:nth-child(4) { animation-delay: 0.4s; }
+        .stars span:nth-child(5) { animation-delay: 0.5s; }
+        @keyframes starPop { 0% { opacity:0; transform:scale(0); } 100% { opacity:1; transform:scale(1); } }
+
+        /* Parallax */
+        .parallax-bg { background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-size: cover; }
+    </style>
+</head>
+<body class="bg-cream-50 text-gray-900 font-sans overflow-x-hidden">
+
+<!-- Cursor Glow -->
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- Navigation -->
+<nav class="fixed top-0 w-full z-50 glass-dark" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16 md:h-20">
+            <a href="#" class="font-serif text-2xl md:text-3xl font-bold gold-text tracking-wide">LUMIÈRE</a>
+            <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                <a href="#services" class="text-gray-300 hover:text-gold-400 transition-colors duration-300 relative group">
+                    Услуги
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gold-400 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#about" class="text-gray-300 hover:text-gold-400 transition-colors duration-300 relative group">
+                    О нас
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gold-400 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#gallery" class="text-gray-300 hover:text-gold-400 transition-colors duration-300 relative group">
+                    Галерея
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gold-400 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#reviews" class="text-gray-300 hover:text-gold-400 transition-colors duration-300 relative group">
+                    Отзывы
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gold-400 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#book" class="bg-gold-500 text-white px-6 py-2.5 rounded-full hover:bg-gold-400 transition-all duration-300 shadow-lg shadow-gold-500/25 hover:shadow-gold-400/40 hover:scale-105">
+                    Записаться
+                </a>
+            </div>
+            <!-- Mobile menu button -->
+            <button class="md:hidden text-gray-300 hover:text-gold-400" id="menuBtn">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+    <!-- Mobile menu -->
+    <div class="md:hidden hidden glass-dark border-t border-white/10" id="mobileMenu">
+        <div class="px-4 py-4 space-y-3">
+            <a href="#services" class="block text-gray-300 hover:text-gold-400 py-2">Услуги</a>
+            <a href="#about" class="block text-gray-300 hover:text-gold-400 py-2">О нас</a>
+            <a href="#gallery" class="block text-gray-300 hover:text-gold-400 py-2">Галерея</a>
+            <a href="#reviews" class="block text-gray-300 hover:text-gold-400 py-2">Отзывы</a>
+            <a href="#book" class="block bg-gold-500 text-white text-center py-3 rounded-2xl">Записаться</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="min-h-screen flex items-center relative overflow-hidden bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950">
+    <!-- Animated background orbs -->
+    <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-gold-500/10 rounded-full blur-3xl animate-float"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gold-600/8 rounded-full blur-3xl animate-float" style="animation-delay: 2s;"></div>
+        <div class="absolute top-1/2 left-1/2 w-64 h-64 bg-gold-400/5 rounded-full blur-3xl animate-float" style="animation-delay: 4s;"></div>
+    </div>
+    <!-- Grid pattern overlay -->
+    <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(circle at 1px 1px, rgba(212,144,31,0.3) 1px, transparent 0); background-size: 40px 40px;"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-20">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="animate-slide-up">
+                <p class="text-gold-400 font-medium tracking-[0.3em] uppercase text-xs mb-6">Премиум салон красоты</p>
+                <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-[0.95] mb-8">
+                    Искусство<br><span class="gold-text italic">красоты</span>
+                </h1>
+                <p class="text-gray-400 text-lg md:text-xl mb-10 leading-relaxed max-w-lg font-light">
+                    Место, где каждый визит — это путешествие к вашей лучшей версии. Индивидуальный подход, премиум материалы, атмосфера уюта.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="#book" class="group bg-gold-500 text-white px-8 py-4 rounded-full text-center font-medium hover:bg-gold-400 transition-all duration-300 shadow-xl shadow-gold-500/25 hover:shadow-gold-400/40 text-lg relative overflow-hidden">
+                        <span class="relative z-10">Записаться онлайн</span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-gold-400 to-gold-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </a>
+                    <a href="#services" class="border border-gold-400/30 text-gold-300 px-8 py-4 rounded-full text-center font-medium hover:bg-gold-400/10 hover:border-gold-400/60 transition-all duration-300 text-lg">
+                        Наши услуги →
+                    </a>
+                </div>
+            </div>
+            <div class="hidden md:block animate-slide-left">
+                <div class="relative">
+                    <div class="w-80 h-80 lg:w-96 lg:h-96 mx-auto rounded-3xl glass border border-gold-400/20 flex items-center justify-center animate-glow">
+                        <div class="text-center">
+                            <div class="text-7xl mb-4 animate-float">✨</div>
+                            <p class="text-gold-300 font-serif text-3xl tracking-wide">LUMIÈRE</p>
+                            <p class="text-gray-500 text-sm mt-3 tracking-widest uppercase">Салон красоты</p>
+                        </div>
+                    </div>
+                    <div class="absolute -bottom-4 -right-4 glass bg-gold-500/20 text-white px-5 py-3 rounded-2xl text-sm font-medium shadow-xl animate-float" style="animation-delay: 1s;">
+                        <span class="stars">
+                            <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span>
+                        </span>
+                        <span class="ml-2">4.9 рейтинг</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services -->
+<section id="services" class="py-20 md:py-32 bg-white relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16 reveal">
+            <p class="text-gold-500 font-medium tracking-[0.3em] uppercase text-xs mb-4">Наши услуги</p>
+            <h2 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Индивидуальный подход</h2>
+            <p class="text-gray-500 max-w-2xl mx-auto text-lg font-light">Каждая услуга — это сочетание мастерства, премиальных материалов и заботы о вас</p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            <div class="service-card glass-card rounded-3xl p-8 reveal" style="transition-delay: 0.1s;">
+                <div class="w-14 h-14 bg-gradient-to-br from-gold-100 to-gold-200 rounded-2xl flex items-center justify-center text-2xl mb-6 shadow-lg shadow-gold-100">💇‍♀️</div>
+                <h3 class="font-serif text-xl font-semibold mb-3">Стрижка и укладка</h3>
+                <p class="text-gray-500 mb-6 leading-relaxed text-sm">От классического боба до авторских стрижек. Стилист подберёт форму под тип лица.</p>
+                <div class="flex justify-between items-center pt-4 border-t border-gold-100">
+                    <span class="text-2xl font-bold gold-text">2 500 ₽</span>
+                    <span class="text-xs text-gray-400 bg-gray-50 px-3 py-1 rounded-full">60 мин</span>
+                </div>
+            </div>
+            <div class="service-card glass-card rounded-3xl p-8 reveal" style="transition-delay: 0.2s;">
+                <div class="w-14 h-14 bg-gradient-to-br from-gold-100 to-gold-200 rounded-2xl flex items-center justify-center text-2xl mb-6 shadow-lg shadow-gold-100">🎨</div>
+                <h3 class="font-serif text-xl font-semibold mb-3">Окрашивание</h3>
+                <p class="text-gray-500 mb-6 leading-relaxed text-sm">Балаяж, шатуш, мелирование или полное окрашивание. Премиум краски.</p>
+                <div class="flex justify-between items-center pt-4 border-t border-gold-100">
+                    <span class="text-2xl font-bold gold-text">4 500 ₽</span>
+                    <span class="text-xs text-gray-400 bg-gray-50 px-3 py-1 rounded-full">120 мин</span>
+                </div>
+            </div>
+            <div class="service-card glass-card rounded-3xl p-8 reveal" style="transition-delay: 0.3s;">
+                <div class="w-14 h-14 bg-gradient-to-br from-gold-100 to-gold-200 rounded-2xl flex items-center justify-center text-2xl mb-6 shadow-lg shadow-gold-100">💅</div>
+                <h3 class="font-serif text-xl font-semibold mb-3">Маникюр</h3>
+                <p class="text-gray-500 mb-6 leading-relaxed text-sm">Классический, комбинированный или аппаратный. Гель-лак, дизайн, нейл-арт.</p>
+                <div class="flex justify-between items-center pt-4 border-t border-gold-100">
+                    <span class="text-2xl font-bold gold-text">1 800 ₽</span>
+                    <span class="text-xs text-gray-400 bg-gray-50 px-3 py-1 rounded-full">90 мин</span>
+                </div>
+            </div>
+            <div class="service-card glass-card rounded-3xl p-8 reveal" style="transition-delay: 0.4s;">
+                <div class="w-14 h-14 bg-gradient-to-br from-gold-100 to-gold-200 rounded-2xl flex items-center justify-center text-2xl mb-6 shadow-lg shadow-gold-100">💄</div>
+                <h3 class="font-serif text-xl font-semibold mb-3">Макияж</h3>
+                <p class="text-gray-500 mb-6 leading-relaxed text-sm">Дневной, вечерний или свадебный. Визажист подчеркнёт вашу индивидуальность.</p>
+                <div class="flex justify-between items-center pt-4 border-t border-gold-100">
+                    <span class="text-2xl font-bold gold-text">3 000 ₽</span>
+                    <span class="text-xs text-gray-400 bg-gray-50 px-3 py-1 rounded-full">45 мин</span>
+                </div>
+            </div>
+            <div class="service-card glass-card rounded-3xl p-8 reveal" style="transition-delay: 0.5s;">
+                <div class="w-14 h-14 bg-gradient-to-br from-gold-100 to-gold-200 rounded-2xl flex items-center justify-center text-2xl mb-6 shadow-lg shadow-gold-100">✨</div>
+                <h3 class="font-serif text-xl font-semibold mb-3">Ламинирование</h3>
+                <p class="text-gray-500 mb-6 leading-relaxed text-sm">Ламинирование бровей и ресниц. Натуральный объём на 4-6 недель.</p>
+                <div class="flex justify-between items-center pt-4 border-t border-gold-100">
+                    <span class="text-2xl font-bold gold-text">1 500 ₽</span>
+                    <span class="text-xs text-gray-400 bg-gray-50 px-3 py-1 rounded-full">40 мин</span>
+                </div>
+            </div>
+            <div class="service-card rounded-3xl p-8 text-white bg-gradient-to-br from-gold-500 via-gold-600 to-gold-700 shadow-2xl shadow-gold-500/30 reveal" style="transition-delay: 0.6s;">
+                <div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center text-2xl mb-6">🎁</div>
+                <h3 class="font-serif text-xl font-semibold mb-3">Комплекс «Превращение»</h3>
+                <p class="text-white/80 mb-6 leading-relaxed text-sm">Стрижка + окрашивание + маникюр + макияж. Полное обновление за один визит.</p>
+                <div class="flex justify-between items-center pt-4 border-t border-white/20">
+                    <span class="text-2xl font-bold">9 900 ₽</span>
+                    <span class="text-xs text-white/60 bg-white/10 px-3 py-1 rounded-full">4 часа</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About -->
+<section id="about" class="py-20 md:py-32 bg-cream-50 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 gap-16 items-center">
+            <div class="reveal-left">
+                <p class="text-gold-500 font-medium tracking-[0.3em] uppercase text-xs mb-4">О салоне</p>
+                <h2 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">Пространство<br>для вас</h2>
+                <p class="text-gray-500 text-lg leading-relaxed mb-8 font-light">
+                    LUMIÈRE — это не просто салон. Это место, где искусство встречается с наукой красоты. Мы создаём атмосферу, в которой вы можете расслабиться и довериться нашим мастерам.
+                </p>
+                <div class="grid grid-cols-3 gap-6">
+                    <div class="text-center p-4 rounded-2xl glass-card">
+                        <p class="font-serif text-3xl md:text-4xl font-bold gold-text">8+</p>
+                        <p class="text-xs text-gray-500 mt-2 tracking-wide uppercase">Лет опыта</p>
+                    </div>
+                    <div class="text-center p-4 rounded-2xl glass-card">
+                        <p class="font-serif text-3xl md:text-4xl font-bold gold-text">15K+</p>
+                        <p class="text-xs text-gray-500 mt-2 tracking-wide uppercase">Клиентов</p>
+                    </div>
+                    <div class="text-center p-4 rounded-2xl glass-card">
+                        <p class="font-serif text-3xl md:text-4xl font-bold gold-text">12</p>
+                        <p class="text-xs text-gray-500 mt-2 tracking-wide uppercase">Мастеров</p>
+                    </div>
+                </div>
+            </div>
+            <div class="relative reveal">
+                <div class="aspect-[4/5] rounded-3xl overflow-hidden border border-gold-200/50 shadow-2xl">
+                    <img src="assets/photo_real_3.jpg" alt="Окрашивание — наша работа" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                </div>
+                <div class="absolute -top-4 -left-4 glass bg-white/90 rounded-2xl p-4 shadow-xl animate-float">
+                    <p class="text-2xl mb-1">🏆</p>
+                    <p class="text-xs font-medium">Лучший салон<br>2025 года</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Gallery -->
+<section id="gallery" class="py-20 md:py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16 reveal">
+            <p class="text-gold-500 font-medium tracking-[0.3em] uppercase text-xs mb-4">Галерея</p>
+            <h2 class="font-serif text-4xl md:text-5xl font-bold">Наша работа</h2>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+            <div class="group rounded-3xl overflow-hidden aspect-square reveal" style="transition-delay:0.1s;">
+                <img src="assets/photo_real_2.jpg" alt="Стрижка и укладка" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+            </div>
+            <div class="group rounded-3xl overflow-hidden aspect-square reveal" style="transition-delay:0.2s;">
+                <img src="assets/photo_real_3.jpg" alt="Окрашивание" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+            </div>
+            <div class="group rounded-3xl overflow-hidden aspect-square reveal" style="transition-delay:0.3s;">
+                <img src="assets/photo_real_4.jpg" alt="Маникюр" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+            </div>
+            <div class="group rounded-3xl overflow-hidden aspect-square reveal" style="transition-delay:0.4s;">
+                <img src="assets/photo_real_5.jpg" alt="Макияж" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+            </div>
+            <div class="group rounded-3xl overflow-hidden aspect-square reveal" style="transition-delay:0.5s;">
+                <img src="assets/photo_real_1.jpg" alt="Ламинирование бровей и ресниц" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+            </div>
+            <div class="group rounded-3xl overflow-hidden aspect-square reveal" style="transition-delay:0.6s;">
+                <img src="assets/photo_real_2.jpg" alt="Комплекс «Превращение»" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Reviews -->
+<section id="reviews" class="py-20 md:py-32 bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(circle at 1px 1px, rgba(212,144,31,0.3) 1px, transparent 0); background-size: 32px 32px;"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center mb-16 reveal">
+            <p class="text-gold-400 font-medium tracking-[0.3em] uppercase text-xs mb-4">Отзывы</p>
+            <h2 class="font-serif text-4xl md:text-5xl font-bold text-white">Что говорят клиенты</h2>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6 md:gap-8">
+            <div class="glass rounded-3xl p-8 reveal" style="transition-delay:0.1s;">
+                <div class="flex items-center gap-1 text-gold-400 mb-4 text-lg stars">
+                    <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span>
+                </div>
+                <p class="text-gray-300 leading-relaxed mb-6 font-light">«Лучший салон, в котором я была. Мастера — настоящие профессионалы. Вышла довольная и уверенная в себе!»</p>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-full flex items-center justify-center font-serif font-bold text-white text-sm">А</div>
+                    <div>
+                        <p class="font-medium text-sm text-white">Анна К.</p>
+                        <p class="text-xs text-gray-500">Постоянный клиент</p>
+                    </div>
+                </div>
+            </div>
+            <div class="glass rounded-3xl p-8 reveal" style="transition-delay:0.2s;">
+                <div class="flex items-center gap-1 text-gold-400 mb-4 text-lg stars">
+                    <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span>
+                </div>
+                <p class="text-gray-300 leading-relaxed mb-6 font-light">«Делала комплекс «Превращение» перед свадьбой. Результат превзошёл ожидания! Все подруги спрашивали контакты.»</p>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-full flex items-center justify-center font-serif font-bold text-white text-sm">М</div>
+                    <div>
+                        <p class="font-medium text-sm text-white">Мария Д.</p>
+                        <p class="text-xs text-gray-500">Новый клиент</p>
+                    </div>
+                </div>
+            </div>
+            <div class="glass rounded-3xl p-8 reveal" style="transition-delay:0.3s;">
+                <div class="flex items-center gap-1 text-gold-400 mb-4 text-lg stars">
+                    <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span>
+                </div>
+                <p class="text-gray-300 leading-relaxed mb-6 font-light">«Хожу сюда уже 2 года. Всегда ухожу с идеальной стрижкой. Атмосфера — просто бомба!»</p>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-full flex items-center justify-center font-serif font-bold text-white text-sm">Е</div>
+                    <div>
+                        <p class="font-medium text-sm text-white">Елена В.</p>
+                        <p class="text-xs text-gray-500">VIP клиент</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Booking CTA -->
+<section id="book" class="py-20 md:py-32 bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 relative overflow-hidden">
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-gold-500/10 rounded-full blur-3xl"></div>
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <h2 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 reveal">Запишитесь сегодня</h2>
+        <p class="text-gray-400 text-lg mb-10 max-w-2xl mx-auto font-light reveal">
+            Выберите удобное время и услугу. Мы позаботимся о каждой детали.
+        </p>
+        <div class="glass rounded-3xl p-8 md:p-12 max-w-2xl mx-auto reveal">
+            <form class="space-y-4" id="bookingForm">
+                <input type="text" placeholder="Ваше имя" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-gold-400 focus:ring-2 focus:ring-gold-400/20 transition-all duration-300" required>
+                <input type="tel" placeholder="Телефон" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-gold-400 focus:ring-2 focus:ring-gold-400/20 transition-all duration-300" required>
+                <select class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-gray-400 focus:outline-none focus:border-gold-400 focus:ring-2 focus:ring-gold-400/20 transition-all duration-300 appearance-none" required>
+                    <option value="" class="bg-gray-900">Выберите услугу</option>
+                    <option class="bg-gray-900">Стрижка и укладка — 2 500 ₽</option>
+                    <option class="bg-gray-900">Окрашивание — 4 500 ₽</option>
+                    <option class="bg-gray-900">Маникюр — 1 800 ₽</option>
+                    <option class="bg-gray-900">Макияж — 3 000 ₽</option>
+                    <option class="bg-gray-900">Ламинирование — 1 500 ₽</option>
+                    <option class="bg-gray-900">Комплекс «Превращение» — 9 900 ₽</option>
+                </select>
+                <input type="datetime-local" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-gray-400 focus:outline-none focus:border-gold-400 focus:ring-2 focus:ring-gold-400/20 transition-all duration-300" required>
+                <button type="submit" class="w-full bg-gold-500 text-white py-4 rounded-2xl font-medium text-lg hover:bg-gold-400 transition-all duration-300 shadow-xl shadow-gold-500/25 hover:shadow-gold-400/40 hover:scale-[1.02] active:scale-[0.98]">
+                    Записаться →
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="py-20 bg-cream-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 reveal">
+            <p class="text-gold-500 font-medium tracking-[0.3em] uppercase text-xs mb-4">Контакты</p>
+            <h2 class="font-serif text-3xl md:text-4xl font-bold">Как нас найти</h2>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="text-center p-8 glass-card rounded-3xl reveal" style="transition-delay:0.1s;">
+                <div class="w-16 h-16 bg-gradient-to-br from-gold-100 to-gold-200 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4 shadow-lg shadow-gold-100">📍</div>
+                <h3 class="font-serif text-lg font-semibold mb-2">Адрес</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">ул. Красоты, 42<br>Москва, 119000</p>
+            </div>
+            <div class="text-center p-8 glass-card rounded-3xl reveal" style="transition-delay:0.2s;">
+                <div class="w-16 h-16 bg-gradient-to-br from-gold-100 to-gold-200 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4 shadow-lg shadow-gold-100">📞</div>
+                <h3 class="font-serif text-lg font-semibold mb-2">Телефон</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">+7 (495) 123-45-67<br>Ежедневно 9:00–21:00</p>
+            </div>
+            <div class="text-center p-8 glass-card rounded-3xl reveal" style="transition-delay:0.3s;">
+                <div class="w-16 h-16 bg-gradient-to-br from-gold-100 to-gold-200 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4 shadow-lg shadow-gold-100">💬</div>
+                <h3 class="font-serif text-lg font-semibold mb-2">Соцсети</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">@lumiere_salon<br>Telegram-бот для записи</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-950 text-gray-500 py-12 border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="text-center md:text-left">
+                <p class="font-serif text-2xl gold-text mb-2">LUMIÈRE</p>
+                <p class="text-xs tracking-widest uppercase">Премиум салон красоты</p>
+            </div>
+            <div class="flex gap-6 text-sm">
+                <a href="#" class="hover:text-gold-400 transition-colors">Instagram</a>
+                <a href="#" class="hover:text-gold-400 transition-colors">Telegram</a>
+                <a href="#" class="hover:text-gold-400 transition-colors">WhatsApp</a>
+            </div>
+            <p class="text-xs">© 2026 LUMIÈRE. Все права защищены.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script>
+// Cursor glow
+const glow = document.getElementById('cursorGlow');
+document.addEventListener('mousemove', (e) => {
+    glow.style.left = e.clientX + 'px';
+    glow.style.top = e.clientY + 'px';
+});
+
+// Mobile menu
+document.getElementById('menuBtn').addEventListener('click', () => {
+    document.getElementById('mobileMenu').classList.toggle('hidden');
+});
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.reveal, .reveal-left').forEach(el => observer.observe(el));
+
+// Navbar scroll effect
+window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    if (window.scrollY > 50) {
+        nav.classList.add('shadow-lg', 'shadow-black/20');
+    } else {
+        nav.classList.remove('shadow-lg', 'shadow-black/20');
+    }
+});
+
+// Form submission
+document.getElementById('bookingForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.textContent = '✓ Записано!';
+    btn.classList.add('bg-green-500');
+    setTimeout(() => {
+        btn.textContent = 'Записаться →';
+        btn.classList.remove('bg-green-500');
+        e.target.reset();
+    }, 3000);
+});
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            document.getElementById('mobileMenu').classList.add('hidden');
+        }
+    });
+});
+</script>
+</body>
+</html>

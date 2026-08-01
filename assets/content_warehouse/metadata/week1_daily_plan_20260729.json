@@ -1,0 +1,82 @@
+{
+  "day1": {
+    "date": "2026-07-29",
+    "tasks": [
+      "Create 3 Ghost-surfer profiles",
+      "Write & submit Article 1 to vc.ru",
+      "Setup Telegram channel + bot + lead magnet",
+      "Find 15 Reddit/forum sources",
+      "Create Instagram account (optional)",
+      "Generate UTM links for all channels"
+    ]
+  },
+  "day2": {
+    "date": "2026-07-30",
+    "tasks": [
+      "Warm up 3 TikTok accounts (30 min each)",
+      "Check vc.ru moderation status",
+      "Write Article 2 for TenChat",
+      "Post Telegram Day 1: Welcome + Lead magnet",
+      "Add channel to catalogs",
+      "Write 5 Reddit expert comments",
+      "Generate & post Instagram Reel #1"
+    ]
+  },
+  "day3": {
+    "date": "2026-07-31",
+    "tasks": [
+      "Generate 15 TikTok videos (5 scripts × 3 variations)",
+      "Schedule 9 posts/day (3 accounts × 3 times)",
+      "Submit Article 2 to TenChat",
+      "Post Telegram Day 2: Case study",
+      "Crosspost to 3 niche chats",
+      "5 Reddit comments + reply to replies",
+      "Post Instagram Reel #2"
+    ]
+  },
+  "day4": {
+    "date": "2026-08-01",
+    "tasks": [
+      "Auto-posting active (9 videos/day)",
+      "Check Article 1 (vc.ru) - if published → announce in TG",
+      "Check Article 2 (TenChat) moderation",
+      "Write Article 3 (Pikabu/Habr)",
+      "Post Telegram Day 3: Expert post",
+      "Collect questions for Q&A",
+      "5 Reddit comments",
+      "Post Instagram Reel #3"
+    ]
+  },
+  "day5": {
+    "date": "2026-08-02",
+    "tasks": [
+      "ANALYSIS DAY: Export all metrics",
+      "Identify top-3 TikTok formats → create 5 variations each",
+      "Stop low-performing formats (<500 views/24h)",
+      "Check article indexing (site:vc.ru)",
+      "Post Telegram Day 4: Q&A + Poll",
+      "5 Reddit comments on top sources",
+      "Analyze Instagram Reels (3 videos)"
+    ]
+  },
+  "day6": {
+    "date": "2026-08-03",
+    "tasks": [
+      "Scale top TikTok formats only",
+      "Submit Article 3 (Pikabu/Habr)",
+      "Post Telegram Day 5: Quick win (winback without bot)",
+      "Focus Reddit on top-3 traffic sources",
+      "Telegram Live/Voice (optional)"
+    ]
+  },
+  "day7": {
+    "date": "2026-08-04",
+    "tasks": [
+      "FULL WEEK AUDIT: Fill metrics table",
+      "Select top-2 channels for Week 2 focus",
+      "Plan Week 2: TikTok scale, SEO 3 articles, TG Days 8-14",
+      "Save all metrics to KC",
+      "Decision: Continue/Stop Instagram"
+    ]
+  }
+}

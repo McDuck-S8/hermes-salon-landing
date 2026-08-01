@@ -1,0 +1,187 @@
+# LiteLLM Configuration Template — Free AI API Stack 2026
+# Location: D:/Portable_Soft/hermes/litellm_config.yaml
+# Run: litellm --config litellm_config.yaml --port 4000
+
+model_list:
+  # === TIER 1: Generous Free Tiers (No Credit Card) ===
+  - model_name: gemini-2.5-flash
+    litellm_params:
+      model: gemini/gemini-2.5-flash
+      api_key: os.environ/GEMINI_API_KEY
+      rpm: 15
+      tpm: 1000000
+  
+  - model_name: gemini-2.5-pro
+    litellm_params:
+      model: gemini/gemini-2.5-pro
+      api_key: os.environ/GEMINI_API_KEY
+      rpm: 2
+      tpm: 32000
+  
+  - model_name: mistral-large
+    litellm_params:
+      model: mistral/mistral-large-latest
+      api_key: os.environ/MISTRAL_API_KEY
+      rpm: 60
+      tpm: 100000
+  
+  - model_name: mistral-small
+    litellm_params:
+      model: mistral/mistral-small-latest
+      api_key: os.environ/MISTRAL_API_KEY
+      rpm: 100
+      tpm: 200000
+
+  - model_name: deepseek-v3
+    litellm_params:
+      model: deepseek/deepseek-chat
+      api_key: os.environ/DEEPSEEK_API_KEY
+      rpm: 30
+      tpm: 50000
+  
+  - model_name: deepseek-r1
+    litellm_params:
+      model: deepseek/deepseek-reasoner
+      api_key: os.environ/DEEPSEEK_API_KEY
+      rpm: 10
+      tpm: 20000
+
+  # === TIER 2: Sign-up Credits ($$ value) ===
+  - model_name: grok-3
+    litellm_params:
+      model: xai/grok-3
+      api_key: os.environ/XAI_API_KEY
+      rpm: 100
+      tpm: 500000
+  
+  - model_name: grok-4
+    litellm_params:
+      model: xai/grok-4
+      api_key: os.environ/XAI_API_KEY
+      rpm: 50
+      tpm: 300000
+
+  - model_name: claude-3-5-haiku
+    litellm_params:
+      model: anthropic/claude-3-5-haiku-20241022
+      api_key: os.environ/ANTHROPIC_API_KEY
+      rpm: 50
+      tpm: 100000
+  
+  - model_name: claude-sonnet-4
+    litellm_params:
+      model: anthropic/claude-sonnet-4-20250514
+      api_key: os.environ/ANTHROPIC_API_KEY
+      rpm: 20
+      tpm: 50000
+
+  - model_name: gpt-4o-mini
+    litellm_params:
+      model: openai/gpt-4o-mini
+      api_key: os.environ/OPENAI_API_KEY
+      rpm: 100
+      tpm: 200000
+
+  # === TIER 3: Together AI (Large One-time Credit $100) ===
+  - model_name: llama-3.3-70b
+    litellm_params:
+      model: together/meta-llama/Llama-3.3-70B-Instruct-Turbo
+      api_key: os.environ/TOGETHER_API_KEY
+      rpm: 60
+      tpm: 150000
+  
+  - model_name: qwen-2.5-72b
+    litellm_params:
+      model: together/Qwen/Qwen2.5-72B-Instruct-Turbo
+      api_key: os.environ/TOGETHER_API_KEY
+      rpm: 60
+      tpm: 150000
+  
+  - model_name: nemotron-3-ultra
+    litellm_params:
+      model: together/nvidia/Nemotron-3-Ultra
+      api_key: os.environ/TOGETHER_API_KEY
+      rpm: 30
+      tpm: 80000
+
+  # === TIER 4: Free/Variable (OpenRouter) ===
+  - model_name: openrouter-auto
+    litellm_params:
+      model: openrouter/auto
+      api_key: os.environ/OPENROUTER_API_KEY
+      rpm: 20
+      tpm: 50000
+
+  # === TIER 5: Cloudflare Workers AI (Edge) ===
+  - model_name: cf-llama-3.1-8b
+    litellm_params:
+      model: cloudflare/@cf/meta-llama/llama-3.1-8b-instruct
+      api_key: os.environ/CLOUDFLARE_API_KEY
+      api_base: https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run
+      rpm: 100
+      tpm: 500000
+
+  # === TIER 6: GitHub Models (In IDE) ===
+  - model_name: github-gpt-4o
+    litellm_params:
+      model: github/gpt-4o
+      api_key: os.environ/GITHUB_TOKEN
+      rpm: 10
+      tpm: 50000
+
+  # === TIER 7: Free Local Proxies (Upstream to LiteLLM) ===
+  - model_name: qwen-free
+    litellm_params:
+      model: custom/qwen3.7-max
+      api_base: http://localhost:3264/api
+      api_key: dummy-key
+      rpm: 100
+      tpm: 500000
+  
+  - model_name: deepseek-free
+    litellm_params:
+      model: deepseek-chat
+      api_base: http://localhost:9655/v1
+      api_key: dummy-key
+      rpm: 60
+      tpm: 200000
+
+general_settings:
+  fallback_policy: "round_robin"
+  retry_policy:
+    max_retries: 3
+    backoff: 2
+    retry_on_status_codes: [429, 500, 502, 503, 504]
+  
+  # Cost tracking
+  alerting:
+    budget_limit: 100  # USD/month hard limit
+    budget_duration: "30d"
+    alert_threshold: 0.8  # Alert at 80% budget
+  
+  # Logging
+  logging:
+    level: INFO
+    format: json
+  
+  # Load balancing
+  load_balancing:
+    strategy: "least_busy"
+    timeout: 60
+  
+  # Router settings
+  router:
+    max_parallel_requests: 10
+    health_check_interval: 300  # 5 min
+    cooldown_after_failures: 60
+
+# Model aliases for easy switching
+model_aliases:
+  fast: gemini-2.5-flash
+  reasoning: deepseek-r1
+  coding: mistral-large
+  creative: grok-3
+  cheap: deepseek-v3
+  free-auto: openrouter-auto
+  local-qwen: qwen-free
+  local-deepseek: deepseek-free

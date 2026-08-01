@@ -1,0 +1,76 @@
+{
+  "base_url": "https://github.com",
+  "login_required": true,
+  "auth_type": "cookie",
+  "storage_state": "github_auth.json",
+  "selectors": {
+    "new_repo_button": "a[href=\"/new\"]",
+    "repo_name_input": "input[name=\"repository[name]\"]",
+    "repo_description_input": "input[name=\"repository[description]\"]",
+    "private_checkbox": "input[name=\"repository[visibility]\"][value=\"private\"]",
+    "public_radio": "input[name=\"repository[visibility]\"][value=\"public\"]",
+    "create_button": "button[type=\"submit\"]",
+    "repo_link": "a[itemprop=\"name codeRepository\"]",
+    "file_upload_button": "a[href*=\"upload\"]",
+    "file_upload_input": "input[type=\"file\"]",
+    "commit_message_input": "input[name=\"commit_message\"]",
+    "commit_button": "button[type=\"submit\"]",
+    "issue_tab": "a[href$=\"/issues\"]",
+    "new_issue_button": "a[href*=\"/issues/new\"]",
+    "issue_title": "input[name=\"issue[title]\"]",
+    "issue_body": "textarea[name=\"issue[body]\"]",
+    "submit_issue": "button[type=\"submit\"]",
+    "pr_tab": "a[href$=\"/pulls\"]",
+    "new_pr_button": "a[href*=\"/compare\"]",
+    "pr_title": "input[name=\"pull_request[title]\"]",
+    "pr_body": "textarea[name=\"pull_request[body]\"]",
+    "create_pr": "button[type=\"submit\"]",
+    "release_tab": "a[href$=\"/releases\"]",
+    "new_release": "a[href*=\"/releases/new\"]",
+    "tag_input": "input[name=\"tag_name\"]",
+    "release_title": "input[name=\"release[name]\"]",
+    "release_body": "textarea[name=\"release[body]\"]",
+    "publish_release": "button[type=\"submit\"]"
+  },
+  "steps": {
+    "create_repo": [
+      { "action": "goto", "url": "/new" },
+      { "action": "wait", "selector": "input[name=\"repository[name]\"]" },
+      { "action": "fill", "selector": "input[name=\"repository[name]\"]", "param": "name" },
+      { "action": "fill", "selector": "input[name=\"repository[description]\"]", "param": "description" },
+      { "action": "click", "selector": "input[name=\"repository[visibility]\"][value=\"private\"]", "condition": "private" },
+      { "action": "click", "selector": "button[type=\"submit\"]" },
+      { "action": "wait_for_navigation" }
+    ],
+    "upload_file": [
+      { "action": "goto", "url": "{repo_url}" },
+      { "action": "click", "selector": "a[href*=\"upload\"]" },
+      { "action": "wait", "selector": "input[type=\"file\"]" },
+      { "action": "fill", "selector": "input[type=\"file\"]", "param": "file_path" },
+      { "action": "fill", "selector": "input[name=\"commit_message\"]", "param": "commit_message" },
+      { "action": "click", "selector": "button[type=\"submit\"]" }
+    ],
+    "create_issue": [
+      { "action": "goto", "url": "{repo_url}/issues/new" },
+      { "action": "wait", "selector": "input[name=\"issue[title]\"]" },
+      { "action": "fill", "selector": "input[name=\"issue[title]\"]", "param": "title" },
+      { "action": "fill", "selector": "textarea[name=\"issue[body]\"]", "param": "body" },
+      { "action": "click", "selector": "button[type=\"submit\"]" }
+    ],
+    "create_pr": [
+      { "action": "goto", "url": "{repo_url}/compare" },
+      { "action": "wait", "selector": "input[name=\"pull_request[title]\"]" },
+      { "action": "fill", "selector": "input[name=\"pull_request[title]\"]", "param": "title" },
+      { "action": "fill", "selector": "textarea[name=\"pull_request[body]\"]", "param": "body" },
+      { "action": "click", "selector": "button[type=\"submit\"]" }
+    ],
+    "create_release": [
+      { "action": "goto", "url": "{repo_url}/releases/new" },
+      { "action": "wait", "selector": "input[name=\"tag_name\"]" },
+      { "action": "fill", "selector": "input[name=\"tag_name\"]", "param": "tag" },
+      { "action": "fill", "selector": "input[name=\"release[name]\"]", "param": "title" },
+      { "action": "fill", "selector": "textarea[name=\"release[body]\"]", "param": "body" },
+      { "action": "click", "selector": "button[type=\"submit\"]" }
+    ]
+  }
+}

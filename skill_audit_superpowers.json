@@ -1,0 +1,22 @@
+{
+  "timestamp": "2026-07-26T17:16:32.261395",
+  "skills_scanned": 1,
+  "files_scanned": 7,
+  "total_findings": 0,
+  "risk": {
+    "score": 0,
+    "severity": "LOW",
+    "recommendation": "SAFE",
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "results": [
+    {
+      "skill": "superpowers",
+      "files": 7,
+      "findings": []
+    }
+  ]
+}

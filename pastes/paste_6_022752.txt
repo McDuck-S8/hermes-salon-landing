@@ -1,0 +1,24 @@
+Debug Console                                                                                                                    │
+│                                                                                                                                  │
+│    (file:///C:/Users/Asus/AppData/Roaming/npm/node_modules/@google/gemini-cli/node_modules/@google/genai/dist/node/index.mjs:133 │
+│    58:24)                                                                                                                        │
+│        at async                                                                                                                  │
+│    file:///C:/Users/Asus/AppData/Roaming/npm/node_modules/@google/gemini-cli/node_modules/@google/gemini-cli-core/dist/src/core/ │
+│    loggingContentGenerator.js:256:26                                                                                             │
+│        at async                                                                                                                  │
+│    file:///C:/Users/Asus/AppData/Roaming/npm/node_modules/@google/gemini-cli/node_modules/@google/gemini-cli-core/dist/src/telem │
+│    etry/trace.js:81:20                                                                                                           │
+│        at async retryWithBackoff                                                                                                 │
+│    (file:///C:/Users/Asus/AppData/Roaming/npm/node_modules/@google/gemini-cli/node_modules/@google/gemini-cli-core/dist/src/util │
+│    s/retry.js:130:28)                                                                                                            │
+│        at async GeminiChat.makeApiCallAndProcessStream                                                                           │
+│    (file:///C:/Users/Asus/AppData/Roaming/npm/node_modules/@google/gemini-cli/node_modules/@google/gemini-cli-core/dist/src/core │
+│    /geminiChat.js:445:32)                                                                                                        │
+│        at async GeminiChat.streamWithRetries                                                                                     │
+│    (file:///C:/Users/Asus/AppData/Roaming/npm/node_modules/@google/gemini-cli/node_modules/@google/gemini-cli-core/dist/src/core │
+│    /geminiChat.js:265:40)                                                                                                        │
+│        at async Turn.run                                                                                                         │
+│    (file:///C:/Users/Asus/AppData/Roaming/npm/node_modules/@google/gemini-cli/node_modules/@google/gemini-cli-core/dist/src/core▄│
+│    /turn.js:70:30) {                                                                                                            █│
+│      status: 403                                                                                                                █│
+│    }                       

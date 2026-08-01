@@ -1,0 +1,17 @@
+{
+  "name": "design-color-patterns",
+  "version": "1.0.0",
+  "category": "design-color",
+  "patterns_used": [
+    "pattern_glassmorphism",
+    "pattern_dark_mode"
+  ],
+  "components": [
+    "general",
+    "nav",
+    "card",
+    "modal",
+    "hero"
+  ],
+  "templates_dir": "templates"
+}

@@ -1,0 +1,135 @@
+## ТЗ: Полная интеграция Chain-Heartbeat во все уровни системы
+
+**Цель:** Каждый компонент системы должен быть подключён к протоколу heartbeat. Не только демоны, но и модули, скрипты, пайплайны, внешние сервисы. Система должна знать что у неё бьётся, а что молчит — на всех уровнях матрёшки.
+
+---
+
+### Уровень 1: Демоны (уже сделано)
+
+**Цепочка:** `signal_scanner → event_bus → self_improvement → suggestion_consumer → crystal`
+
+- ✅ Каждое звено слушает upstream-соседа
+- ✅ Heartbeat каждые 10 секунд
+- ✅ Crystal шлёт heartbeat upstream
+- ✅ Состояние в `cache/chain_heartbeat.json`
+
+---
+
+### Уровень 2: Модули architecture_model
+
+**Что подключить:** Все 18 модулей из `architecture_model.json`.
+
+**Правила:**
+1. Каждый модуль при инициализации регистрируется в heartbeat-цепочке: `chain_heartbeat.register("module_name")`
+2. Каждый модуль шлёт heartbeat при каждом вызове: `chain_heartbeat.beat("module_name")`
+3. Crystal при каждом цикле проверяет все зарегистрированные модули. Если модуль не бился > N секунд → alert в `ALERTS.md` и задача в `goal_queue`
+4. Модули-сироты (есть в модели, но нет heartbeat) → особый alert: "Модуль X не подключён к heartbeat"
+
+**Цепочка модулей (по слоям):**
+```
+core → llm → knowledge → skills → telegram → tools → plugins_websrch → 
+gateway → cron_tools → posting → browser_harness → plugins_selfev → 
+plugins_icarus → plugins_lcm → event_system → knowledge_pipeline → 
+health → crystal_base → deprecated
+```
+
+---
+
+### Уровень 3: Пайплайны (сквозные цепочки)
+
+**Что подключить:** Три основных пайплайна.
+
+**Knowledge Pipeline:**
+```
+rss_monitor → youtube_watch → knowledge_filter → kc_populator → cube_feeder → knowledge_cube
+```
+
+**Self-Improvement Pipeline:**
+```
+hooks → event_evolution → verified_fixes → self_improvement_loop → suggestion_consumer → skills
+```
+
+**Action Pipeline:**
+```
+ghost_browser → human_behavior → account_registration → email_automation → posting → browseros_mcp
+```
+
+**Правила:**
+1. Каждое звено пайплайна — это модуль или скрипт, который уже зарегистрирован в heartbeat
+2. Дополнительно: пайплайн целиком имеет свой heartbeat. Если любой компонент пайплайна молчит → весь пайплайн помечается как DEGRADED
+3. Если два и более компонентов молчат → пайплайн BROKEN, alert немедленно
+
+---
+
+### Уровень 4: Внешние сервисы
+
+**Что подключить:**
+- BrowserOS (порт 9003)
+- BrowserClaw (порт 9010)
+- V2RayN (прокси)
+- Telegram API
+- OpenRouter API
+- DeepSeek Local (порт 9655)
+- Cerebras API
+
+**Правила:**
+1. Каждый внешний сервис проверяется пингом каждые 60 секунд
+2. Heartbeat для внешних сервисов — не просто "жив/мёртв", а с latency: `chain_heartbeat.beat("browseros", latency_ms=145)`
+3. Если latency > threshold → WARNING
+4. Если сервис не отвечает → alert с указанием какие пайплайны затронуты
+
+---
+
+### Уровень 5: Сводный heartbeat системы
+
+**Что должно быть:**
+- Один файл `cache/system_heartbeat.json` с текущим состоянием ВСЕХ уровней
+- Crystal при каждом цикле читает этот файл и видит картину целиком
+
+**Структура:**
+```json
+{
+  "timestamp": "2026-07-19T12:00:00",
+  "levels": {
+    "daemons": {
+      "signal_scanner": {"status": "HEALTHY", "last_beat": "12:00:05", "upstream": true},
+      "event_bus": {"status": "HEALTHY", "last_beat": "12:00:07", "upstream": true},
+      "...": "..."
+    },
+    "modules": {
+      "core": {"status": "HEALTHY", "last_beat": "12:00:10"},
+      "llm": {"status": "DEGRADED", "last_beat": "11:55:00", "missing_files": 1},
+      "...": "..."
+    },
+    "pipelines": {
+      "knowledge_pipeline": {"status": "HEALTHY", "silent_components": 0},
+      "self_improvement_pipeline": {"status": "DEGRADED", "silent_components": 1},
+      "action_pipeline": {"status": "HEALTHY", "silent_components": 0}
+    },
+    "external_services": {
+      "browseros": {"status": "HEALTHY", "latency_ms": 145},
+      "telegram_api": {"status": "HEALTHY", "latency_ms": 320},
+      "cerebras": {"status": "WARNING", "latency_ms": 2500}
+    }
+  },
+  "alerts": []
+}
+```
+
+---
+
+### Что сказать агенту
+
+**"Chain-heartbeat работает для демонов. Теперь ты масштабируешь его на всю систему.**
+
+**Уровень 1 — Демоны:** Уже сделано. Не трогай.
+
+**Уровень 2 — Модули:** Все 18 модулей из architecture_model должны быть подключены к heartbeat. Каждый модуль регистрируется и бьётся при каждом вызове. Модули-сироты (есть в модели, нет heartbeat) → alert.
+
+**Уровень 3 — Пайплайны:** Три пайплайна (Knowledge, Self-Improvement, Action) должны иметь сводный heartbeat. Если компонент молчит → пайплайн DEGRADED. Два и более → BROKEN.
+
+**Уровень 4 — Внешние сервисы:** BrowserOS, Telegram API, OpenRouter, DeepSeek, Cerebras, V2RayN. Пинг каждые 60 секунд. Heartbeat с latency.
+
+**Уровень 5 — Сводный heartbeat:** Один файл `cache/system_heartbeat.json` с состоянием ВСЕХ уровней. Crystal читает его при каждом цикле.
+
+**Начинай с Уровня 2. Доложи когда все 18 модулей будут подключены."**

@@ -1,0 +1,159 @@
+Да, можно. На основе AGENTS.md я вижу готовые строительные блоки для универсального промта авто-пайплайна. Вот что предлагаю:
+
+## Универсальный промт для авто-пайплайна задач
+
+```markdown
+# AUTOMATED TASK PIPELINE — Hermes Protocol
+
+## Phase 0: Context Loading (MANDATORY)
+```python
+import sys
+sys.path.insert(0, "D:/Portable_Soft/hermes/scripts")
+from auto_recall import recall_for_session
+from hermes_hooks import get_hooks
+
+hooks = get_hooks()
+hooks.on_session_start(f"task-{timestamp}")
+
+# Load relevant memory
+context = recall_for_session(task_description, top_n=5)
+# If relevant memories found, apply patterns
+```
+
+## Phase 1: Task Tracking (NO TodoWrite, ONLY bd)
+```bash
+bd ready              # Find available work
+bd show <id>          # Understand requirements
+bd update <id> --claim # Lock the task
+```
+
+## Phase 2: Execute — Use Available Tools
+
+### If code change needed:
+- Read DOX chain for affected paths
+- Apply nearest AGENTS.md rules
+- Make changes
+
+### If testing needed:
+```bash
+# Check if pytest available
+pytest tests/ --tb=short
+
+# Or module-specific:
+python -m scripts.event_evolution --test
+```
+
+### If browser automation needed:
+- Check `browser-harness/AGENTS.md`
+- Use browser-harness tools
+
+### If skill needed:
+- Check `skills/` for existing
+- Use `skill-forge/` to build if missing
+
+### If memory operation needed:
+```python
+# Read memory
+from pathlib import Path
+mem = Path("memories/USER.md").read_text()
+
+# Write knowledge after success
+from scripts.event_evolution import on_task_complete
+on_task_complete(content="result", tags=["tag"], source="agent")
+```
+
+## Phase 3: Error Handling
+```python
+from scripts.event_evolution import on_error
+
+try:
+    # task code
+except Exception as e:
+    on_error(error=str(e), fix="attempted fix", tags=["error-type"])
+    # Re-attempt with fix or escalate
+```
+
+## Phase 4: Validation Gates
+- [ ] DOX chain checked for affected paths
+- [ ] Nearest AGENTS.md updated if behavior changed
+- [ ] No stale/contradictory text left
+- [ ] Tests pass (if code changed)
+- [ ] Linter passes (if applicable)
+
+## Phase 5: Session Closeout
+```bash
+# Update issue status
+bd close <id>         # If complete
+# OR
+bd update <id> --status in-progress --comment "Progress: X"
+
+# Record session
+hooks.on_session_end()
+
+# Git (only if explicitly requested or team-maintainer profile)
+# git add . && git commit -m "..." && git push
+```
+
+## Available Module Quick Reference
+
+| Need | Use |
+|------|-----|
+| Search memory | `auto_recall.recall_for_session()` |
+| Record success | `event_evolution.on_task_complete()` |
+| Record error | `event_evolution.on_error()` |
+| Record correction | `event_evolution.on_user_correction()` |
+| Unified hooks | `hermes_hooks.get_hooks()` |
+| Process pending | `event_evolution.process_pending_events()` |
+| Find work | `bd ready` |
+| Browser automation | `browser-harness/` |
+| Build skill | `skill-forge/` |
+| Voice (JARVIS) | `scripts/jarvis_voice_loop.py` |
+| Security | `scripts/jarvis_security_monitor.py` |
+
+## Behavioral Constraints
+
+- **DO NOT** use TodoWrite, TaskCreate, or markdown TODO lists
+- **DO NOT** create MEMORY.md files — use `bd remember` instead
+- **DO NOT** commit/push unless explicitly asked OR profile=team-maintainer
+- **ALWAYS** load context before starting
+- **ALWAYS** update closest AGENTS.md on meaningful changes
+- **ALWAYS** close out with bd status update
+```
+
+---
+
+## Как это встроить?
+
+### Вариант A: Добавить секцию в корневой AGENTS.md
+```markdown
+## Universal Task Pipeline
+
+[вставить промт выше]
+```
+
+### Вариант B: Создать отдельный `PIPELINE.md`
+```bash
+# В корне проекта
+echo "# Task Pipeline" > PIPELINE.md
+# В AGENTS.md добавить ссылку:
+# "For execution pipeline, see PIPELINE.md"
+```
+
+### Вариант C: Встроить в Beads интеграцию
+Расширить существующий блок `<!-- BEGIN BEADS INTEGRATION -->` добавив фазы выполнения.
+
+---
+
+## Что делает этот промт?
+
+1. **Заставляет загружать память** перед действием (phase 0)
+2. **Блокирует TodoWrite** — только `bd` для трекинга
+3. **Даёт маршрутизацию** — какой инструмент для какой задачи
+4. **Автоматическая запись в Knowledge Cube** при успехе/ошибке
+5. **Валидационные гейты** перед закрытием
+6. **Чёткий closeout protocol**
+
+Хочешь, я:
+- **A)** Добавлю это как секцию в текущий AGENTS.md?
+- **B)** Создам отдельный `PIPELINE.md` с более детальными примерами?
+- **C)** Расширю существующий Beads блок, интегрировав pipeline туда?

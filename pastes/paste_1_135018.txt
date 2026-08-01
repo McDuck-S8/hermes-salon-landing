@@ -1,0 +1,12 @@
+Hermes,
+
+browser, browser-cdp и computer_use не установились, потому что в системе не найден Chrome DevTools Protocol (CDP).
+
+Установи agent-browser-mcp:
+
+bash
+git clone https://github.com/335234131/agent-browser-mcp
+cd agent-browser-mcp
+pip install -e .
+agent-browser-mcp doctor
+После установки перезапустись и проверь: hermes mcp list

@@ -1,0 +1,354 @@
+[09.02.2023 08:16] BotFather: I can help you create and manage Telegram bots. If you're new to the Bot API, please see the manual (https://core.telegram.org/bots).
+
+You can control me by sending these commands:
+
+/newbot - create a new bot
+/mybots - edit your bots [beta]
+
+Edit Bots
+/setname - change a bot's name
+/setdescription - change bot description
+/setabouttext - change bot about info
+/setuserpic - change bot profile photo
+/setcommands - change the list of commands
+/deletebot - delete a bot
+
+Bot Settings
+/token - generate authorization token
+/revoke - revoke bot access token
+/setinline - toggle inline mode (https://core.telegram.org/bots/inline)
+/setinlinegeo - toggle inline location requests (https://core.telegram.org/bots/inline#location-based-results)
+/setinlinefeedback - change inline feedback (https://core.telegram.org/bots/inline#collecting-feedback) settings
+/setjoingroups - can your bot be added to groups?
+/setprivacy - toggle privacy mode (https://core.telegram.org/bots#privacy-mode) in groups
+
+Games
+/mygames - edit your games (https://core.telegram.org/bots/games) [beta]
+/newgame - create a new game (https://core.telegram.org/bots/games)
+/listgames - get a list of your games
+/editgame - edit a game
+/deletegame - delete an existing game
+[09.02.2023 08:16] Александр: /newbot
+[09.02.2023 08:16] BotFather: Alright, a new bot. How are we going to call it? Please choose a name for your bot.
+[09.02.2023 08:18] Александр: Вопрос Ответ
+[09.02.2023 08:18] BotFather: Good. Now let's choose a username for your bot. It must end in `bot`. Like this, for example: TetrisBot or tetris_bot.
+[09.02.2023 08:20] Александр: Ответ_bot
+[09.02.2023 08:20] BotFather: Sorry, this username is invalid.
+[09.02.2023 08:20] Александр: Otvet_bot
+[09.02.2023 08:20] BotFather: Sorry, this username is already taken. Please try something different.
+[09.02.2023 08:21] Александр: McDuck_bot
+[09.02.2023 08:21] BotFather: Sorry, this username is already taken. Please try something different.
+[09.02.2023 08:21] Александр: McDuckbot
+[09.02.2023 08:21] BotFather: Sorry, this username is already taken. Please try something different.
+[09.02.2023 08:29] Александр: McDuckBot
+[09.02.2023 08:29] BotFather: Sorry, this username is already taken. Please try something different.
+[09.02.2023 08:54] Александр: SovetBot
+[09.02.2023 08:54] BotFather: Sorry, this username is already taken. Please try something different.
+[09.02.2023 08:56] Александр: TetrisBot
+[09.02.2023 08:56] BotFather: Sorry, this username is already taken. Please try something different.
+[09.02.2023 08:57] Александр: McDuck8Bot
+[09.02.2023 08:57] BotFather: Done! Congratulations on your new bot. You will find it at t.me/McDuck8Bot. You can now add a description, about section and profile picture for your bot, see /help for a list of commands. By the way, when you've finished creating your cool bot, ping our Bot Support if you want a better username for it. Just make sure the bot is fully operational before you do this.
+
+Use this token to access the HTTP API:
+6187967109:AAGMHxOaLGrD1UmReIj-oU6QOiGzRaJdkkM
+Keep your token secure and store it safely, it can be used by anyone to control your bot.
+
+For a description of the Bot API, see this page: https://core.telegram.org/bots/api
+[19.12.2023 07:14] Александр: /newbot
+[19.12.2023 07:14] BotFather: Alright, a new bot. How are we going to call it? Please choose a name for your bot.
+[19.12.2023 07:15] Александр: SurfEarnerAutoMatrixBot
+[19.12.2023 07:15] BotFather: Good. Now let's choose a username for your bot. It must end in `bot`. Like this, for example: TetrisBot or tetris_bot.
+[19.12.2023 07:15] Александр: SurfEarnerAutoMatrixBot
+[19.12.2023 07:15] BotFather: Done! Congratulations on your new bot. You will find it at t.me/SurfEarnerAutoMatrixBot. You can now add a description, about section and profile picture for your bot, see /help for a list of commands. By the way, when you've finished creating your cool bot, ping our Bot Support if you want a better username for it. Just make sure the bot is fully operational before you do this.
+
+Use this token to access the HTTP API:
+6594259391:AAE52UOO7mriG9-LHHI_9Rn_cQ-AAXlmQKQ
+Keep your token secure and store it safely, it can be used by anyone to control your bot.
+
+For a description of the Bot API, see this page: https://core.telegram.org/bots/api
+[19.12.2023 07:33] Александр: /start
+[19.12.2023 07:33] BotFather: You can choose which rights the bot SurfEarnerAutoMatrixBot @SurfEarnerAutoMatrixBot will request by default when added as a group admin.
+
+If the bot doesn't support managing groups, please remove all checks.
+[01.02.2025 22:20] Александр: /newbot
+[01.02.2025 22:20] BotFather: Alright, a new bot. How are we going to call it? Please choose a name for your bot.
+[01.02.2025 22:20] Александр: /newapp
+[01.02.2025 22:20] BotFather: Alright, a new web app. Which bot will be offering the web app?
+[01.02.2025 22:20] Александр: /myapps
+[01.02.2025 22:20] BotFather: You currently have no web apps. Use /newapp command to create a first web app.
+[01.03.2025 12:12] Александр: /help
+[01.03.2025 12:12] BotFather: I can help you create and manage Telegram bots. If you're new to the Bot API, please see the manual (https://core.telegram.org/bots).
+
+You can control me by sending these commands:
+
+/newbot - create a new bot
+/mybots - edit your bots
+
+Edit Bots
+/setname - change a bot's name
+/setdescription - change bot description
+/setabouttext - change bot about info
+/setuserpic - change bot profile photo
+/setcommands - change the list of commands
+/deletebot - delete a bot
+
+Bot Settings
+/token - generate authorization token
+/revoke - revoke bot access token
+/setinline - toggle inline mode (https://core.telegram.org/bots/inline)
+/setinlinegeo - toggle inline location requests (https://core.telegram.org/bots/inline#location-based-results)
+/setinlinefeedback - change inline feedback (https://core.telegram.org/bots/inline#collecting-feedback) settings
+/setjoingroups - can your bot be added to groups?
+/setprivacy - toggle privacy mode (https://core.telegram.org/bots/features#privacy-mode) in groups
+
+Web Apps
+/myapps - edit your web apps (https://core.telegram.org/bots/webapps)
+/newapp - create a new web app (https://core.telegram.org/bots/webapps)
+/listapps - get a list of your web apps
+/editapp - edit a web app
+/deleteapp - delete an existing web app
+
+Games
+/mygames - edit your games (https://core.telegram.org/bots/games)
+/newgame - create a new game (https://core.telegram.org/bots/games)
+/listgames - get a list of your games
+/editgame - edit a game
+/deletegame - delete an existing game
+[01.03.2025 12:23] Александр: getUpdates
+[01.03.2025 12:23] BotFather: I can help you create and manage Telegram bots. If you're new to the Bot API, please see the manual (https://core.telegram.org/bots).
+
+You can control me by sending these commands:
+
+/newbot - create a new bot
+/mybots - edit your bots
+
+Edit Bots
+/setname - change a bot's name
+/setdescription - change bot description
+/setabouttext - change bot about info
+/setuserpic - change bot profile photo
+/setcommands - change the list of commands
+/deletebot - delete a bot
+
+Bot Settings
+/token - generate authorization token
+/revoke - revoke bot access token
+/setinline - toggle inline mode (https://core.telegram.org/bots/inline)
+/setinlinegeo - toggle inline location requests (https://core.telegram.org/bots/inline#location-based-results)
+/setinlinefeedback - change inline feedback (https://core.telegram.org/bots/inline#collecting-feedback) settings
+/setjoingroups - can your bot be added to groups?
+/setprivacy - toggle privacy mode (https://core.telegram.org/bots/features#privacy-mode) in groups
+
+Web Apps
+/myapps - edit your web apps (https://core.telegram.org/bots/webapps)
+/newapp - create a new web app (https://core.telegram.org/bots/webapps)
+/listapps - get a list of your web apps
+/editapp - edit a web app
+/deleteapp - delete an existing web app
+
+Games
+/mygames - edit your games (https://core.telegram.org/bots/games)
+/newgame - create a new game (https://core.telegram.org/bots/games)
+/listgames - get a list of your games
+/editgame - edit a game
+/deletegame - delete an existing game
+[28.03.2025 23:21] Александр: /mybots
+[28.03.2025 23:21] BotFather: Here it is: Вопрос Ответ @McDuck8Bot.
+What do you want to do with the bot?
+[17.02.2026 07:36] Александр: /start
+[17.02.2026 07:36] BotFather: OK. Send me a list of commands for your bot. Please use this format:
+
+command1 - Description
+command2 - Another description
+
+Send /empty to keep the list empty.
+[17.02.2026 07:59] Александр: /mybots
+[17.02.2026 07:59] BotFather: Here is the token for bot Вопрос Ответ @McDuck8Bot:
+
+6187967109:AAGMHxOaLGrD1UmReIj-oU6QOiGzRaJdkkM
+[19.02.2026 00:17] Александр: /empty
+[19.02.2026 00:17] BotFather: Success! Command list updated. /help
+[19.02.2026 00:17] Александр: /help
+[19.02.2026 00:17] BotFather: I can help you create and manage Telegram bots. If you're new to the Bot API, please see the manual (https://core.telegram.org/bots).
+
+You can control me by sending these commands:
+
+/newbot - create a new bot
+/mybots - edit your bots
+
+Edit Bots
+/setname - change a bot's name
+/setdescription - change bot description
+/setabouttext - change bot about info
+/setuserpic - change bot profile photo
+/setcommands - change the list of commands
+/deletebot - delete a bot
+
+Bot Settings
+/token - get authorization token
+/revoke - revoke bot access token
+/setinline - toggle inline mode (https://core.telegram.org/bots/inline)
+/setinlinegeo - toggle inline location requests (https://core.telegram.org/bots/inline#location-based-results)
+/setinlinefeedback - change inline feedback (https://core.telegram.org/bots/inline#collecting-feedback) settings
+/setjoingroups - can your bot be added to groups?
+/setprivacy - toggle privacy mode (https://core.telegram.org/bots/features#privacy-mode) in groups
+
+Web Apps
+/myapps - edit your web apps (https://core.telegram.org/bots/webapps)
+/newapp - create a new web app (https://core.telegram.org/bots/webapps)
+/listapps - get a list of your web apps
+/editapp - edit a web app
+/deleteapp - delete an existing web app
+
+Games
+/mygames - edit your games (https://core.telegram.org/bots/games)
+/newgame - create a new game (https://core.telegram.org/bots/games)
+/listgames - get a list of your games
+/editgame - edit a game
+/deletegame - delete an existing game
+[19.02.2026 00:18] Александр: /revoke
+[19.02.2026 00:18] BotFather: Choose a bot to generate a new token. Warning: your old token will stop working.
+[19.02.2026 00:18] Александр: @McDuck8Bot
+[19.02.2026 00:18] BotFather: Your token was replaced with a new one. You can use this token to access HTTP API:
+6187967109:AAEGYugyO7-ju3KBT64gnOip_NEZ2KABJQw
+[19.02.2026 01:58] Александр: /start
+[19.02.2026 01:58] BotFather: Here is the token for bot SurfEarnerAutoMatrixBot @SurfEarnerAutoMatrixBot:
+
+6594259391:AAE52UOO7mriG9-LHHI_9Rn_cQ-AAXlmQKQ
+[25.02.2026 02:30] Александр: /start
+[25.02.2026 02:30] BotFather: OK. Send me a list of commands for your bot. Please use this format:
+
+command1 - Description
+command2 - Another description
+
+Send /empty to keep the list empty.
+[25.02.2026 02:31] Александр: /start
+[25.02.2026 02:31] BotFather: I can help you create and manage Telegram bots. If you're new to the Bot API, please see the manual (https://core.telegram.org/bots).
+
+You can control me by sending these commands:
+
+/newbot - create a new bot
+/mybots - edit your bots
+
+Edit Bots
+/setname - change a bot's name
+/setdescription - change bot description
+/setabouttext - change bot about info
+/setuserpic - change bot profile photo
+/setcommands - change the list of commands
+/deletebot - delete a bot
+
+Bot Settings
+/token - get authorization token
+/revoke - revoke bot access token
+/setinline - toggle inline mode (https://core.telegram.org/bots/inline)
+/setinlinegeo - toggle inline location requests (https://core.telegram.org/bots/inline#location-based-results)
+/setinlinefeedback - change inline feedback (https://core.telegram.org/bots/inline#collecting-feedback) settings
+/setjoingroups - can your bot be added to groups?
+/setprivacy - toggle privacy mode (https://core.telegram.org/bots/features#privacy-mode) in groups
+
+Web Apps
+/myapps - edit your web apps (https://core.telegram.org/bots/webapps)
+/newapp - create a new web app (https://core.telegram.org/bots/webapps)
+/listapps - get a list of your web apps
+/editapp - edit a web app
+/deleteapp - delete an existing web app
+
+Games
+/mygames - edit your games (https://core.telegram.org/bots/games)
+/newgame - create a new game (https://core.telegram.org/bots/games)
+/listgames - get a list of your games
+/editgame - edit a game
+/deletegame - delete an existing game
+[05.04.2026 00:59] Александр: /start
+[05.04.2026 00:59] BotFather: Here it is: MAX BRAIN CHEF @max_brain_chef_bot.
+What do you want to do with the bot?
+[06.04.2026 16:11] Александр: /start
+[06.04.2026 16:11] BotFather: Here is the token for bot MAX BRAIN CHEF @max_brain_chef_bot:
+
+8656692973:AAG7ooiscNBGaYTd5wLq5-FFdKRHHDc4ItM
+[06.04.2026 16:21] Александр: /start
+[06.04.2026 16:21] BotFather: Here is the token for bot Вопрос Ответ @McDuck8Bot:
+
+6187967109:AAEGYugyO7-ju3KBT64gnOip_NEZ2KABJQw
+[27.05.2026 18:31] Александр: /newbot
+[27.05.2026 18:31] BotFather: Alright, a new bot. How are we going to call it? Please choose a name for your bot.
+[27.05.2026 18:32] Александр: test_bot
+[27.05.2026 18:32] BotFather: Good. Now let's choose a username for your bot. It must end in `bot`. Like this, for example: TetrisBot or tetris_bot.
+[27.05.2026 18:32] Александр: test_bot
+[27.05.2026 18:32] BotFather: Sorry, this username is already taken. Please try something different.
+[27.05.2026 18:33] Александр: test_bot_help
+[27.05.2026 18:33] BotFather: Sorry, this username is invalid.
+[27.05.2026 18:34] Александр: testbot
+[27.05.2026 18:34] BotFather: Sorry, this username is invalid.
+[27.05.2026 18:34] Александр: helptestbot
+[27.05.2026 18:34] BotFather: Sorry, this username is already taken. Please try something different.
+[27.05.2026 18:36] Александр: CrimeaResortBot
+[27.05.2026 18:36] BotFather: Sorry, this username is already taken. Please try something different.
+[27.05.2026 18:36] Александр: HotelCrimeaBot
+[27.05.2026 18:36] BotFather: Done! Congratulations on your new bot. You will find it at t.me/HotelCrimeaBot. You can now add a description, about section and profile picture for your bot, see /help for a list of commands. By the way, when you've finished creating your cool bot, ping our Bot Support if you want a better username for it. Just make sure the bot is fully operational before you do this.
+
+Use this token to access the HTTP API:
+8645168670:AAG_wrpmbyKcqE5PCe192k5WWWV-swl6dug
+Keep your token secure and store it safely, it can be used by anyone to control your bot.
+
+For a description of the Bot API, see this page: https://core.telegram.org/bots/api
+[15.06.2026 08:02] Александр: /start
+[15.06.2026 08:02] BotFather: I can help you create and manage Telegram bots. If you're new to the Bot API, please see the manual (https://core.telegram.org/bots).
+
+You can control me by sending these commands:
+
+/newbot - create a new bot
+/mybots - edit your bots
+
+Edit Bots
+/setname - change a bot's name
+/setdescription - change bot description
+/setabouttext - change bot about info
+/setuserpic - change bot profile photo
+/setcommands - change the list of commands
+/deletebot - delete a bot
+
+Bot Settings
+/token - get authorization token
+/revoke - revoke bot access token
+/setinline - toggle inline mode (https://core.telegram.org/bots/inline)
+/setinlinegeo - toggle inline location requests (https://core.telegram.org/bots/inline#location-based-results)
+/setinlinefeedback - change inline feedback (https://core.telegram.org/bots/inline#collecting-feedback) settings
+/setjoingroups - can your bot be added to groups?
+/setprivacy - toggle privacy mode (https://core.telegram.org/bots/features#privacy-mode) in groups
+
+Web Apps
+/myapps - edit your web apps (https://core.telegram.org/bots/webapps)
+/newapp - create a new web app (https://core.telegram.org/bots/webapps)
+/listapps - get a list of your web apps
+/editapp - edit a web app
+/deleteapp - delete an existing web app
+
+Games
+/mygames - edit your games (https://core.telegram.org/bots/games)
+/newgame - create a new game (https://core.telegram.org/bots/games)
+/listgames - get a list of your games
+/editgame - edit a game
+/deletegame - delete an existing game
+[15.06.2026 08:03] Александр: /newbot
+[15.06.2026 08:03] BotFather: Alright, a new bot. How are we going to call it? Please choose a name for your bot.
+[15.06.2026 08:50] Александр: CrystalBallBot
+[15.06.2026 08:50] BotFather: Good. Now let's choose a username for your bot. It must end in `bot`. Like this, for example: TetrisBot or tetris_bot.
+[15.06.2026 08:52] Александр: CrystalBallBot
+[15.06.2026 08:52] BotFather: Sorry, this username is already taken. Please try something different.
+[15.06.2026 08:54] Александр: Crystal_Ball_Bot
+[15.06.2026 08:54] BotFather: Sorry, this username is already taken. Please try something different.
+[15.06.2026 08:56] Александр: CrystalBall_Agent
+[15.06.2026 08:56] BotFather: Sorry, the username must end in `bot`. E.g. Tetris_bot or Tetrisbot.
+[15.06.2026 08:56] Александр: CrystalWatchBot
+[15.06.2026 08:56] BotFather: Done! Congratulations on your new bot. You will find it at t.me/CrystalWatchBot. You can now add a description, about section and profile picture for your bot, see /help for a list of commands. By the way, when you've finished creating your cool bot, ping our Bot Support if you want a better username for it. Just make sure the bot is fully operational before you do this.
+
+Use this token to access the HTTP API:
+8890942263:AAFKeJTU-Po3lRgGkQxpIZvSQ-UxLVkwcpk
+Keep your token secure and store it safely, it can be used by anyone to control your bot.
+
+For a description of the Bot API, see this page: https://core.telegram.org/bots/api
+[15.06.2026 09:35] Александр: /start
+[15.06.2026 09:35] BotFather: Here it is: CrystalBallBot @CrystalWatchBot.
+What do you want to do with the bot?

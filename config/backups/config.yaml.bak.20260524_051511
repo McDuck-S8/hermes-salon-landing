@@ -1,0 +1,8 @@
+model:
+  provider: custom
+  base_url: https://opengateway.gitlawb.com/v1
+  default: mimo-v2.5-pro
+  api_key: ogw_live_ac86db9b3ae8fe3d1a6f5a54b9ce9fa6
+onboarding:
+  seen:
+    openclaw_residue_cleanup: true

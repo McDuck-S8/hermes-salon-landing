@@ -1,0 +1,22 @@
+Граф построен. Вот ключевые результаты:
+
+  God Nodes (ядро системы):
+  1. Plugin README — 24 связи (самый связанный)
+  2. Create Agent Skills Skill — 14 связей
+  3. knowledge.jsonl — 12 связей
+  4. v0.7.0 Release Notes — 11 связей
+  5. Core Principles Reference — 10 связей
+
+  Surprising Connections (неожиданные связи):
+  - Ankane README Writer → Repo Research Analyst — README-райтер связан с анализом репозитория
+  - Lavra Triage → Lavra Work Ralph — триаж связан с автономным выполнением
+  - System Prompt Design → Create Agent Skills Skill — дизайн промптов связан с созданием скиллов
+
+  38 сообществ — граф разбил Lavra на кластеры: скиллы, команды, агенты, документация, навыки, архитектура.
+
+  Выходы:
+  - graphify-out/GRAPH_REPORT.md — полный отчёт
+  - graphify-out/graph.json — граф для навигации
+  - graphify-out/graph.html — интерактивная визуализация в браузере
+
+  Открой graph.html в браузере — увидишь граф с community-кластерами.

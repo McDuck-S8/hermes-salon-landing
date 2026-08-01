@@ -1,0 +1,15 @@
+2026-06-07 02:03:03 [info]: Получено подтверждение, продолжаем...
+2026-06-07 02:03:03 [info]: Сохранено 16 cookies
+2026-06-07 02:03:03 [info]: Токен найден и будет сохранен
+2026-06-07 02:03:03 [info]: Токен авторизации сохранен
+2026-06-07 02:03:03 [info]: Cookies сохранены для аккаунта acc_1780786983502
+2026-06-07 02:03:03 [info]: Сессия сохранена с ID: acc_1780786983502
+2026-06-07 02:03:03 [info]: Авторизация завершена успешно
+2026-06-07 02:03:37 [info]: Токен авторизации успешно извлечен
+2026-06-07 02:03:37 [info]: Токен авторизации сохранен
+ERROR: The process with PID 27492 (child process of PID 22700) could not be terminated.
+Reason: There is no running instance of the task.
+ERROR: The process with PID 35428 (child process of PID 22700) could not be terminated.
+Reason: There is no running instance of the task.
+ERROR: The process with PID 33060 (child process of PID 22700) could not be terminated.
+Reason: There is no running instance of the task.

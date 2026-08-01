@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes Kanban</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0d1117;--surface:#161b22;--surface2:#1c2333;--border:#30363d;--text:#e6edf3;--text2:#8b949e;--green:#3fb950;--blue:#58a6ff;--red:#f85149;--orange:#d29922;--purple:#bc8cff;--pink:#db6d9f;--radius:8px}
+body{font:14px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);padding:16px;padding-bottom:40px}
+h1{font-size:20px;font-weight:600;display:flex;align-items:center;gap:8px}
+h2{font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none}
+h2:hover{opacity:.8}
+.header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.header-right{display:flex;align-items:center;gap:8px}
+.btn{padding:6px 14px;border:1px solid var(--border);border-radius:6px;background:var(--surface2);color:var(--text);cursor:pointer;font-size:13px;display:inline-flex;align-items:center;gap:4px;user-select:none}
+.btn:hover{background:#212c42}
+.btn.active{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn.primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+.btn.primary:hover{background:#4a96ff}
+.btn.danger{background:var(--red);color:#fff;border-color:var(--red)}
+.btn.green{background:var(--green);color:#fff;border-color:var(--green)}
+.btn.warn{background:var(--orange);color:#fff;border-color:var(--orange)}
+.btn.sm{padding:3px 10px;font-size:11px}
+/* Toolbar */
+.toolbar{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;padding:8px 12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
+.toolbar-group{display:flex;align-items:center;gap:4px}
+.toolbar-label{font-size:11px;color:var(--text2);margin-right:4px}
+.toolbar select{padding:4px 8px;border:1px solid var(--border);border-radius:4px;background:var(--surface2);color:var(--text);font-size:12px}
+.search-input{padding:5px 10px;border:1px solid var(--border);border-radius:4px;background:var(--surface2);color:var(--text);font-size:12px;width:180px}
+.search-input::placeholder{color:var(--text2)}
+.search-input:focus{outline:none;border-color:var(--blue)}
+.badges{display:flex;gap:6px}
+.badge{padding:2px 10px;border-radius:20px;font-size:11px;font-weight:500;white-space:nowrap}
+.badge.ready{background:#1a3a1a;color:var(--green)}
+.badge.running{background:#1a2a4a;color:var(--blue)}
+.badge.blocked{background:#3a1a1a;color:var(--red)}
+.badge.done{background:#222;color:var(--text2)}
+.kanban-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;min-height:40vh}
+.kanban-col{background:var(--surface2);border-radius:var(--radius);padding:10px;display:flex;flex-direction:column;gap:6px}
+.kanban-col.drag-over{outline:2px dashed var(--blue);outline-offset:-3px}
+.col-header{display:flex;justify-content:space-between;align-items:center;padding:4px 2px 8px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.col-ready .col-header{color:var(--green)}
+.col-running .col-header{color:var(--blue)}
+.col-blocked .col-header{color:var(--red)}
+.col-done .col-header{color:var(--text2)}
+.col-count{background:var(--bg);padding:1px 8px;border-radius:10px;font-size:11px;color:var(--text)}
+/* Task card */
+.task-card{padding:8px 10px;border-radius:6px;cursor:pointer;transition:all .12s;position:relative;border:1px solid var(--border);background:var(--surface);border-left:3px solid var(--text2);touch-action:none}
+.task-card:hover{border-color:var(--blue);box-shadow:0 0 0 1px var(--blue)}
+.task-card.dragging{opacity:.4;cursor:grabbing}
+.task-card.dragging-touch{opacity:.7;transform:scale(1.02);z-index:999;box-shadow:0 4px 12px rgba(0,0,0,.4)}
+.task-card.p0{border-left-color:var(--red)}
+.task-card.p1{border-left-color:var(--orange)}
+.task-card.p2{border-left-color:var(--blue)}
+.task-card.p3{border-left-color:var(--text2)}
+.task-card.due-overdue{border-left-color:var(--red)!important;background:linear-gradient(135deg,var(--surface),#2a1515)}
+.task-card.due-today{border-left-color:var(--orange)!important;background:linear-gradient(135deg,var(--surface),#2a2210)}
+.task-card.blocked-by{border-left-color:var(--purple)!important}
+.task-card.type-goal{border-left-color:var(--pink)!important;background:linear-gradient(135deg,var(--surface),#1f152a)}
+.label-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;flex-shrink:0}
+.label-dot.red{background:var(--red)}
+.label-dot.yellow{background:var(--orange)}
+.label-dot.green{background:var(--green)}
+.label-dot.none{display:none}
+.task-title-row{display:flex;align-items:center;gap:3px;font-size:13px;margin:2px 0;word-break:break-word}
+.task-id{font-size:10px;color:var(--text2);font-family:monospace;margin-bottom:1px}
+.task-type-tag{font-size:9px;padding:1px 5px;border-radius:3px;font-weight:600;margin-right:4px;background:var(--surface2)}
+.task-type-tag.goal{color:var(--pink)}
+.task-meta{font-size:10px;color:var(--text2);display:flex;justify-content:space-between;align-items:center;margin-top:2px;gap:4px;flex-wrap:wrap}
+.task-priority{font-size:9px;padding:1px 5px;border-radius:3px;font-weight:600;background:var(--bg)}
+.task-priority.p0{color:var(--red)}
+.task-priority.p1{color:var(--orange)}
+.task-priority.p2{color:var(--blue)}
+.task-priority.p3{color:var(--text2)}
+.task-icons{font-size:11px;display:flex;gap:3px;margin-left:auto}
+.task-icons span{cursor:default;opacity:.7}
+.task-actions{display:none;position:absolute;top:5px;right:5px;gap:2px}
+.task-card:hover .task-actions{display:flex}
+.task-actions button{padding:2px 6px;font-size:10px;border:1px solid var(--border);border-radius:3px;background:var(--bg);color:var(--text);cursor:pointer;line-height:1.2}
+.task-actions button:hover{background:var(--surface2)}
+.task-actions .btn-del{color:var(--red)}
+.task-actions .btn-del:hover{background:#3a1a1a}
+.empty-state{padding:20px 8px;text-align:center;color:var(--text2);font-size:12px}
+/* Modal */
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);z-index:1000;justify-content:center;align-items:center}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;max-width:550px;width:90%;max-height:85vh;overflow-y:auto}
+.modal-title{font-size:18px;font-weight:600;margin-bottom:16px}
+.modal-body .field{display:flex;gap:8px;margin-bottom:8px}
+.modal-body .field .label{font-weight:500;min-width:90px;color:var(--text2)}
+.modal-body .field .value{color:var(--text)}
+.modal-body .desc-field .value{white-space:pre-wrap;line-height:1.6}
+.dim{color:var(--text2);font-style:italic}
+.modal-actions{display:flex;gap:8px;margin-top:20px;justify-content:flex-end;flex-wrap:wrap}
+.modal label{display:block;font-size:12px;color:var(--text2);margin:8px 0 4px}
+.modal input,.modal select,.modal textarea{width:100%;padding:8px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text);font-size:13px}
+.modal textarea{min-height:60px;resize:vertical}
+/* Sections */
+.section{margin-top:12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
+.section h2{margin-bottom:10px}
+.section-inner{display:block}
+.section-inner.collapsed{display:none}
+/* Stats grid */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.stat-card{padding:10px;border:1px solid var(--border);border-radius:6px;background:var(--surface2);text-align:center}
+.stat-val{font-size:22px;font-weight:700;color:var(--text)}
+.stat-label{font-size:11px;color:var(--text2);margin-top:2px}
+/* Queue grid */
+.queue-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px}
+.queue-card{padding:10px;border:1px solid var(--border);border-radius:6px;background:var(--surface2);font-size:12px}
+.queue-card .q-title{font-weight:600;margin-bottom:2px}
+.queue-card .q-meta{color:var(--text2);font-size:11px}
+/* Rule list */
+.rule-item{padding:8px 12px;border:1px solid var(--border);border-radius:6px;background:var(--surface2);margin-bottom:6px;font-size:12px;display:flex;justify-content:space-between;align-items:center}
+.rule-item .r-name{font-weight:500}
+.rule-item .r-detail{color:var(--text2);font-size:11px}
+/* Template picker */
+.tpl-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px;margin-top:6px}
+.tpl-card{padding:8px;border:1px solid var(--border);border-radius:6px;background:var(--surface2);cursor:pointer;font-size:12px}
+.tpl-card:hover{background:#212c42}
+.tpl-card .tpl-title{font-weight:600}
+.tpl-card .tpl-meta{color:var(--text2);font-size:11px}
+/* History section */
+.history-entry{padding:6px 10px;border-bottom:1px solid var(--border);font-size:12px;display:flex;gap:8px;align-items:baseline}
+.history-entry:last-child{border-bottom:none}
+.hist-time{color:var(--text2);font-size:10px;font-family:monospace;white-space:nowrap}
+.hist-task{color:var(--text);font-weight:500}
+.hist-arrow{color:var(--text2);margin:0 4px}
+.hist-from{color:var(--orange);font-size:11px}
+.hist-to{color:var(--green);font-size:11px}
+/* Alert */
+.alert{position:fixed;bottom:16px;right:16px;padding:10px 16px;border-radius:6px;font-size:13px;z-index:2000;animation:fadeIn .2s}
+.alert.ok{background:#1a3a1a;border:1px solid var(--green);color:var(--green)}
+.alert.err{background:#3a1a1a;border:1px solid var(--red);color:var(--red)}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:900px){.kanban-grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📋 Hermes Kanban</h1>
+  <div class="badges" id="badges"></div>
+  <div class="header-right">
+    <button class="btn" onclick="location.href='/dashboard.html'">📊 Dashboard</button>
+    <button class="btn primary" onclick="openNewModal()">➕ Add task</button>
+    <span class="refresh-time" id="refresh-time" style="font-size:11px;color:var(--text2)"></span>
+  </div>
+</div>
+
+<!-- Toolbar: filters + sort + queue toggle -->
+<div class="toolbar" id="main-toolbar">
+  <div class="toolbar-group">
+    <button class="btn sm active" data-view="all" onclick="setView('all')">All</button>
+    <button class="btn sm" data-view="ready" onclick="setView('ready')">Ready</button>
+    <button class="btn sm" data-view="running" onclick="setView('running')">Running</button>
+    <button class="btn sm" data-view="blocked" onclick="setView('blocked')">Blocked</button>
+    <button class="btn sm" data-view="done" onclick="setView('done')">Done</button>
+    <button class="btn sm" id="btn-queue" onclick="setView('queue')">🎯 Queue</button>
+  </div>
+  <div class="toolbar-group">
+    <span class="toolbar-label">Sort:</span>
+    <select id="sort-select" onchange="render()">
+      <option value="priority">Priority</option>
+      <option value="date">Newest</option>
+      <option value="updated">Changed</option>
+    </select>
+  </div>
+  <div class="toolbar-group">
+    <button class="btn sm" id="btn-awaits" onclick="toggleAwaitsFilter()">👤 Waits for me</button>
+  </div>
+  <div class="toolbar-group">
+    <button class="btn sm" id="btn-hide-done" onclick="toggleHideDone()">🙈 Hide done</button>
+  </div>
+  <div class="toolbar-group" style="margin-left:auto">
+    <input class="search-input" id="search-input" placeholder="🔍 Search..." oninput="render()">
+  </div>
+</div>
+
+<!-- Grid -->
+<div class="kanban-grid" id="kanban-grid"></div>
+
+<!-- Goal Queue -->
+<div class="section" id="queue-section" style="display:none">
+  <h2 onclick="toggleCollapse('queue-inner')">🎯 Goal Queue <span id="queue-toggle">▼</span></h2>
+  <div class="section-inner" id="queue-inner"></div>
+</div>
+
+<!-- Stats -->
+<div class="section">
+  <h2 onclick="toggleCollapse('stats-inner')">📊 Statistics <span id="stats-toggle">▼</span></h2>
+  <div class="section-inner" id="stats-inner"></div>
+</div>
+
+<!-- Templates -->
+<div class="section">
+  <h2 onclick="toggleCollapse('tpl-inner')">📝 Templates <span id="tpl-toggle">▼</span></h2>
+  <div class="section-inner collapsed" id="tpl-inner">
+    <div style="display:flex;gap:8px;margin-bottom:8px">
+      <input id="tpl-name" placeholder="Template name" style="padding:6px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text);font-size:12px;flex:1">
+      <button class="btn sm" onclick="saveTemplate()">💾 Save current</button>
+    </div>
+    <div class="tpl-list" id="tpl-list"></div>
+  </div>
+</div>
+
+<!-- Rules -->
+<div class="section">
+  <h2 onclick="toggleCollapse('rules-inner')">⚙️ Rules <span id="rules-toggle">▼</span></h2>
+  <div class="section-inner collapsed" id="rules-inner">
+    <div id="rules-list"></div>
+    <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+      <input id="rule-name" placeholder="Rule name" style="padding:6px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text);font-size:12px;flex:1">
+      <select id="rule-field" style="padding:4px;border:1px solid var(--border);border-radius:4px;background:var(--surface2);color:var(--text);font-size:11px">
+        <option value="status">If status</option>
+        <option value="priority">If priority</option>
+      </select>
+      <select id="rule-op" style="padding:4px;border:1px solid var(--border);border-radius:4px;background:var(--surface2);color:var(--text);font-size:11px">
+        <option value="eq">=</option>
+        <option value="stale">stale 7d</option>
+      </select>
+      <select id="rule-val" style="padding:4px;border:1px solid var(--border);border-radius:4px;background:var(--surface2);color:var(--text);font-size:11px">
+        <option value="ready">ready</option>
+        <option value="running">running</option>
+        <option value="blocked">blocked</option>
+        <option value="done">done</option>
+      </select>
+      <select id="rule-act" style="padding:4px;border:1px solid var(--border);border-radius:4px;background:var(--surface2);color:var(--text);font-size:11px">
+        <option value="block">→ Block</option>
+        <option value="unblock">→ Unblock</option>
+        <option value="notify">→ Notify</option>
+      </select>
+      <button class="btn sm" onclick="addRule()">Add rule</button>
+      <button class="btn sm" onclick="evaluateRules()">▶ Evaluate</button>
+    </div>
+    <div id="rules-result" style="margin-top:6px;display:none"></div>
+  </div>
+</div>
+
+<!-- History -->
+<div class="section">
+  <h2 onclick="toggleCollapse('hist-inner')">📜 History <span id="hist-toggle">▼</span> <span id="hist-count" style="color:var(--text2);font-size:12px"></span></h2>
+  <div class="section-inner" id="hist-inner"></div>
+</div>
+
+<!-- Cron -->
+<div class="section">
+  <h2 onclick="toggleCollapse('cron-inner')">⏱ Cron <span id="cron-toggle">▼</span></h2>
+  <div class="section-inner collapsed" id="cron-inner">
+    <div class="cron-grid" id="cron-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px"></div>
+  </div>
+</div>
+
+<!-- Task Detail Modal -->
+<div class="modal-overlay" id="task-modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-title" id="modal-title">Task</div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-actions">
+      <button class="btn green sm" id="modal-start" style="display:none" onclick="modalAction('running')">▶ Start</button>
+      <button class="btn sm" id="modal-block" style="display:none" onclick="modalAction('blocked')">🚧 Block</button>
+      <button class="btn sm" id="modal-ready" style="display:none" onclick="modalAction('ready')">⬆ Ready</button>
+      <button class="btn primary sm" id="modal-done" style="display:none" onclick="modalAction('done')">✅ Done</button>
+      <button class="btn danger sm" id="modal-delete" onclick="modalDelete()">🗑 Delete</button>
+      <button class="btn sm" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- New Task Modal -->
+<div class="modal-overlay" id="new-modal" onclick="if(event.target===this)closeNewModal()">
+  <div class="modal">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <h2 style="margin:0">New task</h2>
+      <button class="btn sm" id="btn-from-tpl" onclick="showTemplatePicker()">📝 From template</button>
+    </div>
+    <label>Title</label><input id="task-title" placeholder="What needs to be done?">
+    <label>Description</label><textarea id="task-desc" placeholder="Optional..."></textarea>
+    <label>Type</label>
+    <select id="task-type">
+      <option value="task">🎯 Task</option>
+      <option value="goal">🎯 Goal (queue)</option>
+    </select>
+    <label id="trigger-label" style="display:none">Trigger event</label>
+    <input id="task-trigger" placeholder="What needs to happen first?" style="display:none">
+    <label>Status</label>
+    <select id="task-status">
+      <option value="ready">Ready</option>
+      <option value="running">Running</option>
+      <option value="blocked">Blocked</option>
+      <option value="done">Done</option>
+    </select>
+    <div style="display:flex;gap:12px">
+      <div style="flex:1">
+        <label>Priority</label>
+        <select id="task-prio">
+          <option value="P0">P0 🔴</option>
+          <option value="P1">P1 🟠</option>
+          <option value="P2" selected>P2 🔵</option>
+          <option value="P3">P3 ⚪</option>
+        </select>
+      </div>
+      <div style="flex:1">
+        <label>Label</label>
+        <select id="task-label">
+          <option value="">None</option>
+          <option value="red">🔴 Red</option>
+          <option value="yellow">🟡 Yellow</option>
+          <option value="green">🟢 Green</option>
+        </select>
+      </div>
+    </div>
+    <div style="display:flex;gap:12px">
+      <div style="flex:1">
+        <label>Deadline</label>
+        <input type="date" id="task-deadline">
+      </div>
+      <div style="flex:1">
+        <label>Waits for</label>
+        <input id="task-awaits" placeholder="e.g. Александр">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeNewModal()">Cancel</button>
+      <button class="btn primary" onclick="createTask()">Create</button>
+    </div>
+  </div>
+</div>
+
+<!-- Template picker overlay -->
+<div class="modal-overlay" id="tpl-picker" onclick="if(event.target===this)closeTplPicker()">
+  <div class="modal">
+    <h2 style="margin-bottom:12px">Choose template</h2>
+    <div id="tpl-picker-list"></div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeTplPicker()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let tasks = [];
+let moveLog = [];
+let templates = [];
+let rules = [];
+let modalTaskId = null;
+let filterView = 'all';
+let filterAwaits = false;
+let hideDone = false;
+
+const COLUMNS = [
+  {id:'ready',   label:'Ready',    cls:'col-ready'},
+  {id:'running', label:'Running',  cls:'col-running'},
+  {id:'blocked', label:'Blocked',  cls:'col-blocked'},
+  {id:'done',    label:'Done',     cls:'col-done'},
+];
+const PRIO_ORDER = {P0:0, P1:1, P2:2, P3:3};
+
+// ── Render ──
+function render() {
+  const grid = document.getElementById('kanban-grid');
+  grid.innerHTML = '';
+  const sortMode = document.getElementById('sort-select').value;
+  const query = (document.getElementById('search-input').value||'').toLowerCase();
+
+  // Determine which tasks to show in grid
+  let gridTasks = tasks;
+  if (filterView === 'queue') {
+    gridTasks = tasks.filter(t => t.type === 'goal');
+  } else if (filterView !== 'all') {
+    gridTasks = tasks.filter(t => t.status === filterView);
+  } else {
+    gridTasks = tasks.filter(t => t.type !== 'goal');
+  }
+
+  COLUMNS.forEach(col => {
+    if (hideDone && col.id === 'done') return;
+    let colTasks = gridTasks.filter(t => t.status === col.id && t.type !== 'goal');
+    if (query) colTasks = colTasks.filter(t => (t.title||'').toLowerCase().includes(query));
+    if (filterAwaits) colTasks = colTasks.filter(t => t.awaits && t.awaits.trim());
+
+    colTasks.sort((a,b) => {
+      const fns = {
+        priority: (a,b) => (PRIO_ORDER[a.priority||'P2']||99) - (PRIO_ORDER[b.priority||'P2']||99),
+        date: (a,b) => new Date(b.created_at) - new Date(a.created_at),
+        updated: (a,b) => new Date(b.updated_at||b.created_at) - new Date(a.updated_at||a.created_at),
+      };
+      return (fns[sortMode]||fns.priority)(a,b);
+    });
+
+    const colEl = document.createElement('div');
+    colEl.className = 'kanban-col ' + col.cls;
+    colEl.dataset.col = col.id;
+    colEl.innerHTML = `<div class="col-header"><span>${col.label}</span><span class="col-count">${colTasks.length}</span></div>`;
+
+    colTasks.forEach(t => {
+      colEl.appendChild(createCard(t));
+    });
+
+    if (!colTasks.length) {
+      colEl.innerHTML += '<div class="empty-state">'+(query||filterView!=='all'||filterAwaits?'No matches':'Drop here')+'</div>';
+    }
+
+    colEl.addEventListener('dragover', e => e.preventDefault());
+    colEl.addEventListener('dragenter', () => colEl.classList.add('drag-over'));
+    colEl.addEventListener('dragleave', () => colEl.classList.remove('drag-over'));
+    colEl.addEventListener('drop', e => { colEl.classList.remove('drag-over'); onDrop(e); });
+    grid.appendChild(colEl);
+  });
+
+  // Badges
+  document.getElementById('badges').innerHTML = COLUMNS.map(c =>
+    `<span class="badge ${c.id}">${tasks.filter(t=>t.status===c.id).length} ${c.id}</span>`
+  ).join('') + `<span class="badge" style="background:#1f152a;color:var(--pink)">${tasks.filter(t=>t.type==='goal').length} goals</span>`;
+
+  // Queue section
+  renderQueue();
+  renderStats();
+}
+
+function createCard(t) {
+  const card = document.createElement('div');
+  let cls = 'task-card p'+(t.priority||'P2').toLowerCase().replace('p','');
+  if (t.type === 'goal') cls += ' type-goal';
+  if (t.deadline) {
+    const diff = Math.floor((new Date(t.deadline) - Date.now()) / 86400000);
+    if (diff < 0) cls += ' due-overdue';
+    else if (diff === 0) cls += ' due-today';
+  }
+  const blockedBy = tasks.find(o => o.blocks === t.id);
+  if (blockedBy) cls += ' blocked-by';
+  if (t.label) cls += ' label-' + t.label;
+  card.className = cls;
+  card.draggable = true;
+  card.dataset.id = t.id;
+  card.onclick = () => openModal(t.id);
+
+  let actions = '';
+  if (t.status === 'ready')   actions += `<button onclick="event.stopPropagation();quickMove('${escA(t.id)}','running')">▶</button>`;
+  if (t.status === 'running') actions += `<button onclick="event.stopPropagation();quickMove('${escA(t.id)}','blocked')">🚧</button>`;
+  if (t.status !== 'done')    actions += `<button onclick="event.stopPropagation();quickMove('${escA(t.id)}','done')">✅</button>`;
+  actions += `<button class="btn-del" onclick="event.stopPropagation();deleteTask('${escA(t.id)}')">✕</button>`;
+
+  let icons = '';
+  if (t.blocks) icons += '<span title="Blocks: '+escA(getTaskTitle(t.blocks))+'">🔗</span>';
+  if (blockedBy) icons += '<span title="Blocked by: '+escA(blockedBy.title)+'">⛓️</span>';
+  if (t.awaits && t.awaits.trim()) icons += '<span title="Waits: '+escA(t.awaits)+'">👤</span>';
+  if (t.deadline) icons += '<span title="Due: '+t.deadline+'">📅</span>';
+  if (t.type === 'goal') icons += '<span title="Goal">🎯</span>';
+  if (t.trigger) icons += '<span title="Trigger: '+escA(t.trigger)+'">⏰</span>';
+
+  const dot = t.label ? `<span class="label-dot ${t.label}"></span>` : '';
+  const typeTag = t.type === 'goal' ? '<span class="task-type-tag goal">goal</span>' : '';
+  card.innerHTML = `
+    <div class="task-id">${typeTag}${esc(t.id)}</div>
+    <div class="task-title-row">${dot}${esc(t.title)}${icons?' <span class="task-icons">'+icons+'</span>':''}</div>
+    <div class="task-meta">
+      <span class="task-priority ${(t.priority||'P2').toLowerCase()}">${t.priority||'P2'}</span>
+      <span>${t.deadline?t.deadline:''}</span>
+      <span>${esc(t.assignee||'')}</span>
+      <span>${age(t.created_at)}</span>
+    </div>
+    <div class="task-actions">${actions}</div>
+  `;
+
+  card.addEventListener('dragstart', onDragStart);
+  card.addEventListener('dragend', onDragEnd);
+  card.addEventListener('touchstart', onTouchStart, {passive:false});
+  card.addEventListener('touchmove', onTouchMove, {passive:false});
+  card.addEventListener('touchend', onTouchEnd, {passive:false});
+  return card;
+}
+
+// ── Queue section ──
+function renderQueue() {
+  const el = document.getElementById('queue-inner');
+  if (!el) return;
+  const goals = tasks.filter(t => t.type === 'goal');
+  if (!goals.length) { el.innerHTML = '<div class="empty-state">No goals in queue</div>'; return; }
+  const show = filterView === 'queue';
+  document.getElementById('queue-section').style.display = show ? 'block' : 'none';
+  if (!show) return;
+  goals.sort((a,b) => (a.deadline||'9999').localeCompare(b.deadline||'9999'));
+  el.innerHTML = '<div class="queue-grid">' + goals.map(t => `
+    <div class="queue-card" onclick="openModal('${escA(t.id)}')" style="cursor:pointer">
+      <div class="q-title">${esc(t.title)}</div>
+      <div class="q-meta">📅 ${t.deadline||'no deadline'} · ${t.priority||'P2'}</div>
+      ${t.trigger ? '<div class="q-meta">⏰ Trigger: '+esc(t.trigger)+'</div>' : ''}
+      ${t.description ? '<div class="q-meta">'+esc(t.description.substring(0,80))+'</div>' : ''}
+    </div>
+  `).join('') + '</div>';
+}
+
+// ── Stats section ──
+function renderStats() {
+  const el = document.getElementById('stats-inner');
+  if (!el) return;
+  const total = tasks.length;
+  const done = tasks.filter(t => t.status === 'done').length;
+  const blocked = tasks.filter(t => t.status === 'blocked').length;
+  const ready = tasks.filter(t => t.status === 'ready').length;
+  const running = tasks.filter(t => t.status === 'running').length;
+  const goals = tasks.filter(t => t.type === 'goal').length;
+  const rate = total ? Math.round(done/total*100) : 0;
+  const overdue = tasks.filter(t => t.deadline && new Date(t.deadline) < Date.now() && t.status !== 'done').length;
+
+  // Avg time from move_log
+  const fromLog = moveLog.filter(e => e.to === 'done');
+  const avgDoneDays = fromLog.length ? Math.round(1) : '-'; // simplified
+
+  el.innerHTML = `<div class="stats-grid">
+    <div class="stat-card"><div class="stat-val">${total}</div><div class="stat-label">Total tasks</div></div>
+    <div class="stat-card"><div class="stat-val">${rate}%</div><div class="stat-label">Done rate</div></div>
+    <div class="stat-card"><div class="stat-val">${ready}</div><div class="stat-label">Ready</div></div>
+    <div class="stat-card"><div class="stat-val">${running}</div><div class="stat-label">Running</div></div>
+    <div class="stat-card"><div class="stat-val">${blocked}</div><div class="stat-label">Blocked</div></div>
+    <div class="stat-card"><div class="stat-val">${done}</div><div class="stat-label">Done</div></div>
+    <div class="stat-card"><div class="stat-val">${goals}</div><div class="stat-label">Goals</div></div>
+    <div class="stat-card"><div class="stat-val">${overdue}</div><div class="stat-label">Overdue</div></div>
+  </div>`;
+}
+
+// ── Filter ──
+function setView(v) {
+  filterView = v;
+  document.querySelectorAll('[data-view]').forEach(b => b.classList.toggle('active', b.dataset.view === v));
+  render();
+}
+function toggleAwaitsFilter() { filterAwaits=!filterAwaits; document.getElementById('btn-awaits').classList.toggle('active',filterAwaits); render(); }
+function toggleHideDone() { hideDone=!hideDone; document.getElementById('btn-hide-done').classList.toggle('active',hideDone); render(); }
+
+// ── Drag & Drop ──
+let dragTaskId = null;
+function onDragStart(e) { dragTaskId=this.dataset.id; this.classList.add('dragging'); e.dataTransfer.effectAllowed='move'; e.dataTransfer.setData('text/plain',this.dataset.id); }
+function onDragEnd(e) { this.classList.remove('dragging'); dragTaskId=null; document.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over')); }
+async function onDrop(e) {
+  e.preventDefault(); const id=e.dataTransfer.getData('text/plain');
+  if (!id||!dragTaskId) return;
+  const colEl=e.target.closest('.kanban-col');
+  if (!colEl) return;
+  const newStatus=colEl.dataset.col, task=tasks.find(t=>t.id===id);
+  if (!task||task.status===newStatus) { dragTaskId=null; return; }
+  task.status=newStatus; render();
+  const r=await api('/api/task/move',{id,status:newStatus});
+  if (!r.ok){await loadTasks();toast('Move failed','err')}
+  dragTaskId=null;
+}
+// Touch DnD
+let touchCard=null;
+function onTouchStart(e) { const c=e.currentTarget; touchCard={id:c.dataset.id,startX:e.touches[0].clientX,startY:e.touches[0].clientY,moved:false}; c.classList.add('dragging-touch'); }
+function onTouchMove(e) { if(!touchCard)return; e.preventDefault(); touchCard.moved=true; const t=e.touches[0]; document.querySelectorAll('.kanban-col.drag-over').forEach(el=>el.classList.remove('drag-over')); const colEl=document.elementFromPoint(t.clientX,t.clientY)?.closest('.kanban-col'); if(colEl)colEl.classList.add('drag-over'); }
+async function onTouchEnd(e) {
+  if(!touchCard)return;
+  const card=document.querySelector(`.task-card[data-id="${touchCard.id}"]`); if(card)card.classList.remove('dragging-touch');
+  document.querySelectorAll('.kanban-col.drag-over').forEach(el=>el.classList.remove('drag-over'));
+  if(touchCard.moved){const t=e.changedTouches[0],colEl=document.elementFromPoint(t.clientX,t.clientY)?.closest('.kanban-col'); if(colEl){const ns=colEl.dataset.col,task=tasks.find(x=>x.id===touchCard.id); if(task&&task.status!==ns){task.status=ns;render();const r=await api('/api/task/move',{id:touchCard.id,status:ns});if(!r.ok){await loadTasks();toast('Move failed','err')}}}}
+  touchCard=null;
+}
+
+// ── Modal ──
+function openModal(id) {
+  modalTaskId=id; const t=tasks.find(t=>t.id===id); if(!t)return;
+  document.getElementById('modal-title').textContent = t.title;
+  const blockedBy=tasks.find(o=>o.blocks===t.id);
+  const allTasks=tasks.filter(x=>x.id!==id);
+
+  document.getElementById('modal-body').innerHTML = `
+    <div class="field"><div class="label">ID</div><div class="value">${esc(t.id)}</div></div>
+    <div class="field"><div class="label">Type</div><div class="value">${t.type==='goal'?'🎯 Goal':'📋 Task'}
+      <select onchange="upd('type',this.value)" style="padding:3px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text);font-size:11px;margin-left:8px">
+        <option value="task" ${t.type!=='goal'?'selected':''}>Task</option>
+        <option value="goal" ${t.type==='goal'?'selected':''}>Goal</option>
+      </select>
+    </div></div>
+    ${t.type==='goal'?`<div class="field"><div class="label">Trigger</div><div class="value"><input value="${esc(t.trigger||'')}" onchange="upd('trigger',this.value)" style="padding:4px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text);font-size:12px;width:100%"></div></div>`:''}
+    <div class="field"><div class="label">Status</div><div class="value">${t.status}</div></div>
+    <div class="field"><div class="label">Priority</div><div class="value">
+      <select onchange="upd('priority',this.value)" style="padding:4px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text);font-size:12px">
+        ${['P0','P1','P2','P3'].map(p => `<option value="${p}" ${(t.priority||'P2')===p?'selected':''}>${p}</option>`).join('')}
+      </select></div></div>
+    <div class="field"><div class="label">Label</div><div class="value">
+      <select onchange="upd('label',this.value)" style="padding:4px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text);font-size:12px">
+        ${['','red','yellow','green'].map(v => `<option value="${v}" ${t.label===v?'selected':''}>${v||'None'}</option>`).join('')}
+      </select></div></div>
+    <div class="field"><div class="label">Assignee</div><div class="value"><input value="${esc(t.assignee||'')}" onchange="upd('assignee',this.value)" style="padding:4px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text);font-size:12px;width:100%"></div></div>
+    <div class="field"><div class="label">Blocks</div><div class="value">
+      <select onchange="upd('blocks',this.value)" style="padding:4px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text);font-size:12px;width:100%">
+        <option value="">— None —</option>
+        ${allTasks.map(x => `<option value="${escA(x.id)}" ${t.blocks===x.id?'selected':''}>${esc(x.id)}: ${esc(x.title.substring(0,50))}</option>`).join('')}
+      </select>
+      ${t.blocks&&getTaskTitle(t.blocks)?`<br><small style="color:var(--purple)">🔗 Blocks: ${esc(getTaskTitle(t.blocks))}</small>`:''}
+    </div></div>
+    ${blockedBy?`<div class="field"><div class="label">Blocked by</div><div class="value" style="color:var(--purple)">⛓️ ${esc(blockedBy.title)}</div></div>`:''}
+    <div class="field"><div class="label">Deadline</div><div class="value"><input type="date" value="${t.deadline||''}" onchange="upd('deadline',this.value)" style="padding:4px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text);font-size:12px"></div></div>
+    <div class="field"><div class="label">Waits for</div><div class="value"><input value="${esc(t.awaits||'')}" placeholder="e.g. Александр" onchange="upd('awaits',this.value)" style="padding:4px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text);font-size:12px;width:100%"></div></div>
+    <div class="field"><div class="label">Created</div><div class="value">${fmtDate(t.created_at)}</div></div>
+    <div class="field"><div class="label">Updated</div><div class="value">${t.updated_at?fmtDate(t.updated_at):'—'}</div></div>
+    <div class="field desc-field"><div class="label">Description</div><div class="value">${t.description?esc(t.description):'<span class="dim">—</span>'}</div></div>
+  `;
+  ['start','block','ready','done'].forEach(id=>{
+    document.getElementById('modal-'+id).style.display = 'none';
+  });
+  if(t.status==='ready') document.getElementById('modal-start').style.display='inline-block';
+  if(t.status==='running') document.getElementById('modal-block').style.display='inline-block';
+  if(t.status==='blocked'||t.status==='done') document.getElementById('modal-ready').style.display='inline-block';
+  if(t.status!=='done') document.getElementById('modal-done').style.display='inline-block';
+  document.getElementById('task-modal').classList.add('open');
+}
+function closeModal(){modalTaskId=null;document.getElementById('task-modal').classList.remove('open');}
+function modalAction(s){if(modalTaskId){quickMove(modalTaskId,s);closeModal();}}
+function modalDelete(){if(modalTaskId){deleteTask(modalTaskId);closeModal();}}
+async function upd(key,value){
+  if(!modalTaskId)return;
+  const r=await api('/api/task/update',{id:modalTaskId,[key]:value,updated_at:new Date().toISOString()});
+  if(r.ok){const t=tasks.find(x=>x.id===modalTaskId);if(t){t[key]=value;t.updated_at=new Date().toISOString();}render();toast('Updated','ok')}
+  else toast('Update failed','err');
+}
+
+// ── New Task ──
+document.getElementById('task-type').addEventListener('change', function() {
+  const isGoal = this.value === 'goal';
+  document.getElementById('trigger-label').style.display = isGoal ? 'block' : 'none';
+  document.getElementById('task-trigger').style.display = isGoal ? 'block' : 'none';
+});
+function openNewModal() {
+  document.getElementById('new-modal').classList.add('open');
+  ['task-title','task-desc','task-awaits','task-trigger'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('task-status').value='ready';
+  document.getElementById('task-prio').value='P2';
+  document.getElementById('task-label').value='';
+  document.getElementById('task-deadline').value='';
+  document.getElementById('task-type').value='task';
+  document.getElementById('trigger-label').style.display='none';
+  document.getElementById('task-trigger').style.display='none';
+  setTimeout(()=>document.getElementById('task-title').focus(),100);
+}
+function closeNewModal(){document.getElementById('new-modal').classList.remove('open');}
+async function createTask() {
+  const title=document.getElementById('task-title').value.trim();
+  if(!title){toast('Title required','err');return;}
+  const body={
+    title,
+    description:document.getElementById('task-desc').value.trim(),
+    status:document.getElementById('task-status').value,
+    priority:document.getElementById('task-prio').value,
+    label:document.getElementById('task-label').value,
+    deadline:document.getElementById('task-deadline').value,
+    awaits:document.getElementById('task-awaits').value.trim(),
+    type:document.getElementById('task-type').value,
+    trigger:document.getElementById('task-trigger').value.trim(),
+  };
+  const r=await api('/api/task/create',body);
+  if(r.ok){closeNewModal();await loadTasks();toast('Created','ok')}
+  else toast('Failed','err');
+}
+
+// ── Quick actions ──
+async function quickMove(id,status){const r=await api('/api/task/move',{id,status});if(r.ok)await loadTasks();else toast('Move failed','err');}
+async function deleteTask(id){if(!confirm('Delete '+id+'?'))return;const r=await api('/api/task/delete',{id});if(r.ok){await loadTasks();toast('Deleted','ok')}else toast('Delete failed','err');}
+
+// ── Templates ──
+function showTemplatePicker(){loadTemplates();document.getElementById('tpl-picker').classList.add('open');renderTemplatePicker();}
+function closeTplPicker(){document.getElementById('tpl-picker').classList.remove('open');}
+function renderTemplatePicker(){
+  const el=document.getElementById('tpl-picker-list');
+  if(!templates.length){el.innerHTML='<div class="empty-state">No templates. Save one first.</div>';return;}
+  el.innerHTML='<div class="tpl-list">'+templates.map(t=>
+    `<div class="tpl-card" onclick="applyTemplate('${escA(t.id)}')">
+      <div class="tpl-title">${esc(t.title)}</div>
+      <div class="tpl-meta">${t.priority||'P2'}${t.assignee?' · '+esc(t.assignee):''}</div>
+      <div class="tpl-meta">${t.description?esc(t.description.substring(0,60)):''}</div>
+    </div>`
+  ).join('')+'</div>';
+}
+function applyTemplate(id){
+  const t=templates.find(x=>x.id===id);
+  if(!t)return;
+  document.getElementById('task-title').value=t.title||'';
+  document.getElementById('task-desc').value=t.description||'';
+  document.getElementById('task-prio').value=t.priority||'P2';
+  document.getElementById('task-label').value=t.label||'';
+  document.getElementById('task-awaits').value=t.awaits||'';
+  if(t.deadline_offset){
+    const d=new Date();d.setDate(d.getDate()+t.deadline_offset);
+    document.getElementById('task-deadline').value=d.toISOString().split('T')[0];
+  }
+  closeTplPicker();toast('Template applied','ok');
+}
+async function saveTemplate(){
+  const name=document.getElementById('tpl-name').value.trim();
+  if(!name){toast('Name required','err');return;}
+  const t=modalTaskId?tasks.find(x=>x.id===modalTaskId):null;
+  const r=await api('/api/templates/create',{
+    title:name,
+    description: t?t.description:'',
+    priority: t?t.priority:'P2',
+    label: t?.label||'',
+    assignee: t?.assignee||'',
+    deadline_offset:0,
+    awaits: t?.awaits||'',
+  });
+  if(r.ok){document.getElementById('tpl-name').value='';await loadTemplates();toast('Template saved','ok')}
+  else toast('Failed','err');
+}
+async function loadTemplates(){const r=await api('/api/templates/list',{});if(r.ok)templates=r.templates||[];renderTemplates();}
+function renderTemplates(){
+  const el=document.getElementById('tpl-list');
+  if(!templates.length){el.innerHTML='<div class="empty-state">No templates</div>';return;}
+  el.innerHTML=templates.map(t=>
+    `<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface2);font-size:12px">
+      <div><span style="font-weight:500">${esc(t.title)}</span> <span style="color:var(--text2)">${t.priority||''}</span></div>
+      <button class="btn sm danger" onclick="deleteTemplate('${escA(t.id)}')">✕</button>
+    </div>`
+  ).join('');
+}
+async function deleteTemplate(id){const r=await api('/api/templates/delete',{id});if(r.ok){await loadTemplates();toast('Deleted','ok')}else toast('Failed','err');}
+
+// ── Rules ──
+async function loadRules(){const r=await api('/api/rules/list',{});if(r.ok)rules=r.rules||[];renderRules();}
+function renderRules(){
+  const el=document.getElementById('rules-list');
+  if(!rules.length){el.innerHTML='<div class="empty-state">No rules</div>';return;}
+  el.innerHTML=rules.map(r=>
+    `<div class="rule-item">
+      <div><div class="r-name">${esc(r.name||'?')}</div>
+      <div class="r-detail">${r.condition?.field||'?'} ${r.condition?.op||'?'} ${r.condition?.value||'?'} → ${r.action?.action||'?'}</div></div>
+      <div><span style="width:8px;height:8px;border-radius:50%;display:inline-block;background:${r.enabled?'var(--green)':'var(--red)'};margin-right:6px"></span>
+      <button class="btn sm danger" onclick="deleteRule('${escA(r.id)}')">✕</button></div>
+    </div>`
+  ).join('');
+}
+async function addRule(){
+  const name=document.getElementById('rule-name').value.trim()||'auto-rule';
+  const field=document.getElementById('rule-field').value;
+  const op=document.getElementById('rule-op').value;
+  const val=document.getElementById('rule-val').value;
+  const act=document.getElementById('rule-act').value;
+  const cond=op==='stale'?{field,op,days:7}:{field,op,value:val};
+  const r=await api('/api/rules/create',{name,condition:cond,action:{action:act,target_status:act==='block'?'blocked':'ready'}});
+  if(r.ok){document.getElementById('rule-name').value='';await loadRules();toast('Rule added','ok')}
+  else toast('Failed','err');
+}
+async function deleteRule(id){const r=await api('/api/rules/delete',{id});if(r.ok){await loadRules();toast('Deleted','ok')}else toast('Failed','err');}
+async function evaluateRules(){
+  const r=await api('/api/rules/evaluate',{});
+  const el=document.getElementById('rules-result');
+  if(!r.ok||!r.results||!r.results.length){el.style.display='block';el.innerHTML='<div class="empty-state">No rules triggered</div>';return;}
+  el.style.display='block';
+  el.innerHTML='<div style="font-size:12px;color:var(--orange);margin-bottom:6px">⚠️ Triggered rules:</div>'+
+    r.results.map(ev=>`<div style="font-size:11px;padding:4px 8px;border-bottom:1px solid var(--border)">${esc(ev.rule_name)} → <b>${esc(ev.task_title)}</b> (${ev.action?.action||'?'})</div>`).join('');
+  toast('Evaluated','ok');
+}
+
+// ── Load data ──
+async function loadTasks(){try{tasks=await fetchJSON('data/tasks.json');render();}catch(e){toast('Failed to load tasks','err');}}
+async function loadMoveLog(){try{moveLog=await fetchJSON('data/move_log.json');}catch(e){moveLog=[];}renderHistory();}
+function renderHistory(){
+  if(!document.getElementById('hist-inner'))return;
+  document.getElementById('hist-count').textContent=moveLog.length+' entries';
+  const el=document.getElementById('hist-inner');
+  el.innerHTML=[...moveLog].reverse().slice(0,100).map(e=>`<div class="history-entry"><span class="hist-time">${e.timestamp?new Date(e.timestamp).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'}):'?'}</span><span class="hist-task">${esc(e.task_title||'?')}</span><span class="hist-arrow">→</span><span class="hist-from">${e.from||'?'}</span><span class="hist-arrow">→</span><span class="hist-to">${e.to||'?'}</span></div>`).join('');
+  if(!moveLog.length)el.innerHTML='<div class="empty-state">No moves yet</div>';
+}
+
+function toggleCollapse(id){
+  const el=document.getElementById(id);
+  if(!el)return;
+  el.classList.toggle('collapsed');
+  const toggleId=id.replace('-inner','-toggle');
+  const tEl=document.getElementById(toggleId);
+  if(tEl)tEl.textContent=el.classList.contains('collapsed')?'▶':'▼';
+}
+
+// ── Helpers ──
+async function fetchJSON(p){const r=await fetch(p,{cache:'no-store'});return r.ok?r.json():[];}
+async function api(m,b){return fetch(m,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)}).then(r=>r.json());}
+function getTaskTitle(id){const t=tasks.find(x=>x.id===id);return t?t.title:'?';}
+function esc(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function escA(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+function age(ts){if(!ts)return'';const d=Math.floor((Date.now()-new Date(ts).getTime())/1000);if(d<60)return'now';if(d<3600)return Math.floor(d/60)+'m';if(d<86400)return Math.floor(d/3600)+'h';return Math.floor(d/86400)+'d';}
+function fmtDate(ts){if(!ts)return'-';try{return new Date(ts).toLocaleString('ru-RU')}catch(e){return ts}}
+let toastTimer;
+function toast(msg,t){const el=document.createElement('div');el.className='alert '+t;el.textContent=msg;document.body.appendChild(el);clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.remove(),2500);}
+
+// ── Init ──
+async function init() {
+  await Promise.all([loadTasks(),loadMoveLog(),loadTemplates(),loadRules()]);
+  document.getElementById('refresh-time').textContent=new Date().toLocaleTimeString();
+}
+init();
+// Refresh auto
+setInterval(() => { loadTasks(); loadMoveLog(); }, 30000);
+</script>
+</body>
+</html>

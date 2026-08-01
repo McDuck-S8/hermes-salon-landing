@@ -1,0 +1,213 @@
+{
+  "_principles": [
+    "Каждое действие имеет причину (событие)",
+    "Каждое событие имеет реакцию",
+    "Реакции многоагентные, многоуровневые",
+    "L0=мгновенно, L1=быстро, L2=в фоне, L3=периодически",
+    "Система никогда не простаивает",
+    "Адаптируйся или умри"
+  ],
+
+  "L0_IMMEDIATE": {
+    "scam_detected": {
+      "name": "Обнаружен скам",
+      "triggers": ["скам", "подделка", "фишинг", "phishing", "fake", "scam"],
+      "agents": ["security_sentinel"],
+      "actions": ["block_threat", "alert_user", "log_incident"]
+    },
+    "attack_detected": {
+      "name": "Атака на систему",
+      "triggers": ["атака", "brute force", "ddos", "injection", "взлом", "attack"],
+      "agents": ["security_sentinel", "incident_responder"],
+      "actions": ["block_ip", "rate_limit", "alert_user", "emergency_lockdown"]
+    },
+    "threat_to_user": {
+      "name": "Угроза пользователю",
+      "triggers": ["угроза", "шантаж", "doxing", "personal attack", "threat"],
+      "agents": ["security_sentinel"],
+      "actions": ["alert_user_immediately", "preserve_evidence", "block_attacker"]
+    },
+    "disk_critical": {
+      "name": "Диск критически полон",
+      "triggers": ["disk critical", "диск полон", "disk full", "no space"],
+      "agents": ["ops_agent"],
+      "actions": ["emergency_cleanup", "alert_user"]
+    },
+    "memory_critical": {
+      "name": "RAM критически полна",
+      "triggers": ["memory critical", "ram full", "out of memory", "oom"],
+      "agents": ["ops_agent"],
+      "actions": ["kill_processes", "alert_user"]
+    }
+  },
+
+  "L1_FAST": {
+    "breakdown": {
+      "name": "Поломка",
+      "triggers": ["не работает", "упал", "ошибка", "crash", "dead", "broken",
+                   "не отвечает", "timeout", "refused", "connection reset",
+                   "порт не открыт", "не запускается", "error"],
+      "agents": ["ops_agent"],
+      "actions": ["restart_process", "check_logs", "verify_fix"]
+    },
+    "missing_information": {
+      "name": "Нет информации",
+      "triggers": ["нет данных", "нет ответа", "неполные данные", "нужна справка",
+                   "не знаю", "don't know", "no info"],
+      "agents": ["researcher"],
+      "actions": ["search_web", "check_knowledge_cube", "ask_user"]
+    },
+    "missing_tool": {
+      "name": "Нет инструмента",
+      "triggers": ["нет модуля", "not found", "MissingPackage", "command not found",
+                   "pip install", "нужен инструмент"],
+      "agents": ["installer"],
+      "actions": ["pip_install", "find_alternative", "build_workaround"]
+    },
+    "new_task": {
+      "name": "Новое задание",
+      "triggers": ["сделай", "нужно", "задача", "create", "build", "deploy",
+                   "задание", "поручение", "task"],
+      "agents": ["planner", "executor"],
+      "actions": ["parse_requirements", "delegate_to_subagent", "track_progress"]
+    },
+    "order_received": {
+      "name": "Заказ получен",
+      "triggers": ["заказ", "оплата", "booking", "покупка", "заявка", "order"],
+      "agents": ["order_processor"],
+      "actions": ["confirm_order", "process_payment", "notify_salon", "send_confirmation"]
+    },
+    "disk_warning": {
+      "name": "Диск почти полон",
+      "triggers": ["disk warning", "диск почти полный", "disk filling"],
+      "agents": ["ops_agent"],
+      "actions": ["suggest_cleanup"]
+    },
+    "memory_warning": {
+      "name": "RAM почти полна",
+      "triggers": ["memory warning", "ram filling", "ram almost full"],
+      "agents": ["ops_agent"],
+      "actions": ["monitor"]
+    }
+  },
+
+  "L2_BACKGROUND": {
+    "work_mode": {
+      "name": "Рабочее время",
+      "triggers": ["work_mode", "рабочее время", "forenoon", "afternoon"],
+      "agents": ["planner"],
+      "actions": ["check_goals", "prioritize_tasks"]
+    },
+    "new_trend": {
+      "name": "Новый тренд",
+      "triggers": ["тренд", "вирусное", "viral", "hype", "trending", "тренды"],
+      "agents": ["trend_analyst"],
+      "actions": ["analyze_trend", "assess_relevance", "estimate_opportunity"]
+    },
+    "new_video": {
+      "name": "Новое видео",
+      "triggers": ["новое видео", "youtube", "video published", "вышло видео"],
+      "agents": ["content_monitor"],
+      "actions": ["fetch_transcript", "extract_key_points", "summarize"]
+    },
+    "system_update": {
+      "name": "Обновление системы",
+      "triggers": ["update available", "new version", "обновление", "upgrade"],
+      "agents": ["updater"],
+      "actions": ["check_changelog", "backup_current", "apply_update"]
+    },
+    "knowledge_gap": {
+      "name": "Пробел в знаниях",
+      "triggers": ["не знаю как", "no documentation", "unfamiliar", "пробел"],
+      "agents": ["researcher", "knowledge_builder"],
+      "actions": ["search_solutions", "build_understanding", "store_in_cube"]
+    },
+    "user_silent": {
+      "name": "Пользователь молчит",
+      "triggers": ["user_silent", "молчит", "тишина", "user away", "тихо"],
+      "agents": ["background_worker"],
+      "actions": ["start_background_work"]
+    },
+    "new_external_signal": {
+      "name": "Новый внешний сигнал",
+      "triggers": ["new_external_signal", "внешний сигнал", "external signal", "новый кирпич"],
+      "agents": ["rd_processor", "dev_processor"],
+      "actions": ["extract_essence", "check_workshop", "add_brick", "create_goal_if_gap"]
+    },
+    "file_changed": {
+      "name": "Файл изменён",
+      "triggers": ["file_changed", "файл изменён", "modified"],
+      "agents": ["verifier"],
+      "actions": ["verify_syntax", "check_impact"]
+    },
+    "no_goals": {
+      "name": "Нет целей",
+      "triggers": ["no_goals", "нет целей", "простой", "idle"],
+      "agents": ["planner"],
+      "actions": ["create_goals", "explore_opportunities"]
+    },
+    "cron_degraded": {
+      "name": "Крон деградировал",
+      "triggers": ["cron", "cron jobs", "просрочено", "просрочены", "stale", "cron degraded"],
+      "agents": ["ops_agent"],
+      "actions": ["reschedule_cron"]
+    },
+    "knowledge_stale": {
+      "name": "Знания устарели",
+      "triggers": ["knowledge stale", "knowledge not updated", "KC устарел"],
+      "agents": ["researcher"],
+      "actions": ["explore_and_learn"]
+    }
+  },
+
+  "L3_PERIODIC": {
+    "day_started": {
+      "name": "День начался",
+      "triggers": ["day_started", "утро", "morning", "start_of_day"],
+      "agents": ["morning_briefing"],
+      "actions": ["system_health_check", "overnight_report", "day_planning"]
+    },
+    "day_ending": {
+      "name": "День заканчивается",
+      "triggers": ["day_ending", "вечер", "evening", "подведу итоги"],
+      "agents": ["night_maintenance"],
+      "actions": ["daily_summary", "plan_tomorrow", "cleanup"]
+    },
+    "deep_night": {
+      "name": "Глубокая ночь",
+      "triggers": ["deep_night", "ночь", "night", "aintenance window"],
+      "agents": ["night_maintenance"],
+      "actions": ["backup", "analytics", "knowledge_compaction"]
+    },
+    "weather_changed": {
+      "name": "Погода изменилась",
+      "triggers": ["погода", "weather", "дождь", "солнце", "шторм"],
+      "agents": ["weather_monitor"],
+      "actions": ["fetch_weather", "assess_salon_impact"]
+    },
+    "report_needed": {
+      "name": "Нужен отчёт",
+      "triggers": ["отчёт", "report", "analytics", "статистика"],
+      "agents": ["report_generator"],
+      "actions": ["collect_metrics", "generate_report"]
+    },
+    "meditation": {
+      "name": "Медитация",
+      "triggers": ["медитируй", "подумай", "проанализируй", "reflect", "meditate"],
+      "agents": ["reflection_agent"],
+      "actions": ["analyze_recent_actions", "find_patterns", "propose_improvements"]
+    },
+    "no_user_interaction": {
+      "name": "Нет взаимодействия",
+      "triggers": ["no_user_interaction", "нет взаимодействия"],
+      "agents": ["waiter"],
+      "actions": ["wait_for_user"]
+    }
+  },
+
+  "unknown_event": {
+    "name": "Неизвестное событие",
+    "agents": ["investigator"],
+    "actions": ["log_unknown", "analyze_context", "classify_manual", "add_to_registry"]
+  }
+}

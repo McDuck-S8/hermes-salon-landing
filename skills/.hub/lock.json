@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "installed": {
+    "excel-author": {
+      "source": "official",
+      "identifier": "official/finance/excel-author",
+      "trust_level": "builtin",
+      "scan_verdict": "backfilled",
+      "content_hash": "sha256:a2ae410c548602b0",
+      "install_path": "finance/excel-author",
+      "files": [
+        "scripts/recalc.py",
+        "SKILL.md"
+      ],
+      "metadata": {
+        "backfilled_from": "optional-skills"
+      },
+      "installed_at": "2026-06-21T21:45:57.393563+00:00",
+      "updated_at": "2026-06-21T21:45:57.393563+00:00"
+    },
+    "pptx-author": {
+      "source": "official",
+      "identifier": "official/finance/pptx-author",
+      "trust_level": "builtin",
+      "scan_verdict": "backfilled",
+      "content_hash": "sha256:4ec63d16a63a7bcb",
+      "install_path": "finance/pptx-author",
+      "files": [
+        "SKILL.md"
+      ],
+      "metadata": {
+        "backfilled_from": "optional-skills"
+      },
+      "installed_at": "2026-06-21T21:45:57.443862+00:00",
+      "updated_at": "2026-06-21T21:45:57.443862+00:00"
+    },
+    "stocks": {
+      "source": "official",
+      "identifier": "official/finance/stocks",
+      "trust_level": "builtin",
+      "scan_verdict": "backfilled",
+      "content_hash": "sha256:fc54924847e2d9af",
+      "install_path": "finance/stocks",
+      "files": [
+        "scripts/stocks_client.py",
+        "SKILL.md"
+      ],
+      "metadata": {
+        "backfilled_from": "optional-skills"
+      },
+      "installed_at": "2026-06-21T21:45:57.485037+00:00",
+      "updated_at": "2026-06-21T21:45:57.485037+00:00"
+    },
+    "sherlock": {
+      "source": "official",
+      "identifier": "official/security/sherlock",
+      "trust_level": "builtin",
+      "scan_verdict": "backfilled",
+      "content_hash": "sha256:5c1da13887269a5e",
+      "install_path": "security/sherlock",
+      "files": [
+        "SKILL.md"
+      ],
+      "metadata": {
+        "backfilled_from": "optional-skills"
+      },
+      "installed_at": "2026-06-21T21:45:58.029297+00:00",
+      "updated_at": "2026-06-21T21:45:58.029297+00:00"
+    },
+    "page-agent": {
+      "source": "official",
+      "identifier": "official/web-development/page-agent",
+      "trust_level": "builtin",
+      "scan_verdict": "backfilled",
+      "content_hash": "sha256:d1bfdd031da222b1",
+      "install_path": "web-development/page-agent",
+      "files": [
+        "SKILL.md"
+      ],
+      "metadata": {
+        "backfilled_from": "optional-skills"
+      },
+      "installed_at": "2026-06-21T21:45:58.159923+00:00",
+      "updated_at": "2026-06-21T21:45:58.159923+00:00"
+    }
+  }
+}

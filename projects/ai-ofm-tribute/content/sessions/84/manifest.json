@@ -1,0 +1,67 @@
+{
+  "session": 84,
+  "style": "fantasy",
+  "model": "seedream",
+  "count": 5,
+  "success_count": 0,
+  "fail_count": 5,
+  "timestamp": "2026-07-25T22:27:24.938924+00:00",
+  "provider": "pollinations.ai",
+  "images": [
+    {
+      "index": 1,
+      "style": "fantasy",
+      "prompt": "Goddess of moonlight standing on ancient temple ruins, silver-white dress, glowing eyes, mystical aura, starry night sky, fantasy art, cinematic composition, photorealistic",
+      "seed": 232499,
+      "caption": "🌟 Magic in every detail | Premium gallery",
+      "model": "seedream",
+      "filename": "fantasy_84_01.jpg",
+      "filepath": "D:\\Portable_Soft\\hermes\\projects\\ai-ofm-tribute\\content\\sessions\\84\\fantasy_84_01.jpg",
+      "success": false
+    },
+    {
+      "index": 2,
+      "style": "fantasy",
+      "prompt": "Sorceress with flowing silver hair casting a spell, magical particles around hands, dramatic lighting, fantasy portrait, intricate robe details, glowing runes, ethereal atmosphere",
+      "seed": 601596,
+      "caption": "⭐ Enchanted | Subscriber preview",
+      "model": "seedream",
+      "filename": "fantasy_84_02.jpg",
+      "filepath": "D:\\Portable_Soft\\hermes\\projects\\ai-ofm-tribute\\content\\sessions\\84\\fantasy_84_02.jpg",
+      "success": false
+    },
+    {
+      "index": 3,
+      "style": "fantasy",
+      "prompt": "Mystical elf queen in enchanted forest, bioluminescent flowers, shimmering dress, elegant pose, detailed face, dappled sunlight, fantasy art, intricate details, volumetric fog",
+      "seed": 513006,
+      "caption": "💫 Fantasy collection | Member access only",
+      "model": "seedream",
+      "filename": "fantasy_84_03.jpg",
+      "filepath": "D:\\Portable_Soft\\hermes\\projects\\ai-ofm-tribute\\content\\sessions\\84\\fantasy_84_03.jpg",
+      "success": false
+    },
+    {
+      "index": 4,
+      "style": "fantasy",
+      "prompt": "Mystical elf queen in enchanted forest, bioluminescent flowers, shimmering dress, elegant pose, detailed face, dappled sunlight, fantasy art, intricate details, volumetric fog",
+      "seed": 147524,
+      "caption": "🌙 Mystical beauty | Daily exclusive",
+      "model": "seedream",
+      "filename": "fantasy_84_04.jpg",
+      "filepath": "D:\\Portable_Soft\\hermes\\projects\\ai-ofm-tribute\\content\\sessions\\84\\fantasy_84_04.jpg",
+      "success": false
+    },
+    {
+      "index": 5,
+      "style": "fantasy",
+      "prompt": "Forest nymph with flower crown, dewdrop skin, emerald eyes, magical forest background, soft sunlight filtering through leaves, dreamy atmosphere, hyperdetailed portrait",
+      "seed": 8044,
+      "caption": "🌟 Magic in every detail | Premium gallery",
+      "model": "seedream",
+      "filename": "fantasy_84_05.jpg",
+      "filepath": "D:\\Portable_Soft\\hermes\\projects\\ai-ofm-tribute\\content\\sessions\\84\\fantasy_84_05.jpg",
+      "success": false
+    }
+  ]
+}

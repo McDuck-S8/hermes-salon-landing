@@ -1,0 +1,7 @@
+
+db = SessionDB()
+cur = db._conn.execute('SELECT COUNT(*) FROM sessions WHERE title IS NULL OR title = \"\"')
+u = cur.fetchone()[0]
+print(f'Untitiled remaining: {u}')
+cat /tmp/fix_titles.log 2>/dev/null | tail -3
+" 2>&1 && cat /tmp/fix_titles.log 2>/dev/null | tail -3  0.0s

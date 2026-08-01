@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Косметолог Комсомольское — ботокс, губы, биоревитализация</title>
+  <meta name="description" content="Косметолог с высшим медицинским образованием. Ботокс, филлеры, биоревитализация, чистки, пилинги. Выезд на дом. Запись @alliccenn">
+
+  <!-- Modern preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== BASE STYLES ===== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 80px;
+    }
+    
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #f8f7f4;
+      color: #1a1a1a;
+      line-height: 1.6;
+      overflow-x: hidden;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; border: none; background: none; font: inherit; }
+    
+    /* ===== CSS LAYERS FOR MAINTAINABLE ARCHITECTURE ===== */
+    @layer reset, base, tokens, layout, components, utilities, overrides;
+    
+    /* Reset Layer */
+    @layer reset {
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      body, h1, h2, h3, p { margin: 0; padding: 0; }
+    }
+    
+    /* Base Layer */
+    @layer base {
+      :root {
+        --font-primary: 'Inter', sans-serif;
+        --spacing: 1rem;
+        --radius: 12px;
+      }
+      body { font-family: var(--font-primary); line-height: 1.6; }
+    }
+    
+    /* Tokens Layer (colors, sizes) */
+    @layer tokens {
+      :root {
+        --color-primary: #2563eb;
+        --color-secondary: #64748b;
+        --color-accent: #10b981;
+        --color-error: #ef4444;
+        --color-surface: #ffffff;
+        --color-bg-dark: #121212;
+        --radius-sm: 4px;
+        --radius-md: 8px;
+      }
+    }
+    
+    /* Layout Layer */
+    @layer layout {
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+    }
+    
+    /* Components Layer */
+    @layer components {
+      .card {
+        background: var(--color-surface);
+        border-radius: var(--radius-md);
+        padding: var(--spacing);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      }
+      
+      .btn {
+        padding: 8px 16px;
+        border-radius: var(--radius-sm);
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      
+      .btn-primary { background: var(--color-primary); color: white; }
+      .btn-primary:hover { background: #1d4ed8; }
+    }
+    
+    /* Utilities Layer */
+    @layer utilities {
+      .text-center { text-align: center; }
+      .mt-2 { margin-top: 0.5rem; }
+      .mb-2 { margin-bottom: 0.5rem; }
+    }
+    
+    /* ===== MODERN CSS FEATURES ===== */
+    
+    /* Container Queries - adapts to parent size */
+    @container (.services-grid) (min-width: 800px) {
+      .service-group { flex-direction: row; align-items: center; }
+      .service-item { min-width: 250px; }
+    }
+    
+    /* :has() pseudo-class - parent selector styling */
+    :has(> .error) .form-control {
+      border-color: var(--color-error);
+      background: rgba(239, 68, 68, 0.1);
+    }
+    
+    /* light-dark() function - automatic theme switching */
+    :root {
+      color-scheme: light dark;
+      --bg: light-dark(#ffffff, #121212);
+      --text: light-dark(#1a1a2e, #e4e4e7);
+      --surface: light-dark(#ffffff, #1e1e1e);
+    }
+    
+    /* CSS Nesting for cleaner structure */
+    .service-group {
+      background: var(--color-surface);
+      border-radius: var(--radius-md);
+      padding: var(--spacing);
+      
+      &:hover {
+        border-color: var(--color-primary);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      }
+      
+      .service-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--border-color);
+        
+        &:last-child { border-bottom: none; }
+      }
+    }
+    
+    /* ===== ANIMATIONS AND TRANSITIONS ===== */
+    
+    /* Micro-interactions */
+    .btn {
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .btn:hover { transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+    
+    /* ===== LAYOUT AND SECTIONS ===== */
+    
+    /* Header */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 14px 0;
+      transition: all 0.3s ease;
+      background: rgba(248, 247, 244, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+    
+    .header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .header-logo {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: var(--color-primary);
+      font-weight: 500;
+    }
+    
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+    
+    .header-nav a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .header-nav a:hover {
+      color: var(--color-primary);
+    }
+    
+    /* Hero Section */
+    .hero {
+      min-height: 90dvh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 80px;
+      background: linear-gradient(135deg, #f0f5f3 0%, #f8f7f4 50%, #f0f0ec 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero-left {
+      display: flex;
+      align-items: center;
+      padding: 0 48px;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .hero-content { max-width: 520px; }
+    
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius) 0 0 var(--radius);
+      display: flex;
+      align-items: stretch;
+    }
+    
+    .hero-right img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    /* ===== RESPONSIVE DESIGN - FIXED VERSION ===== */
+    
+    @media(max-width: 768px) {
+      /* Mobile Styles - Apply ONLY on mobile */
+      .header-nav {
+        display: none !important; /* Hide desktop nav on mobile */
+      }
+      
+      .mobile-toggle {
+        display: flex !important; /* Show mobile menu button */
+      }
+      
+      .hero {
+        grid-template-columns: 1fr !important; /* Single column on mobile */
+      }
+      
+      .hero-right {
+        min-height: 50vh !important; /* Mobile hero height */
+      }
+      
+      /* Stack all grid items on mobile */
+      .services-grid,
+      .reviews-grid,
+      .ba-grid,
+      .slots-grid {
+        grid-template-columns: 1fr !important;
+      }
+      
+      /* Full-width carousels on mobile */
+      .carousel-slide {
+        min-width: 100% !important;
+      }
+    }
+    
+    /* Desktop Styles - Use the default (not in media query) */
+    .header-nav {
+      display: flex !important; /* Show desktop nav on desktop */
+    }
+    
+    .mobile-toggle {
+      display: none !important; /* Hide mobile button on desktop */
+    }
+    
+    .hero {
+      grid-template-columns: 1fr 1fr !important; /* Desktop grid */
+    }
+    
+    .services-grid,
+    .reviews-grid,
+    .ba-grid,
+    .slots-grid {
+      grid-template-columns: 1fr 1fr !important; /* Desktop grid */
+    }
+    
+    .carousel-slide {
+      min-width: 33.333% !important; /* Desktop carousel */
+    }
+  </style>
+  
+  <!-- Scripts -->
+  <script>
+    // ===== THEME MANAGER =====
+    const ThemeManager = {
+      init() {
+        const saved = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (saved) {
+          this.setTheme(saved);
+        } else if (prefersDark) {
+          this.setTheme('dark');
+        } else {
+          this.setTheme('light');
+        }
+        
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+          if (!localStorage.getItem('theme')) {
+            this.setTheme(e.matches ? 'dark' : 'light');
+          }
+        });
+      },
+      
+      setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        this.updateToggleButton(theme);
+      },
+      
+      updateToggleButton(theme) {
+        const toggle = document.getElementById('themeToggle');
+        if (toggle) {
+          toggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
+      },
+      
+      toggle() {
+        const current = document.documentElement.getAttribute('data-theme');
+        this.setTheme(current === 'dark' ? 'light' : 'dark');
+      }
+    };
+    
+    // ===== MOBILE MENU MANAGER =====
+    const MobileMenuManager = {
+      init() {
+        this.toggle = document.querySelector('.mobile-toggle');
+        this.nav = document.querySelector('.header-nav');
+        
+        if (this.toggle && this.nav) {
+          this.toggle.addEventListener('click', () => this.toggleMenu());
+          this.setupLinkHandlers();
+        }
+      },
+      
+      toggleMenu() {
+        this.nav.classList.toggle('active');
+      },
+      
+      setupLinkHandlers() {
+        document.querySelectorAll('.header-nav a').forEach(link => {
+          link.addEventListener('click', () => this.closeMenu());
+        });
+      },
+      
+      closeMenu() {
+        this.nav.classList.remove('active');
+      }
+    };
+    
+    // ===== CAROUSEL MANAGER =====
+    const CarouselManager = {
+      init(trackId, dotsId, visibleCount) {
+        this.track = document.getElementById(trackId);
+        if (!this.track) return;
+        
+        this.slides = Array.from(this.track.children);
+        this.totalReal = this.slides.length;
+        this.visibleCount = visibleCount;
+        this.slideWidth = 100 / visibleCount;
+        
+        this.setupCarousel();
+        this.createDots(dotsId);
+        this.startAtFirstReal();
+      },
+      
+      setupCarousel() {
+        const prevBtn = document.querySelector(`#${this.track.id} .carousel-btn`);
+        const nextBtn = document.querySelector(`#${this.track.id} .carousel-next`);
+        
+        if (prevBtn) {
+          prevBtn.addEventListener('click', () => this.navigate(-1));
+        }
+        
+        if (nextBtn) {
+          nextBtn.addEventListener('click', () => this.navigate(1));
+        }
+      },
+      
+      navigate(direction) {
+        this.current += direction;
+        this.track.style.transition = 'transform 0.5s ease';
+        this.track.style.transform = `translateX(-${this.current * this.slideWidth}%)`;
+        
+        this.updateDots();
+        this.handleSeamlessJump();
+      },
+      
+      handleSeamlessJump() {
+        this.track.addEventListener('transitionend', () => {
+          if (this.current <= this.visibleCount - 1) {
+            this.current = this.totalReal + this.visibleCount - 1;
+            this.track.style.transition = 'none';
+            this.track.style.transform = `translateX(-${this.current * this.slideWidth}%)`;
+          } else if (this.current >= this.totalReal + this.visibleCount) {
+            this.current = this.visibleCount;
+            this.track.style.transition = 'none';
+            this.track.style.transform = `translateX(-${this.current * this.slideWidth}%)`;
+          }
+        });
+      }
+    };
+    
+    // ===== INITIALIZATION =====
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize managers
+      const themeManager = new ThemeManager();
+      const mobileMenuManager = new MobileMenuManager();
+      const carouselManager = new CarouselManager();
+      
+      // Initialize carousel for both carousels
+      carouselManager.init('carouselTrack', 'carouselDots', 3);
+    });
+  </script>
+</head>
+<body>
+  <a href="#main" class="skip-link">Перейти к содержанию</a>
+  
+  <!-- Theme toggle button -->
+  <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">🌙</button>
+  
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="#" class="header-logo">Косметолог<span>.</span></a>
+      <nav class="header-nav" role="navigation" aria-label="Главное меню">
+        <a href="#services">Услуги</a>
+        <a href="#about">Обо мне</a>
+        <a href="#results">Результаты</a>
+        <a href="#reviews">Отзывы</a>
+        <a href="#contact">Контакты</a>
+        <a href="https://t.me/alliccenn" class="btn btn-primary" target="_blank">✉️ Записаться</a>
+      </nav>
+      <div class="mobile-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+  
+  <main id="main" role="main">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-left">
+        <div class="hero-content">
+          <div class="eyebrow">Косметолог с высшим медицинским образованием</div>
+          <h1>Ваша красота — <em>моя работа</em></h1>
+          <p>Ботокс, филлеры, биоревитализация, чистки, пилинги. Работаю дома с выездом к вам.</p>
+          <div class="hero-actions">
+            <a href="https://t.me/alliccenn" class="btn btn-primary" target="_blank">✉️ Записаться</a>
+            <a href="#services" class="btn btn-outline">Услуги</a>
+          </div>
+          <div class="hero-badges">
+            <span class="hero-badge">🎓 Высшее медицинское</span>
+            <span class="hero-badge">💉 Препараты премиум</span>
+            <span class="hero-badge">🏠 Выезд на дом</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-right">
+        <img src="assets/master.jpg" alt="Косметолог Комсомольское" loading="eager">
+      </div>
+    </section>
+    
+    <!-- SERVICES -->
+    <section class="services" id="services">
+      <div class="container">
+        <div class="section-label">Услуги</div>
+        <h2>Что я предлагаю</h2>
+        <div class="services-grid">
+          <div class="service-group">
+            <h3>💉 Инъекционная косметология</h3>
+            <div class="service-item"><span class="service-item-name">Ботокс / Диспорт</span><span class="service-item-val">от 350₽ ед.</span></div>
+            <div class="service-item"><span class="service-item-name">Коррекция мимических морщин</span><span class="service-item-val">от 4 000₽</span></div>
+            <div class="service-item"><span class="service-item-name">Ботулинотерапия (лоб, межбровье)</span><span class="service-item-val">5 000₽</span></div>
+            <div class="service-item"><span class="service-item-name">Ботокс от гипергидроза (потливость)</span><span class="service-item-val">6 000₽</span></div>
+            <div class="service-item"><span class="service-item-name">Губы (филлер)</span><span class="service-item-val">от 7 500₽</span></div>
+            <div class="service-item"><span class="service-item-name">Контурная пластика</span><span class="service-item-val">от 6 000₽</span></div>
+          </div>
+          <div class="service-group">
+            <h3>🧴 Уходовая косметология</h3>
+            <div class="service-item"><span class="service-item-name">Биоревитализация</span><span class="service-item-val">от 5 000₽</span></div>
+            <div class="service-item"><span class="service-item-name">Plinest (премиум)</span><span class="service-item-val">8 000₽</span></div>
+            <div class="service-item"><span class="service-item-name">Чистка лица (комбинированная)</span><span class="service-item-val">1 500₽</span></div>
+            <div class="service-item"><span class="service-item-name">Пилинг (по типу кожи)</span><span class="service-item-val">от 1 500₽</span></div>
+            <div class="service-item"><span class="service-item-name">Подбор домашнего ухода</span><span class="service-item-val">1 000₽</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- PROMO -->
+    <section class="promo">
+      <div class="container">
+        <h2>🎀 Спецпредложение</h2>
+        <p>Ботулинотерапия со скидкой — свободное окно. Успейте записаться!</p>
+        <a href="https://t.me/alliccenn" class="btn btn-outline" target="_blank">✉️ Узнать подробнее</a>
+      </div>
+    </section>
+    
+    <!-- ABOUT -->
+    <section class="services" id="about">
+      <div class="container">
+        <div class="section-label">Обо мне</div>
+        <h2 style="text-align:center">Косметолог с медицинским образованием</h2>
+        <div class="about-single" style="max-width:700px;margin:0 auto;text-align:center">
+          <div class="edu-badge" style="display:inline-flex;align-items:center;gap:8px;padding:10px 24px;border-radius:4px;background:#e8f2f0;color:#2d6a6a;font-weight:600;font-size:0.9rem;margin-bottom:1.5rem">🎓 Высшее медицинское образование</div>
+          <p style="margin-bottom:1.5rem">Работаю с препаратами премиум-класса. Индивидуальный подход к каждому клиенту. Выезд на дом.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;list-style:none;text-align:left">
+            <div style="background:#e8f2f0;border-radius:12px;padding:16px">💉 Ботокс, диспорт, ксеомин</div>
+            <div style="background:#e8f2f0;border-radius:12px;padding:16px">💋 Филлеры (губы, носогубные складки)</div>
+            <div style="background:#e8f2f0;border-radius:12px;padding:16px">✨ Биоревитализация (Plinest, Profhilo)</div>
+            <div style="background:#e8f2f0;border-radius:12px;padding:16px">🧴 Чистки, пилинги, уход</div>
+            <div style="background:#e8f2f0;border-radius:12px;padding:16px">💧 Гипергидроз (повышенная потливость)</div>
+            <div style="background:#e8f2f0;border-radius:12px;padding:16px">🔬 Плацентарная терапия</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- RESULTS -->
+    <section class="beforeafter" id="results">
+      <div class="container">
+        <div class="section-label">Результаты</div>
+        <h2>До и после</h2>
+        <div class="carousel">
+          <div class="carousel-track" id="carouselTrack">
+            <div class="carousel-slide"><img src="assets/ba_lips1.jpg" alt="До и после"><div class="carousel-label">Коррекция асимметрии губ</div></div>
+            <div class="carousel-slide"><img src="assets/ba_botox1.jpg" alt="До и после"><div class="carousel-label">Ботокс лба и межбровья</div></div>
+            <div class="carousel-slide"><img src="assets/ba_lips2.jpg" alt="До и после"><div class="carousel-label">Биоревитализация Plinest</div></div>
+            <div class="carousel-slide"><img src="assets/ba_more1.jpg" alt="До и после"><div class="carousel-label">Коррекция губ</div></div>
+            <div class="carousel-slide"><img src="assets/ba_more2.jpg" alt="До и после"><div class="carousel-label">Ботулинотерапия</div></div>
+            <div class="carousel-slide"><img src="assets/ba_more3.jpg" alt="До и после"><div class="carousel-label">Комплексный уход</div></div>
+          </div>
+          <button class="carousel-btn carousel-prev" onclick="moveSlide(-1)">‹</button>
+          <button class="carousel-btn carousel-next" onclick="moveSlide(1)">›</button>
+        </div>
+        <div class="carousel-dots" id="carouselDots"></div>
+        <p style="text-align:center;margin-top:1.5rem;font-size:0.85rem;">Больше фото в <a href="https://t.me/alliccenncosmm" target="_blank" style="color:var(--color-primary);font-weight:500">Telegram-канале</a></p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,48 @@
+{
+  "week": 1,
+  "start_date": "2026-07-29",
+  "channels": {
+    "tiktok": {
+      "views": 0,
+      "profile_clicks": 0,
+      "followers": 0,
+      "posts": 0
+    },
+    "vc_ru": {
+      "articles_submitted": 0,
+      "articles_published": 0,
+      "views": 0,
+      "profile_clicks": 0
+    },
+    "tenchat": {
+      "articles_submitted": 0,
+      "articles_published": 0,
+      "views": 0,
+      "profile_clicks": 0
+    },
+    "telegram": {
+      "posts": 0,
+      "subscribers": 0,
+      "lead_magnet_downloads": 0,
+      "dm_questions": 0
+    },
+    "reddit": {
+      "comments": 0,
+      "profile_clicks": 0,
+      "upvotes": 0
+    },
+    "instagram": {
+      "reels": 0,
+      "views": 0,
+      "profile_clicks": 0,
+      "followers": 0
+    }
+  },
+  "kpis": {
+    "min_tiktok_views": 5000,
+    "min_tg_clicks": 30,
+    "min_tg_subs": 20,
+    "min_articles_published": 1,
+    "min_reddit_comments": 35
+  }
+}

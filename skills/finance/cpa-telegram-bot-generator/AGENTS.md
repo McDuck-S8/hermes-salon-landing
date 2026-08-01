@@ -1,0 +1,27 @@
+# cpa-telegram-bot-generator — Skill
+
+## Purpose
+Use when creating Telegram bots for CPA traffic — 3 templates (cpa_offers, content_locker, vpn_promo), /start → offer button, /offer command, admin stats, requirements.txt, .env.example
+
+## Ownership
+Managed by Hermes Agent. Self-contained skill with SKILL.md, references/, templates/, scripts/.
+
+## Local Contracts
+- **Triggers**: auto-detected from context
+- **Required tools**: standard Hermes tools
+- **Config**: config.yaml in skill dir (optional)
+
+## Work Guidance
+**When to use**: Use when creating Telegram bots for CPA traffic — 3 templates (cpa_offers, content_locker, vpn_promo), /start → offer button, /offer command, admin stats, requirements
+**Common patterns**: Standard skill invocation
+**Anti-patterns**: Using without reading SKILL.md first
+
+## Verification
+- Load SKILL.md and validate frontmatter
+- Run any test scripts in scripts/
+- Verify references/ files exist
+
+## Child DOX Index
+| File/Dir | Purpose |
+|----------|---------|
+| (no child directories) | |

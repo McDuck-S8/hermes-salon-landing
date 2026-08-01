@@ -1,0 +1,42 @@
+ Excellent! The recall command is now working properly. Let me provide a summary to the user.
+
+ Lavra Recall работает!
+
+ Статистика базы знаний
+
+ ┌───────────────┬────────────┐
+ │ Тип           │ Количество │
+ ├───────────────┼────────────┤
+ │ DECISION      │ 71         │
+ ├───────────────┼────────────┤
+ │ LEARNED       │ 41         │
+ ├───────────────┼────────────┤
+ │ FACT          │ 31         │
+ ├───────────────┼────────────┤
+ │ PATTERN       │ 29         │
+ ├───────────────┼────────────┤
+ │ INVESTIGATION │ 10         │
+ └───────────────┴────────────┘
+
+ Всего: 217 записей
+
+ Топ тегов
+
+ - decision (81)
+ - pattern (59)
+ - learned (41)
+ - fact (31)
+ - ui (28)
+ - fix (24)
+ - security (21)
+
+ Команды
+
+ ```bash
+   /lavra-recall --stats           # Статистика
+   /lavra-recall --recent 5        # Последние 5 записей
+   /lavra-recall "keyword"         # Поиск по ключевому слову
+   /lavra-recall --topic BD-001    # Поиск по теме
+ ```
+
+ База знаний готова к работе. Lavra полностью установлена в портабл OMP.

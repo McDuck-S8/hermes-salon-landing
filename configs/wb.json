@@ -1,0 +1,83 @@
+{
+  "base_url": "https://www.wildberries.ru",
+  "search_url": "/catalog/0/search.aspx?search={query}&sort=price",
+  "login_required": false,
+  "auth_type": "cookie",
+  "storage_state": "wb_auth.json",
+  "selectors": {
+    "search_input": "input[id=\"searchInput\"], input[name=\"search\"]",
+    "search_button": "button[type=\"submit\"], button:has-text(\"Найти\")",
+    "product_cards": "article.product-card, div.product-card, article[class*=\"product-card\"]",
+    "product_link": "a.product-card__link, a[href*=\"/catalog/\"]",
+    "product_title": "span.product-card__name, span.product-card__brand, h3.product-card__name",
+    "product_price": "ins.price__lower-price, span.price__lower-price, span.product-card__price",
+    "old_price": "del.price__old-price, del.product-card__price-old",
+    "rating": "span.product-card__rating, span.address-rate-mini",
+    "reviews_count": "span.product-card__count, span.address-rate-mini + span",
+    "product_image": "img.product-card__img, img[class*=\"product-card__img\"]",
+    "next_page": "a.pagination__next, a.pagination__item:last-child, button:has-text(\"Далее\")",
+    "product_page_title": "h1.product-page__title, h1.product-page__header",
+    "product_page_price": "span.price-block__price, ins.price-block__price",
+    "product_page_old_price": "del.price-block__old-price, del.price-block__old-price",
+    "product_page_rating": "span.product-page__rating, span.product-page__rating-value",
+    "product_page_reviews_link": "a[href*=\"feedbacks\"], a:has-text(\"Отзывы\")",
+    "product_page_reviews_count": "span.product-page__reviews-count, a[href*=\"feedbacks\"] span",
+    "product_page_images": "img.slide__img, img[class*=\"slide__img\"]",
+    "characteristics_button": "button:has-text(\"Характеристики\"), button:has-text(\"Все характеристики\")",
+    "characteristics_container": "div.product-page__characteristics, div[class*=\"characteristics\"]",
+    "characteristic_row": "tr, div[class*=\"characteristic\"]",
+    "characteristic_name": "th, td:first-child, span[class*=\"name\"]",
+    "characteristic_value": "td:last-child, span[class*=\"value\"]",
+    "reviews_tab": "a[href*=\"feedbacks\"], button:has-text(\"Отзывы\")",
+    "reviews_container": "div[class*=\"feedbacks\"], div[class*=\"comments\"]",
+    "review_item": "li[class*=\"feedback\"], div[class*=\"feedback\"]",
+    "review_rating": "span[class*=\"rating\"], span.address-rate-mini",
+    "review_text": "p[class*=\"text\"], span[class*=\"text\"]",
+    "review_date": "span[class*=\"date\"], time",
+    "availability": "span:has-text(\"В наличии\"), span:has-text(\"Нет в наличии\")",
+    "seller_name": "a[href*=\"seller\"], a[href*=\"sellerId\"]",
+    "brand": "span.product-page__brand, a[href*=\"brand\"]",
+    "article": "span:has-text(\"Артикул\") + span, div:has-text(\"Артикул\") span",
+    "sizes": "button[class*=\"size\"], label[class*=\"size\"]",
+    "colors": "button[class*=\"color\"], label[class*=\"color\"]"
+  },
+  "steps": {
+    "search_products": [
+      { "action": "goto", "url": "/catalog/0/search.aspx?search={query}&sort=price" },
+      { "action": "wait", "selector": "article.product-card, div.product-card" },
+      { "action": "scroll", "direction": "down", "amount": 1000 },
+      { "action": "wait", "selector": "article.product-card, div.product-card" }
+    ],
+    "extract_product_list": [
+      { "action": "evaluate", "script": "extractProductList" }
+    ],
+    "get_product_details": [
+      { "action": "goto", "url": "{product_url}" },
+      { "action": "wait", "selector": "h1.product-page__title" },
+      { "action": "click", "selector": "button:has-text(\"Характеристики\"), button:has-text(\"Все характеристики\")", "optional": true },
+      { "action": "wait", "selector": "div[class*=\"characteristics\"]", "optional": true },
+      { "action": "evaluate", "script": "extractProductDetails" }
+    ],
+    "get_reviews": [
+      { "action": "click", "selector": "a[href*=\"feedbacks\"], button:has-text(\"Отзывы\")" },
+      { "action": "wait", "selector": "div[class*=\"feedbacks\"], div[class*=\"comments\"]" },
+      { "action": "evaluate", "script": "extractReviews" }
+    ],
+    "filter_by_price": [
+      { "action": "fill", "selector": "input[placeholder*=\"От\"], input[id*=\"priceFrom\"]", "param": "min_price" },
+      { "action": "fill", "selector": "input[placeholder*=\"До\"], input[id*=\"priceTo\"]", "param": "max_price" },
+      { "action": "click", "selector": "button:has-text(\"Применить\"), button:has-text(\"Показать\")" },
+      { "action": "wait_for_navigation" }
+    ],
+    "sort_by_price_asc": [
+      { "action": "click", "selector": "select[name=\"sort\"]" },
+      { "action": "click", "selector": "option[value=\"price\"], option:has-text(\"по возрастанию цены\")" },
+      { "action": "wait_for_navigation" }
+    ]
+  },
+  "evaluation_scripts": {
+    "extractProductList": "() => {\n  const cards = document.querySelectorAll('article.product-card, div.product-card');\n  const products = [];\n  cards.forEach(card => {\n    try {\n      const link = card.querySelector('a.product-card__link, a[href*=\"/catalog/\"]')?.href;\n      const title = card.querySelector('span.product-card__name, span.product-card__brand, h3.product-card__name')?.textContent?.trim();\n      const brand = card.querySelector('span.product-card__brand')?.textContent?.trim();\n      const priceText = card.querySelector('ins.price__lower-price, span.price__lower-price, span.product-card__price')?.textContent?.trim();\n      const price = priceText ? parseInt(priceText.replace(/[^\\d]/g, '')) : null;\n      const oldPriceText = card.querySelector('del.price__old-price, del.product-card__price-old')?.textContent?.trim();\n      const oldPrice = oldPriceText ? parseInt(oldPriceText.replace(/[^\\d]/g, '')) : null;\n      const ratingText = card.querySelector('span.product-card__rating, span.address-rate-mini')?.textContent?.trim();\n      const rating = ratingText ? parseFloat(ratingText.replace(',', '.')) : null;\n      const reviewsText = card.querySelector('span.product-card__count, span.address-rate-mini + span')?.textContent?.trim();\n      const reviewsCount = reviewsText ? parseInt(reviewsText.replace(/[^\\d]/g, '')) : 0;\n      const image = card.querySelector('img.product-card__img, img[class*=\"product-card__img\"]')?.src;\n      if (link && title) {\n        products.push({ link, title, brand, price, oldPrice, rating, reviewsCount, image });\n      }\n    } catch (e) {}\n  });\n  return products;\n}",
+    "extractProductDetails": "() => {\n  const result = {};\n  try {\n    result.title = document.querySelector('h1.product-page__title, h1.product-page__header')?.textContent?.trim();\n    const priceEl = document.querySelector('span.price-block__price, ins.price-block__price');\n    result.price = priceEl ? parseInt(priceEl.textContent?.replace(/[^\\d]/g, '')) : null;\n    const oldPriceEl = document.querySelector('del.price-block__old-price, del.price-block__old-price');\n    result.oldPrice = oldPriceEl ? parseInt(oldPriceEl.textContent?.replace(/[^\\d]/g, '')) : null;\n    const ratingEl = document.querySelector('span.product-page__rating, span.product-page__rating-value');\n    result.rating = ratingEl ? parseFloat(ratingEl.textContent?.replace(',', '.')) : null;\n    const reviewsLink = document.querySelector('a[href*=\"feedbacks\"], a:has-text(\"Отзывы\")');\n    result.reviewsCount = reviewsLink ? parseInt(reviewsLink.textContent?.replace(/[^\\d]/g, '')) : 0;\n    result.reviewsUrl = reviewsLink?.href;\n    \n    // Characteristics\n    const chars = {};\n    const charContainer = document.querySelector('div.product-page__characteristics, div[class*=\"characteristics\"]');\n    if (charContainer) {\n      charContainer.querySelectorAll('tr, div[class*=\"characteristic\"]').forEach(row => {\n        const name = row.querySelector('th, td:first-child, span[class*=\"name\"]')?.textContent?.trim();\n        const value = row.querySelector('td:last-child, span[class*=\"value\"]')?.textContent?.trim();\n        if (name && value) chars[name] = value;\n      });\n    }\n    result.characteristics = chars;\n    \n    // Availability\n    const availText = document.body.innerText;\n    if (availText.includes('В наличии')) result.availability = 'В наличии';\n    else if (availText.includes('Нет в наличии')) result.availability = 'Нет в наличии';\n    else result.availability = 'Unknown';\n    \n    // Seller & Brand\n    result.seller = document.querySelector('a[href*=\"seller\"], a[href*=\"sellerId\"]')?.textContent?.trim();\n    result.brand = document.querySelector('span.product-page__brand, a[href*=\"brand\"]')?.textContent?.trim();\n    \n    // Article\n    const articleMatch = document.body.innerText.match(/Артикул[^\\d]*(\\d+)/);\n    result.article = articleMatch ? articleMatch[1] : null;\n    \n    // Images\n    result.images = Array.from(document.querySelectorAll('img.slide__img, img[class*=\"slide__img\"]')).map(img => img.src);\n    \n    // Sizes & Colors\n    result.sizes = Array.from(document.querySelectorAll('button[class*=\"size\"], label[class*=\"size\"]')).map(el => el.textContent?.trim()).filter(Boolean);\n    result.colors = Array.from(document.querySelectorAll('button[class*=\"color\"], label[class*=\"color\"]')).map(el => el.getAttribute('title') || el.textContent?.trim()).filter(Boolean);\n  } catch (e) {}\n  return result;\n}",
+    "extractReviews": "() => {\n  const reviews = [];\n  try {\n    const items = document.querySelectorAll('li[class*=\"feedback\"], div[class*=\"feedback\"]');\n    items.forEach(item => {\n      try {\n        const ratingEl = item.querySelector('span[class*=\"rating\"], span.address-rate-mini');\n        let rating = null;\n        if (ratingEl) {\n          const style = ratingEl.getAttribute('style');\n          if (style && style.includes('width')) {\n            const match = style.match(/width:\\s*(\\d+)%/);\n            if (match) rating = parseInt(match[1]) / 20;\n          } else {\n            rating = parseFloat(ratingEl.textContent?.replace(',', '.').trim());\n          }\n        }\n        const text = item.querySelector('p[class*=\"text\"], span[class*=\"text\"]')?.textContent?.trim();\n        const dateEl = item.querySelector('span[class*=\"date\"], time');\n        const date = dateEl ? dateEl.dateTime || dateEl.textContent?.trim() : null;\n        if (text) reviews.push({ rating, text, date });\n      } catch (e) {}\n    });\n  } catch (e) {}\n  return reviews.slice(0, 5);\n}"
+  }
+}

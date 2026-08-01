@@ -1,0 +1,10 @@
+ ERROR: Error: Chrome/Chrome for Testing not found: /Applications/Google Chrome.app/Contents/MacOS/Google Chrome. Set CHROME_PATH.
+    at main (D:\Portable_Soft\FreeDeepseekAPI\scripts\deepseek_chrome_auth.js:222:41)
+    at Object.<anonymous> (D:\Portable_Soft\FreeDeepseekAPI\scripts\deepseek_chrome_auth.js:280:1)
+    at Module._compile (node:internal/modules/cjs/loader:1854:14)
+    at Object..js (node:internal/modules/cjs/loader:1985:10)
+    at Module.load (node:internal/modules/cjs/loader:1577:32)
+    at Module._load (node:internal/modules/cjs/loader:1379:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47

@@ -1,0 +1,26 @@
+Учитывая твою архитектуру (Python, proactive_executor.py, pending_analysis.json, Knowledge Cube gap):
+
+Бери Dory.
+
+bash
+# В твоём окружении Hermes
+pip install dory-memory
+
+# В scripts/hermes_hooks.py добавить
+from dory import DoryMemory
+mem = DoryMemory(db_path="./hermes_knowledge.db")
+
+def on_task_complete(issue_id, fix_result):
+    if fix_result.get("verified"):
+        mem.observe(
+            f"Fix for {issue_id}: {fix_result['patch']}",
+            node_type="SOLUTION",
+            importance=4  # critical
+        )
+        mem.observe(
+            f"Verification: {fix_result['evidence']}",
+            node_type="EVIDENCE"
+        )
+Dory закроет твой Knowledge→KC loop одной строчкой и не потребует переписывать половину системы.
+
+Понятно теперь? Если нужна помощь с интеграцией Dory конкретно в твой proactive_executor.py — покажи код, накидаю пример.

@@ -1,0 +1,55 @@
+# Knowledge Filter Cron Job Template
+
+## Add to cron/jobs.json
+
+```json
+{
+  "name": "knowledge-filter",
+  "schedule": "every 60m",
+  "script": "knowledge_filter_cron.py",
+  "prompt": "Run knowledge filter on latest RSS/YouTube cache, insert filtered knowledge into KC, report stats",
+  "enabled": true,
+  "skills": ["automation/knowledge-filter"]
+}
+```
+
+## Manual Run
+
+```bash
+# From Hermes root
+python scripts/knowledge_filter_cron.py
+```
+
+## Expected Output
+
+```
+=== Knowledge Filter Cron Job ===
+
+📰 Processing RSS cache...
+  Found 45 articles
+  RSS: 12 passed, 33 rejected
+
+📺 Processing YouTube cache...
+  Found 10 videos
+  YouTube: 3 passed, 7 rejected
+
+=== TOTAL ===
+Passed: 15 | Rejected: 40
+
+=== KC Sources ===
+  scripts: 211
+  errors: 70
+  knowledge_filter: 22
+  rss_reddit_affiliatemarketing: 10
+  ...
+  Total external: 82
+```
+
+## Integration with Existing Cron
+
+The knowledge filter should run AFTER parsers:
+1. `rss-monitor` (every 240m) — fetches feeds
+2. `youtube-watch` (every 360m) — fetches videos
+3. `knowledge-filter` (every 60m) — filters & inserts
+
+This ensures fresh cache is available.

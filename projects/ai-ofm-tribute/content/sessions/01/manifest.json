@@ -1,0 +1,31 @@
+{
+  "session": 1,
+  "style": "fantasy",
+  "timestamp": "2026-07-14T20:56:32.271966+00:00",
+  "images": [
+    {
+      "index": 1,
+      "style": "fantasy",
+      "prompt": "Mystical elf queen in enchanted forest, bioluminescent flowers, shimmering dress, elegant pose, detailed face, dappled sunlight, artstation quality, fantasy art, intricate details, volumetric fog",
+      "seed": 691356,
+      "caption": "✨ New fantasy art | Exclusive content",
+      "filename": "fantasy_01_01.jpg"
+    },
+    {
+      "index": 2,
+      "style": "fantasy",
+      "prompt": "Ethereal fantasy woman with glowing crystal skin, detailed digital art, cinematic lighting, artstation style, symmetrical face, perfect skin, flowing magical dress, intricate jewelry, golden hour lighting, unreal engine 5, photorealistic, hyperdetailed, 8k",
+      "seed": 110582,
+      "caption": "🌟 Magic in every detail | Premium",
+      "filename": "fantasy_01_02.jpg"
+    },
+    {
+      "index": 3,
+      "style": "fantasy",
+      "prompt": "Ethereal fantasy woman with glowing crystal skin, detailed digital art, cinematic lighting, artstation style, symmetrical face, perfect skin, flowing magical dress, intricate jewelry, golden hour lighting, unreal engine 5, photorealistic, hyperdetailed, 8k",
+      "seed": 526355,
+      "caption": "✨ New fantasy art | Exclusive content",
+      "filename": "fantasy_01_03.jpg"
+    }
+  ]
+}

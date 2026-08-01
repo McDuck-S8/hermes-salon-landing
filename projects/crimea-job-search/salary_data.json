@@ -1,0 +1,276 @@
+{
+  "metadata": {
+    "source": "hh.ru, zarplata.ru, gorodrabot.ru (average data for Crimea, 2025-2026)",
+    "last_updated": "2026-06",
+    "currency": "RUR",
+    "note": "Зарплаты указаны в рублях. Данные приблизительные, основаны на публичных источниках."
+  },
+  "roles": [
+    {
+      "role": "Программист Python",
+      "min": 60000,
+      "max": 180000,
+      "avg": 110000,
+      "city": "symferopol"
+    },
+    {
+      "role": "Программист Java",
+      "min": 70000,
+      "max": 200000,
+      "avg": 130000,
+      "city": "symferopol"
+    },
+    {
+      "role": "Веб-разработчик (Frontend)",
+      "min": 50000,
+      "max": 150000,
+      "avg": 90000,
+      "city": "symferopol"
+    },
+    {
+      "role": "Веб-разработчик (Backend)",
+      "min": 60000,
+      "max": 170000,
+      "avg": 105000,
+      "city": "symferopol"
+    },
+    {
+      "role": "Fullstack разработчик",
+      "min": 70000,
+      "max": 200000,
+      "avg": 120000,
+      "city": "symferopol"
+    },
+    {
+      "role": "DevOps инженер",
+      "min": 80000,
+      "max": 220000,
+      "avg": 140000,
+      "city": "symferopol"
+    },
+    {
+      "role": "Data Scientist",
+      "min": 70000,
+      "max": 200000,
+      "avg": 120000,
+      "city": "symferopol"
+    },
+    {
+      "role": "Системный администратор",
+      "min": 35000,
+      "max": 90000,
+      "avg": 55000,
+      "city": "symferopol"
+    },
+    {
+      "role": "Тестировщик (QA)",
+      "min": 40000,
+      "max": 120000,
+      "avg": 70000,
+      "city": "symferopol"
+    },
+    {
+      "role": "Менеджер проектов (IT)",
+      "min": 60000,
+      "max": 180000,
+      "avg": 100000,
+      "city": "symferopol"
+    },
+    {
+      "role": "Product Manager",
+      "min": 80000,
+      "max": 200000,
+      "avg": 130000,
+      "city": "symferopol"
+    },
+    {
+      "role": "Аналитик 1С",
+      "min": 50000,
+      "max": 130000,
+      "avg": 80000,
+      "city": "symferopol"
+    },
+    {
+      "role": "Бухгалтер",
+      "min": 30000,
+      "max": 80000,
+      "avg": 50000,
+      "city": "symferopol"
+    },
+    {
+      "role": "Менеджер по продажам",
+      "min": 25000,
+      "max": 100000,
+      "avg": 50000,
+      "city": "symferopol"
+    },
+    {
+      "role": "Продавец-консультант",
+      "min": 20000,
+      "max": 50000,
+      "avg": 35000,
+      "city": "symferopol"
+    },
+    {
+      "role": "Кассир",
+      "min": 20000,
+      "max": 40000,
+      "avg": 30000,
+      "city": "symferopol"
+    },
+    {
+      "role": "Администратор",
+      "min": 25000,
+      "max": 55000,
+      "avg": 38000,
+      "city": "symferopol"
+    },
+    {
+      "role": "Водитель",
+      "min": 30000,
+      "max": 80000,
+      "avg": 50000,
+      "city": "symferopol"
+    },
+    {
+      "role": "Курьер",
+      "min": 25000,
+      "max": 70000,
+      "avg": 40000,
+      "city": "symferopol"
+    },
+    {
+      "role": "Грузчик",
+      "min": 25000,
+      "max": 55000,
+      "avg": 38000,
+      "city": "symferopol"
+    },
+    {
+      "role": "Повар",
+      "min": 25000,
+      "max": 65000,
+      "avg": 40000,
+      "city": "symferopol"
+    },
+    {
+      "role": "Официант",
+      "min": 15000,
+      "max": 45000,
+      "avg": 30000,
+      "city": "symferopol"
+    },
+    {
+      "role": "Медицинская сестра",
+      "min": 25000,
+      "max": 55000,
+      "avg": 38000,
+      "city": "symferopol"
+    },
+    {
+      "role": "Врач",
+      "min": 40000,
+      "max": 120000,
+      "avg": 70000,
+      "city": "symferopol"
+    },
+    {
+      "role": "Учитель",
+      "min": 20000,
+      "max": 50000,
+      "avg": 35000,
+      "city": "symferopol"
+    },
+    {
+      "role": "Маркетолог",
+      "min": 30000,
+      "max": 100000,
+      "avg": 60000,
+      "city": "symferopol"
+    },
+    {
+      "role": "SMM-менеджер",
+      "min": 25000,
+      "max": 80000,
+      "avg": 50000,
+      "city": "symferopol"
+    },
+    {
+      "role": "Дизайнер (графический)",
+      "min": 30000,
+      "max": 100000,
+      "avg": 60000,
+      "city": "symferopol"
+    },
+    {
+      "role": "UI/UX дизайнер",
+      "min": 40000,
+      "max": 140000,
+      "avg": 80000,
+      "city": "symferopol"
+    },
+    {
+      "role": "Юрист",
+      "min": 30000,
+      "max": 100000,
+      "avg": 60000,
+      "city": "symferopol"
+    },
+    {
+      "role": "Архитектор",
+      "min": 50000,
+      "max": 150000,
+      "avg": 90000,
+      "city": "symferopol"
+    },
+    {
+      "role": "Строитель",
+      "min": 30000,
+      "max": 80000,
+      "avg": 50000,
+      "city": "symferopol"
+    },
+    {
+      "role": "Инженер-строитель",
+      "min": 40000,
+      "max": 120000,
+      "avg": 70000,
+      "city": "symferopol"
+    },
+    {
+      "role": "Экономист",
+      "min": 30000,
+      "max": 80000,
+      "avg": 50000,
+      "city": "symferopol"
+    },
+    {
+      "role": "HR-менеджер",
+      "min": 30000,
+      "max": 80000,
+      "avg": 50000,
+      "city": "symferopol"
+    },
+    {
+      "role": "Программист Python (удаленно)",
+      "min": 80000,
+      "max": 300000,
+      "avg": 150000,
+      "city": "remote"
+    },
+    {
+      "role": "Программист JavaScript (удаленно)",
+      "min": 70000,
+      "max": 280000,
+      "avg": 140000,
+      "city": "remote"
+    },
+    {
+      "role": "Аналитик данных (удаленно)",
+      "min": 60000,
+      "max": 250000,
+      "avg": 120000,
+      "city": "remote"
+    }
+  ]
+}

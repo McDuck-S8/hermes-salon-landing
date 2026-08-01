@@ -1,0 +1,39 @@
+Ты видел спецификацию Google OKF. Мы не будем переписывать Knowledge Cube с нуля. Мы добавим три критических поля.
+
+ЗАДАЧА: Обновить Knowledge Cube до OKF-Lite
+
+Миграция базы данных:
+
+Добавь в experiences таблицу поля:
+
+confidence REAL DEFAULT 0.5 (байесовская уверенность)
+
+expiration_date TEXT (когда протухнет)
+
+verification_method TEXT (как проверять)
+
+Создай скрипт scripts/migrate_kc_to_okf.py который делает ALTER TABLE.
+
+Обновление kc_rag.py:
+
+При добавлении новой записи требуй verification_method (можно 'manual' по умолчанию).
+
+При поиске (search) учитывай confidence — более уверенные знания выше в выдаче.
+
+Добавь функцию find_expired_knowledge() — возвращает записи где expiration_date < now.
+
+Обновление autonomous_agent.py:
+
+Добавь новый candidate action: [SURVIVE] Refresh expired knowledge.
+
+Если find_expired_knowledge() возвращает >10 записей — это становится приоритетной задачей.
+
+Протестируй:
+
+Создай тестовую запись с expiration_date = '2020-01-01'.
+
+Запусти find_expired_knowledge() — она должна найтись.
+
+Покажи мне SQL-запрос и результат.
+
+Это превратит твой Knowledge Cube из 'свалки фактов' в 'живую базу знаний с сроком годности'. Вперёд.

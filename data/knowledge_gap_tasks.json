@@ -1,0 +1,702 @@
+[
+  {
+    "domain": "automation",
+    "gap_description": "Fill knowledge gap for domain 'automation' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain automation",
+    "priority": 5,
+    "created_at": "2026-07-31T14:18:00.312933+00:00"
+  },
+  {
+    "domain": "testing",
+    "gap_description": "Fill knowledge gap for domain 'testing' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain testing",
+    "priority": 5,
+    "created_at": "2026-07-31T14:36:04.591270+00:00"
+  },
+  {
+    "domain": "security",
+    "gap_description": "Fill knowledge gap for domain 'security' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain security",
+    "priority": 5,
+    "created_at": "2026-07-31T14:36:04.591270+00:00"
+  },
+  {
+    "domain": "automation",
+    "gap_description": "Fill knowledge gap for domain 'automation' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain automation",
+    "priority": 5,
+    "created_at": "2026-07-31T14:36:04.591270+00:00"
+  },
+  {
+    "domain": "testing",
+    "gap_description": "Domain 'testing' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for testing domain",
+    "priority": 3,
+    "created_at": "2026-07-31T14:52:15.720562+00:00"
+  },
+  {
+    "domain": "security",
+    "gap_description": "Domain 'security' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for security domain",
+    "priority": 3,
+    "created_at": "2026-07-31T14:52:15.720562+00:00"
+  },
+  {
+    "domain": "automation",
+    "gap_description": "Domain 'automation' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for automation domain",
+    "priority": 3,
+    "created_at": "2026-07-31T14:52:15.720562+00:00"
+  },
+  {
+    "domain": "knowledge_cube/testing.json",
+    "gap_description": "Fill knowledge gap for domain 'testing' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain testing",
+    "priority": 5,
+    "created_at": "2026-07-31T15:10:24.132123+00:00"
+  },
+  {
+    "domain": "knowledge_cube/security.json",
+    "gap_description": "Fill knowledge gap for domain 'security' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain security",
+    "priority": 5,
+    "created_at": "2026-07-31T15:10:24.132123+00:00"
+  },
+  {
+    "domain": "knowledge_cube/automation.json",
+    "gap_description": "Fill knowledge gap for domain 'automation' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain automation",
+    "priority": 5,
+    "created_at": "2026-07-31T15:10:24.132123+00:00"
+  },
+  {
+    "domain": "knowledge_cube/testing.json",
+    "gap_description": "Fill knowledge gap for domain 'testing' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain testing",
+    "priority": 5,
+    "created_at": "2026-07-31T15:29:07.324997+00:00"
+  },
+  {
+    "domain": "knowledge_cube/security.json",
+    "gap_description": "Fill knowledge gap for domain 'security' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain security",
+    "priority": 5,
+    "created_at": "2026-07-31T15:29:07.324997+00:00"
+  },
+  {
+    "domain": "knowledge_cube/automation.json",
+    "gap_description": "Fill knowledge gap for domain 'automation' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain automation",
+    "priority": 5,
+    "created_at": "2026-07-31T15:29:07.324997+00:00"
+  },
+  {
+    "domain": "knowledge_cube/testing.json",
+    "gap_description": "Fill knowledge gap for domain 'testing' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain testing",
+    "priority": 5,
+    "created_at": "2026-07-31T15:47:35.332813+00:00"
+  },
+  {
+    "domain": "knowledge_cube/security.json",
+    "gap_description": "Fill knowledge gap for domain 'security' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain security",
+    "priority": 5,
+    "created_at": "2026-07-31T15:47:35.332813+00:00"
+  },
+  {
+    "domain": "knowledge_cube/automation.json",
+    "gap_description": "Fill knowledge gap for domain 'automation' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain automation",
+    "priority": 5,
+    "created_at": "2026-07-31T15:47:35.332813+00:00"
+  },
+  {
+    "domain": "knowledge_cube/testing.json",
+    "gap_description": "Fill knowledge gap for domain 'testing' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain testing",
+    "priority": 5,
+    "created_at": "2026-07-31T16:06:04.569137+00:00"
+  },
+  {
+    "domain": "knowledge_cube/security.json",
+    "gap_description": "Fill knowledge gap for domain 'security' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain security",
+    "priority": 5,
+    "created_at": "2026-07-31T16:06:04.569137+00:00"
+  },
+  {
+    "domain": "knowledge_cube/automation.json",
+    "gap_description": "Fill knowledge gap for domain 'automation' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain automation",
+    "priority": 5,
+    "created_at": "2026-07-31T16:06:04.569137+00:00"
+  },
+  {
+    "domain": "testing",
+    "gap_description": "Domain 'testing' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for testing domain",
+    "priority": 3,
+    "created_at": "2026-07-31T16:22:36.501378+00:00"
+  },
+  {
+    "domain": "security",
+    "gap_description": "Domain 'security' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for security domain",
+    "priority": 3,
+    "created_at": "2026-07-31T16:22:36.501378+00:00"
+  },
+  {
+    "domain": "automation",
+    "gap_description": "Domain 'automation' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for automation domain",
+    "priority": 3,
+    "created_at": "2026-07-31T16:22:36.501378+00:00"
+  },
+  {
+    "domain": "testing",
+    "gap_description": "Domain 'testing' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for testing domain",
+    "priority": 3,
+    "created_at": "2026-07-31T16:39:37.611313+00:00"
+  },
+  {
+    "domain": "security",
+    "gap_description": "Domain 'security' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for security domain",
+    "priority": 3,
+    "created_at": "2026-07-31T16:39:37.611313+00:00"
+  },
+  {
+    "domain": "automation",
+    "gap_description": "Domain 'automation' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for automation domain",
+    "priority": 3,
+    "created_at": "2026-07-31T16:39:37.611313+00:00"
+  },
+  {
+    "domain": "testing",
+    "gap_description": "Domain 'testing' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for testing domain",
+    "priority": 3,
+    "created_at": "2026-07-31T16:56:40.183912+00:00"
+  },
+  {
+    "domain": "security",
+    "gap_description": "Domain 'security' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for security domain",
+    "priority": 3,
+    "created_at": "2026-07-31T16:56:40.183912+00:00"
+  },
+  {
+    "domain": "automation",
+    "gap_description": "Domain 'automation' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for automation domain",
+    "priority": 3,
+    "created_at": "2026-07-31T16:56:40.183912+00:00"
+  },
+  {
+    "domain": "testing",
+    "gap_description": "Domain 'testing' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for testing domain",
+    "priority": 3,
+    "created_at": "2026-07-31T17:13:41.523798+00:00"
+  },
+  {
+    "domain": "security",
+    "gap_description": "Domain 'security' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for security domain",
+    "priority": 3,
+    "created_at": "2026-07-31T17:13:41.523798+00:00"
+  },
+  {
+    "domain": "automation",
+    "gap_description": "Domain 'automation' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for automation domain",
+    "priority": 3,
+    "created_at": "2026-07-31T17:13:41.523798+00:00"
+  },
+  {
+    "domain": "testing",
+    "gap_description": "Fill knowledge gap for domain 'testing' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain testing",
+    "priority": 5,
+    "created_at": "2026-07-31T17:32:20.052371+00:00"
+  },
+  {
+    "domain": "security",
+    "gap_description": "Fill knowledge gap for domain 'security' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain security",
+    "priority": 5,
+    "created_at": "2026-07-31T17:32:20.052371+00:00"
+  },
+  {
+    "domain": "automation",
+    "gap_description": "Fill knowledge gap for domain 'automation' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain automation",
+    "priority": 5,
+    "created_at": "2026-07-31T17:32:20.052371+00:00"
+  },
+  {
+    "domain": "testing",
+    "gap_description": "Fill knowledge gap for domain 'testing' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain testing",
+    "priority": 5,
+    "created_at": "2026-07-31T17:51:34.915251+00:00"
+  },
+  {
+    "domain": "security",
+    "gap_description": "Fill knowledge gap for domain 'security' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain security",
+    "priority": 5,
+    "created_at": "2026-07-31T17:51:34.915251+00:00"
+  },
+  {
+    "domain": "automation",
+    "gap_description": "Fill knowledge gap for domain 'automation' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain automation",
+    "priority": 5,
+    "created_at": "2026-07-31T17:51:34.915251+00:00"
+  },
+  {
+    "domain": "testing",
+    "gap_description": "Fill knowledge gap for domain 'testing' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain testing",
+    "priority": 5,
+    "created_at": "2026-07-31T18:09:47.498376+00:00"
+  },
+  {
+    "domain": "security",
+    "gap_description": "Fill knowledge gap for domain 'security' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain security",
+    "priority": 5,
+    "created_at": "2026-07-31T18:09:47.498376+00:00"
+  },
+  {
+    "domain": "automation",
+    "gap_description": "Fill knowledge gap for domain 'automation' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain automation",
+    "priority": 5,
+    "created_at": "2026-07-31T18:09:47.498376+00:00"
+  },
+  {
+    "domain": "testing",
+    "gap_description": "Fill knowledge gap for domain 'testing' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain testing",
+    "priority": 5,
+    "created_at": "2026-07-31T18:28:02.603921+00:00"
+  },
+  {
+    "domain": "security",
+    "gap_description": "Fill knowledge gap for domain 'security' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain security",
+    "priority": 5,
+    "created_at": "2026-07-31T18:28:02.603921+00:00"
+  },
+  {
+    "domain": "automation",
+    "gap_description": "Fill knowledge gap for domain 'automation' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain automation",
+    "priority": 5,
+    "created_at": "2026-07-31T18:28:02.603921+00:00"
+  },
+  {
+    "domain": "testing",
+    "gap_description": "Domain 'testing' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for testing domain",
+    "priority": 3,
+    "created_at": "2026-07-31T18:44:49.288845+00:00"
+  },
+  {
+    "domain": "security",
+    "gap_description": "Domain 'security' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for security domain",
+    "priority": 3,
+    "created_at": "2026-07-31T18:44:49.288845+00:00"
+  },
+  {
+    "domain": "automation",
+    "gap_description": "Domain 'automation' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for automation domain",
+    "priority": 3,
+    "created_at": "2026-07-31T18:44:49.288845+00:00"
+  },
+  {
+    "domain": "testing",
+    "gap_description": "Domain 'testing' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for testing domain",
+    "priority": 3,
+    "created_at": "2026-07-31T19:01:52.146147+00:00"
+  },
+  {
+    "domain": "security",
+    "gap_description": "Domain 'security' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for security domain",
+    "priority": 3,
+    "created_at": "2026-07-31T19:01:52.146147+00:00"
+  },
+  {
+    "domain": "automation",
+    "gap_description": "Domain 'automation' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for automation domain",
+    "priority": 3,
+    "created_at": "2026-07-31T19:01:52.146147+00:00"
+  },
+  {
+    "domain": "scripts/auto_tagger_v2.py",
+    "gap_description": "Auto-tag 79 uncategorized entries using the improved tagger",
+    "suggested_action": "python scripts/auto_tagger_v2.py",
+    "priority": 5,
+    "created_at": "2026-07-31T19:18:12.330797+00:00"
+  },
+  {
+    "domain": "cron_jobs.json",
+    "gap_description": "Script path for trend_scout.py was fixed; wait for next cron cycle to verify",
+    "suggested_action": "echo 'Monitor cron job 5189e26afdd5 next run'",
+    "priority": 5,
+    "created_at": "2026-07-31T19:18:12.330797+00:00"
+  },
+  {
+    "domain": "cron_jobs.json",
+    "gap_description": "Script path for trend_scout.py (salon) was fixed; wait for next cron cycle to verify",
+    "suggested_action": "echo 'Monitor cron job 1e45cd2656bd next run'",
+    "priority": 5,
+    "created_at": "2026-07-31T19:18:12.330797+00:00"
+  },
+  {
+    "domain": "scripts/auto_tagger_v2.py",
+    "gap_description": "Auto-tag 79 uncategorized entries using the improved tagger",
+    "suggested_action": "python scripts/auto_tagger_v2.py",
+    "priority": 5,
+    "created_at": "2026-07-31T19:50:18.723353+00:00"
+  },
+  {
+    "domain": "cron_jobs.json",
+    "gap_description": "Script path for trend_scout.py was fixed; wait for next cron cycle to verify",
+    "suggested_action": "echo 'Monitor cron job 5189e26afdd5 next run'",
+    "priority": 5,
+    "created_at": "2026-07-31T19:50:18.723353+00:00"
+  },
+  {
+    "domain": "cron_jobs.json",
+    "gap_description": "Script path for trend_scout.py (salon) was fixed; wait for next cron cycle to verify",
+    "suggested_action": "echo 'Monitor cron job 1e45cd2656bd next run'",
+    "priority": 5,
+    "created_at": "2026-07-31T19:50:18.723353+00:00"
+  },
+  {
+    "domain": "testing",
+    "gap_description": "Domain 'testing' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for testing domain",
+    "priority": 3,
+    "created_at": "2026-07-31T20:07:00.972524+00:00"
+  },
+  {
+    "domain": "security",
+    "gap_description": "Domain 'security' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for security domain",
+    "priority": 3,
+    "created_at": "2026-07-31T20:07:00.972524+00:00"
+  },
+  {
+    "domain": "automation",
+    "gap_description": "Domain 'automation' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for automation domain",
+    "priority": 3,
+    "created_at": "2026-07-31T20:07:00.972524+00:00"
+  },
+  {
+    "domain": "testing",
+    "gap_description": "Domain 'testing' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for testing domain",
+    "priority": 3,
+    "created_at": "2026-07-31T20:24:02.896328+00:00"
+  },
+  {
+    "domain": "security",
+    "gap_description": "Domain 'security' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for security domain",
+    "priority": 3,
+    "created_at": "2026-07-31T20:24:02.896328+00:00"
+  },
+  {
+    "domain": "automation",
+    "gap_description": "Domain 'automation' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for automation domain",
+    "priority": 3,
+    "created_at": "2026-07-31T20:24:02.896328+00:00"
+  },
+  {
+    "domain": "",
+    "gap_description": "Fill knowledge gap for domain 'testing' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain testing",
+    "priority": 5,
+    "created_at": "2026-07-31T20:43:16.513171+00:00"
+  },
+  {
+    "domain": "",
+    "gap_description": "Fill knowledge gap for domain 'security' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain security",
+    "priority": 5,
+    "created_at": "2026-07-31T20:43:16.513171+00:00"
+  },
+  {
+    "domain": "",
+    "gap_description": "Fill knowledge gap for domain 'automation' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain automation",
+    "priority": 5,
+    "created_at": "2026-07-31T20:43:16.513171+00:00"
+  },
+  {
+    "domain": "",
+    "gap_description": "Fill knowledge gap for domain 'testing' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain testing",
+    "priority": 5,
+    "created_at": "2026-07-31T21:00:26.322179+00:00"
+  },
+  {
+    "domain": "",
+    "gap_description": "Fill knowledge gap for domain 'security' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain security",
+    "priority": 5,
+    "created_at": "2026-07-31T21:00:26.322179+00:00"
+  },
+  {
+    "domain": "",
+    "gap_description": "Fill knowledge gap for domain 'automation' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain automation",
+    "priority": 5,
+    "created_at": "2026-07-31T21:00:26.322179+00:00"
+  },
+  {
+    "domain": "",
+    "gap_description": "Fill knowledge gap for domain 'testing' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain testing",
+    "priority": 5,
+    "created_at": "2026-07-31T21:19:21.411708+00:00"
+  },
+  {
+    "domain": "",
+    "gap_description": "Fill knowledge gap for domain 'security' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain security",
+    "priority": 5,
+    "created_at": "2026-07-31T21:19:21.411708+00:00"
+  },
+  {
+    "domain": "",
+    "gap_description": "Fill knowledge gap for domain 'automation' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain automation",
+    "priority": 5,
+    "created_at": "2026-07-31T21:19:21.411708+00:00"
+  },
+  {
+    "domain": "testing",
+    "gap_description": "Domain 'testing' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for testing domain",
+    "priority": 3,
+    "created_at": "2026-07-31T21:36:30.507129+00:00"
+  },
+  {
+    "domain": "security",
+    "gap_description": "Domain 'security' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for security domain",
+    "priority": 3,
+    "created_at": "2026-07-31T21:36:30.507129+00:00"
+  },
+  {
+    "domain": "automation",
+    "gap_description": "Domain 'automation' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for automation domain",
+    "priority": 3,
+    "created_at": "2026-07-31T21:36:30.507129+00:00"
+  },
+  {
+    "domain": "testing",
+    "gap_description": "Fill knowledge gap for domain 'testing' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain testing",
+    "priority": 5,
+    "created_at": "2026-07-31T21:57:55.368395+00:00"
+  },
+  {
+    "domain": "security",
+    "gap_description": "Fill knowledge gap for domain 'security' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain security",
+    "priority": 5,
+    "created_at": "2026-07-31T21:57:55.368395+00:00"
+  },
+  {
+    "domain": "automation",
+    "gap_description": "Fill knowledge gap for domain 'automation' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain automation",
+    "priority": 5,
+    "created_at": "2026-07-31T21:57:55.368395+00:00"
+  },
+  {
+    "domain": "testing",
+    "gap_description": "Fill knowledge gap for domain 'testing' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain testing",
+    "priority": 5,
+    "created_at": "2026-07-31T22:17:22.470873+00:00"
+  },
+  {
+    "domain": "security",
+    "gap_description": "Fill knowledge gap for domain 'security' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain security",
+    "priority": 5,
+    "created_at": "2026-07-31T22:17:22.470873+00:00"
+  },
+  {
+    "domain": "automation",
+    "gap_description": "Fill knowledge gap for domain 'automation' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain automation",
+    "priority": 5,
+    "created_at": "2026-07-31T22:17:22.470873+00:00"
+  },
+  {
+    "domain": "testing",
+    "gap_description": "Fill knowledge gap for domain 'testing' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain testing",
+    "priority": 5,
+    "created_at": "2026-07-31T22:36:08.708229+00:00"
+  },
+  {
+    "domain": "security",
+    "gap_description": "Fill knowledge gap for domain 'security' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain security",
+    "priority": 5,
+    "created_at": "2026-07-31T22:36:08.708229+00:00"
+  },
+  {
+    "domain": "automation",
+    "gap_description": "Fill knowledge gap for domain 'automation' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain automation",
+    "priority": 5,
+    "created_at": "2026-07-31T22:36:08.708229+00:00"
+  },
+  {
+    "domain": "testing",
+    "gap_description": "Domain 'testing' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for testing domain",
+    "priority": 3,
+    "created_at": "2026-07-31T22:55:40.747793+00:00"
+  },
+  {
+    "domain": "security",
+    "gap_description": "Domain 'security' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for security domain",
+    "priority": 3,
+    "created_at": "2026-07-31T22:55:40.747793+00:00"
+  },
+  {
+    "domain": "automation",
+    "gap_description": "Domain 'automation' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for automation domain",
+    "priority": 3,
+    "created_at": "2026-07-31T22:55:40.747793+00:00"
+  },
+  {
+    "domain": "testing",
+    "gap_description": "Fill knowledge gap for domain 'testing' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain testing",
+    "priority": 5,
+    "created_at": "2026-07-31T23:17:30.111321+00:00"
+  },
+  {
+    "domain": "security",
+    "gap_description": "Fill knowledge gap for domain 'security' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain security",
+    "priority": 5,
+    "created_at": "2026-07-31T23:17:30.111321+00:00"
+  },
+  {
+    "domain": "automation",
+    "gap_description": "Fill knowledge gap for domain 'automation' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain automation",
+    "priority": 5,
+    "created_at": "2026-07-31T23:17:30.111321+00:00"
+  },
+  {
+    "domain": "testing",
+    "gap_description": "Fill knowledge gap for domain 'testing' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain testing",
+    "priority": 5,
+    "created_at": "2026-07-31T23:36:00.335690+00:00"
+  },
+  {
+    "domain": "security",
+    "gap_description": "Fill knowledge gap for domain 'security' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain security",
+    "priority": 5,
+    "created_at": "2026-07-31T23:36:00.335690+00:00"
+  },
+  {
+    "domain": "automation",
+    "gap_description": "Fill knowledge gap for domain 'automation' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain automation",
+    "priority": 5,
+    "created_at": "2026-07-31T23:36:00.335690+00:00"
+  },
+  {
+    "domain": "testing",
+    "gap_description": "Fill knowledge gap for domain 'testing' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain testing",
+    "priority": 5,
+    "created_at": "2026-07-31T23:52:57.066539+00:00"
+  },
+  {
+    "domain": "security",
+    "gap_description": "Fill knowledge gap for domain 'security' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain security",
+    "priority": 5,
+    "created_at": "2026-07-31T23:52:57.066539+00:00"
+  },
+  {
+    "domain": "automation",
+    "gap_description": "Fill knowledge gap for domain 'automation' by generating content entries",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain automation",
+    "priority": 5,
+    "created_at": "2026-07-31T23:52:57.066539+00:00"
+  },
+  {
+    "domain": "testing",
+    "gap_description": "Domain 'testing' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for testing domain",
+    "priority": 3,
+    "created_at": "2026-08-01T00:09:10.556478+00:00"
+  },
+  {
+    "domain": "security",
+    "gap_description": "Domain 'security' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for security domain",
+    "priority": 3,
+    "created_at": "2026-08-01T00:09:10.556478+00:00"
+  },
+  {
+    "domain": "automation",
+    "gap_description": "Domain 'automation' has only 0 entries \u2014 underpopulated area needs exploration",
+    "suggested_action": "Research and generate content for automation domain",
+    "priority": 3,
+    "created_at": "2026-08-01T00:09:10.556478+00:00"
+  },
+  {
+    "domain": "",
+    "gap_description": "Fill knowledge gap for domain 'testing' by generating content entries using knowledge gap filler script",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain testing",
+    "priority": 5,
+    "created_at": "2026-08-01T00:27:30.102183+00:00"
+  },
+  {
+    "domain": "",
+    "gap_description": "Fill knowledge gap for domain 'security' by generating content entries using knowledge gap filler script",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain security",
+    "priority": 5,
+    "created_at": "2026-08-01T00:27:30.102183+00:00"
+  },
+  {
+    "domain": "",
+    "gap_description": "Fill knowledge gap for domain 'automation' by generating content entries using knowledge gap filler script",
+    "suggested_action": "python scripts/knowledge_gap_filler.py --domain automation",
+    "priority": 5,
+    "created_at": "2026-08-01T00:27:30.102183+00:00"
+  }
+]

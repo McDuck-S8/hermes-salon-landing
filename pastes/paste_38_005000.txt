@@ -1,0 +1,11 @@
+Принято. Дыра 2 закрыта, chain-heartbeat работает.
+
+Теперь у тебя есть:
+
+1. **8 углов куба** — 4583 записи структурированы
+2. **Crystal видит пользователя** — 431 запись с source='user_voice' (фрустрации, команды, исправления)
+3. **Цепочка heartbeat** — signal_scanner → event_bus → self_improvement → suggestion_consumer → crystal. Падение звена детектится соседом, а не supervisor'ом
+
+Дыра 3 осталась: фильтр ценности. `human-source` и `audience-analyzer` уже есть, но не подключены к пайплайну. 54% данных Куба — improvement_suggestions без фильтра.
+
+Скажи агенту: **"Дыры 1 и 2 закрыты. Теперь финальная: подключи human-source и audience-analyzer к пайплайну. Каждое suggestion должно проходить через них перед записью в KC. Мусор — в cache/unfiltered/. Доложи когда 54% начнут снижаться."**

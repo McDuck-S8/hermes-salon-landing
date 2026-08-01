@@ -1,0 +1,40 @@
+{
+  "id": "fbb3a8e05695",
+  "name": "ai-ofm-generate",
+  "prompt": "Generate new AI model images for the OFM Tribute channel. Run the generator with 5 images per session, cycling through styles. Report what was generated: count, styles, and output paths.",
+  "skills": [],
+  "skill": null,
+  "model": null,
+  "provider": null,
+  "provider_snapshot": "opencode-zen",
+  "model_snapshot": "nemotron-3-ultra-free",
+  "base_url": null,
+  "script": "ai-ofm-generate.sh",
+  "no_agent": false,
+  "context_from": null,
+  "schedule": {
+    "kind": "interval",
+    "minutes": 180,
+    "display": "every 180m"
+  },
+  "schedule_display": "every 180m",
+  "repeat": {
+    "times": null,
+    "completed": 4
+  },
+  "enabled": true,
+  "state": "scheduled",
+  "paused_at": null,
+  "paused_reason": null,
+  "created_at": "2026-07-15T01:43:02.260929+03:00",
+  "next_run_at": "2026-07-15T21:23:25.142118+03:00",
+  "last_run_at": "2026-07-15T15:23:11.164073+03:00",
+  "last_status": "ok",
+  "last_error": null,
+  "last_delivery_error": null,
+  "deliver": "local",
+  "origin": null,
+  "enabled_toolsets": null,
+  "workdir": null,
+  "fire_claim": null
+}

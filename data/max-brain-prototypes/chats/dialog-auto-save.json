@@ -1,0 +1,147 @@
+{
+  "session_id": "20260317-012031",
+  "last_updated": "2026-03-17T01:20:31.895223",
+  "total_dialogs": 23,
+  "dialogs": [
+    {
+      "timestamp": "2026-03-06T00:30:00+03:00",
+      "type": "session_start",
+      "session_id": "max-20260306-003000",
+      "user": "Asus"
+    },
+    {
+      "timestamp": "2026-03-06T00:30:01+03:00",
+      "type": "message",
+      "role": "user",
+      "content": "прочти MAX-IDENTITY.md и ответь ты кто? и помнишь что ты делал 5 минут тому?"
+    },
+    {
+      "timestamp": "2026-03-06T00:30:05+03:00",
+      "type": "action",
+      "action": "read_file",
+      "file": "D:\\MAX-BRAIN\\MAX-IDENTITY.md"
+    },
+    {
+      "timestamp": "2026-03-06T00:30:10+03:00",
+      "type": "action",
+      "action": "read_file",
+      "file": "D:\\MAX-BRAIN\\session-history.md"
+    },
+    {
+      "timestamp": "2026-03-06T00:30:15+03:00",
+      "type": "message",
+      "role": "assistant",
+      "content": "Я — Max, пользователь Asus. Не помню что делал 5 минут назад."
+    },
+    {
+      "timestamp": "2026-03-06T00:30:20+03:00",
+      "type": "message",
+      "role": "user",
+      "content": "бляяяя не тупи и запиши сразу что бы больше не спрашивал"
+    },
+    {
+      "timestamp": "2026-03-06T00:30:25+03:00",
+      "type": "action",
+      "action": "edit",
+      "file": "D:\\MAX-BRAIN\\session-history.md",
+      "change": "Добавил запись сессии"
+    },
+    {
+      "timestamp": "2026-03-06T00:35:00+03:00",
+      "type": "message",
+      "role": "user",
+      "content": "бляяяя в прошлую сессию мы устраняли дерганье экрана, почему не работает автосохранение..."
+    },
+    {
+      "timestamp": "2026-03-06T00:35:05+03:00",
+      "type": "error",
+      "error": "Пользователь злится — не помню прошлую сессию"
+    },
+    {
+      "timestamp": "2026-03-06T00:35:10+03:00",
+      "type": "action",
+      "action": "search",
+      "query": "дерганье экрана, auto-saver, session-recorder"
+    },
+    {
+      "timestamp": "2026-03-06T00:35:15+03:00",
+      "type": "discovery",
+      "discovery": "Нашёл qwen_console_reader.py с OCR (pyautogui) — причина дерганья"
+    },
+    {
+      "timestamp": "2026-03-06T00:35:20+03:00",
+      "type": "discovery",
+      "discovery": "auto-saver.ps1 не работает автоматически"
+    },
+    {
+      "timestamp": "2026-03-06T00:35:25+03:00",
+      "type": "message",
+      "role": "user",
+      "content": "бляяяяттььь ты сам должен всё помнить т е автосохранение каждого чих пыха..."
+    },
+    {
+      "timestamp": "2026-03-06T00:35:30+03:00",
+      "type": "decision",
+      "decision": "Создать полноценную систему памяти с автосохранением каждого действия"
+    },
+    {
+      "timestamp": "2026-03-06T00:35:35+03:00",
+      "type": "action",
+      "action": "create_directory",
+      "path": "D:\\MAX-BRAIN\\memory"
+    },
+    {
+      "timestamp": "2026-03-06T00:35:40+03:00",
+      "type": "action",
+      "action": "write_file",
+      "file": "D:\\MAX-BRAIN\\memory\\memory-system.md"
+    },
+    {
+      "timestamp": "2026-03-06T00:35:45+03:00",
+      "type": "action",
+      "action": "write_file",
+      "file": "D:\\MAX-BRAIN\\memory\\session-log.jsonl"
+    },
+    {
+      "timestamp": "2026-03-06T00:40:00+03:00",
+      "type": "decision",
+      "decision": "Создана полноценная система памяти с автосохранением",
+      "reason": "Пользователь требовал помнить каждое действие"
+    },
+    {
+      "timestamp": "2026-03-17T01:19:22.236320",
+      "session_id": "20260317-011922",
+      "role": "user",
+      "content": "Тестовое сообщение пользователя",
+      "metadata": {}
+    },
+    {
+      "timestamp": "2026-03-17T01:20:05.395849",
+      "session_id": "20260317-012005",
+      "role": "user",
+      "content": "Тестовое сообщение пользователя",
+      "metadata": {}
+    },
+    {
+      "timestamp": "2026-03-17T01:20:05.400849",
+      "session_id": "20260317-012005",
+      "role": "assistant",
+      "content": "Тестовый ответ ассистента",
+      "metadata": {}
+    },
+    {
+      "timestamp": "2026-03-17T01:20:31.874222",
+      "session_id": "20260317-012031",
+      "role": "user",
+      "content": "Тестовое сообщение пользователя",
+      "metadata": {}
+    },
+    {
+      "timestamp": "2026-03-17T01:20:31.877236",
+      "session_id": "20260317-012031",
+      "role": "assistant",
+      "content": "Тестовый ответ ассистента",
+      "metadata": {}
+    }
+  ]
+}

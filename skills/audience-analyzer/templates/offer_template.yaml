@@ -1,0 +1,41 @@
+# Offer Description Template
+
+Copy this file, fill in your offer details, and use with `--offer-file`.
+
+```yaml
+description: |
+  Full offer description. Include:
+  - What the product/service does
+  - Target problem/pain it solves
+  - Price model (CPA, CPS, CPL, subscription, one-time)
+  - Average check / payout
+  - KYC requirements (yes/no, what docs)
+  - Geographic restrictions
+  - Risk level (low/medium/high)
+  - Commitment required (one-time, monthly, ongoing)
+
+# Optional structured fields (auto-extracted if in description)
+price_model: "CPA"        # CPA, CPS, CPL, subscription, one-time
+avg_check: 15.0           # numeric, USD or RUB
+kyc_required: false       # true/false
+geo_restrictions:         # list of countries/regions
+  - "India"
+  - "Russia"
+risk_level: "low"         # low, medium, high
+commitment: "medium"      # low, medium, high
+traffic_sources:          # where you plan to drive traffic
+  - "TikTok India"
+  - "YouTube Shorts"
+  - "Telegram channels"
+creatives_available: true # do you have ready creatives?
+```
+
+## Usage
+
+```bash
+# Save as offers/my_offer.yaml
+python -m skills.audience-analyzer.scripts.analyze \
+  --mode offer2audience \
+  --offer-file offers/my_offer.yaml \
+  --output reports/my_offer_analysis.md
+```

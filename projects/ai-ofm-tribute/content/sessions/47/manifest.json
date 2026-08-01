@@ -1,0 +1,68 @@
+{
+  "session": 47,
+  "style": "fantasy",
+  "model": "turbo",
+  "count": 5,
+  "success_count": 1,
+  "fail_count": 4,
+  "timestamp": "2026-07-18T11:19:05.849845+00:00",
+  "provider": "pollinations.ai",
+  "images": [
+    {
+      "index": 1,
+      "style": "fantasy",
+      "prompt": "Forest nymph with flower crown, dewdrop skin, emerald eyes, magical forest background, soft sunlight filtering through leaves, dreamy atmosphere, hyperdetailed portrait",
+      "seed": 206329,
+      "caption": "🌙 Mystical beauty | Daily exclusive",
+      "model": "turbo",
+      "filename": "fantasy_47_01.jpg",
+      "filepath": "D:\\Portable_Soft\\hermes\\projects\\ai-ofm-tribute\\content\\sessions\\47\\fantasy_47_01.jpg",
+      "success": false
+    },
+    {
+      "index": 2,
+      "style": "fantasy",
+      "prompt": "Forest nymph with flower crown, dewdrop skin, emerald eyes, magical forest background, soft sunlight filtering through leaves, dreamy atmosphere, hyperdetailed portrait",
+      "seed": 27288,
+      "caption": "🌙 Mystical beauty | Daily exclusive",
+      "model": "turbo",
+      "filename": "fantasy_47_02.jpg",
+      "filepath": "D:\\Portable_Soft\\hermes\\projects\\ai-ofm-tribute\\content\\sessions\\47\\fantasy_47_02.jpg",
+      "success": false
+    },
+    {
+      "index": 3,
+      "style": "fantasy",
+      "prompt": "Sorceress with flowing silver hair casting a spell, magical particles around hands, dramatic lighting, fantasy portrait, intricate robe details, glowing runes, ethereal atmosphere",
+      "seed": 682826,
+      "caption": "🌟 Magic in every detail | Premium gallery",
+      "model": "turbo",
+      "filename": "fantasy_47_03.jpg",
+      "filepath": "D:\\Portable_Soft\\hermes\\projects\\ai-ofm-tribute\\content\\sessions\\47\\fantasy_47_03.jpg",
+      "success": false
+    },
+    {
+      "index": 4,
+      "style": "fantasy",
+      "prompt": "Goddess of moonlight standing on ancient temple ruins, silver-white dress, glowing eyes, mystical aura, starry night sky, fantasy art, cinematic composition, photorealistic",
+      "seed": 662777,
+      "caption": "⭐ Enchanted | Subscriber preview",
+      "model": "turbo",
+      "filename": "fantasy_47_04.jpg",
+      "filepath": "D:\\Portable_Soft\\hermes\\projects\\ai-ofm-tribute\\content\\sessions\\47\\fantasy_47_04.jpg",
+      "success": false
+    },
+    {
+      "index": 5,
+      "style": "fantasy",
+      "prompt": "Mystical elf queen in enchanted forest, bioluminescent flowers, shimmering dress, elegant pose, detailed face, dappled sunlight, fantasy art, intricate details, volumetric fog",
+      "seed": 163276,
+      "caption": "⭐ Enchanted | Subscriber preview",
+      "model": "turbo",
+      "filename": "fantasy_47_05.jpg",
+      "filepath": "D:\\Portable_Soft\\hermes\\projects\\ai-ofm-tribute\\content\\sessions\\47\\fantasy_47_05.jpg",
+      "success": true,
+      "file_size": 104376
+    }
+  ]
+}

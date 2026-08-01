@@ -477,9 +477,10 @@ def _save_will_history(action_id, result_text):
         now = datetime.now()
         ts = now.isoformat()[:19]
         # Используем source='crystal_will' для отделения от снапшотов
+        will_text = f"[will:{action_id}] {result_text}"
         k.execute(
-            "INSERT INTO experiences (ts, raw_text, hash, axis_time_hour, axis_time_dow, axis_domain, axis_outcome, source) VALUES (?,?,?,?,?,'crystal_will','will_action','crystal_will')",
-            (ts, f"[will:{action_id}] {result_text}", str(hash(ts + action_id))[:16], now.hour, now.weekday())
+            "INSERT INTO experiences (ts, content, raw_text, hash, axis_time_hour, axis_time_dow, axis_domain, axis_outcome, source) VALUES (?,?,?,?,?,?,'crystal_will','will_action','crystal_will')",
+            (ts, will_text, will_text, str(hash(ts + action_id))[:16], now.hour, now.weekday())
         )
         kc.commit()
         kc.close()
@@ -2645,8 +2646,8 @@ def _execute_understand_intents():
     
     # Добавляем в KC как осознание
     summary = '\n'.join(lines)
-    k.execute("INSERT INTO experiences (ts, raw_text, hash, axis_time_hour, axis_time_dow, axis_domain, axis_outcome, source) VALUES (?,?,?,?,?,'crystal_intent','intent_snapshot','crystal_will')",
-             (now, summary, str(hash(now + 'intents'))[:16], datetime.now().hour, datetime.now().weekday()))
+    k.execute("INSERT INTO experiences (ts, content, raw_text, hash, axis_time_hour, axis_time_dow, axis_domain, axis_outcome, source) VALUES (?,?,?,?,?,?,'crystal_intent','intent_snapshot','crystal_will')",
+             (now, summary, summary, str(hash(now + 'intents'))[:16], datetime.now().hour, datetime.now().weekday()))
     kc.commit()
     kc.close()
     
@@ -2738,8 +2739,8 @@ def _execute_refine_intents():
         lines.append(f"  .{cname}.: {len(items)} — {ex_str}")
     
     summary = '\n'.join(lines)
-    k.execute("INSERT INTO experiences (ts, raw_text, hash, axis_time_hour, axis_time_dow, axis_domain, axis_outcome, source) VALUES (?,?,?,?,?,'crystal_intent','reflection_snapshot','crystal_will')",
-             (now, summary, str(hash(now + 'reflection'))[:16], datetime.now().hour, datetime.now().weekday()))
+    k.execute("INSERT INTO experiences (ts, content, raw_text, hash, axis_time_hour, axis_time_dow, axis_domain, axis_outcome, source) VALUES (?,?,?,?,?,?,'crystal_intent','reflection_snapshot','crystal_will')",
+             (now, summary, summary, str(hash(now + 'reflection'))[:16], datetime.now().hour, datetime.now().weekday()))
     kc.commit()
     kc.close()
     
@@ -3028,8 +3029,8 @@ def record(snap, diag, preds, decisions):
     for attempt in range(3):
         try:
             k.execute(
-                "INSERT INTO experiences (ts, raw_text, hash, axis_time_hour, axis_time_dow, axis_domain, axis_outcome, source) VALUES (?,?,?,?,?,'crystal','snapshot','crystal')",
-                (ts, summary, unique_id, now.hour, now.weekday())
+                "INSERT INTO experiences (ts, content, raw_text, hash, axis_time_hour, axis_time_dow, axis_domain, axis_outcome, source) VALUES (?,?,?,?,?,?,'crystal','snapshot','crystal')",
+                (ts, summary, summary, unique_id, now.hour, now.weekday())
             )
             break
         except sqlite3.OperationalError:

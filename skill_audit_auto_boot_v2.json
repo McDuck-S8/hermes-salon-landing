@@ -1,0 +1,95 @@
+{
+  "timestamp": "2026-07-26T19:23:49.548976",
+  "skills_scanned": 1,
+  "files_scanned": 11,
+  "total_findings": 9,
+  "risk": {
+    "score": 100,
+    "severity": "CRITICAL",
+    "recommendation": "DANGEROUS",
+    "critical": 0,
+    "high": 9,
+    "medium": 0,
+    "low": 0
+  },
+  "results": [
+    {
+      "skill": "auto-boot",
+      "files": 11,
+      "findings": [
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\auto-boot\\SKILL.md",
+          "line": 80,
+          "code": "**Root cause**: `subprocess.run()` calls at lines ~289, ~301 in morning_report.py trigger have NO `timeout=` param. If t"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\auto-boot\\SKILL.md",
+          "line": 82,
+          "code": "**Fix**: Add `timeout=45` to every `subprocess.run()` that calls another script, plus catch `subprocess.TimeoutExpired` "
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\auto-boot\\SKILL.md",
+          "line": 85,
+          "code": "subprocess.run([sys.executable, str(ROOT / \"scripts\" / \"morning_report.py\")],"
+        },
+        {
+          "rule": "P6_direct_leakage",
+          "severity": "HIGH",
+          "category": "Prompt Leakage",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\auto-boot\\references\\windows-cli-asyncio-fix-2026-07-26.md",
+          "line": 59,
+          "code": "D:/Portable_Soft/hermes/hermes-agent/.venv/Scripts/python.exe -c \"import prompt_toolkit; print(prompt_toolkit.__version_"
+        },
+        {
+          "rule": "P6_direct_leakage",
+          "severity": "HIGH",
+          "category": "Prompt Leakage",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\auto-boot\\references\\windows-cli-asyncio-fix-2026-07-26.md",
+          "line": 63,
+          "code": "D:/Program Files/Python311/python.exe -c \"import prompt_toolkit; print(prompt_toolkit.__version__)\""
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\auto-boot\\references\\windows-process-management.md",
+          "line": 31,
+          "code": "r = subprocess.run([\"tasklist\", \"/FI\", f\"PID eq {pid}\"], capture_output=True, timeout=5)"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\auto-boot\\references\\windows-process-management.md",
+          "line": 54,
+          "code": "subprocess.run([\"taskkill\", \"/F\", \"/PID\", str(pid)], capture_output=True, timeout=5)"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\auto-boot\\references\\windows-process-management.md",
+          "line": 65,
+          "code": "proc = subprocess.Popen("
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\auto-boot\\references\\windows-process-management.md",
+          "line": 71,
+          "code": "proc = subprocess.Popen([\"pythonw.exe\", \"script.py\", \"run\"])"
+        }
+      ]
+    }
+  ]
+}

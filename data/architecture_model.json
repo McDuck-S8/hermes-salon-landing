@@ -1,0 +1,782 @@
+{
+  "timestamp": "2026-08-01T00:05:25.497064+00:00",
+  "modules": {
+    "core": {
+      "label": "Core Engine & Events",
+      "layer": "engine",
+      "files": {
+        "core_engine.py": {
+          "exists": true,
+          "hash": "39c633af"
+        },
+        "event_evolution.py": {
+          "exists": true,
+          "hash": "417dd053"
+        },
+        "hermes_hooks.py": {
+          "exists": true,
+          "hash": "b223a4fa"
+        },
+        "autonomous_agent.py": {
+          "exists": true,
+          "hash": "3df228df"
+        },
+        "proactive_executor.py": {
+          "exists": true,
+          "hash": "08ae0e6b"
+        },
+        "proactive_doer.py": {
+          "exists": true,
+          "hash": "ee0a7a68"
+        }
+      },
+      "files_alive": 6,
+      "files_total": 6,
+      "health": "HEALTHY",
+      "tags": [
+        "engine",
+        "events",
+        "scheduling"
+      ]
+    },
+    "event_system": {
+      "label": "Event Bus & Reactors",
+      "layer": "engine",
+      "files": {
+        "event_bus.py": {
+          "exists": true,
+          "hash": "695c7e03"
+        },
+        "event_bridge.py": {
+          "exists": true,
+          "hash": "8c035d0f"
+        },
+        "event_heartbeat.py": {
+          "exists": true,
+          "hash": "7520d992"
+        },
+        "event_classifier.py": {
+          "exists": true,
+          "hash": "a4673536"
+        },
+        "event_reactor.py": {
+          "exists": true,
+          "hash": "4a5b4fef"
+        },
+        "event_registry.py": {
+          "exists": true,
+          "hash": "04a3e72d"
+        },
+        "event_sense.py": {
+          "exists": true,
+          "hash": "16b3988c"
+        },
+        "event_trigger.py": {
+          "exists": true,
+          "hash": "8f35e5e9"
+        }
+      },
+      "files_alive": 8,
+      "files_total": 8,
+      "health": "HEALTHY",
+      "tags": [
+        "events",
+        "bus",
+        "reactor"
+      ]
+    },
+    "knowledge": {
+      "label": "Knowledge Cube",
+      "layer": "knowledge",
+      "files": {
+        "knowledge_cube.py": {
+          "exists": true,
+          "hash": "f14d74b3"
+        },
+        "cube_feeder.py": {
+          "exists": true,
+          "hash": "95a630a6"
+        },
+        "cube_categorizer.py": {
+          "exists": true,
+          "hash": "05101a43"
+        },
+        "auto_recall.py": {
+          "exists": true,
+          "hash": "d095e007"
+        },
+        "knowledge_brain.py": {
+          "exists": true,
+          "hash": "32460864"
+        }
+      },
+      "files_alive": 5,
+      "files_total": 5,
+      "health": "HEALTHY",
+      "tags": [
+        "kc",
+        "memory",
+        "recall"
+      ]
+    },
+    "knowledge_pipeline": {
+      "label": "Knowledge Pipeline",
+      "layer": "knowledge",
+      "files": {
+        "knowledge_pipeline.py": {
+          "exists": true,
+          "hash": "2d0b5b28"
+        },
+        "knowledge_filter_cron.py": {
+          "exists": true,
+          "hash": "a1043d02"
+        },
+        "knowledge_gap_filler.py": {
+          "exists": true,
+          "hash": "6e8bc50b"
+        }
+      },
+      "files_alive": 3,
+      "files_total": 3,
+      "health": "HEALTHY",
+      "tags": [
+        "kc",
+        "pipeline",
+        "cron"
+      ]
+    },
+    "llm": {
+      "label": "LLM Interface",
+      "layer": "io",
+      "files": {
+        "openrouter_client.py": {
+          "exists": true,
+          "hash": "1598a45a"
+        },
+        "llm_classifier.py": {
+          "exists": false,
+          "hash": "?"
+        },
+        "llm_client.py": {
+          "exists": true,
+          "hash": "ac689ad9"
+        },
+        "llm_filter.py": {
+          "exists": true,
+          "hash": "caaae6bc"
+        },
+        "llm_tracer.py": {
+          "exists": true,
+          "hash": "b0b5f901"
+        }
+      },
+      "files_alive": 4,
+      "files_total": 5,
+      "health": "DEGRADED",
+      "tags": [
+        "llm",
+        "api",
+        "inference"
+      ]
+    },
+    "cron_tools": {
+      "label": "Cron Jobs",
+      "layer": "automation",
+      "files": {
+        "jobs.json": {
+          "exists": true,
+          "hash": "e6e231be"
+        }
+      },
+      "files_alive": 1,
+      "files_total": 1,
+      "health": "HEALTHY",
+      "tags": [
+        "cron",
+        "monitoring"
+      ]
+    },
+    "tools": {
+      "label": "CLI Tools",
+      "layer": "io",
+      "files": {
+        "amr_calc.py": {
+          "exists": true,
+          "hash": "e205eed8"
+        },
+        "auto_compress.py": {
+          "exists": true,
+          "hash": "f90bf42e"
+        },
+        "hermes_compress.py": {
+          "exists": true,
+          "hash": "878459e1"
+        },
+        "price_monitor.py": {
+          "exists": true,
+          "hash": "c25dba8a"
+        }
+      },
+      "files_alive": 4,
+      "files_total": 4,
+      "health": "HEALTHY",
+      "tags": [
+        "cli",
+        "tools"
+      ]
+    },
+    "telegram": {
+      "label": "Telegram Integration",
+      "layer": "io",
+      "files": {
+        "telegram_bridge.py": {
+          "exists": true,
+          "hash": "6f287cd4"
+        },
+        "tg_client.py": {
+          "exists": false,
+          "hash": "?"
+        },
+        "telegram_poster.py": {
+          "exists": true,
+          "hash": "cbc5d55d"
+        },
+        "telegram_helper.py": {
+          "exists": true,
+          "hash": "e1545d42"
+        },
+        "telegram_cron_monitor.py": {
+          "exists": true,
+          "hash": "b097f2c5"
+        },
+        "telegram_daily_report.py": {
+          "exists": true,
+          "hash": "1aa4f878"
+        },
+        "telegram_delivery_report.py": {
+          "exists": true,
+          "hash": "aff05140"
+        }
+      },
+      "files_alive": 6,
+      "files_total": 7,
+      "health": "DEGRADED",
+      "tags": [
+        "telegram",
+        "messaging"
+      ]
+    },
+    "posting": {
+      "label": "Content Posting",
+      "layer": "action",
+      "files": {
+        "post_all.py": {
+          "exists": true,
+          "hash": "27e44e8f"
+        },
+        "post_final.py": {
+          "exists": true,
+          "hash": "aebde3cc"
+        },
+        "post_frontier.py": {
+          "exists": true,
+          "hash": "76f53d99"
+        },
+        "post_with_images.py": {
+          "exists": true,
+          "hash": "7f6d13bb"
+        },
+        "ai_tools_poster.py": {
+          "exists": true,
+          "hash": "5c30b891"
+        }
+      },
+      "files_alive": 5,
+      "files_total": 5,
+      "health": "HEALTHY",
+      "tags": [
+        "posting",
+        "content"
+      ]
+    },
+    "health": {
+      "label": "Health & Self-Monitor",
+      "layer": "self-improvement",
+      "files": {
+        "hermes_health.py": {
+          "exists": true,
+          "hash": "0f7208dd"
+        },
+        "hermes_heartbeat.py": {
+          "exists": true,
+          "hash": "118c5ac8"
+        },
+        "auto_recovery.py": {
+          "exists": true,
+          "hash": "3e220df4"
+        },
+        "hermes_self_monitor.py": {
+          "exists": true,
+          "hash": "04e0867b"
+        },
+        "hermes_self_upgrade.py": {
+          "exists": true,
+          "hash": "6ffc27c8"
+        }
+      },
+      "files_alive": 5,
+      "files_total": 5,
+      "health": "HEALTHY",
+      "tags": [
+        "health",
+        "monitor",
+        "recovery"
+      ]
+    },
+    "crystal_base": {
+      "label": "Crystal Knowledge Base",
+      "layer": "self-improvement",
+      "files": {
+        "knowledge_base.py": {
+          "exists": true,
+          "hash": "548e24c6"
+        }
+      },
+      "files_alive": 1,
+      "files_total": 1,
+      "health": "HEALTHY",
+      "tags": [
+        "crystal",
+        "kb"
+      ]
+    },
+    "plugins_websrch": {
+      "label": "Web Search Plugin",
+      "layer": "io",
+      "files": {
+        "__init__.py": {
+          "exists": true,
+          "hash": "3c39d4dc"
+        },
+        "search.py": {
+          "exists": true,
+          "hash": "851681b7"
+        },
+        "providers.py": {
+          "exists": true,
+          "hash": "566e8a2e"
+        },
+        "routing.py": {
+          "exists": true,
+          "hash": "70bfe69b"
+        }
+      },
+      "files_alive": 4,
+      "files_total": 4,
+      "health": "HEALTHY",
+      "tags": [
+        "plugin",
+        "web"
+      ]
+    },
+    "plugins_selfev": {
+      "label": "Self-Evolution Plugin",
+      "layer": "self-improvement",
+      "files": {
+        "generate_report.py": {
+          "exists": true,
+          "hash": "da64c3fd"
+        }
+      },
+      "files_alive": 1,
+      "files_total": 1,
+      "health": "HEALTHY",
+      "tags": [
+        "plugin",
+        "evolution"
+      ]
+    },
+    "plugins_icarus": {
+      "label": "Icarus Plugin",
+      "layer": "self-improvement",
+      "files": {
+        "__init__.py": {
+          "exists": true,
+          "hash": "17629232"
+        },
+        "hooks.py": {
+          "exists": true,
+          "hash": "a5424551"
+        },
+        "tools.py": {
+          "exists": true,
+          "hash": "e46a03f2"
+        },
+        "state.py": {
+          "exists": true,
+          "hash": "295fce8b"
+        }
+      },
+      "files_alive": 4,
+      "files_total": 4,
+      "health": "HEALTHY",
+      "tags": [
+        "plugin",
+        "icarus"
+      ]
+    },
+    "plugins_lcm": {
+      "label": "LCM Plugin",
+      "layer": "self-improvement",
+      "files": {
+        "__init__.py": {
+          "exists": true,
+          "hash": "f201cc2f"
+        },
+        "engine.py": {
+          "exists": true,
+          "hash": "b6a522ab"
+        },
+        "dag.py": {
+          "exists": true,
+          "hash": "0368b800"
+        },
+        "config.py": {
+          "exists": true,
+          "hash": "1b7337e7"
+        }
+      },
+      "files_alive": 4,
+      "files_total": 4,
+      "health": "HEALTHY",
+      "tags": [
+        "plugin",
+        "lcm"
+      ]
+    },
+    "curiosity": {
+      "label": "Curiosity Engine (restored)",
+      "layer": "io",
+      "files": {
+        "curiosity_engine.py": {
+          "exists": true,
+          "hash": "f18b49b4"
+        }
+      },
+      "files_alive": 1,
+      "files_total": 1,
+      "health": "HEALTHY",
+      "tags": [
+        "restored",
+        "research",
+        "discovery"
+      ]
+    },
+    "anomaly_detector": {
+      "label": "Anomaly Detector (restored)",
+      "layer": "self-improvement",
+      "files": {
+        "anomaly_detector.py": {
+          "exists": true,
+          "hash": "eed5be00"
+        }
+      },
+      "files_alive": 1,
+      "files_total": 1,
+      "health": "HEALTHY",
+      "tags": [
+        "restored",
+        "health",
+        "anomaly"
+      ]
+    },
+    "orchestrator": {
+      "label": "Orchestrator (restored)",
+      "layer": "engine",
+      "files": {
+        "orchestrator.py": {
+          "exists": true,
+          "hash": "ba24c3c3"
+        }
+      },
+      "files_alive": 1,
+      "files_total": 1,
+      "health": "HEALTHY",
+      "tags": [
+        "restored",
+        "orchestrator",
+        "chains"
+      ]
+    },
+    "market_research": {
+      "label": "Market Research (restored)",
+      "layer": "io",
+      "files": {
+        "market_research.py": {
+          "exists": true,
+          "hash": "7c466b04"
+        }
+      },
+      "files_alive": 1,
+      "files_total": 1,
+      "health": "HEALTHY",
+      "tags": [
+        "restored",
+        "research",
+        "niches"
+      ]
+    },
+    "self_improvement_loop": {
+      "label": "Self-Improvement Loop (restored)",
+      "layer": "self-improvement",
+      "files": {
+        "self_improvement_loop.py": {
+          "exists": true,
+          "hash": "853f387c"
+        }
+      },
+      "files_alive": 1,
+      "files_total": 1,
+      "health": "HEALTHY",
+      "tags": [
+        "restored",
+        "improvement",
+        "patterns"
+      ]
+    },
+    "uncertainty_observer": {
+      "label": "Uncertainty Observer (restored)",
+      "layer": "self-improvement",
+      "files": {
+        "uncertainty_observer.py": {
+          "exists": true,
+          "hash": "611faa14"
+        }
+      },
+      "files_alive": 1,
+      "files_total": 1,
+      "health": "HEALTHY",
+      "tags": [
+        "restored",
+        "philosophy",
+        "analysis"
+      ]
+    },
+    "config": {
+      "label": "Configuration",
+      "layer": "infra",
+      "files": {
+        "config.yaml": {
+          "exists": true,
+          "hash": "da45c561"
+        }
+      },
+      "files_alive": 1,
+      "files_total": 1,
+      "health": "HEALTHY",
+      "tags": [
+        "config"
+      ]
+    },
+    "skills": {
+      "label": "Skills Library",
+      "layer": "knowledge",
+      "files": {
+        "self-improvement/crystal-architecture-awareness/SKILL.md": {
+          "exists": true,
+          "hash": "7c686fd8"
+        }
+      },
+      "files_alive": 1,
+      "files_total": 1,
+      "health": "HEALTHY",
+      "tags": [
+        "skills",
+        "library"
+      ]
+    },
+    "deprecated": {
+      "label": "Deprecated Scripts",
+      "layer": "infra",
+      "files": {},
+      "files_alive": 0,
+      "files_total": 1,
+      "health": "DEAD",
+      "tags": [
+        "deprecated"
+      ]
+    }
+  },
+  "connections": [
+    {
+      "from": "core",
+      "to": "event_system",
+      "type": "data",
+      "description": "hooks \u2192 event_bus",
+      "status": "ACTIVE"
+    },
+    {
+      "from": "event_system",
+      "to": "knowledge",
+      "type": "data",
+      "description": "event_classifier \u2192 KC",
+      "status": "ACTIVE"
+    },
+    {
+      "from": "core",
+      "to": "knowledge",
+      "type": "data",
+      "description": "on_task_complete \u2192 KC write",
+      "status": "ACTIVE"
+    },
+    {
+      "from": "knowledge",
+      "to": "knowledge",
+      "type": "data",
+      "description": "recall \u2192 KC query",
+      "status": "ACTIVE"
+    },
+    {
+      "from": "knowledge",
+      "to": "knowledge",
+      "type": "data",
+      "description": "feeder \u2192 KC write",
+      "status": "ACTIVE"
+    },
+    {
+      "from": "knowledge_pipeline",
+      "to": "knowledge",
+      "type": "data",
+      "description": "filter \u2192 KC write",
+      "status": "ACTIVE"
+    },
+    {
+      "from": "knowledge_pipeline",
+      "to": "core",
+      "type": "data",
+      "description": "gap_filler \u2192 events",
+      "status": "ACTIVE"
+    },
+    {
+      "from": "telegram",
+      "to": "core",
+      "type": "trigger",
+      "description": "incoming messages \u2192 hooks",
+      "status": "BROKEN"
+    },
+    {
+      "from": "telegram",
+      "to": "core",
+      "type": "data",
+      "description": "daily_report \u2192 context",
+      "status": "BROKEN"
+    },
+    {
+      "from": "plugins_websrch",
+      "to": "core",
+      "type": "data",
+      "description": "search results \u2192 context",
+      "status": "ACTIVE"
+    },
+    {
+      "from": "llm",
+      "to": "core",
+      "type": "data",
+      "description": "LLM responses \u2192 agent",
+      "status": "BROKEN"
+    },
+    {
+      "from": "core",
+      "to": "posting",
+      "type": "trigger",
+      "description": "cron \u2192 post",
+      "status": "ACTIVE"
+    },
+    {
+      "from": "tools",
+      "to": "core",
+      "type": "data",
+      "description": "CLI tools \u2192 execution",
+      "status": "ACTIVE"
+    },
+    {
+      "from": "health",
+      "to": "core",
+      "type": "event",
+      "description": "heartbeat \u2192 health check",
+      "status": "ACTIVE"
+    },
+    {
+      "from": "health",
+      "to": "event_system",
+      "type": "event",
+      "description": "monitor \u2192 events",
+      "status": "ACTIVE"
+    },
+    {
+      "from": "core",
+      "to": "plugins_selfev",
+      "type": "data",
+      "description": "events \u2192 evolution",
+      "status": "ACTIVE"
+    },
+    {
+      "from": "plugins_selfev",
+      "to": "knowledge",
+      "type": "data",
+      "description": "patterns \u2192 KC",
+      "status": "ACTIVE"
+    },
+    {
+      "from": "plugins_icarus",
+      "to": "core",
+      "type": "data",
+      "description": "suggestions \u2192 fixes",
+      "status": "ACTIVE"
+    },
+    {
+      "from": "plugins_lcm",
+      "to": "core",
+      "type": "data",
+      "description": "lifecycle \u2192 state",
+      "status": "ACTIVE"
+    },
+    {
+      "from": "crystal_base",
+      "to": "knowledge",
+      "type": "data",
+      "description": "KB \u2190 KC queries",
+      "status": "ACTIVE"
+    },
+    {
+      "from": "config",
+      "to": "core",
+      "type": "config",
+      "description": "config \u2192 all modules",
+      "status": "ACTIVE"
+    },
+    {
+      "from": "skills",
+      "to": "knowledge",
+      "type": "reference",
+      "description": "skills \u2192 tool execution",
+      "status": "ACTIVE"
+    }
+  ],
+  "diff": [
+    "No changes detected"
+  ],
+  "deprecated": {
+    "total": 1,
+    "shamed": 0,
+    "files": [
+      {
+        "name": "AGENTS.md",
+        "age_days": 29,
+        "shamed": false,
+        "mtime": "2026-07-02T19:43:37+00:00",
+        "size_kb": 2.0
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+name: code-simplicity-reviewer
+description: >
+  Final review ensuring code is minimal, KISS-compliant, and free of
+  unnecessary abstraction. Checks DRY violations, over-engineering,
+  and unneeded dependencies.
+trigger: before merge, after bulk edit
+runtime:
+  max_iterations: 8
+  toolsets: [skills, file]
+skills:
+  - lavra-agent-code-simplicity-reviewer

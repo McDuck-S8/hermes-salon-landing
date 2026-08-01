@@ -1,0 +1,79 @@
+{
+  "base_url": "https://dzen.ru",
+  "login_required": true,
+  "auth_type": "cookie",
+  "storage_state": "dzen_auth.json",
+  "selectors": {
+    "new_post_button": "button:has-text(\"Новая публикация\")",
+    "title_input": "input[placeholder*=\"заголовок\" i], input[placeholder*=\"название\" i]",
+    "subtitle_input": "input[placeholder*=\"подзаголовок\" i]",
+    "editor_iframe": "iframe[class*=\"editor\"], iframe[id*=\"editor\"]",
+    "editor_body": "div[contenteditable=\"true\"], body[contenteditable=\"true\"]",
+    "image_upload_button": "button:has-text(\"Изображение\"), button:has-text(\"Добавить фото\")",
+    "image_upload_input": "input[type=\"file\"][accept*=\"image\"]",
+    "video_button": "button:has-text(\"Видео\")",
+    "video_url_input": "input[placeholder*=\"ссылка на видео\" i]",
+    "link_button": "button:has-text(\"Ссылка\")",
+    "link_url_input": "input[placeholder*=\"ссылка\" i]",
+    "link_text_input": "input[placeholder*=\"текст ссылки\" i]",
+    "tags_input": "input[placeholder*=\"тег\" i]",
+    "category_select": "select[name=\"category\"], button:has-text(\"Категория\")",
+    "publish_button": "button:has-text(\"Опубликовать\")",
+    "save_draft_button": "button:has-text(\"Сохранить черновик\")",
+    "schedule_button": "button:has-text(\"Запланировать\")",
+    "schedule_datetime": "input[name=\"publish_at\"], input[placeholder*=\"дата\" i]",
+    "cover_image_button": "button:has-text(\"Обложка\")",
+    "cover_upload_input": "input[type=\"file\"][accept*=\"image\"]",
+    "seo_title_input": "input[name=\"seo_title\"]",
+    "seo_description_input": "textarea[name=\"seo_description\"]",
+    "age_restriction_select": "select[name=\"age_rating\"]",
+    "comments_toggle": "input[name=\"comments_enabled\"]",
+    "monetization_toggle": "input[name=\"monetization_enabled\"]"
+  },
+  "steps": {
+    "publish_article": [
+      { "action": "goto", "url": "/new" },
+      { "action": "wait", "selector": "input[placeholder*=\"заголовок\"]" },
+      { "action": "fill", "selector": "input[placeholder*=\"заголовок\"]", "param": "title" },
+      { "action": "fill", "selector": "input[placeholder*=\"подзаголовок\"]", "param": "subtitle" },
+      { "action": "click", "selector": "div[contenteditable=\"true\"]" },
+      { "action": "type", "selector": "div[contenteditable=\"true\"]", "param": "content" },
+      { "action": "click", "selector": "button:has-text(\"Опубликовать\")" },
+      { "action": "wait", "selector": "button:has-text(\"Опубликовать\")" },
+      { "action": "click", "selector": "button:has-text(\"Опубликовать\")" },
+      { "action": "wait_for_navigation" }
+    ],
+    "publish_with_image": [
+      { "action": "goto", "url": "/new" },
+      { "action": "wait", "selector": "input[placeholder*=\"заголовок\"]" },
+      { "action": "fill", "selector": "input[placeholder*=\"заголовок\"]", "param": "title" },
+      { "action": "click", "selector": "button:has-text(\"Изображение\")" },
+      { "action": "wait", "selector": "input[type=\"file\"][accept*=\"image\"]" },
+      { "action": "fill", "selector": "input[type=\"file\"][accept*=\"image\"]", "param": "image_path" },
+      { "action": "wait", "selector": "img[src*=\"blob:\"]" },
+      { "action": "type", "selector": "div[contenteditable=\"true\"]", "param": "content" },
+      { "action": "click", "selector": "button:has-text(\"Опубликовать\")" }
+    ],
+    "schedule_post": [
+      { "action": "goto", "url": "/new" },
+      { "action": "fill", "selector": "input[placeholder*=\"заголовок\"]", "param": "title" },
+      { "action": "type", "selector": "div[contenteditable=\"true\"]", "param": "content" },
+      { "action": "click", "selector": "button:has-text(\"Запланировать\")" },
+      { "action": "fill", "selector": "input[name=\"publish_at\"]", "param": "datetime" },
+      { "action": "click", "selector": "button:has-text(\"Запланировать\")" }
+    ],
+    "add_cover": [
+      { "action": "click", "selector": "button:has-text(\"Обложка\")" },
+      { "action": "wait", "selector": "input[type=\"file\"][accept*=\"image\"]" },
+      { "action": "fill", "selector": "input[type=\"file\"][accept*=\"image\"]", "param": "cover_path" },
+      { "action": "wait", "selector": "img[src*=\"blob:\"]" }
+    ],
+    "save_draft": [
+      { "action": "goto", "url": "/new" },
+      { "action": "fill", "selector": "input[placeholder*=\"заголовок\"]", "param": "title" },
+      { "action": "type", "selector": "div[contenteditable=\"true\"]", "param": "content" },
+      { "action": "click", "selector": "button:has-text(\"Сохранить черновик\")" },
+      { "action": "wait", "selector": "text=Сохранено" }
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+�� JARVIS listening... (speak naturally, I'll detect when you're done)
+  [no speech detected]
+
+�� You: Тебе меня случилось?
+⚙️ JARVIS thinking...
+  [no speech detected]
+�� JARVIS: I'm having trouble with my language processor, Sir. error code: 1010
+  [no speech detected]
+
+�� You: Крикая похода в маске.
+⚙️ JARVIS thinking...
+  [no speech detected]

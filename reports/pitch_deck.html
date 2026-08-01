@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Money Plan — Pitch Deck</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0f;color:#e0e0e0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;overflow:hidden;height:100vh}
+.slide{display:none;height:100vh;padding:60px 80px;flex-direction:column;justify-content:center}
+.slide.active{display:flex}
+h1{font-size:3rem;background:linear-gradient(135deg,#00d4aa,#00a3ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+h2{font-size:2rem;color:#fff;margin-bottom:20px}
+h3{font-size:1.1rem;color:#00d4aa;margin-bottom:10px}
+p{color:#aaa;font-size:1.1rem;line-height:1.6}
+.big-number{font-size:2.5rem;color:#00d4aa;font-weight:700}
+.card{background:#111122;border:1px solid #00d4aa22;border-radius:12px;padding:20px}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:20px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+.meta{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
+.badge{padding:4px 12px;border-radius:6px;font-size:.8rem}
+.green{background:#00d4aa22;color:#00d4aa}
+.purple{background:#a855f722;color:#a855f7}
+.orange{background:#f59e0b22;color:#f59e0b}
+.red{background:#ef444422;color:#ef4444}
+table{width:100%;border-collapse:collapse;margin-top:16px}
+th{text-align:left;padding:8px 12px;border-bottom:2px solid #00d4aa44;color:#00d4aa}
+td{padding:8px 12px;border-bottom:1px solid #1a1a2e;color:#ccc}
+ul{list-style:none;font-size:1rem}
+li{margin-bottom:6px;padding-left:16px;position:relative}
+li::before{content:'▸';position:absolute;left:0;color:#00d4aa}
+.nav{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);display:flex;gap:8px;align-items:center;z-index:100}
+.nav button{background:#00d4aa22;border:1px solid #00d4aa44;color:#fff;padding:8px 20px;border-radius:6px;cursor:pointer;font-size:1rem}
+.nav button:hover{background:#00d4aa44}
+.nav .dots{display:flex;gap:6px}
+.nav .dot{width:10px;height:10px;border-radius:50%;background:#333;cursor:pointer;transition:all .2s}
+.nav .dot.active{background:#00d4aa}
+.nav .counter{color:#555;font-size:.85rem;margin:0 10px}
+</style>
+</head>
+<body>
+
+<div class="slide active" id="slide1">
+<h1>AI Money Plan</h1>
+<p style="font-size:1.4rem;color:#ddd;margin-top:10px">План монетизации Hermes Agent</p>
+<p style="color:#666;margin-top:6px">на базе opencode.ai/zen/v1 — бесплатный LLM</p>
+<div class="meta">
+<span class="badge green">10 методов</span>
+<span class="badge purple">0 руб. старт</span>
+<span class="badge orange">90%+ маржа</span>
+<span class="badge red">До 3.8 млн/мес</span>
+</div>
+</div>
+
+<div class="slide" id="slide2">
+<h2>Проблема</h2>
+<div class="grid-2">
+<div class="card">
+<h3>🤖 Дорогие AI-API</h3>
+<p>OpenAI API: $20-200/мес за нормальную работу. Claude: $20+/мес. Убивает маржинальность.</p>
+</div>
+<div class="card">
+<h3>🔧 Ручная работа</h3>
+<p>Большинство "AI-агентств" — это ручной труд под видом AI. Нет реальной автоматизации.</p>
+</div>
+<div class="card">
+<h3>💰 Нет системного подхода</h3>
+<p>Фрилансеры берут проекты, но не строят систему. Нет пассивного дохода.</p>
+</div>
+<div class="card">
+<h3>📊 Сложный старт</h3>
+<p>Нужно разбираться в API, хостинге, промптах — порог входа высокий.</p>
+</div>
+</div>
+</div>
+
+<div class="slide" id="slide3">
+<h2>Решение</h2>
+<p style="color:#aaa;margin-bottom:20px">5 готовых методов монетизации на Hermes Agent</p>
+<div class="grid">
+<div class="card">
+<div style="font-size:2rem;margin-bottom:6px">🤖</div>
+<h3>Чат-боты</h3>
+<p style="color:#888;font-size:.85rem">100-350K/мес | 1-2 нед</p>
+<p style="font-size:.9rem">Telegram/WhatsApp AI-боты под ключ</p>
+</div>
+<div class="card">
+<div style="font-size:2rem;margin-bottom:6px">🏢</div>
+<h3>AI-агентство</h3>
+<p style="color:#888;font-size:.85rem">200K-1.5 млн/мес | 4-8 нед</p>
+<p style="font-size:.9rem">Автоматизация бизнес-процессов</p>
+</div>
+<div class="card">
+<div style="font-size:2rem;margin-bottom:6px">🎓</div>
+<h3>Консалтинг</h3>
+<p style="color:#888;font-size:.85rem">200K-2 млн/мес | 4-12 нед</p>
+<p style="font-size:.9rem">Обучение AI-автоматизации</p>
+</div>
+<div class="card">
+<div style="font-size:2rem;margin-bottom:6px">📝</div>
+<h3>White-Label</h3>
+<p style="color:#888;font-size:.85rem">300K-2.5 млн/мес | 4-8 нед</p>
+<p style="font-size:.9rem">Контент под брендом клиента</p>
+</div>
+<div class="card">
+<div style="font-size:2rem;margin-bottom:6px">🎬</div>
+<h3>Faceless YouTube</h3>
+<p style="color:#888;font-size:.85rem">85K-3.8 млн/мес | 12-24 нед</p>
+<p style="font-size:.9rem">AI-канал без лица автора</p>
+</div>
+</div>
+</div>
+
+<div class="slide" id="slide4">
+<h2>Рынок</h2>
+<table>
+<tr><th>Показатель</th><th>Значение</th></tr>
+<tr><td>TAM — рынок AI-услуг РФ</td><td>150 млрд руб./год</td></tr>
+<tr><td>SAM — AI-автоматизация для малого бизнеса</td><td>30 млрд руб./год</td></tr>
+<tr><td>SOM — цель наша на 6 мес</td><td>0.5-2.5 млн руб./мес</td></tr>
+<tr><td>Рост рынка AI в РФ</td><td>+35% в год</td></tr>
+<tr><td>Количество потенциальных клиентов</td><td>500 000+ малых предприятий</td></tr>
+</table>
+</div>
+
+<div class="slide" id="slide5">
+<h2>Бизнес-модель</h2>
+<div class="grid-2">
+<div class="card">
+<h3>💰 Разовые проекты</h3>
+<p>Разработка ботов, автоматизации под ключ. Чек: 30-150 т.р.</p>
+</div>
+<div class="card">
+<h3>📅 Подписки</h3>
+<p>SaaS, лидоген, контент. Чек: 10-50 т.р./мес</p>
+</div>
+<div class="card">
+<h3>🏷️ White-Label</h3>
+<p>Контент для агентств под их брендом. Чек: 50-200 т.р./мес</p>
+</div>
+<div class="card">
+<h3>🎓 Обучение</h3>
+<p>Курсы, консультации, наставничество. Чек: 5-50 т.р.</p>
+</div>
+</div>
+<p style="margin-top:16px;color:#00d4aa">Ключевое: бесплатный LLM = 90%+ маржинальность</p>
+</div>
+
+<div class="slide" id="slide6">
+<h2>Конкуренты</h2>
+<table>
+<tr><th>Конкурент</th><th>Цена</th><th>Автономность</th><th>Наше преимущество</th></tr>
+<tr><td>OpenAI-решения</td><td>$20-200/мес</td><td>50-70%</td><td>Мы в 10x дешевле</td></tr>
+<tr><td>Ручные агентства</td><td>Высокая</td><td>20-40%</td><td>Мы 80-95% авто</td></tr>
+<tr><td>Фрилансеры</td><td>Средняя</td><td>10-30%</td><td>Системный подход</td></tr>
+<tr><td>Low-code платформы</td><td>$30-500/мес</td><td>60-80%</td><td>Гибкость + цена</td></tr>
+</table>
+</div>
+
+<div class="slide" id="slide7">
+<h2>Наше преимущество</h2>
+<div class="grid">
+<div class="card">
+<div class="big-number">0₽</div>
+<h3>Бесплатный LLM</h3>
+<p style="color:#888;font-size:.85rem">opencode.ai/zen/v1 — безлимит</p>
+</div>
+<div class="card">
+<div class="big-number">85+</div>
+<h3>Готовых навыков</h3>
+<p style="color:#888;font-size:.85rem">Из коробки, без настройки</p>
+</div>
+<div class="card">
+<div class="big-number">95%</div>
+<h3>Автономность</h3>
+<p style="color:#888;font-size:.85rem">Максимальная автоматизация</p>
+</div>
+</div>
+</div>
+
+<div class="slide" id="slide8">
+<h2>Продукт — что уже есть</h2>
+<div class="grid-2">
+<div class="card">
+<h3>🤖 Telegram-боты</h3>
+<p style="font-size:.9rem;color:#aaa">Готовая интеграция с Telegram API, cron-задачи, gateway</p>
+</div>
+<div class="card">
+<h3>📚 Knowledge Cube</h3>
+<p style="font-size:.9rem;color:#aaa">2145 записей в 97 доменах — база знаний</p>
+</div>
+<div class="card">
+<h3>⏰ Cron-планировщик</h3>
+<p style="font-size:.9rem;color:#aaa">Автоматические задачи по расписанию, самоконтроль</p>
+</div>
+<div class="card">
+<h3>🎙️ Voice Loop</h3>
+<p style="font-size:.9rem;color:#aaa">Голосовое управление, JARVIS-интеграция</p>
+</div>
+<div class="card">
+<h3>🌐 Браузер</h3>
+<p style="font-size:.9rem;color:#aaa">Web automation, парсинг, browser-based задачи</p>
+</div>
+<div class="card">
+<h3>🧠 Sub-agents</h3>
+<p style="font-size:.9rem;color:#aaa">Делегирование задач параллельным агентам</p>
+</div>
+</div>
+</div>
+
+<div class="slide" id="slide9">
+<h2>Метрики — план на 6 месяцев</h2>
+<table>
+<tr><th>Период</th><th>Доход (конс.)</th><th>Доход (опт.)</th><th>Клиенты</th><th>Методы</th></tr>
+<tr><td>Месяц 1</td><td>50-100 т.р.</td><td>100-200 т.р.</td><td>3-5</td><td>Боты + консалтинг</td></tr>
+<tr><td>Месяц 2</td><td>100-200 т.р.</td><td>200-400 т.р.</td><td>5-10</td><td>+ Lead Gen</td></tr>
+<tr><td>Месяц 3</td><td>150-300 т.р.</td><td>300-700 т.р.</td><td>10-15</td><td>+ White-Label</td></tr>
+<tr><td>Месяц 4</td><td>200-400 т.р.</td><td>400-900 т.р.</td><td>15-20</td><td>+ YouTube</td></tr>
+<tr><td>Месяц 5</td><td>250-500 т.р.</td><td>500-1500 т.р.</td><td>20-30</td><td>+ SaaS</td></tr>
+<tr><td>Месяц 6</td><td>300-700 т.р.</td><td>700-2500 т.р.</td><td>30+</td><td>Всё в комплексе</td></tr>
+</table>
+</div>
+
+<div class="slide" id="slide10">
+<h2>Финансы</h2>
+<div class="grid">
+<div class="card">
+<div class="big-number">500-2000₽</div>
+<h3>CAC</h3>
+<p style="font-size:.85rem;color:#888">Стоимость привлечения клиента</p>
+</div>
+<div class="card">
+<div class="big-number">45-120К₽</div>
+<h3>LTV</h3>
+<p style="font-size:.85rem;color:#888">Прибыль с клиента за всё время</p>
+</div>
+<div class="card">
+<div class="big-number">30-150x</div>
+<h3>LTV/CAC</h3>
+<p style="font-size:.85rem;color:#888">Окупаемость инвестиций</p>
+</div>
+</div>
+</div>
+
+<div class="slide" id="slide11">
+<h2>Дорожная карта</h2>
+<div class="grid-2">
+<div class="card" style="border-top:2px solid #00d4aa">
+<h3>Месяц 1 — Быстрый старт</h3>
+<p style="font-size:.85rem;color:#aaa">Боты (3-5 проектов), консалтинг (2-3), платёжные шлюзы, Telegram-канал</p>
+<p style="color:#00d4aa;font-size:.9rem;margin-top:6px">50-100 т.р.</p>
+</div>
+<div class="card" style="border-top:2px solid #a855f7">
+<h3>Месяц 2 — Масштаб</h3>
+<p style="font-size:.85rem;color:#aaa">Lead Gen сервис, White-label, автоматизация процессов, партнёрская сеть</p>
+<p style="color:#a855f7;font-size:.9rem;margin-top:6px">150-300 т.р.</p>
+</div>
+<div class="card" style="border-top:2px solid #f59e0b">
+<h3>Месяц 3-4 — Пассив</h3>
+<p style="font-size:.85rem;color:#aaa">YouTube канал, контент-сайты (2-3 ниши), SaaS, автопилот</p>
+<p style="color:#f59e0b;font-size:.9rem;margin-top:6px">300-700 т.р.</p>
+</div>
+<div class="card" style="border-top:2px solid #ef4444">
+<h3>Месяц 5-6 — Рост</h3>
+<p style="font-size:.85rem;color:#aaa">Масштабирование, 2-3 контент-сайта, 2 YouTube канала, оптимизация</p>
+<p style="color:#ef4444;font-size:.9rem;margin-top:6px">700K-2.5 млн</p>
+</div>
+</div>
+</div>
+
+<div class="slide" id="slide12">
+<h1 style="text-align:center">Готовы начать?</h1>
+<p style="text-align:center;font-size:1.2rem;color:#aaa">6 шагов до первого дохода</p>
+<div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:30px;max-width:700px;margin-left:auto;margin-right:auto">
+<div class="badge green">1. Платёжные шлюзы</div>
+<div class="badge green">2. Демо-бот</div>
+<div class="badge green">3. Telegram-канал</div>
+<div class="badge green">4. Первый клиент</div>
+<div class="badge green">5. Lead Gen</div>
+<div class="badge green">6. Масштаб</div>
+</div>
+<p style="text-align:center;margin-top:30px;color:#666">Детальный бизнес-план → reports/business_plan.html</p>
+</div>
+
+<!-- Навигация -->
+<div class="nav">
+<button onclick="prevSlide()">◀</button>
+<div class="dots" id="dots"></div>
+<span class="counter" id="counter">1 / 12</span>
+<button onclick="nextSlide()">▶</button>
+</div>
+
+<script>
+let current = 0;
+const total = 12;
+
+for(let i=0;i<total;i++){
+const d=document.createElement('div');
+d.className='dot'+(i===0?' active':'');
+d.onclick=()=>showSlide(i);
+document.getElementById('dots').appendChild(d);
+}
+
+function showSlide(n){
+document.querySelectorAll('.slide').forEach(s=>s.classList.remove('active'));
+document.getElementById('slide'+(n+1)).classList.add('active');
+document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===n));
+document.getElementById('counter').textContent=(n+1)+' / '+total;
+current=n;
+}
+
+function nextSlide(){showSlide((current+1)%total)}
+function prevSlide(){showSlide((current-1+total)%total)}
+
+document.addEventListener('keydown',e=>{
+if(e.key==='ArrowRight')nextSlide();
+if(e.key==='ArrowLeft')prevSlide();
+});
+</script>
+
+</body>
+</html>

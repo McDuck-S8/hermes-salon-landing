@@ -1,0 +1,24 @@
+name: llm-analyst
+schedule: "30s"
+prompt: |
+  Run the LLM Analyst service to process pending_analysis.json and generate suggested_fixes.json.
+  This is a continuous background service that polls every 30 seconds.
+  
+  Use the free models via opencode-zen with auto-rotation on failure.
+  The service reads from cache/pending_analysis.json and writes to cache/suggested_fixes.json.
+  
+  Free models priority: nemotron-3-ultra-free, deepseek-v4-flash-free, mimo-v2.5-free, qwen3.6-plus, qwen3.5-plus
+  
+  If all models fail, wait for next poll cycle.
+  
+  Model configuration is in config.yaml under llm_analyst.free_models
+skills:
+  - autonomous-coding-with-opencode-zen
+enabled_toolsets:
+  - terminal
+  - file
+model:
+  provider: opencode_zen
+  model: nemotron-3-ultra-free
+script: "scripts/llm_analyst.py"
+no_agent: true

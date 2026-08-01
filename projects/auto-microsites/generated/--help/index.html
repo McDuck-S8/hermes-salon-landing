@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>--help</title>
+    <meta name="description" content="--help — Профессиональный сервис">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #2563eb;
+            --accent: #f59e0b;
+            --dark: #1a1a2e;
+            --light: #f8fafc;
+            --text: #334155;
+            --radius: 12px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: var(--text);
+            background: var(--light);
+            line-height: 1.6;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            color: white;
+            padding: 80px 20px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 12px;
+            position: relative;
+        }
+        .hero .tagline {
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            opacity: 0.9;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .hero .cta-btn {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--dark);
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+        .hero .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        /* Sections */
+        .section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+        .section h2 {
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .service-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #e2e8f0;
+        }
+        .service-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .service-card h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        .service-card .price {
+            display: inline-block;
+            margin-top: 12px;
+            background: var(--primary);
+            color: white;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* About */
+        .about-text {
+            background: white;
+            border-radius: var(--radius);
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            border-left: 4px solid var(--primary);
+        }
+
+        /* Contact */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .contact-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        }
+        .contact-card .icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        .contact-card a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: rgba(255,255,255,0.6);
+            text-align: center;
+            padding: 20px;
+            font-size: 0.85rem;
+        }
+
+        /* Floating CTA */
+        .floating-cta {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+        .floating-cta a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #22c55e;
+            color: white;
+            padding: 14px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(34,197,94,0.4);
+            transition: transform 0.2s;
+        }
+        .floating-cta a:hover {
+            transform: scale(1.05);
+        }
+
+        .placeholder {
+            text-align: center;
+            color: #94a3b8;
+            font-style: italic;
+            padding: 40px;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s, transform 0.6s;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+<!-- Hero -->
+<section class="hero">
+    <h1>--help</h1>
+    <p class="tagline">Профессиональный сервис</p>
+    <a href="tel:+79781234567" class="cta-btn">📞 Позвонить</a>
+</section>
+
+<!-- Services -->
+<section class="section">
+    <h2>Наши услуги</h2>
+    <div class="services-grid fade-in">
+        
+        <div class="service-card">
+            <h3>Услуга 1</h3>
+            <p>Описание услуги</p>
+            <span class='price'>от 1 000 ₽</span>
+        </div>
+    </div>
+</section>
+
+<!-- About -->
+<section class="section">
+    <h2>О нас</h2>
+    <div class="about-text fade-in">
+        Мы предоставляем качественные услуги.
+    </div>
+</section>
+
+<!-- Contact -->
+<section class="section">
+    <h2>Контакты</h2>
+    <div class="contact-grid fade-in">
+        <div class="contact-card">
+            <div class="icon">📞</div>
+            <a href="tel:+79781234567">+7 (978) 123-45-67</a>
+        </div>
+        <div class="contact-card">
+            <div class="icon">📍</div>
+            <p>г. Симферополь, ул. Примерная, 1</p>
+        </div>
+        <div class="contact-card">
+            <div class="icon">🕐</div>
+            <p>Пн-Пт: 09:00-18:00</p>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <p>&copy; 2026 --help. Все права защищены.</p>
+</footer>
+
+<!-- Floating CTA -->
+<div class="floating-cta">
+    <a href="tel:+79781234567">📞 Позвонить</a>
+</div>
+
+<script>
+    // Scroll animation
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

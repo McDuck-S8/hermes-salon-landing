@@ -1,0 +1,73 @@
+
+  ┊ �� preparing terminal…
+  ┊ �� $         cd "D:/Portable_Soft/hermes" && python scripts/skill_indexer.py --dry 2>&1  1.3s [exit 1]
+  ┊ �� preparing patch…
+  ┊ �� patch     D:/Portable_Soft/hermes/scripts/skill_indexer.py  4.5s
+  ┊ review diff
+a/D:\Portable_Soft\hermes\scripts\skill_indexer.py → b/D:\Portable_Soft\hermes\scripts\skill_indexer.py
+@@ -314,10 +314,10 @@
+ def find_related_from_body(body):
+     """Find skill references in the body (links to other skills)."""
+     refs = []
+-    # Match skill names in backticks or markdown links
++    refs = []
+     refs.extend(re.findall(r'`([a-z][a-z0-9_-]+)`', body))
+     refs.extend(re.findall(r'\[([^\]]+)\]\(.*?skill', body))
+-    return list(set(r) for r in refs if len(r) > 2)
++    return list(r for r in refs if isinstance(r, str) and len(r) > 2)
+
+
+ def index_all_skills(dry_run=False):
+  ┊ �� preparing patch…
+  ┊ �� patch     D:/Portable_Soft/hermes/scripts/skill_indexer.py  4.4s
+  ┊ review diff
+a/D:\Portable_Soft\hermes\scripts\skill_indexer.py → b/D:\Portable_Soft\hermes\scripts\skill_indexer.py
+@@ -314,7 +314,6 @@
+ def find_related_from_body(body):
+     """Find skill references in the body (links to other skills)."""
+     refs = []
+-    refs = []
+     refs.extend(re.findall(r'`([a-z][a-z0-9_-]+)`', body))
+     refs.extend(re.findall(r'\[([^\]]+)\]\(.*?skill', body))
+     return list(r for r in refs if isinstance(r, str) and len(r) > 2)
+  ┊ �� preparing terminal…
+  ┊ �� $         cd "D:/Portable_Soft/hermes" && python scripts/skill_indexer.py --dry 2>&1  1.6s
+  ┊ �� preparing patch…
+  ┊ �� patch     D:/Portable_Soft/hermes/scripts/skill_indexer.py  4.0s
+  ┊ review diff
+a/D:\Portable_Soft\hermes\scripts\skill_indexer.py → b/D:\Portable_Soft\hermes\scripts\skill_indexer.py
+@@ -44,6 +44,7 @@
+ # ── Domain mapping (from directory) ────────────────────────────────────────
+ DOMAIN_FROM_DIR = {
+     "agent-browser": "automation",
++    "apple": "apple",
+     "agent-native-architecture": "architecture",
+     "auto-generated": "self-improvement",
+     "automation": "automation",
+  ┊ �� preparing terminal…
+  ┊ �� $         cd "D:/Portable_Soft/hermes" && python scripts/skill_indexer.py 2>&1  1.6s [exit 1]
+  ┊ �� preparing patch…
+  ┊ �� patch     D:/Portable_Soft/hermes/scripts/skill_indexer.py  3.9s
+  ┊ review diff
+a/D:\Portable_Soft\hermes\scripts\skill_indexer.py → b/D:\Portable_Soft\hermes\scripts\skill_indexer.py
+@@ -467,8 +467,10 @@
+             """INSERT INTO experiences
+                (ts, raw_text, hash, axis_domain, axis_outcome,
+                 tags, source)
+-               VALUES (?, ?, ?, 'skill_chain', 'indexed', ?, 'skill-indexer')""",
+-            (now, content, json.dumps(chain_data["tags"] + ["chain", chain_name]))
++               VALUES (?, ?, ?, ?, ?, ?, ?)""",
++            (now, content, hash_val, "skill_chain", "indexed",
++             json.dumps(chain_data["tags"] + ["chain", chain_name]),
++             "skill-indexer")
+         )
+         chains_indexed += 1
+         print(f"  [+] Chain: {chain_name:25s} ({len(chain_data['steps'])} steps)")
+  ⟳ compacting context…
+��️ Compacting context — summarizing earlier conversation so I can continue...
+
+⚡ New message detected, interrupting...
+⚠️  Session compressed 2 times — accuracy may degrade. Consider /new to start fresh.
+
+⚙️  /new
+ ⚕ deepseek-v4-flash-free │ 0/200K │ [░░░░░░░░░░] 0% │ ��️ 2 │ 50m │ ⏲ 7m 1s

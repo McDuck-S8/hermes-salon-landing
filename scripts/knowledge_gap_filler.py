@@ -227,6 +227,13 @@ def mark_cluster_filled(cluster_id):
 
 
 def main(filter_domain=None):
+    # Heartbeat: module alive
+    try:
+        from chain_heartbeat import beat
+        beat("knowledge_gap_filler")
+    except ImportError:
+        pass
+
     print(f"[GapFiller] {datetime.now().isoformat()} — starting")
     gaps = find_gaps()
 

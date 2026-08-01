@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes Project Map — Интерактивная карта</title>
+<style>
+  * { margin: 0; padding: 0; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #0a0a0f; }
+  #markmap { width: 100%; height: 100%; display: block; }
+  .legend {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 16px; padding: 10px 20px;
+    background: rgba(18,18,26,0.95); border: 1px solid #2a2a3e;
+    border-radius: 12px; font-family: 'Segoe UI', sans-serif; font-size: 12px;
+    color: #8888a0; backdrop-filter: blur(8px); z-index: 100;
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .dot-green { background: #00b894; }
+  .dot-yellow { background: #fdcb6e; }
+  .dot-red { background: #e17055; }
+  .dot-purple { background: #6c5ce7; }
+  .title {
+    position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+    font-family: 'Segoe UI', sans-serif; font-size: 14px; font-weight: 700;
+    color: #e8e8f0; z-index: 100; text-align: center;
+    background: rgba(10,10,15,0.8); padding: 8px 20px;
+    border-radius: 10px; border: 1px solid #2a2a3e; backdrop-filter: blur(4px);
+  }
+  @media (max-width: 640px) {
+    .legend { flex-wrap: wrap; justify-content: center; padding: 8px 12px; gap: 8px; bottom: 10px; font-size: 11px; }
+    .title { font-size: 12px; top: 10px; padding: 6px 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="title">🗺️ Hermes Project Map</div>
+<div id="markmap"></div>
+<div class="legend">
+  <span class="legend-item"><span class="dot dot-green"></span> Работает</span>
+  <span class="legend-item"><span class="dot dot-yellow"></span> Требует внимания</span>
+  <span class="legend-item"><span class="dot dot-red"></span> Пусто</span>
+  <span class="legend-item"><span class="dot dot-purple"></span> Инфраструктура</span>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/markmap-lib"></script>
+<script src="https://cdn.jsdelivr.net/npm/markmap-view"></script>
+<script>
+const { Transformer } = window.markmap;
+const t = new Transformer();
+const { root } = t.transform(`# Hermes Ecosystem
+
+## 💰 Заработок
+Goal: First paying client | Priority: #1
+### 🛒 salon-bot
+🟢 Готов | aiogram 3 + SQLite + Mini App
+Цена: $1 500-2 500 + $40/мес
+Статус: ГОТОВ К ДЕПЛОЮ
+### 💼 Бизнес-план
+🟢 Создан | landing page + markdown
+Страница: business-plan.html
+### 🏖️ crimea-bots
+🟡 Активен | hotel / restaurant / transfer
+Нужен: рефакторинг → единый мульти-бот
+
+## 📝 Контент
+### 📦 content-monetization
+🔴 Создан каркас | Pipeline генерации
+Нужен: реализация генератора
+### 🌐 auto-microsites
+🔴 Создан каркас | Jinja2 template engine
+Нужен: реализация генератора
+
+## 📚 Обучение
+### 🎓 ai-education-bot
+🟡 demo_bot.py существует
+Нужен: ревью → деплой
+
+## ⚙️ Инфраструктура
+### 🧠 agentmemory
+🟢 Работает | TypeScript MCP сервер
+Роль: память агентов
+### 🔷 entity-engine
+🟡 Работает | Python
+Роль: Entity Cube
+### 📊 Knowledge Cube
+🟢 1 891+ записей | 130+ доменов
+Основа всех данных
+
+## 📋 Состояние
+### Running code: 3/8
+### Money making: 0/8
+### Готово: business-plan ✅
+### Готово: landing ✅  
+### Готово: PROJECT_MAP ✅
+### Цель: первый клиент → деньги
+
+## 🔗 Связи
+salon-bot ← TGB-Booking (компоненты)
+salon-bot → auto-microsites (лендинг)
+crimea-bots → salon-bot (архитектура)
+content-monetization → все проекты
+agentmemory → Knowledge Cube
+`.trim());
+
+setTimeout(function() {
+  var el = document.getElementById('markmap');
+  if (el) {
+    window.mm = window.markmap.Markmap.create(el, {
+      colorFreezeLevel: 3,
+      duration: 500,
+      zoom: true,
+      pan: true,
+    }, root);
+    setTimeout(function() { window.mm && window.mm.zoomFit(); }, 200);
+  }
+}, 500);
+</script>
+</body>
+</html>

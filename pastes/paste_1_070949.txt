@@ -1,0 +1,13 @@
+⏳ Installing skill...
+
+⚙️  /skills install darwinian-evolver
+Resolving 'darwinian-evolver'...
+
+Multiple skills named 'darwinian-evolver' found:
+┏━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Source   ┃ Trust    ┃ Identifier                          ┃
+┡━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ official │ official │ official/research/darwinian-evolver │
+│ official │ official │ official/research\darwinian-evolver │
+└──────────┴──────────┴─────────────────────────────────────┘
+Use the full identifier to install a specific one.

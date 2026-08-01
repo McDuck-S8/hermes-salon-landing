@@ -1,0 +1,90 @@
+# Autonomy Configuration v2.0
+# All thresholds, timeouts, weights for agent autonomy protocols
+
+# VOID_RESPONSE Protocol
+void_response:
+  entropy_threshold: 0.30              # Trigger when >30% critical params missing
+  max_reconnaissance_questions: 2      # Max closed questions to user
+  ontology_template_timeout_s: 5       # Timeout for template creation
+  confidence_levels:
+    local_memory: 0.15
+    passive_scan: 0.25
+    active_recon: 0.45
+    ontology_template: 0.60
+    external_import: 0.65
+
+# EXTERNAL_IMPORT Protocol
+external_import:
+  confidence_trigger: 0.20             # Trigger when confidence < 0.2
+  max_results: 10
+  max_doc_age_days: 730                # 2 years
+  source_priority:
+    - "official_docs"
+    - "github_readme"
+    - "technical_blog"
+    - "stackoverflow"
+    - "forum"
+  virtual_test_timeout_s: 30
+  error_prob_threshold_ask: 0.3        # Ask user if error_prob > 0.3
+  experimental_confidence: 0.65        # Confidence for auto-applied external patterns
+
+# TACTICAL_VS_STRATEGIC Protocol
+tactical_vs_strategic:
+  tactical_ttl_days: 7
+  promotion_requirements:
+    min_occurrences: 3
+    min_days_span: 7
+    min_success_rate: 0.80
+    universal_contexts_required: true  # No hardcoded time/place/mood
+  demotion:
+    unused_days: 30
+    weight_decay_per_week: 0.10
+    archive_threshold: 0.30
+
+# EXCEPTION_VALIDATES_RULE Protocol
+exception_validates_rule:
+  global_age_decay_days: 30
+  tactical_recent_boost_hours: 24
+  consecutive_wins_for_promotion: 5
+  conflict_log_retention_days: 90
+
+# ARCHIVAL Protocol
+archival:
+  tactical_ttl_days: 7
+  strategic_unused_days: 30
+  weight_decay_per_week: 0.10
+  archive_threshold: 0.30
+  archive_retention_days: 365
+
+# Agent State Machine
+state_machine:
+  idle_scan_interval_s: 300            # 5 min background scan
+  gathering_intel_timeout_s: 120       # Max time in GATHERING_INTEL
+  executing_timeout_s: 3600            # Max execution time
+  experimenting_timeout_s: 1800        # Max experiment time
+  conflict_resolution_timeout_s: 60    # Max conflict resolution time
+  pattern_merging_timeout_s: 120       # Max merge time
+  archiving_timeout_s: 60              # Max archival time
+
+# Virtual Emulator (for external_import testing)
+emulator:
+  enabled: true
+  max_steps: 50
+  timeout_s: 30
+  sandbox_env: true
+
+# Logging & Transparency
+logging:
+  log_all_state_transitions: true
+  log_conflict_resolutions: true
+  log_promotions: true
+  log_archivals: true
+  log_external_imports: true
+  retention_days: 90
+
+# Integration
+integration:
+  chain_heartbeat_event: "autonomy_cycle_complete"
+  skill_evolution_feed: true
+  always_on_agent_buffer: true
+  knowledge_cube_white_spots: true

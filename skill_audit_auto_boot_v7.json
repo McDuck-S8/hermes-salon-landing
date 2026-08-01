@@ -1,0 +1,71 @@
+{
+  "timestamp": "2026-07-26T19:43:46.162559",
+  "skills_scanned": 1,
+  "files_scanned": 11,
+  "total_findings": 6,
+  "risk": {
+    "score": 100,
+    "severity": "CRITICAL",
+    "recommendation": "DANGEROUS",
+    "critical": 0,
+    "high": 6,
+    "medium": 0,
+    "low": 0
+  },
+  "results": [
+    {
+      "skill": "auto-boot",
+      "files": 11,
+      "findings": [
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\auto-boot\\SKILL.md",
+          "line": 80,
+          "code": "**Root cause**: `subprocess.run()` calls at lines ~289, ~301 in morning_report.py trigger have NO `timeout=` param. If t"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\auto-boot\\SKILL.md",
+          "line": 82,
+          "code": "**Fix**: Add `timeout=45` to every `subprocess.run()` that calls another script, plus catch `subprocess.TimeoutExpired` "
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\auto-boot\\SKILL.md",
+          "line": 85,
+          "code": "subprocess.run([sys.executable, str(ROOT / \"scripts\" / \"morning_report.py\")],"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\auto-boot\\references\\windows-process-management.md",
+          "line": 54,
+          "code": "subprocess.run([\"taskkill\", \"/F\", \"/PID\", str(pid)], capture_output=True, timeout=5)  # SAFE: explicit args list, no she"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\auto-boot\\references\\windows-process-management.md",
+          "line": 65,
+          "code": "proc = subprocess.Popen(  # SAFE: explicit args list, no shell"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\auto-boot\\references\\windows-process-management.md",
+          "line": 71,
+          "code": "proc = subprocess.Popen(  # SAFE: explicit args list, no shell"
+        }
+      ]
+    }
+  ]
+}

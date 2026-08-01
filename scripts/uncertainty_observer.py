@@ -513,6 +513,13 @@ SYSTEM_PROMPT = """Ты — 'Наблюдатель Неопределеннос
 # ---------------------------------------------------------------------------
 
 def main():
+    # Heartbeat
+    try:
+        from chain_heartbeat import beat
+        beat("uncertainty_observer")
+    except ImportError:
+        pass
+
     parser = argparse.ArgumentParser(
         description="Наблюдатель Неопределенности — стратегический философский анализатор"
     )

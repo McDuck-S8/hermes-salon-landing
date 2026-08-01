@@ -19,6 +19,10 @@ import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
+try:
+    from config_guard import is_high_risk_domain
+except ImportError:
+    def is_high_risk_domain(d): return False
 from typing import Any
 
 # ── paths ──────────────────────────────────────────────────────────
@@ -2466,6 +2470,13 @@ def generate_patch_from_description(target_file: str, description: str) -> str |
 # ── Main ───────────────────────────────────────────────────────────
 
 def main() -> int:
+    # Heartbeat: module alive
+    try:
+        from chain_heartbeat import beat
+        beat("proactive_executor")
+    except ImportError:
+        pass
+
     start = time.time()
     fixes_applied = 0
     fixes_verified = 0

@@ -1,0 +1,26 @@
+{
+   "action": {
+      "default_icon": {
+         "128": "assets/icon128.png",
+         "16": "assets/icon16.png",
+         "48": "assets/icon48.png"
+      }
+   },
+   "background": {
+      "service_worker": "background.js",
+      "type": "module"
+   },
+   "description": "BrowserOS API bridge for BrowserOS Server",
+   "host_permissions": [ "\u003Call_urls>" ],
+   "icons": {
+      "128": "assets/icon128.png",
+      "16": "assets/icon16.png",
+      "48": "assets/icon48.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhlh9i/c2A3f0PL86hXhGPzguLIOQ+sPf3/Y8RD11gmdvoU6XqnUqv7GgBvm7SW7316uPnS58AYZY13jGtF4rFrscdda5H2CjZrtOyOycmKp2KzibJLwibXNm/JwKhZ3QEfgsW/orh1SMY2kNj62JemkWLcLyn3E1T+KTcTVyFOxiJS3hyQ+Y0/Jp1HOqGh5lYS58YYzwhId5rrJjfL7wFYtALgt2dEA2r7p4qpe+SW0QLA+ayjRAjS+yt+qitR0eWg+XgqcIk1f1KblN8/yDISssSD4LWiPofe5CmJPnqlHIuI0CpgvAFv9dvgR/w8OFkXxK5h06i6saum1xExj+IwIDAQAB",
+   "manifest_version": 3,
+   "name": "BrowserOS Controller",
+   "permissions": [ "tabs", "activeTab", "bookmarks", "history", "scripting", "storage", "tabGroups", "webNavigation", "downloads", "browserOS", "alarms" ],
+   "update_url": "https://cdn.browseros.com/extensions/update-manifest.xml",
+   "version": "1.1.0.0"
+}

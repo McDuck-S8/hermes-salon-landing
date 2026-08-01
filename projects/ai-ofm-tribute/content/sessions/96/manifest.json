@@ -1,0 +1,24 @@
+{
+  "session": 96,
+  "style": "fantasy",
+  "model": "flux",
+  "count": 1,
+  "success_count": 1,
+  "fail_count": 0,
+  "timestamp": "2026-07-26T18:17:21.247669+00:00",
+  "provider": "pollinations.ai",
+  "images": [
+    {
+      "index": 1,
+      "style": "fantasy",
+      "prompt": "Goddess of moonlight standing on ancient temple ruins, silver-white dress, glowing eyes, mystical aura, starry night sky, fantasy art, cinematic composition, photorealistic",
+      "seed": 116338,
+      "caption": "✨ New fantasy art | Exclusive content",
+      "model": "flux",
+      "filename": "fantasy_96_01.jpg",
+      "filepath": "D:\\Portable_Soft\\hermes\\projects\\ai-ofm-tribute\\content\\sessions\\96\\fantasy_96_01.jpg",
+      "success": true,
+      "file_size": 82269
+    }
+  ]
+}

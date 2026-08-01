@@ -1,0 +1,37 @@
+�� GitHub Repositories Mentioned in This Video
+
+#10 Chonkie (Chunking Library)
+https://github.com/bhavnicksm/chonkie
+
+#9 Marker (PDF to Markdown)
+https://github.com/VikParuchuri/marker
+
+#8 Langfuse (AI Observability)
+https://github.com/langfuse/langfuse
+
+#7 Qdrant (Vector Database)
+https://github.com/qdrant/qdrant
+
+#6 Ollama
+https://github.com/ollama/ollama
+
+#5 DSPy
+https://github.com/stanfordnlp/dspy
+
+#4 Crawl4AI
+https://github.com/unclecode/crawl4ai
+
+#3 Outlines (Guaranteed JSON Output)
+https://github.com/dottxt-ai/outlines
+
+#2 LiteLLM
+https://github.com/BerriAI/litellm
+
+#1 Instructor (Type-Safe AI)
+https://github.com/jxnl/instructor
+
+⭐ Bonus #1 vLLM
+https://github.com/vllm-project/vllm
+
+⭐ Bonus #2 Ragas
+https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqa242TG9abExLSjg3VHh6dUFZQlBMTGVNM3lvUXxBQ3Jtc0tsYTNFZEZKN3pLcFlVdVg0RERxRUt2UmlnbVN4QXdVZHJZazJtQWY0T2p3Q3Q1RnZJbnRBYmhoMi13U2FjNTdDNHNUa1BzX0g3dzR6ZHZoRFVqX3FnTWYyNWVuNnNzajF2c3NrRGNoVXlacUd1ei1aSQ&q=https%3A%2F%2Fgithub.com%2Fexplodinggradients%2Fragas&v=dk1Y3VtC3F8

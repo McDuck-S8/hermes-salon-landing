@@ -1,0 +1,17 @@
+[
+  {
+    "id": "R1783898172",
+    "name": "Stale auto-block",
+    "condition": {
+      "field": "status",
+      "op": "stale",
+      "days": 7
+    },
+    "action": {
+      "action": "block",
+      "target_status": "blocked"
+    },
+    "enabled": true,
+    "created_at": "2026-07-13T02:16:12.903394"
+  }
+]

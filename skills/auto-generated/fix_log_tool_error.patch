@@ -1,0 +1,25 @@
+# Auto-generated fix for: Log pattern 'tool_error' seen 36 times: terminal
+# Issue: log_tool_error
+# Severity: critical
+# Count: 36
+# Source: session_logs
+
+# TODO: Review and apply this patch manually
+# The self-improvement loop detected this pattern 36 times
+# Recommended actions:
+# - Add input validation before tool calls
+# - Implement tool error recovery
+# - Add fallback tool strategy
+# - Log pattern to Knowledge Cube for future reference
+
+# Example patch template:
+# *** Begin Patch
+# *** Update File: scripts/terminal_tool.py
+# @@ -45,6 +45,10 @@
+#      def execute(self, command, timeout=30):
+# +        # Guard: prevent timeout on long commands
+# +        if timeout > 60:
+# +            timeout = 60
+# +            logger.warning(f"Timeout capped at 60s (was {timeout}s)")
+#      return subprocess.run(...)
+# *** End Patch

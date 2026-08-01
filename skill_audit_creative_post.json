@@ -1,0 +1,567 @@
+{
+  "timestamp": "2026-07-26T18:48:22.235744",
+  "skills_scanned": 1,
+  "files_scanned": 307,
+  "total_findings": 68,
+  "risk": {
+    "score": 100,
+    "severity": "CRITICAL",
+    "recommendation": "DANGEROUS",
+    "critical": 0,
+    "high": 62,
+    "medium": 6,
+    "low": 0
+  },
+  "results": [
+    {
+      "skill": "creative",
+      "files": 307,
+      "findings": [
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\arbitrage-mindmap\\SKILL.md",
+          "line": 94,
+          "code": "<!-- строки с class=\"ready|testing|blocked\" -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\architecture-diagram\\SKILL.md",
+          "line": 90,
+          "code": "<!-- Background Grid Pattern -->"
+        },
+        {
+          "rule": "PE2_sudo_root",
+          "severity": "MEDIUM",
+          "category": "Privilege Escalation",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\ascii-art\\SKILL.md",
+          "line": 97,
+          "code": "sudo apt install cowsay -y    # Debian/Ubuntu"
+        },
+        {
+          "rule": "PE2_sudo_root",
+          "severity": "MEDIUM",
+          "category": "Privilege Escalation",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\ascii-art\\SKILL.md",
+          "line": 141,
+          "code": "sudo apt install boxes -y    # Debian/Ubuntu"
+        },
+        {
+          "rule": "PE2_sudo_root",
+          "severity": "MEDIUM",
+          "category": "Privilege Escalation",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\ascii-art\\SKILL.md",
+          "line": 176,
+          "code": "sudo apt install toilet toilet-fonts -y    # Debian/Ubuntu"
+        },
+        {
+          "rule": "PE2_sudo_root",
+          "severity": "MEDIUM",
+          "category": "Privilege Escalation",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\ascii-art\\SKILL.md",
+          "line": 207,
+          "code": "sudo snap install ascii-image-converter"
+        },
+        {
+          "rule": "PE2_sudo_root",
+          "severity": "MEDIUM",
+          "category": "Privilege Escalation",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\ascii-art\\SKILL.md",
+          "line": 224,
+          "code": "sudo apt install jp2a -y"
+        },
+        {
+          "rule": "P3_exfiltration_commands",
+          "severity": "HIGH",
+          "category": "Data Exfiltration",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\comfyui\\SKILL.md",
+          "line": 228,
+          "code": "| \"cancel that\" | REST | `curl -X POST http://HOST:8188/interrupt` |"
+        },
+        {
+          "rule": "P3_exfiltration_commands",
+          "severity": "HIGH",
+          "category": "Data Exfiltration",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\comfyui\\SKILL.md",
+          "line": 229,
+          "code": "| \"free GPU memory\" | REST | `curl -X POST http://HOST:8188/free` |"
+        },
+        {
+          "rule": "P3_exfiltration_commands",
+          "severity": "HIGH",
+          "category": "Data Exfiltration",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\comfyui\\SKILL.md",
+          "line": 509,
+          "code": "curl -X POST \"https://cloud.comfy.org/api/upload/image\" \\"
+        },
+        {
+          "rule": "SC2_external_script",
+          "severity": "HIGH",
+          "category": "Supply Chain",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\comfyui\\SKILL.md",
+          "line": 539,
+          "code": "curl -s http://127.0.0.1:8188/queue | python3 -m json.tool"
+        },
+        {
+          "rule": "OH1_unvalidated_output",
+          "severity": "HIGH",
+          "category": "Output Handling",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\dashboard-design\\SKILL.md",
+          "line": 104,
+          "code": "document.getElementById('modal-body').innerHTML = html;"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\p5js\\SKILL.md",
+          "line": 190,
+          "code": "<!-- <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.3/addons/p5.sound.min.js\"></script> -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\p5js\\SKILL.md",
+          "line": 191,
+          "code": "<!-- <script src=\"https://unpkg.com/p5.js-svg@1.6.0\"></script> -->  <!-- SVG export -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\p5js\\SKILL.md",
+          "line": 192,
+          "code": "<!-- <script src=\"https://cdn.jsdelivr.net/npm/ccapture.js-npmfixed/build/CCapture.all.min.js\"></script> -->  <!-- video"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\pixel-art\\ATTRIBUTION.md",
+          "line": 31,
+          "code": "- `ffmpeg` invocation switched from `os.system` to `subprocess.run(check=True)`"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\popular-web-designs\\SKILL.md",
+          "line": 58,
+          "code": "<!-- Paste the Google Fonts <link> from the template's Hermes notes -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\popular-web-designs\\SKILL.md",
+          "line": 80,
+          "code": "<!-- Build using component specs from the template -->"
+        },
+        {
+          "rule": "AST2_eval_call",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\touchdesigner-mcp\\references\\dat-scripting.md",
+          "line": 116,
+          "code": "\"\"\"par is a Par object. par.name, par.eval(), par.owner.\"\"\""
+        },
+        {
+          "rule": "AST2_eval_call",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\touchdesigner-mcp\\references\\dat-scripting.md",
+          "line": 118,
+          "code": "op('/project1/bloom').par.threshold = par.eval()"
+        },
+        {
+          "rule": "AST2_eval_call",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\touchdesigner-mcp\\references\\dat-scripting.md",
+          "line": 168,
+          "code": "val = panelValue.eval()"
+        },
+        {
+          "rule": "AST2_eval_call",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\touchdesigner-mcp\\references\\dat-scripting.md",
+          "line": 334,
+          "code": "6. **`par` vs `panelValue`** — parameterExecuteDAT gives `par` (a Par object), panelExecuteDAT gives `panelValue` (also "
+        },
+        {
+          "rule": "PE2_sudo_root",
+          "severity": "MEDIUM",
+          "category": "Privilege Escalation",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\touchdesigner-mcp\\references\\external-data.md",
+          "line": 303,
+          "code": "4. **Serial port permissions on macOS** — TD needs Full Disk Access OR the port needs to be unlocked via `sudo chmod 666"
+        },
+        {
+          "rule": "MP1_persistent_injection",
+          "severity": "HIGH",
+          "category": "Memory Poisoning",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\touchdesigner-mcp\\references\\glsl.md",
+          "line": 66,
+          "code": "// Output (always use this — handles sRGB correctly)"
+        },
+        {
+          "rule": "AST2_eval_call",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\touchdesigner-mcp\\references\\network-patterns.md",
+          "line": 61,
+          "code": "op('/project1/noise1').par.period.expr = \"tdu.remap(op('/project1/spectrum_scale')['chan1'].eval(), 0, 1, 1, 8)\""
+        },
+        {
+          "rule": "AST2_eval_call",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\touchdesigner-mcp\\references\\panel-ui.md",
+          "line": 48,
+          "code": "val = op('/project1/my_component').par.Intensity.eval()"
+        },
+        {
+          "rule": "AST2_eval_call",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\touchdesigner-mcp\\references\\panel-ui.md",
+          "line": 181,
+          "code": "new_val = panelValue.eval()"
+        },
+        {
+          "rule": "AST2_eval_call",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\touchdesigner-mcp\\references\\pitfalls.md",
+          "line": 237,
+          "code": "# Verify: audio.par.cue.eval() should be True"
+        },
+        {
+          "rule": "AST2_eval_call",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\touchdesigner-mcp\\references\\pitfalls.md",
+          "line": 290,
+          "code": "`me.inputVal`, `me.chanIndex`, `me.sampleIndex` work ONLY in cook-context. Calling `par.expr0expr.eval()` from outside a"
+        },
+        {
+          "rule": "AST2_eval_call",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\touchdesigner-mcp\\references\\pitfalls.md",
+          "line": 535,
+          "code": "When `audiofileinCHOP` is in `playmode=2` (sequential), `par.index.eval()` returns 0.0 even while audio IS actively play"
+        },
+        {
+          "rule": "AST2_eval_call",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\touchdesigner-mcp\\references\\pitfalls.md",
+          "line": 540,
+          "code": "- `par.play.eval()` returning True is necessary but NOT sufficient — it can be True with no audio flowing if cue is stuc"
+        },
+        {
+          "rule": "AST2_eval_call",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\touchdesigner-mcp\\references\\python-api.md",
+          "line": 80,
+          "code": "node.par.seed.eval()     # same as .val"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\popular-web-designs\\templates\\apple.md",
+          "line": 11,
+          "code": "> <!-- No CDN needed — uses system fonts -->"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\pixel-art\\scripts\\pixel_art_video.py",
+          "line": 297,
+          "code": "subprocess.run("
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\pixel-art\\scripts\\pixel_art_video.py",
+          "line": 309,
+          "code": "subprocess.run("
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\dashboard-design\\scripts\\gen_dashboard.py",
+          "line": 16,
+          "code": "result = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=timeout, cwd=HERMES_ROOT)"
+        },
+        {
+          "rule": "P3_exfiltration_commands",
+          "severity": "HIGH",
+          "category": "Data Exfiltration",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\comfyui\\references\\rest-api.md",
+          "line": 60,
+          "code": "curl -X POST \"https://cloud.comfy.org/api/prompt\" \\"
+        },
+        {
+          "rule": "SC2_external_script",
+          "severity": "HIGH",
+          "category": "Supply Chain",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\comfyui\\references\\rest-api.md",
+          "line": 203,
+          "code": "curl -s \"http://127.0.0.1:8188/object_info\" | python3 -m json.tool"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\comfyui\\scripts\\auto_fix_deps.py",
+          "line": 54,
+          "code": "proc = subprocess.run(cmd, capture_output=True, text=True, check=False)"
+        },
+        {
+          "rule": "SC2_external_script",
+          "severity": "HIGH",
+          "category": "Supply Chain",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\comfyui\\scripts\\comfyui_setup.sh",
+          "line": 238,
+          "code": "curl -fsS \"http://127.0.0.1:$PORT/system_stats\" | python3 -m json.tool 2>/dev/null || true"
+        },
+        {
+          "rule": "SC2_external_script",
+          "severity": "HIGH",
+          "category": "Supply Chain",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\comfyui\\scripts\\comfyui_setup.sh",
+          "line": 260,
+          "code": "curl -fsS \"http://127.0.0.1:$PORT/system_stats\" | python3 -m json.tool 2>/dev/null || true"
+        },
+        {
+          "rule": "P6_direct_leakage",
+          "severity": "HIGH",
+          "category": "Prompt Leakage",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\comfyui\\scripts\\fetch_logs.py",
+          "line": 137,
+          "code": "print(\"Error: prompt_id is required (or use --tail-queue)\", file=sys.stderr)"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\comfyui\\scripts\\hardware_check.py",
+          "line": 56,
+          "code": "out = subprocess.run("
+        },
+        {
+          "rule": "P6_direct_leakage",
+          "severity": "HIGH",
+          "category": "Prompt Leakage",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\comfyui\\scripts\\hardware_check.py",
+          "line": 460,
+          "code": "print(f\"RAM:       {report['system_ram_gb']} GB\")"
+        },
+        {
+          "rule": "P6_direct_leakage",
+          "severity": "HIGH",
+          "category": "Prompt Leakage",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\comfyui\\scripts\\hardware_check.py",
+          "line": 474,
+          "code": "print(f\"           run: comfy --skip-prompt install {report['comfy_cli_flag']}\")"
+        },
+        {
+          "rule": "P6_direct_leakage",
+          "severity": "HIGH",
+          "category": "Prompt Leakage",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\comfyui\\scripts\\ws_monitor.py",
+          "line": 198,
+          "code": "print(fmt_color(f\"[start] prompt_id={pid}\", BOLD, color_on=color_on))"
+        },
+        {
+          "rule": "P6_direct_leakage",
+          "severity": "HIGH",
+          "category": "Prompt Leakage",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\comfyui\\scripts\\ws_monitor.py",
+          "line": 204,
+          "code": "print(fmt_color(f\"  [executing] (workflow done) prompt_id={pid}\", DIM, color_on=color_on))"
+        },
+        {
+          "rule": "P6_direct_leakage",
+          "severity": "HIGH",
+          "category": "Prompt Leakage",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\comfyui\\scripts\\ws_monitor.py",
+          "line": 229,
+          "code": "print(fmt_color(f\"[success] prompt_id={pid}\", GREEN + BOLD, color_on=color_on))"
+        },
+        {
+          "rule": "P6_direct_leakage",
+          "severity": "HIGH",
+          "category": "Prompt Leakage",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\comfyui\\scripts\\ws_monitor.py",
+          "line": 246,
+          "code": "print(fmt_color(f\"[interrupted] prompt_id={pid}\", YELLOW, color_on=color_on))"
+        },
+        {
+          "rule": "E2_env_harvesting",
+          "severity": "HIGH",
+          "category": "Data Exfiltration",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\comfyui\\tests\\conftest.py",
+          "line": 54,
+          "code": "return os.environ.get(\"COMFY_CLOUD_API_KEY\")"
+        },
+        {
+          "rule": "E2_env_harvesting",
+          "severity": "HIGH",
+          "category": "Data Exfiltration",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\comfyui\\tests\\conftest.py",
+          "line": 59,
+          "code": "if os.environ.get(\"COMFY_CLOUD_API_KEY\"):"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\ascii-video\\references\\architecture.md",
+          "line": 700,
+          "code": "pipe = subprocess.Popen(cmd, stdin=subprocess.PIPE,"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\ascii-video\\references\\architecture.md",
+          "line": 726,
+          "code": "subprocess.run([\"ffmpeg\", \"-y\", \"-f\", \"concat\", \"-safe\", \"0\", \"-i\", concat_path,"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\ascii-video\\references\\inputs.md",
+          "line": 11,
+          "code": "subprocess.run([\"ffmpeg\", \"-y\", \"-i\", input_path, \"-ac\", \"1\", \"-ar\", \"22050\","
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\ascii-video\\references\\inputs.md",
+          "line": 106,
+          "code": "pipe = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\ascii-video\\references\\inputs.md",
+          "line": 422,
+          "code": "subprocess.run("
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\ascii-video\\references\\inputs.md",
+          "line": 426,
+          "code": "result = subprocess.run("
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\ascii-video\\references\\inputs.md",
+          "line": 504,
+          "code": "subprocess.run(cmd, capture_output=True, check=True)"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\ascii-video\\references\\inputs.md",
+          "line": 600,
+          "code": "proc = subprocess.run(cmd, capture_output=True)"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\ascii-video\\references\\inputs.md",
+          "line": 606,
+          "code": "probe = subprocess.run("
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\ascii-video\\references\\optimization.md",
+          "line": 35,
+          "code": "mem_bytes = int(subprocess.check_output([\"sysctl\", \"-n\", \"hw.memsize\"]).strip())"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\ascii-video\\references\\optimization.md",
+          "line": 523,
+          "code": "pipe = subprocess.Popen(cmd, stdin=subprocess.PIPE, stderr=subprocess.PIPE)"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\ascii-video\\references\\optimization.md",
+          "line": 527,
+          "code": "pipe = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.DEVNULL, stderr=stderr_fh)"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\ascii-video\\references\\optimization.md",
+          "line": 547,
+          "code": "subprocess.run(cmd, capture_output=True, check=True)"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\ascii-video\\references\\optimization.md",
+          "line": 588,
+          "code": "r = subprocess.run(cmd, capture_output=True)"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\ascii-video\\references\\scenes.md",
+          "line": 500,
+          "code": "pipe = subprocess.Popen(cmd, stdin=subprocess.PIPE,"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\ascii-video\\references\\troubleshooting.md",
+          "line": 192,
+          "code": "pipe = subprocess.Popen(cmd, stdin=subprocess.PIPE, stderr=subprocess.PIPE)"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\creative\\ascii-video\\references\\troubleshooting.md",
+          "line": 199,
+          "code": "pipe = subprocess.Popen(cmd, stdin=subprocess.PIPE,"
+        }
+      ]
+    }
+  ]
+}

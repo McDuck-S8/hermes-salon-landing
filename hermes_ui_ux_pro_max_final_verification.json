@@ -1,0 +1,82 @@
+{
+  "timestamp": "2026-07-20T02:55:37.778071",
+  "verification_status": "FAIL",
+  "components": {
+    "ui_ux_pro_max": {
+      "status": "PASS",
+      "issues": [],
+      "details": {
+        "skill_data": {
+          "name": "ui-ux-pro-max",
+          "version": "2.11.0",
+          "author": "NextLevelBuilder",
+          "license": "MIT",
+          "keywords": [
+            "ui",
+            "ux",
+            "design",
+            "design-system",
+            "color-palette",
+            "typography",
+            "accessibility",
+            "ai-skill"
+          ],
+          "platforms": [
+            "claude",
+            "cursor",
+            "windsurf",
+            "copilot",
+            "kiro",
+            "roocode",
+            "kilocode",
+            "codex",
+            "qoder",
+            "gemini",
+            "trae",
+            "opencode",
+            "continue",
+            "codebuddy",
+            "droid",
+            "warp",
+            "augment",
+            "antigravity",
+            "openclaw"
+          ],
+          "install": "pip install -r ui-ux-pro-max-cli/requirements.txt",
+          "description": "AI-powered design intelligence with design system generation for UI/UX across multiple frameworks, including reasoning engine for industry-specific styles, colors, typography, and 161+ reasoning rules"
+        }
+      }
+    },
+    "generate_income_pipeline_flow": {
+      "status": "FAIL",
+      "issues": [
+        "Closing HTML tag"
+      ],
+      "details": {}
+    },
+    "validate_flow": {
+      "status": "FAIL",
+      "issues": [
+        "def validate_html_structure()",
+        "def validate_functionality()"
+      ],
+      "details": {}
+    },
+    "hermes_integration": {
+      "status": "VALID",
+      "issues": [],
+      "details": {
+        "skills_dir_exists": true,
+        "ui_ux_pro_max_exists": true,
+        "skill_json_valid": true,
+        "skill_loading_works": true
+      }
+    }
+  },
+  "summary": {
+    "total_components": 4,
+    "passed": 1,
+    "failed": 2,
+    "warnings": 0
+  }
+}

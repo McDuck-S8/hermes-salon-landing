@@ -1,0 +1,245 @@
+====================================================================
+  KNOWLEDGE CUBE — ПОЛНЫЙ АНАЛИЗ
+====================================================================
+
+--- 1. ОБЩАЯ СТАТИСТИКА ---
+  Всего записей:   2148
+  Unknown:         993 (46.2%)
+  Failure:         479 (22.3%)
+  Success:         224 (10.4%)
+  Indexed:         427 (19.9%)
+  Partial:         14
+
+--- 2. UNKNOWN: РАСПРЕДЕЛЕНИЕ ПО ИСТОЧНИКАМ ---
+  state_db                           : 430
+  skill-indexer                      : 185
+  latent-domain-detector             : 110
+  dimension_proposals                : 51
+  lavra_decision                     : 40
+  lavra_learned                      : 18
+  lavra_fact                         : 13
+  white-spot-explorer                : 12
+  auto_research                      : 10
+  lavra_pattern                      : 8
+  gap_filler                         : 7
+  synthesize_patterns                : 6
+  lavra_investigation                : 4
+  agent_decisions                    : 4
+  improvement_suggestions            : 2
+  script_verify_outcomes             : 1
+  script_verified_fix_memory         : 1
+  script_update_runtime_skill        : 1
+  script_unified_cron                : 1
+  script_unified                     : 1
+  script_uncertainty_observer        : 1
+  script_trend_scout                 : 1
+  script_tg_client                   : 1
+  script_test_llm_analyst            : 1
+  script_telegram_delivery_report    : 1
+  script_telegram_daily_report       : 1
+  script_telegram_bridge             : 1
+  script_task_lifecycle              : 1
+  script_system_watcher              : 1
+  script_system_metrics              : 1
+  script_synthesize_patterns         : 1
+  script_subconscious_loop_cron      : 1
+  script_skill_indexer               : 1
+  script_skill_evolution_v2          : 1
+  script_skill_evolution_cron        : 1
+  script_skill_evolution             : 1
+  script_session_recall              : 1
+  script_self_improvement_loop       : 1
+  script_self_healing_monitor        : 1
+  script_self_assessment_cron        : 1
+  script_self_analysis_cron          : 1
+  script_seed_tools_knowledge        : 1
+  script_seed_creative_knowledge     : 1
+  script_prompt_compressor           : 1
+  script_process_events_cron         : 1
+  script_proactive_executor          : 1
+  script_proactive_doer              : 1
+  script_pattern_extractor           : 1
+  script_outcome_tracker             : 1
+  script_openrouter_client           : 1
+  script_nightly_brain_scan          : 1
+  script_morning_report_cron         : 1
+  script_memory_consolidate          : 1
+  script_market_research             : 1
+  script_llm_classifier              : 1
+  script_llm_analyst                 : 1
+  script_knowledge_surfacer          : 1
+  script_knowledge_gap_filler        : 1
+  script_knowledge_cube              : 1
+  script_knowledge_brain             : 1
+  script_jarvis_real                 : 1
+  script_integration                 : 1
+  script_insert_mobile_mcp_kb        : 1
+  script_ingest_sessions             : 1
+  script_import_state_to_cube        : 1
+  script_import_lavra_knowledge      : 1
+  script_health_check                : 1
+  script_generate_preventive_records : 1
+  script_file_conflict_detector      : 1
+  script_explore_white_spot          : 1
+  script_explore_domain              : 1
+  script_explore_design_domain       : 1
+  script_event_trigger               : 1
+  script_event_patterns              : 1
+  script_event_evolution             : 1
+  script_dream_memory_cron           : 1
+  script_dimension_discovery         : 1
+  script_daily_knowledge_report      : 1
+  script_cube_to_memory              : 1
+  script_cube_feeder                 : 1
+  script_cube_categorizer            : 1
+  script_core_engine                 : 1
+  script_background_runner           : 1
+  script_autonomous_agent            : 1
+  script_auto_tagger_v2              : 1
+  script_auto_tagger                 : 1
+  script_auto_recall                 : 1
+  script_auto_fetch_cron             : 1
+  script_auto_consult                : 1
+  script_aspect_router               : 1
+  script_anomaly_detector            : 1
+  script_analyze_cube                : 1
+  git:e7e23a6                        : 1
+  git:ce178e7                        : 1
+  git:a4c84b1                        : 1
+  git:99b5da1                        : 1
+  git:9820fc1                        : 1
+  git:8dc8166                        : 1
+  git:8d9684d                        : 1
+  git:56e752e                        : 1
+  git:3b4682b                        : 1
+  git:1671e5b                        : 1
+  file:D:\Portable_Soft\hermes\projects\agentmemory\DESIGN.md: 1
+  file:D:\Portable_Soft\hermes\hermes-agent\skills\creative\ascii-video\references\ARCHITECTURE.md: 1
+  file:D:\Portable_Soft\hermes\hermes-agent\optional-skills\software-development\code-wiki\templates\ARCHITECTURE.md: 1
+  file:D:\Portable_Soft\hermes\hermes-agent\apps\desktop\DESIGN.md: 1
+  event:11                           : 1
+  content_generation                 : 1
+
+--- 3. FAILURE: РАСПРЕДЕЛЕНИЕ ПО ИСТОЧНИКАМ ---
+  improvement_suggestions            : 329
+  state_db                           : 45
+  cube_analysis                      : 43
+  log_agent                          : 15
+  gap_filler                         : 10
+  log_autonomous_agent               : 8
+  log_errors                         : 7
+  agent_decisions                    : 6
+  lavra_decision                     : 4
+  lavra_learned                      : 3
+  suggestion_application             : 2
+  lavra_fact                         : 2
+  script_self_improvement_loop       : 1
+  script_result_producer             : 1
+  script_error_alerter               : 1
+  lavra_pattern                      : 1
+  lavra_investigation                : 1
+
+--- 4. ДОМЕНЫ (ТОП-30) ---
+  Domain                          Total    OK  Fail
+  --------------------------------------------------
+  bugfix                            504    49   381
+  file_ops                          346    34     7
+  research                          226    13    44
+  system                            185     7     3
+  coding                            137    22    12
+  devops                            107    14     4
+  terminal                          106    25     0
+  browser                           102     4    11
+  communication                     101    28     1
+  creative                           64     0     1
+  learning                           62    21     1
+  debugging                          35     3     9
+  architecture                       31     1     2
+  skill                              24     0     0
+  data                               23     3     3
+  user-preference                    11     0     0
+  skill_chain                         4     0     0
+  design                              2     0     0
+  across                              1     0     0
+  action                              1     0     0
+  actions                             1     0     0
+  agent                               1     0     0
+  agents                              1     0     0
+  analytics                           1     0     0
+  appears                             1     0     0
+  audience                            1     0     0
+  automation                          1     0     0
+  backup                              1     0     0
+  candidate                           1     0     0
+  case                                1     0     0
+
+--- 5. СОДЕРЖИМОЕ UNKNOWN (выборка) ---
+
+  [state_db] (430 entries) — примеры:
+    id=2: сделай плиз это всё на русском и полное описание склов. и ткрой это в браузере красиво оформлено буду изучать и запоминать.
+    id=3: на чём мы остановились?
+    id=4: я просил скилы открытть в браузере почитать и на русском. какие вкл а какие нет
+
+  [dimension_proposals] (51 entries) — примеры:
+    id=797: [dimension_proposal] Cluster ws_29a4cb87 (size=4): unknown_dimension: Cluster keywords: по, из — needs human analysis
+    id=798: [dimension_proposal] Cluster ws_3b9a3388 (size=3): unknown_dimension: Cluster keywords: self-identification, adjust, via, accordingly.], [note: — needs human analysis
+    id=799: [dimension_proposal] Cluster ws_5a40f419 (size=17): unknown_dimension: Cluster keywords: please, tool, results, process — needs human analysis
+
+--- 6. ТЕГИ (ТОП-20) ---
+  ["complexity:low"], auto_tagged         : 302
+  auto_tagged_llm                         : 161
+  ["source:improvement", "complexity:low",: 144
+  ["source:improvement", "complexity:low",: 140
+  ["knowledge-gap", "latent-domain", "cros: 62
+  ["domain:architecture", "source:dimensio: 48
+  ["complexity:low", "tool:code"], auto_ta: 36
+  ["source:improvement", "complexity:low",: 31
+  ["knowledge-gap", "latent-domain", "cros: 28
+  ["complexity:low", "pattern:novel"], aut: 26
+  ["complexity:low", "tool:browser"], auto: 18
+  ["tool:file", "complexity:medium"], auto: 14
+  ["complexity:low", "tool:file"], auto_ta: 9
+  ["complexity:medium"], auto_tagged      : 8
+  ["tool:web_search", "complexity:low"]   : 7
+  ["knowledge-gap", "latent-domain", "brid: 7
+  ["error_type:traceback", "complexity:low: 7
+  ["source:log", "error_type:traceback", ": 6
+  ["domain:tools", "white-spot", "tools-co: 6
+  ["complexity:medium", "tool:file", "tool: 6
+
+--- 7. АНАЛИЗ И РЕКОМЕНДАЦИИ ---
+
+  state_db (430 entries):
+    Это сырые диалоги пользователя — запросы, команды, сообщения.
+    НЕ классифицированы, потому что event_evolution не присвоил outcome.
+    ЦЕННОСТЬ: высокая — это история взаимодействия с пользователем.
+  skill-indexer (0 entries):
+    Результаты индексации навыков — технические логи.
+    ЦЕННОСТЬ: низкая — можно перезаписать при следующей индексации.
+  latent-domain-detector (0 entries):
+    Результаты авто-детекции скрытых доменов.
+    ЦЕННОСТЬ: средняя — содержит предложения новых доменов.
+  dimension_proposals (51 entries):
+    Авто-сгенерированные предложения новых измерений для Cube.
+    ЦЕННОСТЬ: средняя — может содержать полезные идеи.
+  improvement_suggestions (329 entries, marked failure):
+    Это НЕ ошибки! Это предложения по улучшению, которые система
+    авто-генерирует, но они не прошли верификацию или не были приняты.
+    Статус 'failure' вводит в заблуждение.
+
+--- 8. ПЛАН ДЕЙСТВИЙ ---
+
+  1. ПЕРЕКЛАССИФИЦИРОВАТЬ improvement_suggestions (329 шт):
+     Это не failure, а 'proposal_rejected'. Исправить в Cube.
+
+  2. state_db (430 шт) — оставить как есть или добавить тег
+     conversation_history. Это ценный контекст, не мусор.
+
+  3. skill-indexer (185 шт) — очистить, они перезаписываются при
+     каждой индексации. Просто удалить или игнорировать.
+
+  4. latent-domain-detector + dimension_proposals (~160 шт):
+     Разобрать: что из предложенного реально внедрено?
+
+  5. Улучшить event_evolution — присваивать outcome автоматически
+     при записи события, не оставлять unknown.

@@ -1,0 +1,13 @@
+model: claude-sonnet-4
+tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Task
+  - WebSearch
+  - WebFetch
+display_name: "Main"
+description: "Primary coordinator and consolidator for Hermes Hive Mind. Routes tasks, synthesizes war room discussions, tracks cross-cutting concerns."

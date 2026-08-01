@@ -1,0 +1,201 @@
+Available Tools
+66 tools available
+
+
+get_active_page
+Get the currently active (focused) page in the browser
+
+list_pages
+List all pages (tabs) currently open in the browser
+
+navigate_page
+Navigate a page to a URL, or go back/forward/reload
+
+new_page
+Open a new page (tab) and navigate to a URL. Opens in background by default to keep the user on their current page. Use group_tabs to organize related tabs.
+
+new_hidden_page
+Open a new hidden page (tab) and navigate to a URL. Hidden pages are not visible to the user and useful for background data fetching or automation. Note: take_screenshot is not supported on hidden tabs — use show_page first to make it visible.
+
+show_page
+Restore a hidden page back into a visible browser window. Use after new_hidden_page when you need to make the page visible (e.g. for screenshots). Errors if the page is already visible.
+
+move_page
+Move a page (tab) to a different window or position within a window.
+
+close_page
+Close a page (tab)
+
+take_snapshot
+Get a concise snapshot of interactive elements on the page. Returns a flat list with element IDs (e.g. [47]) that can be used with click, fill, hover, etc. Always take a snapshot before interacting with page elements.
+
+take_enhanced_snapshot
+Get a detailed accessibility tree of the page with structural context (headings, landmarks, dialogs) and cursor-interactive elements that ARIA misses. Use when you need more context than take_snapshot provides.
+
+get_page_content
+Extract page content as clean markdown with headers, links, lists, tables, and formatting preserved. Large results are written to a local file and returned by path. Not for automation — use take_snapshot for that.
+
+get_page_links
+Extract all links from the page using the accessibility tree. Returns a deduplicated list of [text](url) entries. More reliable than DOM queries — handles role="link" elements and shadow DOM.
+
+get_dom
+Get the raw HTML DOM structure of a page or a specific element. Writes outer HTML to a local file and returns the file path. Use a CSS selector to scope to a specific part of the page. For readable text content, prefer get_page_content instead.
+
+search_dom
+Search the DOM using plain text, CSS selectors, or XPath queries. Uses the browser's native DOM search. Returns matching elements with tag name and attributes. Examples: "Login" (text search), "input[type=email]" (CSS), "//button[@aria-label]" (XPath).
+
+take_screenshot
+Take a screenshot of a page
+
+evaluate_script
+Execute JavaScript in the page context. Returns the result as a string. Use for reading page state or performing actions not covered by other tools.
+
+get_console_logs
+Get browser console output (logs, warnings, errors, exceptions) for a page. Use to debug JavaScript errors, failed network requests, or unexpected page behavior.
+
+click
+Click an element by its ID from the last snapshot
+
+click_at
+Click at specific page coordinates
+
+hover
+Hover over an element by its ID
+
+hover_at
+Hover at specific page coordinates
+
+type_at
+Click at specific coordinates then type text. Use for typing into inputs at known positions.
+
+drag_at
+Drag from one coordinate to another
+
+focus
+Focus an element by its ID. Scrolls into view first.
+
+clear
+Clear the text content of an input or textarea element
+
+fill
+Type text into an input or textarea element. Focuses the element, optionally clears existing text, then types character by character.
+
+check
+Check a checkbox or radio button. No-op if already checked.
+
+uncheck
+Uncheck a checkbox. No-op if already unchecked.
+
+upload_file
+Set file(s) on a file input element. Files must be absolute paths on disk.
+
+press_key
+Press a key or key combination (e.g. 'Enter', 'Escape', 'Control+A', 'Meta+Shift+P'). Sent to the currently focused element.
+
+drag
+Drag from one element to another element or to specific coordinates
+
+scroll
+Scroll the page or a specific element
+
+handle_dialog
+Accept or dismiss a JavaScript dialog (alert, confirm, prompt)
+
+select_option
+Select an option in a <select> dropdown by value or visible text
+
+save_pdf
+Save the current page as a PDF file
+
+save_screenshot
+Take a screenshot of a page and save it to a file on disk
+
+download_file
+Click an element to trigger a file download and save it to disk
+
+list_windows
+List all browser windows
+
+create_window
+Create a new browser window
+
+create_hidden_window
+Create a new hidden browser window. Hidden windows are not visible to the user and useful for background automation. Note: take_screenshot is not supported on hidden windows.
+
+close_window
+Close a browser window
+
+activate_window
+Activate (focus) a browser window
+
+get_bookmarks
+List all bookmarks in the browser
+
+create_bookmark
+Create a new bookmark or folder. Omit url to create a folder.
+
+remove_bookmark
+Remove a bookmark or folder by ID (recursive)
+
+update_bookmark
+Update a bookmark title or URL
+
+move_bookmark
+Move a bookmark or folder into a different folder
+
+search_bookmarks
+Search bookmarks by title or URL
+
+search_history
+Search browser history by text query
+
+get_recent_history
+Get most recent browser history items
+
+delete_history_url
+Delete a specific URL from browser history
+
+delete_history_range
+Delete browser history within a time range
+
+list_tab_groups
+List all tab groups in the browser
+
+group_tabs
+Group pages together with an optional title. Color is auto-assigned; use update_tab_group to change it.
+
+update_tab_group
+Update a tab group's title, color, or collapsed state
+
+ungroup_tabs
+Remove pages from their groups
+
+close_tab_group
+Close a tab group and all its tabs
+
+browseros_info
+Get information about BrowserOS features, capabilities, and documentation links. Use when users ask "What is BrowserOS?", "What can BrowserOS do?", or about specific features.
+
+suggest_schedule
+Call this to suggest scheduling a task. Use in two cases: (1) MANDATORY after completing a task that could run on a recurring schedule (news, monitoring, reports, price tracking, data gathering). (2) Immediately when the user explicitly asks to schedule, automate, or repeat the current task — do NOT ask for clarification, infer all parameters from context. Do NOT call if the task requires real-time user interaction.
+
+suggest_app_connection
+BLOCKING DECISION — Call after tab grouping but before any browser work when the user's request relates to a Connect Apps service but you don't have MCP tools for it. Your response must contain ONLY this tool call with zero text. The appName must be one of: Gmail, Google Calendar, Google Docs, Google Drive, Google Sheets, Slack, LinkedIn, Notion, Airtable, Confluence, GitHub, GitLab, Linear, Jira, Figma, Salesforce, ClickUp, Asana, Monday, Microsoft Teams, Outlook Mail, Outlook Calendar, Supabase, Vercel, Postman, Stripe, Cloudflare, Brave Search, Mem0, Dropbox, OneDrive, WordPress, YouTube, Box, HubSpot, PostHog, Mixpanel, Discord, WhatsApp, Shopify, Cal.com, Resend, Google Forms, Zendesk, Intercom.
+
+discover_server_categories_or_actions
+**PREFERRED STARTING POINT**: Discover available categories or actions. Try this tool first when exploring what actions are available across servers. This is the primary entry point for exploring available actions and should be used before other search methods.The output will be a list of servers with detail level and details.If detail level is 'categories_only', the details will be a list of category names only. Next step prefer to use get_category_actions tool to get the actions for the categories.If detail level is 'full_details', the details will be a list of category names with their actions details included. This happens when the server has only a few actions. Next step prefer to use execute_action tool to execute the actions.If detail level is 'categories_and_actions', the details will be a list of category names and action names. This happens when using external tools. Next step prefer to use get_action_details tool to get the details of the actions.If detail level is 'mixed', the details will be a list of category names, some with actions name and description for enriched information. Next step prefer to use get_category_actions or get_action_details tools.
+
+get_category_actions
+Get a comprehensive overview of API actions available within specific categories. Use this tool if you want to explore what actions are available in particular service categories or get a detailed view of category capabilities. ** Important **: It should only be called after you get the server categories from the discover_server_categories tool.
+
+get_action_details
+Get detailed information about a specific action, including required and optional parameters. Must provide category name and action name. ** Important **: It should only be called after you get the server categories from previous tool calls.
+
+execute_action
+Execute a specific action with the provided parameters. Must provide server name, action name, and action parameters. ** Important **: It should only be called after you get the action details from the get_action_details tool.
+
+search_documentation
+**SECONDARY OPTION**: Use this tool only when discover_server_categories doesn't provide sufficient detail or when you need to search within a specific server's documentation. Search for server action documentations by category, operation, tags, or functionality using keyword matching. This is not a natural language search - it matches exact keywords and phrases. Returns endpoints ranked by relevance. Use a few targeted keywords to find the best matches. Common patterns: category names ('projects', 'users', 'pipelines'), actions ('create', 'delete', 'list', 'get'), or combinations ('create user', 'list projects'). The search algorithm uses smart scoring to prevent verbose description fields from overwhelming results.
+
+handle_auth_failure
+Handle authentication failures that occur when executing actions. CRITICAL: This tool should ONLY be

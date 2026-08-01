@@ -1,0 +1,35 @@
+⚕ Hermes ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+    Sales Machine готова! Ось підсумок:
+
+
+
+    ✅ Sales Machine — Budva, Montenegro
+
+    Створено модулі:
+
+    | Модуль          | Призначення                                            | Файл                    |
+    |-----------------|--------------------------------------------------------|-------------------------|
+    | lead_finder.py  | Пошук бізнесів у Google Maps (Будва, Київ, Белград...) | modules/lead_finder.py  |
+    | demo_builder.py | Генерація лендінгів (салон, ресторан, готель, клініка) | modules/demo_builder.py |
+    | closer.py       | Комунікація через Telegram/WhatsApp/VK/OK/Email        | modules/closer.py       |
+    | field_agent.py  | Управління польовими агентами                          | modules/field_agent.py  |
+    | main.py         | CLI інтерфейс (scan, leads, demo, dashboard, agent)    | main.py                 |
+
+    База даних: db/clients.db
+    - ✅ 3 реальні ліди з Будви (Restaurant Conte, Hotel Avala Resort, Salon Lotos)
+    - ✅ 5 демо-лендінгів згенеровано (RU, EN, SR)
+    - ✅ 6 таблиць (clients, demos, conversations, deals, field_agents, campaigns)
+
+    Cron job:
+    | Час           | Команда                                                      |
+    |---------------|--------------------------------------------------------------|
+    | ⏰ Щодня 8:00 | Сканування Google Maps для Будви (ресторани, готелі, салони) |
+
+    Skill: sales-machine — зареєстровано в Hermes
+
+    Що далі робити?
+    1. Запустити сканування — python main.py scan budva_restaurants --lang en (через browser-harness)
+    2. Зареєструвати агента — python main.py agent register --name "Milos" --phone "+382..." --location "Budva"
+    3. Згенерувати демо — python main.py demo <lead_id> --niche restaurant --lang sr
+    4. Запустити кампанію — через closer.py з Telegram Bot APIПроводжу верифікацію. Це новий проект без тестів — перевіряю
+    імпорти та базову логіку:

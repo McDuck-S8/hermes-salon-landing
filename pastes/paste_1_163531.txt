@@ -1,0 +1,36 @@
+plugin discovery failed at CLI startup
+Traceback (most recent call last):
+  File "D:\Program Files\Python311\Lib\site-packages\hermes_cli\main.py", line 11229, in _prepare_agent_startup
+    from hermes_cli.plugins import discover_plugins
+  File "D:\Program Files\Python311\Lib\site-packages\hermes_cli\plugins.py", line 36, in <module>
+    import asyncio
+  File "D:\Program Files\Python311\Lib\site-packages\asyncio\__init__.py", line 21, in <module>
+    from .base_events import *
+  File "D:\Program Files\Python311\Lib\site-packages\asyncio\base_events.py", line 296
+    future = tasks.async(future, loop=self)
+                   ^^^^^
+SyntaxError: invalid syntax
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "D:\Program Files\Python311\Scripts\hermes.exe\__main__.py", line 5, in <module>
+  File "D:\Program Files\Python311\Lib\site-packages\hermes_cli\main.py", line 12619, in main
+    args.func(args)
+  File "D:\Program Files\Python311\Lib\site-packages\hermes_cli\main.py", line 2311, in cmd_chat
+    from cli import main as cli_main
+  File "D:\Program Files\Python311\Lib\site-packages\cli.py", line 59, in <module>
+    from prompt_toolkit.history import FileHistory
+  File "D:\Program Files\Python311\Lib\site-packages\prompt_toolkit\__init__.py", line 27, in <module>
+    from .application import Application
+  File "D:\Program Files\Python311\Lib\site-packages\prompt_toolkit\application\__init__.py", line 3, in <module>
+    from .application import Application
+  File "D:\Program Files\Python311\Lib\site-packages\prompt_toolkit\application\application.py", line 3, in <module>
+    import asyncio
+  File "D:\Program Files\Python311\Lib\site-packages\asyncio\__init__.py", line 21, in <module>
+    from .base_events import *
+  File "D:\Program Files\Python311\Lib\site-packages\asyncio\base_events.py", line 296
+    future = tasks.async(future, loop=self)
+                   ^^^^^
+SyntaxError: invalid syntax
+
+D:\Portable_Soft\hermes>^A

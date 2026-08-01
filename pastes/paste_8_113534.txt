@@ -1,0 +1,39 @@
+Базовый эндпоинт OpenCode Zen API:
+
+**`https://opencode.ai/zen/v1`**
+
+Это основная базовая URL. В зависимости от используемой модели конечные точки будут различаться.
+
+## Основные эндпоинты
+
+| Назначение | Эндпоинт |
+|------------|----------|
+| **Базовая URL** (Base URL) | `https://opencode.ai/zen/v1` |
+| **Список моделей** | `https://opencode.ai/zen/v1/models`  |
+| **Чат-комплетены** (OpenAI‑совместимые модели) | `/chat/completions`  |
+| **Responses API** (GPT‑серии) | `/responses`  |
+| **Messages API** (Claude‑серия) | `/messages`  |
+| **Gemini модели** | `/models/gemini-{model-id}`  |
+
+## Пример использования
+
+Для большинства OpenAI-совместимых клиентов (например, вашего `jarvis_voice_loop.py`):
+
+```python
+client = OpenAI(
+    base_url="https://opencode.ai/zen/v1",
+    api_key="ваш_api_ключ"
+)
+
+response = client.chat.completions.create(
+    model="opencode/gpt-5.1-codex",  # формат: opencode/<model-id>
+    messages=[{"role": "user", "content": "Hello"}]
+)
+```
+
+Идентификаторы моделей указываются в формате `opencode/<model-id>` .
+
+## Важно
+
+✅ Правильный эндпоинт — `opencode.ai/zen/v1`  
+❌ Неправильный — `api.opencode-zen.com/v1` (частая ошибка в настройках) 

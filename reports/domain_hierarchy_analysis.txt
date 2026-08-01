@@ -1,0 +1,302 @@
+========================================================================
+  PHASE 1: DOMAIN DISTRIBUTION
+========================================================================
+Domain                  Total   Unk  Fail    OK   Idx  % of total
+----------------------------------------------------------
+bugfix                    504     5   381    49    33      23.5%
+file_ops                  346    46     7    34   212      16.1%
+research                  226   136    44    13    16      10.5%
+system                    185   174     3     7     0       8.6%
+coding                    137    65    12    22    36       6.4%
+devops                    107    59     4    14     7       5.0%
+terminal                  106    27     0    25     8       4.9%
+browser                   102    27    11     4    28       4.7%
+communication             101    49     1    28    11       4.7%
+creative                   64     6     1     0    31       3.0%
+learning                   62    28     1    21     8       2.9%
+debugging                  35    17     9     3     3       1.6%
+architecture               31    13     2     1     8       1.4%
+skill                      24     0     0     0    20       1.1%
+data                       23    11     3     3     2       1.1%
+user-preference            11     0     0     0     0       0.5%
+skill_chain                 4     0     0     0     4       0.2%
+design                      2     2     0     0     0       0.1%
+across                      1     0     0     0     0       0.0%
+action                      1     0     0     0     0       0.0%
+actions                     1     0     0     0     0       0.0%
+agent                       1     0     0     0     0       0.0%
+agents                      1     0     0     0     0       0.0%
+analytics                   1     0     0     0     0       0.0%
+appears                     1     0     0     0     0       0.0%
+audience                    1     0     0     0     0       0.0%
+automation                  1     0     0     0     0       0.0%
+backup                      1     0     0     0     0       0.0%
+candidate                   1     0     0     0     0       0.0%
+case                        1     0     0     0     0       0.0%
+category                    1     0     0     0     0       0.0%
+check                       1     0     0     0     0       0.0%
+cicd                        1     0     0     0     0       0.0%
+cluster                     1     0     0     0     0       0.0%
+config                      1     0     0     0     0       0.0%
+controller                  1     0     0     0     0       0.0%
+decision                    1     0     0     0     0       0.0%
+document                    1     0     0     0     0       0.0%
+domains                     1     0     0     0     0       0.0%
+entries                     1     0     0     0     0       0.0%
+execute                     1     0     0     0     0       0.0%
+failure                     1     0     0     0     0       0.0%
+fallback                    1     0     0     0     0       0.0%
+files                       1     0     0     0     0       0.0%
+future                      1     0     0     0     0       0.0%
+gateway                     1     0     0     0     0       0.0%
+generate                    1     0     0     0     0       0.0%
+github                      1     0     0     0     0       0.0%
+guard                       1     0     0     0     0       0.0%
+hermes                      1     0     0     0     0       0.0%
+hosting                     1     0     0     0     0       0.0%
+image                       1     0     0     0     0       0.0%
+installation                1     0     0     0     0       0.0%
+issues                      1     0     0     0     0       0.0%
+json                        1     0     0     0     0       0.0%
+kanban                      1     0     0     0     0       0.0%
+knowledge                   1     0     0     0     0       0.0%
+latent                      1     0     0     0     0       0.0%
+latent-domain               1     0     0     0     0       0.0%
+lavra                       1     0     0     0     0       0.0%
+logs                        1     0     0     0     0       0.0%
+marketing                   1     0     0     0     0       0.0%
+memory                      1     0     0     0     0       0.0%
+monetization                1     0     0     0     0       0.0%
+needs                       1     0     0     0     0       0.0%
+note                        1     0     0     0     0       0.0%
+ops-skill                   1     0     0     0     0       0.0%
+output                      1     0     0     0     0       0.0%
+patch                       1     0     0     0     0       0.0%
+pattern                     1     0     0     0     0       0.0%
+payment                     1     0     0     0     0       0.0%
+plan                        1     0     0     0     0       0.0%
+portable                    1     0     0     0     0       0.0%
+portable-soft               1     0     0     0     0       0.0%
+potential                   1     0     0     0     0       0.0%
+prevent                     1     0     0     0     0       0.0%
+process                     1     0     0     0     0       0.0%
+queries                     1     0     0     0     0       0.0%
+recent                      1     0     0     0     0       0.0%
+reference                   1     0     0     0     0       0.0%
+registry                    1     0     0     0     0       0.0%
+report                      1     0     0     0     0       0.0%
+search                      1     0     0     0     0       0.0%
+seo                         1     0     0     0     0       0.0%
+skills                      1     0     0     0     0       0.0%
+soft                        1     0     0     0     0       0.0%
+suggested                   1     0     0     0     0       0.0%
+suggested-potential         1     0     0     0     0       0.0%
+tags                        1     0     0     0     0       0.0%
+task                        1     0     0     0     0       0.0%
+telegram                    1     0     0     0     0       0.0%
+tool                        1     0     0     0     0       0.0%
+unknown                     1     0     0     0     0       0.0%
+user                        1     0     0     0     0       0.0%
+version                     1     0     0     0     0       0.0%
+your                        1     0     0     0     0       0.0%
+
+  Всего доменов: 96
+  Всего записей: 2148
+
+  Домены с 1 записью (noise): ['across', 'action', 'actions', 'agent', 'agents', 'analytics', 'appears', 'audience', 'automation', 'backup', 'candidate', 'case', 'category', 'check', 'cicd', 'cluster', 'config', 'controller', 'decision', 'document', 'domains', 'entries', 'execute', 'failure', 'fallback', 'files', 'future', 'gateway', 'generate', 'github', 'guard', 'hermes', 'hosting', 'image', 'installation', 'issues', 'json', 'kanban', 'knowledge', 'latent', 'latent-domain', 'lavra', 'logs', 'marketing', 'memory', 'monetization', 'needs', 'note', 'ops-skill', 'output', 'patch', 'pattern', 'payment', 'plan', 'portable', 'portable-soft', 'potential', 'prevent', 'process', 'queries', 'recent', 'reference', 'registry', 'report', 'search', 'seo', 'skills', 'soft', 'suggested', 'suggested-potential', 'tags', 'task', 'telegram', 'tool', 'unknown', 'user', 'version', 'your']
+
+========================================================================
+  PHASE 2: SOURCES PER DOMAIN — subdomain structure hints
+========================================================================
+  bugfix                 total=  504  src: improvement_suggestions(332), skill-indexer(53), log_agent(26), state_db(22), log_errors(14)
+  file_ops               total=  346  src: skill-indexer(258), state_db(30), lavra_decision(16), lavra_learned(13), lavra_pattern(9)
+  research               total=  226  src: state_db(53), dimension_proposals(51), cube_analysis(35), skill-indexer(28), lavra_decision(14)
+  system                 total=  185  src: state_db(185)
+  coding                 total=  137  src: state_db(69), skill-indexer(38), lavra_decision(8), lavra_learned(6), gap_filler(4)
+  devops                 total=  107  src: state_db(46), skill-indexer(18), lavra_decision(10), latent-domain-detector(4), agent_decisions(3)
+  terminal               total=  106  src: skill-indexer(53), state_db(43), lavra_decision(3), lavra_fact(3), latent-domain-detector(1)
+  communication          total=  101  src: state_db(69), skill-indexer(22), lavra_learned(2), manual_research(2), content_generation(1)
+  browser                total=  101  src: skill-indexer(36), state_db(32), latent-domain-detector(22), cube_analysis(6), auto_research(1)
+  creative               total=   64  src: skill-indexer(50), white-spot-explorer(5), auto_research(2), latent-domain-detector(2), gap_filler(1)
+  learning               total=   62  src: state_db(31), skill-indexer(10), lavra_learned(6), gap_filler(2), event:11(1)
+  debugging              total=   35  src: state_db(26), skill-indexer(3), white-spot-explorer(2), gap_filler(1), latent-domain-detector(1)
+  architecture           total=   31  src: skill-indexer(10), gap_filler(3), lavra_investigation(2), lavra_pattern(2), file:D:\Portable_Soft\hermes\hermes-agent\apps\desktop\DESIGN.md(1)
+  skill                  total=   24  src: skill-indexer(24)
+  data                   total=   23  src: state_db(11), skill-indexer(5), lavra_decision(2), latent-domain-detector(1), lavra_learned(1)
+
+========================================================================
+  PHASE 3: TAG PATTERNS BY DOMAIN (potential subdomain indicators)
+========================================================================
+
+  bugfix                 (504 entries)
+    tags: auto_tagged(488), complexity:low(415), source:improvement(332), severity:medium(320), issue:log_unknown(145), issue:log_tick_failure(144), source:log(48), tool:code(47)
+    potential subdomain anchors: auto_tagged, complexity:low, source:improvement, severity:medium, issue:log_unknown, issue:log_tick_failure
+
+  file_ops               (346 entries)
+    tags: auto_tagged(314), output:report(155), action:assist(70), complexity:low(63), source:lavra(54), output:code(49), tool:file(46), domain:skill(46)
+    potential subdomain anchors: auto_tagged, output:report, action:assist, complexity:low, source:lavra
+
+  research               (226 entries)
+    tags: complexity:low(192), auto_tagged(190), domain:architecture(51), source:dimension_proposal(51), pattern:recurring(35), source:cube_analysis(35), domain:coding(28), source:code(24)
+    potential subdomain anchors: complexity:low, auto_tagged, domain:architecture, source:dimension_proposal, pattern:recurring, source:cube_analysis
+
+  system                 (185 entries)
+    tags: auto_tagged_llm(155), complexity:low(30), auto_tagged(30), tool:browser(1), tool:terminal(1), tool:file(1)
+    potential subdomain anchors: auto_tagged_llm, complexity:low, auto_tagged
+
+  coding                 (137 entries)
+    tags: auto_tagged(114), complexity:low(96), output:report(32), tool:code(24), source:lavra(17), action:review(16), source:code(9), domain:coding(9)
+    potential subdomain anchors: auto_tagged, complexity:low, output:report, tool:code
+
+  devops                 (107 entries)
+    tags: complexity:low(79), auto_tagged(73), source:lavra(16), source:code(14), domain:coding(14), domain:skill(11), entry_type:decision(10), decision(10)
+
+  terminal               (106 entries)
+    tags: auto_tagged(106), complexity:low(49), domain:skill(45), tool:code(23), source:lavra(8), tool:file(6), exploration(5), workflow(5)
+    potential subdomain anchors: auto_tagged, complexity:low, domain:skill, tool:code
+
+  browser                (102 entries)
+    tags: auto_tagged(96), complexity:low(42), output:report(23), knowledge-gap(22), latent-domain(22), cross-cutting(21), tool:browser(17), domain:creative(10)
+    potential subdomain anchors: auto_tagged, complexity:low, output:report, knowledge-gap, latent-domain, cross-cutting, tool:browser
+
+  communication          (101 entries)
+    tags: auto_tagged(97), complexity:low(74), pattern:novel(19), domain:skill(11), output:report(8), tool:file(6), tool:code(6), api(5)
+    potential subdomain anchors: auto_tagged, complexity:low, pattern:novel
+
+  creative               (64 entries)
+    tags: auto_tagged(55), domain:creative(34), creative(22), output:report(22), domain:skill(19), action:assist(16), category:creative(14), image-generation(12)
+    potential subdomain anchors: auto_tagged, domain:creative, creative, output:report, domain:skill, action:assist, category:creative, image-generation, design, ui
+
+  learning               (62 entries)
+    tags: auto_tagged(55), complexity:low(27), complexity:medium(18), tool:file(15), source:code(10), domain:coding(10), pattern:novel(8), source:lavra(8)
+    potential subdomain anchors: auto_tagged, complexity:low, complexity:medium, tool:file, source:code, domain:coding
+
+  debugging              (35 entries)
+    tags: auto_tagged(34), complexity:low(26), complexity:medium(3), tool:file(3), debugging(3), nodejs(3), node-inspect(3), cdp(3)
+
+  architecture           (31 entries)
+    tags: auto_tagged(27), complexity:low(13), source:lavra(7), pattern(5), source:code(5), domain:coding(5), action:review(4), complexity:medium(3)
+    potential subdomain anchors: auto_tagged, complexity:low, source:lavra, pattern, source:code, domain:coding
+
+  skill                  (24 entries)
+    tags: output:report(20), action:generate(7), domain:skill(4), [Coding-Agent, Claude, Anthropic, Code-Review, Refactoring, PTY, Automation](3), action:review(3), domain:ai-agents(3), [kanban, multi-agent, collaboration, workflow, pitfalls](3), domain:devops(3)
+    potential subdomain anchors: output:report, action:generate, domain:skill
+
+  data                   (23 entries)
+    tags: auto_tagged(19), complexity:low(15), source:lavra(3), source:code(3), domain:coding(3), domain:skill(3), complexity:medium(2), tool:file(2)
+
+========================================================================
+  PHASE 5: SMALL DOMAINS (2-29 entries) — possible mergers
+========================================================================
+  skill                  cnt=24   tags: output:report(20), action:generate(7), domain:skill(4), [Coding-Agent, Claude, Anthropic, Code-Review, Refactoring, PTY, Automation](3)  → входит в data-knowledge
+  data                   cnt=23   tags: auto_tagged(19), complexity:low(15), source:lavra(3), source:code(3)  → входит в data-knowledge
+  user-preference        cnt=11   tags: user-preference(11), architecture(2), autonomy(1), quality(1)  → входит в communication
+  skill_chain            cnt=4    tags: chain(4), development(2), research(1), knowledge(1)  
+  design                 cnt=2    tags: complexity:low(2), tool:web_search(1), script:explore_design_domain(1), domain:coding(1)  
+
+========================================================================
+  PHASE 5: PROPOSED DOMAIN HIERARCHY + SUBDOMAINS
+========================================================================
+
+  [system-dev] Development
+    Кодинг, архитектура, отладка
+    Current domains: coding, architecture, debugging
+    Total entries: 203
+    Recommended subdomains: coding-python, coding-js, architecture-design, debugging-trace, debugging-test
+
+  [system-ops] DevOps & Admin
+    Деплой, администрирование, инфраструктура
+    Current domains: devops, system, terminal
+    Total entries: 398
+    Recommended subdomains: system-admin, system-monitoring, system-network, devops-deploy, devops-ci
+
+  [data-knowledge] Data & Research
+    Исследования, данные, обучение, навыки
+    Current domains: research, data, learning, skill
+    Total entries: 335
+    Recommended subdomains: research-web, research-papers, data-analysis, data-collection, learning-skills
+
+  [communication] Communication & Docs
+    Общение, контент, файловые операции, творчество
+    Current domains: communication, file_ops, creative, user-preference
+    Total entries: 522
+    Recommended subdomains: communication-chat, communication-docs, file_ops-read, file_ops-write, creative-text, creative-visual
+
+  [quality] Bugfix & Quality
+    Баги, ошибки, качество кода
+    Current domains: bugfix
+    Total entries: 504
+    Recommended subdomains: bugfix-python, bugfix-js, bugfix-config, bugfix-network, bugfix-dependency
+
+  [automation] Automation & Tools
+    Браузерная и инструментальная автоматизация
+    Current domains: browser
+    Total entries: 102
+    Recommended subdomains: browser-automation, browser-scraping, tools-cli, tools-mcp
+
+========================================================================
+  RECOMMENDATIONS
+========================================================================
+
+  1. [bugfix (504)]
+     Крупнейший домен. Разбить на поддомены по стеку: bugfix-python, bugfix-js, bugfix-config, bugfix-network, bugfix-dependency. >50% записей — failure, что логично для багфиксов.
+
+  2. [file_ops (346)]
+     Разделить на file_ops-read, file_ops-write, file_ops-search. Файловые операции разной природы смешаны.
+
+  3. [research (226)]
+     Разделить на research-web vs research-papers. Теги подсказывают: web_search, browser vs academic, paper.
+
+  4. [system (185)]
+     Разделить на system-admin, system-monitoring, system-network. Источники: state_db (разговоры) + улучшалки.
+
+  5. [coding (137)]
+     Уже довольно чистый. Но если дробить — coding-python, coding-js (по тегам).
+
+  6. [creative (64)]
+     Домен существует, но мал. Сейчас 0 success — все unknown. Присоединить к communication как subdomain creative-text/visual.
+
+  7. [Мусорные домены]
+     Следующие домены имеют ≤2 записей и должны быть переквалифицированы или удалены: 'design' (2), 'actions' (1), 'agent' (1), 'across' (1), 'analytics' (1), 'backup' (1) и т.д. — ~20 шт.
+
+  8. [learning + skill]
+     learning(62) + skill(24) = 86. Объединить в learning-skills под data-knowledge.
+
+  9. [user-preference (11)]
+     Переместить под communication как communication-preference.
+
+  10. [dynamic_axes]
+     Поле dynamic_axes редко заполнено (всего 200+). Внедрить авто-заполнение при записи события: стек, ОС, окружение.
+
+========================================================================
+  PHASE 7: DYNAMIC AXES — unused structural potential
+========================================================================
+  Всего записей: 2148, заполнено dynamic_axes: 2148 (100.0%)
+  {}                                                               776
+  {"feeder_source": "improvement_suggestions"}                     333
+  {"feeder_source": "lavra_decision"}                               61
+  {"feeder_source": "dimension_proposals"}                          51
+  {"feeder_source": "cube_analysis"}                                43
+  {"feeder_source": "lavra_learned"}                                41
+  {"session_id": "20260524_191116_3b1c6d6e"}                        29
+  {"feeder_source": "log_agent"}                                    26
+  {"feeder_source": "lavra_fact"}                                   24
+  {"session_id": "20260530_194459_1be2bc"}                          23
+  {"session_id": "20260525_134935_c95a94"}                          22
+  {"session_id": "20260528_231652_e5acd2"}                          18
+  {"session_id": "20260528_021222_b1a85b"}                          18
+  {"session_id": "20260528_160511_853ec4"}                          17
+  {"session_id": "20260526_115426_68a522"}                          17
+  {"session_id": "20260528_035230_670f9a"}                          16
+  {"session_id": "20260527_205423_f8a3fc"}                          15
+  {"feeder_source": "lavra_pattern"}                                15
+  {"feeder_source": "log_errors"}                                   14
+  {"session_id": "20260531_225858_d5dd81"}                          13
+
+========================================================================
+  SUMMARY
+========================================================================
+  Предлагается: 6 топ-доменов → ~30 поддоменов
+  + авто-заполнение dynamic_axes при записи события
+  + чистка ~20 noise-доменов
+

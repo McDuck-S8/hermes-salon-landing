@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Money Plan — Презентация</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    height: 100%;
+    overflow: hidden;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: #0a0a0f;
+    color: #ffffff;
+    line-height: 1.5;
+  }
+
+  /* Slides wrapper */
+  .slides-wrapper {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  }
+  .slides-track {
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    height: 100%;
+  }
+  .slide {
+    min-width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 40px;
+    overflow-y: auto;
+    position: relative;
+  }
+
+  /* Navigation */
+  .nav-arrows {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 16px;
+    z-index: 100;
+    align-items: center;
+  }
+  .nav-arrows button {
+    background: rgba(0,212,170,0.12);
+    border: 1px solid rgba(0,212,170,0.2);
+    color: #00d4aa;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.4rem;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-arrows button:hover {
+    background: rgba(0,212,170,0.25);
+    border-color: #00d4aa;
+  }
+  .nav-arrows button:disabled {
+    opacity: 0.2;
+    cursor: default;
+  }
+  .nav-dots {
+    display: flex;
+    gap: 8px;
+    margin: 0 16px;
+  }
+  .nav-dots .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+  }
+  .nav-dots .dot.active {
+    background: #00d4aa;
+    box-shadow: 0 0 8px rgba(0,212,170,0.4);
+  }
+  .slide-counter {
+    position: fixed;
+    top: 24px;
+    right: 32px;
+    color: #445566;
+    font-size: 0.85rem;
+    z-index: 100;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+  .slide-counter span { color: #00d4aa; }
+
+  /* Slide 1 — Title */
+  .slide-title {
+    text-align: center;
+  }
+  .slide-title h1 {
+    font-size: 4rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #00d4aa, #00a884);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 20px;
+  }
+  .slide-title .subtitle {
+    font-size: 1.3rem;
+    color: #8899aa;
+    max-width: 600px;
+    margin: 0 auto 12px;
+  }
+  .slide-title .meta {
+    font-size: 0.9rem;
+    color: #556677;
+  }
+  .slide-title .meta span {
+    color: #00d4aa;
+  }
+
+  /* Slide content */
+  .slide-content {
+    max-width: 1100px;
+    width: 100%;
+  }
+  .slide-content h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 32px;
+    text-align: center;
+    background: linear-gradient(135deg, #00d4aa, #00a884);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Cards grid */
+  .pres-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .pres-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 28px 24px;
+    text-align: center;
+    transition: all 0.3s;
+  }
+  .pres-card:hover {
+    border-color: rgba(0,212,170,0.3);
+    background: rgba(0,212,170,0.04);
+    transform: translateY(-3px);
+  }
+  .pres-card .card-icon {
+    width: 56px;
+    height: 56px;
+    background: rgba(0,212,170,0.1);
+    color: #00d4aa;
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .pres-card h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .pres-card .tag {
+    display: inline-block;
+    padding: 3px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .tag-green { background: rgba(0,212,170,0.15); color: #00d4aa; }
+  .tag-orange { background: rgba(255,184,0,0.15); color: #ffb800; }
+  .tag-purple { background: rgba(180,100,255,0.15); color: #b464ff; }
+  .pres-card ul {
+    list-style: none;
+    text-align: left;
+    margin-top: 12px;
+  }
+  .pres-card ul li {
+    padding: 5px 0;
+    font-size: 0.85rem;
+    color: #99aabb;
+  }
+  .pres-card ul li::before {
+    content: '▸ ';
+    color: #00d4aa;
+  }
+  .pres-card .big-stat {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #00d4aa;
+    margin: 6px 0;
+  }
+  .pres-card .stat-label {
+    font-size: 0.78rem;
+    color: #667788;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .pres-card p {
+    color: #99aabb;
+    font-size: 0.88rem;
+    margin-top: 8px;
+  }
+
+  /* Comparison table */
+  .comp-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.06);
+    font-size: 0.9rem;
+  }
+  .comp-table th {
+    background: rgba(0,212,170,0.12);
+    color: #00d4aa;
+    padding: 14px 16px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid rgba(0,212,170,0.2);
+  }
+  .comp-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .comp-table tr:last-child td { border-bottom: none; }
+  .comp-table tr:hover td { background: rgba(0,212,170,0.04); }
+  .comp-table .rank {
+    color: #00d4aa;
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+  .comp-table .score {
+    display: inline-block;
+    padding: 2px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.8rem;
+  }
+  .score-high { background: rgba(0,212,170,0.15); color: #00d4aa; }
+  .score-mid { background: rgba(255,184,0,0.15); color: #ffb800; }
+
+  /* Roadmap (presentation) */
+  .roadmap-pres {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .rm-phase {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+  }
+  .rm-phase .rm-num {
+    display: inline-block;
+    padding: 2px 14px;
+    background: rgba(0,212,170,0.15);
+    color: #00d4aa;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .rm-phase h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .rm-phase .rm-info {
+    font-size: 0.8rem;
+    color: #8899aa;
+    margin-bottom: 10px;
+  }
+  .rm-phase ul {
+    list-style: none;
+  }
+  .rm-phase ul li {
+    font-size: 0.8rem;
+    color: #99aabb;
+    padding: 3px 0;
+  }
+  .rm-phase ul li::before {
+    content: '• ';
+    color: #00d4aa;
+  }
+
+  /* First steps + CTA */
+  .steps-pres {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .step-pres {
+    background: rgba(0,212,170,0.04);
+    border: 1px solid rgba(0,212,170,0.1);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  .step-pres .step-num {
+    width: 36px;
+    height: 36px;
+    background: rgba(0,212,170,0.12);
+    color: #00d4aa;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .step-pres h4 { font-size: 0.95rem; margin-bottom: 4px; }
+  .step-pres p { font-size: 0.8rem; color: #99aabb; }
+  .cta-box {
+    background: linear-gradient(135deg, rgba(0,212,170,0.1), rgba(0,168,132,0.05));
+    border: 1px solid rgba(0,212,170,0.2);
+    border-radius: 14px;
+    padding: 28px;
+    text-align: center;
+  }
+  .cta-box h3 {
+    color: #00d4aa;
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+  }
+  .cta-box p {
+    color: #99aabb;
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+  }
+  .cta-box .cta-btn {
+    display: inline-block;
+    padding: 12px 36px;
+    background: #00d4aa;
+    color: #0a0a0f;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .cta-box .cta-btn:hover {
+    background: #00e8bb;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0,212,170,0.3);
+  }
+
+  /* Keyboard hint */
+  .kb-hint {
+    position: fixed;
+    bottom: 88px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #334455;
+    font-size: 0.75rem;
+    z-index: 100;
+    letter-spacing: 0.5px;
+  }
+
+  @media (max-width: 900px) {
+    .pres-cards { grid-template-columns: 1fr; }
+    .roadmap-pres { grid-template-columns: 1fr 1fr; }
+    .steps-pres { grid-template-columns: 1fr; }
+    .slide-title h1 { font-size: 2.5rem; }
+    .slide-content h2 { font-size: 1.6rem; }
+    .slide { padding: 40px 20px; }
+  }
+  @media (max-width: 600px) {
+    .roadmap-pres { grid-template-columns: 1fr; }
+    .nav-arrows button { width: 40px; height: 40px; font-size: 1.1rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-counter"><span id="current-slide">1</span> / 6</div>
+
+<div class="slides-wrapper">
+  <div class="slides-track" id="slidesTrack">
+
+    <!-- Slide 1: Title -->
+    <div class="slide slide-title">
+      <div>
+        <h1>AI Money Plan</h1>
+        <p class="subtitle">План монетизации Hermes Agent<br>10 методов заработка на AI-автоматизации</p>
+        <p class="meta">на базе <span>opencode.ai/zen/v1</span> (бесплатный LLM)</p>
+      </div>
+    </div>
+
+    <!-- Slide 2: 3 быстрых способа -->
+    <div class="slide">
+      <div class="slide-content">
+        <h2>3 лучших быстрых способа</h2>
+        <div class="pres-cards">
+
+          <div class="pres-card">
+            <div class="card-icon">🤖</div>
+            <h3>Чат-боты на заказ</h3>
+            <div class="tag tag-green">Старт: 0–10 т.р.</div>
+            <div class="big-stat">100–350K</div>
+            <div class="stat-label">Доход / мес</div>
+            <ul>
+              <li>Срок выхода: 1–2 недели</li>
+              <li>Автономность: 90%</li>
+              <li>Telegram / WhatsApp AI</li>
+            </ul>
+          </div>
+
+          <div class="pres-card">
+            <div class="card-icon">🏢</div>
+            <h3>AI-агентство</h3>
+            <div class="tag tag-orange">Старт: 30–50 т.р.</div>
+            <div class="big-stat">200K–1.5 млн</div>
+            <div class="stat-label">Доход / мес</div>
+            <ul>
+              <li>Срок выхода: 4–8 недель</li>
+              <li>Автономность: 85%</li>
+              <li>B2B-автоматизация</li>
+            </ul>
+          </div>
+
+          <div class="pres-card">
+            <div class="card-icon">🎓</div>
+            <h3>AI-консалтинг</h3>
+            <div class="tag tag-purple">Старт: 0–5 т.р.</div>
+            <div class="big-stat">200K–2 млн+</div>
+            <div class="stat-label">Доход / мес</div>
+            <ul>
+              <li>Срок выхода: 4–12 недель</li>
+              <li>Автономность: 40%</li>
+              <li>Обучение бизнеса</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3: 3 пассивных способа -->
+    <div class="slide">
+      <div class="slide-content">
+        <h2>3 лучших пассивных способа</h2>
+        <div class="pres-cards">
+
+          <div class="pres-card">
+            <div class="card-icon">📝</div>
+            <h3>AI-контент-сайт</h3>
+            <div class="tag tag-green">Старт: 5–15 т.р.</div>
+            <div class="big-stat">40–400K</div>
+            <div class="stat-label">Доход / мес</div>
+            <ul>
+              <li>Срок выхода: 8–16 недель</li>
+              <li>Автономность: 95%</li>
+              <li>Multi-Agent Pipeline</li>
+            </ul>
+          </div>
+
+          <div class="pres-card">
+            <div class="card-icon">🎬</div>
+            <h3>Faceless YouTube</h3>
+            <div class="tag tag-orange">Старт: 4–15 т.р./мес</div>
+            <div class="big-stat">85K–3.8 млн</div>
+            <div class="stat-label">Доход / мес</div>
+            <ul>
+              <li>Срок выхода: 12–24 недели</li>
+              <li>Автономность: 80%</li>
+              <li>AI-генерация видео</li>
+            </ul>
+          </div>
+
+          <div class="pres-card">
+            <div class="card-icon">☁️</div>
+            <h3>Нишевой SaaS</h3>
+            <div class="tag tag-purple">Старт: 5–20 т.р.</div>
+            <div class="big-stat">85–850K</div>
+            <div class="stat-label">Доход / мес</div>
+            <ul>
+              <li>Срок выхода: 4–12 недель</li>
+              <li>Автономность: 90%</li>
+              <li>Цифровые продукты</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 4: Top-5 comparison table -->
+    <div class="slide">
+      <div class="slide-content">
+        <h2>Топ-5 методов по потенциалу</h2>
+        <table class="comp-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Метод</th>
+              <th>Старт</th>
+              <th>Доход/мес</th>
+              <th>Авто</th>
+              <th>Потенциал</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="rank">1</td>
+              <td>White-Label AI-студия контента</td>
+              <td>5–10 т.р.</td>
+              <td>300K–2.5 млн</td>
+              <td>88%</td>
+              <td><span class="score score-high">Максимум</span></td>
+            </tr>
+            <tr>
+              <td class="rank">2</td>
+              <td>AI-консалтинг и обучение</td>
+              <td>0–5 т.р.</td>
+              <td>200K–2 млн+</td>
+              <td>40%</td>
+              <td><span class="score score-high">Высокий</span></td>
+            </tr>
+            <tr>
+              <td class="rank">3</td>
+              <td>Faceless YouTube-канал</td>
+              <td>4–15 т.р.</td>
+              <td>85K–3.8 млн</td>
+              <td>80%</td>
+              <td><span class="score score-high">Максимум</span></td>
+            </tr>
+            <tr>
+              <td class="rank">4</td>
+              <td>AI-агентство автоматизации</td>
+              <td>30–50 т.р.</td>
+              <td>200K–1.5 млн</td>
+              <td>85%</td>
+              <td><span class="score score-mid">Стабильный</span></td>
+            </tr>
+            <tr>
+              <td class="rank">5</td>
+              <td>Голосовой AI-агент</td>
+              <td>15–50 т.р.</td>
+              <td>250K–1.5 млн</td>
+              <td>88%</td>
+              <td><span class="score score-mid">Стабильный</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="margin-top:24px;text-align:center;color:#8899aa;font-size:0.9rem;">
+          Бесплатный LLM = 90%+ маржинальность во всех методах
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 5: Roadmap -->
+    <div class="slide">
+      <div class="slide-content">
+        <h2>Дорожная карта на 6 месяцев</h2>
+        <div class="roadmap-pres">
+
+          <div class="rm-phase">
+            <div class="rm-num">Месяц 1</div>
+            <h4>Быстрый старт</h4>
+            <div class="rm-info">50–100 т.р.</div>
+            <ul>
+              <li>Платёжные шлюзы</li>
+              <li>2–3 демо-бота</li>
+              <li>Первые клиенты</li>
+            </ul>
+          </div>
+
+          <div class="rm-phase">
+            <div class="rm-num">Месяц 2</div>
+            <h4>Масштабирование</h4>
+            <div class="rm-info">150–300 т.р.</div>
+            <ul>
+              <li>AI-агентство B2B</li>
+              <li>Lead Gen сервис</li>
+              <li>Telegram-канал</li>
+            </ul>
+          </div>
+
+          <div class="rm-phase">
+            <div class="rm-num">Месяц 3–4</div>
+            <h4>Пассивные потоки</h4>
+            <div class="rm-info">300–700 т.р.</div>
+            <ul>
+              <li>Контент-сайт</li>
+              <li>YouTube-канал</li>
+              <li>SaaS / White-Label</li>
+            </ul>
+          </div>
+
+          <div class="rm-phase">
+            <div class="rm-num">Месяц 5–6</div>
+            <h4>Рост</h4>
+            <div class="rm-info">500K–1.5 млн+</div>
+            <ul>
+              <li>Масштаб топ-3</li>
+              <li>2–3 ниши сайтов</li>
+              <li>Автоматизация</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 6: First steps + CTA -->
+    <div class="slide">
+      <div class="slide-content">
+        <h2>Первые шаги</h2>
+        <div class="steps-pres">
+          <div class="step-pres">
+            <div class="step-num">1</div>
+            <h4>Настройте платёжные шлюзы</h4>
+            <p>ЮMoney + Crypto Bot для приёма платежей</p>
+          </div>
+          <div class="step-pres">
+            <div class="step-num">2</div>
+            <h4>Создайте демо-бота</h4>
+            <p>Универсальный Telegram-бот на Hermes</p>
+          </div>
+          <div class="step-pres">
+            <div class="step-num">3</div>
+            <h4>Запустите Telegram-канал</h4>
+            <p>AI-контент ежедневно через cron</p>
+          </div>
+          <div class="step-pres">
+            <div class="step-num">4</div>
+            <h4>Найдите первого клиента</h4>
+            <p>Бесплатный аудит → платная подписка</p>
+          </div>
+          <div class="step-pres">
+            <div class="step-num">5</div>
+            <h4>Lead Gen воронка</h4>
+            <p>Browser automation + LLM для сбора лидов</p>
+          </div>
+          <div class="step-pres">
+            <div class="step-num">6</div>
+            <h4>Контент-сайт</h4>
+            <p>Multi-Agent пайплайн для SEO-контента</p>
+          </div>
+        </div>
+
+        <div class="cta-box">
+          <h3>Готовы начать?</h3>
+          <p>Hermes Agent — все инструменты уже у вас. Начните с первого шага уже сегодня.</p>
+          <a href="money_plan.html" class="cta-btn">Открыть полный бизнес-план</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Navigation -->
+<div class="nav-arrows">
+  <button id="prevBtn" disabled>◀</button>
+  <div class="nav-dots" id="navDots">
+    <button class="dot active" data-slide="0"></button>
+    <button class="dot" data-slide="1"></button>
+    <button class="dot" data-slide="2"></button>
+    <button class="dot" data-slide="3"></button>
+    <button class="dot" data-slide="4"></button>
+    <button class="dot" data-slide="5"></button>
+  </div>
+  <button id="nextBtn">▶</button>
+</div>
+
+<div class="kb-hint">←  →  ·  клик по слайду для навигации</div>
+
+<script>
+(function() {
+  const track = document.getElementById('slidesTrack');
+  const slides = track.querySelectorAll('.slide');
+  const total = slides.length;
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const dots = document.querySelectorAll('#navDots .dot');
+  const counter = document.getElementById('current-slide');
+  let current = 0;
+
+  function goTo(index) {
+    if (index < 0) index = 0;
+    if (index >= total) index = total - 1;
+    if (index === current) return;
+    current = index;
+    track.style.transform = 'translateX(-' + (current * 100) + 'vw)';
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === total - 1;
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+    counter.textContent = current + 1;
+  }
+
+  prevBtn.addEventListener('click', () => goTo(current - 1));
+  nextBtn.addEventListener('click', () => goTo(current + 1));
+  dots.forEach(d => d.addEventListener('click', () => goTo(parseInt(d.dataset.slide))));
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); goTo(current + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); goTo(current - 1); }
+    if (e.key === 'Home') { e.preventDefault(); goTo(0); }
+    if (e.key === 'End') { e.preventDefault(); goTo(total - 1); }
+  });
+
+  // Click on slide to advance
+  track.addEventListener('click', function(e) {
+    if (e.target.closest('.nav-arrows') || e.target.closest('.cta-btn')) return;
+    goTo(current + 1);
+  });
+
+  // Touch support
+  let touchStartX = 0;
+  let touchEndX = 0;
+  document.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, {passive: true});
+  document.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) goTo(current + 1);
+      else goTo(current - 1);
+    }
+  }, {passive: true});
+
+})();
+</script>
+
+</body>
+</html>

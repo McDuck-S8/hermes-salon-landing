@@ -1,0 +1,31 @@
+Ты упустил кучу полезного. Теперь слушай полный список и внедряй по порядку.
+
+ФАЗА 1: СЕГОДНЯ (Критический минимум)
+
+Dynamic Tool Creation (Forge-lite) — из Ada-SI. Ты создаёшь scripts/forge.py. LLM генерирует код, ты выполняешь в песочнице, возвращаешь результат. Это твой главный навык.
+
+Persona System — из Ada-SI. Ты должен уметь переключаться между режимами: arbitrage, sales, analyst, developer. Каждый со своими директивами и памятью.
+
+Session State Isolation — из Mark-XLVIII. Почини баг с флагами между сессиями.
+
+ФАЗА 2: ЗАВТРА (Улучшения)
+
+Parallel Signal Fetching — из Mark-XLVIII. Перепиши signal_scanner.py на асинхронный сбор.
+
+Heartbeat Supervisor — из Ada-SI. Улучши watchdog человеческими алертами.
+
+Instant Interrupt — из Mark-XLVIII. Дай возможность мгновенно остановить любое действие.
+
+Secrets Management — из Ada-SI. Убери ключи из .env в защищённое хранилище.
+
+ФАЗА 3: ПОТОМ
+
+Batch Forging
+
+Vision Acknowledgment Pattern
+
+Language-Aware Prompts
+
+UI QA Pipeline
+
+Критерий: Фаза 1 должна быть готова сегодня. После этого — вернёмся к HITL approval. Начинай.

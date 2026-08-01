@@ -1,0 +1,328 @@
+Хорошо. Пишу код. Никаких пояснений — только файлы, строки и команды.
+
+---
+
+## Файл: `hermes_start.py` (единый менеджер процессов)
+
+```python
+#!/usr/bin/env python3
+"""
+Hermes Process Manager — запускает и следит за всеми процессами.
+Запуск: python hermes_start.py
+Остановка: Ctrl+C (или kill -TERM <pid>)
+"""
+
+import os
+import sys
+import json
+import time
+import signal
+import subprocess
+import threading
+from pathlib import Path
+from datetime import datetime
+
+# Пути
+BASE_DIR = Path(__file__).parent.absolute()
+CACHE_DIR = BASE_DIR / "cache"
+CACHE_DIR.mkdir(exist_ok=True)
+
+PID_FILE = CACHE_DIR / "processes.pid"
+LOG_DIR = BASE_DIR / "logs"
+LOG_DIR.mkdir(exist_ok=True)
+
+# Процессы, которые нужно запустить
+PROCESSES = [
+    {
+        "name": "signal_daemon",
+        "cmd": ["python", str(BASE_DIR / "scripts" / "signal_daemon.py")],
+        "log": LOG_DIR / "signal_daemon.log",
+        "restart": True,
+    },
+    {
+        "name": "event_bus",
+        "cmd": ["python", str(BASE_DIR / "scripts" / "event_bus.py"), "process"],
+        "log": LOG_DIR / "event_bus.log",
+        "restart": True,
+    },
+    {
+        "name": "goal_executor",
+        "cmd": ["python", str(BASE_DIR / "scripts" / "goal_executor.py"), "--daemon"],
+        "log": LOG_DIR / "goal_executor.log",
+        "restart": True,
+    },
+    {
+        "name": "procedural_executor",
+        "cmd": ["python", str(BASE_DIR / "scripts" / "procedural_executor.py"), "--daemon"],
+        "log": LOG_DIR / "procedural_executor.log",
+        "restart": True,
+    },
+]
+
+class ProcessManager:
+    def __init__(self):
+        self.processes = {}
+        self.running = True
+        signal.signal(signal.SIGTERM, self.shutdown)
+        signal.signal(signal.SIGINT, self.shutdown)
+
+    def start_process(self, proc_config):
+        """Запускает процесс и сохраняет его в словаре"""
+        name = proc_config["name"]
+        cmd = proc_config["cmd"]
+        log_file = proc_config["log"]
+        log_fh = open(log_file, "a", encoding="utf-8")
+        try:
+            proc = subprocess.Popen(
+                cmd,
+                stdout=log_fh,
+                stderr=subprocess.STDOUT,
+                cwd=BASE_DIR,
+                preexec_fn=os.setsid if os.name != "nt" else None,
+            )
+            self.processes[name] = {
+                "proc": proc,
+                "log_fh": log_fh,
+                "config": proc_config,
+                "pid": proc.pid,
+                "started": datetime.now().isoformat(),
+                "restarts": 0,
+            }
+            print(f"[{datetime.now().isoformat()}] Запущен {name} (PID={proc.pid})")
+            return True
+        except Exception as e:
+            print(f"[{datetime.now().isoformat()}] Ошибка запуска {name}: {e}")
+            log_fh.close()
+            return False
+
+    def restart_process(self, name):
+        """Перезапускает процесс"""
+        if name in self.processes:
+            self.stop_process(name)
+        proc_config = next(p for p in PROCESSES if p["name"] == name)
+        self.start_process(proc_config)
+        self.processes[name]["restarts"] += 1
+
+    def stop_process(self, name):
+        """Останавливает процесс"""
+        if name not in self.processes:
+            return
+        proc_info = self.processes[name]
+        proc = proc_info["proc"]
+        try:
+            if os.name == "nt":
+                proc.terminate()
+            else:
+                os.killpg(os.getpgid(proc.pid), signal.SIGTERM)
+            proc.wait(timeout=5)
+        except:
+            if os.name == "nt":
+                proc.kill()
+            else:
+                os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
+        proc_info["log_fh"].close()
+        del self.processes[name]
+        print(f"[{datetime.now().isoformat()}] Остановлен {name}")
+
+    def shutdown(self, signum, frame):
+        """Остановка всех процессов при завершении"""
+        print(f"\n[{datetime.now().isoformat()}] Получен сигнал {signum}, останавливаю...")
+        self.running = False
+        for name in list(self.processes.keys()):
+            self.stop_process(name)
+        sys.exit(0)
+
+    def save_pid_file(self):
+        """Сохраняет PID'ы в файл"""
+        data = {}
+        for name, info in self.processes.items():
+            data[name] = {
+                "pid": info["pid"],
+                "started": info["started"],
+                "restarts": info["restarts"],
+            }
+        with open(PID_FILE, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2)
+
+    def check_processes(self):
+        """Проверка, живы ли процессы, и перезапуск"""
+        for name, info in list(self.processes.items()):
+            proc = info["proc"]
+            if proc.poll() is not None:
+                print(f"[{datetime.now().isoformat()}] {name} упал (код {proc.returncode})")
+                if info["config"]["restart"]:
+                    self.restart_process(name)
+                else:
+                    self.stop_process(name)
+        self.save_pid_file()
+
+    def run(self):
+        """Главный цикл"""
+        print(f"[{datetime.now().isoformat()}] Hermes Process Manager запущен")
+        print(f"PID менеджера: {os.getpid()}")
+        print(f"Кэш: {CACHE_DIR}")
+        print(f"Логи: {LOG_DIR}")
+
+        # Запускаем все процессы
+        for proc_config in PROCESSES:
+            self.start_process(proc_config)
+        self.save_pid_file()
+
+        # Цикл проверки
+        while self.running:
+            time.sleep(15)
+            self.check_processes()
+
+if __name__ == "__main__":
+    # Проверка, что не запущена другая копия
+    if PID_FILE.exists():
+        with open(PID_FILE, "r", encoding="utf-8") as f:
+            try:
+                old_data = json.load(f)
+                # Если есть старые PID'ы, но они не живы — удаляем файл
+                alive = False
+                for name, info in old_data.items():
+                    pid = info["pid"]
+                    try:
+                        os.kill(pid, 0)
+                        alive = True
+                        break
+                    except:
+                        pass
+                if alive:
+                    print("Система уже запущена (найдены живые PID'ы). Выход.")
+                    sys.exit(1)
+                else:
+                    print("Обнаружен старый PID-файл, но процессы мертвы. Удаляю.")
+                    PID_FILE.unlink()
+            except:
+                PID_FILE.unlink()
+
+    manager = ProcessManager()
+    manager.run()
+```
+
+---
+
+## Патч для `event_bus.py` (добавить таймаут на `session_recall`)
+
+Найти в `event_bus.py` функцию `process()` или место, где импортируется `session_recall`. Заменить на:
+
+```python
+try:
+    import session_recall
+    # Проверка, что модуль не зависает
+    import signal
+    def timeout_handler(signum, frame):
+        raise TimeoutError("session_recall import timeout")
+    signal.signal(signal.SIGALRM, timeout_handler)
+    signal.alarm(5)
+    # Импорт выполнится с таймаутом
+    from session_recall import index_messages
+    signal.alarm(0)
+except (ImportError, TimeoutError) as e:
+    print(f"WARNING: session_recall недоступен: {e}")
+    # Заглушка
+    def index_messages(*args, **kwargs):
+        return []
+```
+
+---
+
+## Патч для `procedural_executor.py` (добавить watchdog)
+
+В `procedural_executor.py` добавить функцию:
+
+```python
+def watchdog_processes():
+    """Проверяет, живы ли процессы, и перезапускает их через менеджер"""
+    import json
+    import subprocess
+    from pathlib import Path
+    base = Path(__file__).parent.parent
+    pid_file = base / "cache" / "processes.pid"
+    if not pid_file.exists():
+        return
+    with open(pid_file, "r") as f:
+        data = json.load(f)
+    for name, info in data.items():
+        pid = info["pid"]
+        try:
+            os.kill(pid, 0)
+        except:
+            # Процесс мёртв — перезапускаем через менеджер
+            subprocess.Popen(["python", str(base / "hermes_start.py"), "--restart", name])
+```
+
+И добавить в список триггеров (например, `TRIGGER_MAP` или в cron):
+
+```python
+TRIGGER_MAP["watchdog_processes"] = watchdog_processes
+# Запускать каждые 60 секунд
+```
+
+---
+
+## Патч для `cron/jobs.json` (заменить `event-heartbeat`)
+
+Отредактировать файл `cron/jobs.json` (найти и заменить):
+
+**Было:**
+```json
+{
+  "event-heartbeat": {
+    "interval": 60,
+    "command": "python hermes_heartbeat.py"
+  }
+}
+```
+
+**Стало:**
+```json
+{
+  "event-bus-process": {
+    "interval": 60,
+    "command": "python scripts/event_bus.py process"
+  }
+}
+```
+
+Или удалить `event-heartbeat` целиком, т.к. теперь `event_bus` запускается через менеджер.
+
+---
+
+## Очистка `goal_queue` (команда)
+
+```bash
+cd /d D:\Portable_Soft\hermes
+python -c "import json; from pathlib import Path; p=Path('cache/goal_queue.json'); p.write_text(json.dumps([], indent=2))"
+```
+
+---
+
+## Запуск системы (после всех правок)
+
+1. Закрыть все старые процессы (если висят).
+2. Запустить менеджер:
+
+```bash
+python hermes_start.py
+```
+
+3. Проверить, что все процессы запущены:
+
+```bash
+cat cache/processes.pid
+```
+
+4. Посмотреть логи:
+
+```bash
+tail -f logs/signal_daemon.log
+tail -f logs/event_bus.log
+tail -f logs/goal_executor.log
+```
+
+---
+
+**Готово.** Это всё. Никаких лишних слов. Бери и делай. Если что-то не работает — говори конкретно, какой файл и какую ошибку — буду править.

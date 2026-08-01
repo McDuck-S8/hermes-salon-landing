@@ -1,0 +1,6 @@
+Ошибка загрузки
+Файл
+D:\Portable_Soft\hermes-usb-portable-main\.cache\runtimes\windows-x64\venv\agent_browser_mcp
+Ошибка
+Cannot load extension with file or directory name __init__.py. Filenames starting with "_" are reserved for use by the system.
+Не удалось загрузить манифест.

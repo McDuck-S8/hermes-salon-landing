@@ -1,0 +1,27 @@
+name: deploy-github-pages
+role: deployer
+description: Deploy to GitHub Pages
+params:
+  - name: repo
+    type: string
+    required: true
+  - name: branch
+    type: string
+    default: "gh-pages"
+    required: false
+  - name: path
+    type: string
+    default: "."
+    required: false
+script: |
+  # GitHub Pages Deploy
+  # Repo: {{repo}}
+  # Branch: {{branch}}
+  # Path: {{path}}
+
+  cd {{path}}
+  git add .
+  git commit -m "Deploy {{repo}} $(date)"
+  git push origin HEAD:{{branch}} --force
+timeout: 120
+tags: [deploy, github-pages, git]

@@ -1,0 +1,159 @@
+{
+  "timestamp": "2026-07-27T00:31:06.733811",
+  "skills_scanned": 1,
+  "files_scanned": 122,
+  "total_findings": 17,
+  "risk": {
+    "score": 100,
+    "severity": "CRITICAL",
+    "recommendation": "DANGEROUS",
+    "critical": 0,
+    "high": 16,
+    "medium": 1,
+    "low": 0
+  },
+  "results": [
+    {
+      "skill": "automation",
+      "files": 122,
+      "findings": [
+        {
+          "rule": "E2_env_harvesting",
+          "severity": "HIGH",
+          "category": "Data Exfiltration",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\automation\\telegram-digest\\SKILL.md",
+          "line": 25,
+          "code": "token = os.environ.get('TELEGRAM_BOT_TOKEN')"
+        },
+        {
+          "rule": "E2_env_harvesting",
+          "severity": "HIGH",
+          "category": "Data Exfiltration",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\automation\\telegram-digest\\SKILL.md",
+          "line": 35,
+          "code": "token = os.environ.get('TELEGRAM_BOT_TOKEN')"
+        },
+        {
+          "rule": "PE3_credential_access",
+          "severity": "HIGH",
+          "category": "Privilege Escalation",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\automation\\telegram-digest\\SKILL.md",
+          "line": 94,
+          "code": "1. **Bot API** — works via HTTPS, less likely blocked. Use `urllib.request` to call `api.telegram.org/bot{token}/...`. R"
+        },
+        {
+          "rule": "PE2_sudo_root",
+          "severity": "MEDIUM",
+          "category": "Privilege Escalation",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\automation\\voice-interface\\SKILL.md",
+          "line": 542,
+          "code": "apt install ffmpeg          # Debian/Ubuntu (prefix sudo if applicable)"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\automation\\voice-interface\\SKILL.md",
+          "line": 482,
+          "code": "# subprocess.run("
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\automation\\voice-interface\\SKILL.md",
+          "line": 487,
+          "code": "# subprocess.run("
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\automation\\voice-interface\\references\\tts-playback-fallback.md",
+          "line": 31,
+          "code": "# subprocess.run("
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\automation\\voice-interface\\references\\tts-playback-fallback.md",
+          "line": 48,
+          "code": "# subprocess.run("
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\automation\\voice-interface\\references\\tts-playback-fallback.md",
+          "line": 144,
+          "code": "# subprocess.run(['ffplay', '-nodisp', '-autoexit', '-loglevel', 'quiet', mp3], timeout=30)"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\automation\\telegram-digest\\scripts\\cron_monitor.py",
+          "line": 16,
+          "code": "result = subprocess.run("
+        },
+        {
+          "rule": "E2_env_harvesting",
+          "severity": "HIGH",
+          "category": "Data Exfiltration",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\automation\\telegram-channel-poster\\scripts\\telegram_poster.py",
+          "line": 39,
+          "code": "BOT_TOKEN = os.environ.get(\"TELEGRAM_BOT_TOKEN\", \"\")"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\automation\\knowledge-filter\\references\\ripple-engine-analysis.md",
+          "line": 93,
+          "code": "3. **HTML artifacts**: Reddit entries contain raw `<p>`, `<table>`, `<!-- SC_OFF -->` tags. Clean with `re.sub(r'<[^>]+>"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\automation\\ghost-surfer\\references\\browseros-mcp-patterns.md",
+          "line": 17,
+          "code": "result = subprocess.run(["
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\automation\\ghost-surfer\\references\\telegram-rich-posting.md",
+          "line": 28,
+          "code": "<!-- ai_tool -->"
+        },
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\automation\\ghost-surfer\\references\\telegram-rich-posting.md",
+          "line": 39,
+          "code": "<!-- code_tip -->"
+        },
+        {
+          "rule": "OH1_unvalidated_output",
+          "severity": "HIGH",
+          "category": "Output Handling",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\automation\\ghost-surfer\\scripts\\account_registration.py",
+          "line": 691,
+          "code": "document.getElementById('g-recaptcha-response').innerHTML = '{solution}';"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\automation\\ghost-surfer\\scripts\\verify_identity_rotation.py",
+          "line": 26,
+          "code": "result = subprocess.run(["
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,206 @@
+Ты абсолютно прав. Все три пункта должны работать **вместе**, потому что они решают **разные проблемы** на разных уровнях:
+
+| Пункт | Проблема | Решение |
+|-------|----------|---------|
+| **1. Починить кассира** | Цели завершаются мгновенно (progress=100) без реальной проверки → система думает, что они выполнены, а они висят → накапливается мусор → штраф `dept_overloaded`. | Исправить `goal_executor.py`: ждать завершения процесса, проверять `returncode`, ставить реальный `progress` и `outcome`. |
+| **2. Открыть вторую кассу** | Даже если кассир честный, он работает последовательно (одна цель за раз). При 10+ целях они будут ждать часами, а новые сигналы будут теряться. | Добавить параллельное выполнение (ThreadPoolExecutor) с настраиваемым `max_workers`. |
+| **3. Поставить в очередь ожидания** | При пиковой нагрузке (целей больше, чем `max_workers`) новые полезные сигналы всё ещё могут быть отклонены, если нет места. | Ввести `pending_goals` – очередь отложенных целей, которые будут выполнены, когда освободится слот. |
+
+---
+
+## Что мы делаем (конкретный план)
+
+### А. Правим `goal_executor.py` – честное выполнение
+- Заменяем `Popen` без ожидания на `subprocess.run()` или `Popen.communicate()` с таймаутом.
+- Проверяем `returncode` и `done_when` (если задано).
+- Устанавливаем `progress = 100` **только** при успешном завершении.
+- Логируем реальное время выполнения и результат.
+
+### Б. Добавляем параллельность в `goal_queue.py` или `goal_executor.py`
+- Создаём `ThreadPoolExecutor(max_workers=N)`, где `N` берётся из `config.yaml`.
+- При добавлении цели – отправляем в пул, а не запускаем в основном потоке.
+- Ограничиваем количество одновременно выполняемых целей через семафор или проверку активных задач.
+
+### В. Добавляем `pending_goals` (очередь ожидания)
+- В `goal_queue.py` заводим `deque()` для отложенных целей.
+- При добавлении цели: если активных целей < `max_workers` – запускаем сразу; иначе – кладём в `pending_goals`.
+- После завершения каждой цели проверяем, есть ли ожидающие, и если есть – запускаем следующую.
+- Добавляем метрики: длина очереди, время ожидания.
+
+### Г. Убираем `dept_overloaded` штраф из `bayesian_scorer.py`
+- Штраф больше не нужен, потому что система теперь сама регулирует нагрузку через очередь.
+- Удаляем блок, где `likelihood *= 0.6` при `len(active_goals) > 5`.
+
+---
+
+## Готовый код (патчи для твоих файлов)
+
+### 1. `goal_executor.py` – исправленное выполнение
+
+```python
+import subprocess
+import logging
+
+def execute_goal(goal):
+    """Выполняет цель, ожидая завершения и проверяя результат."""
+    logger = logging.getLogger(__name__)
+    try:
+        # Используем run с таймаутом (или Popen + communicate)
+        result = subprocess.run(
+            goal.command,
+            shell=True,
+            capture_output=True,
+            text=True,
+            timeout=getattr(goal, 'timeout', 3600)
+        )
+        if result.returncode == 0:
+            goal.progress = 100
+            goal.status = 'completed'
+            goal.outcome = 1
+            goal.output = result.stdout
+            logger.info(f"Goal {goal.id} completed successfully")
+        else:
+            goal.progress = 0
+            goal.status = 'failed'
+            goal.outcome = -1
+            goal.error = result.stderr
+            logger.error(f"Goal {goal.id} failed with code {result.returncode}: {result.stderr}")
+        # Дополнительная проверка done_when, если есть
+        if hasattr(goal, 'done_when') and goal.done_when:
+            # Например, проверить наличие файла
+            if not check_done_condition(goal.done_when):
+                goal.status = 'failed_verification'
+                goal.outcome = -1
+                logger.warning(f"Goal {goal.id} passed return code but failed verification: {goal.done_when}")
+    except subprocess.TimeoutExpired:
+        goal.progress = 0
+        goal.status = 'timeout'
+        goal.outcome = -1
+        goal.error = f"Timeout after {goal.timeout} seconds"
+        logger.error(f"Goal {goal.id} timed out")
+    except Exception as e:
+        goal.progress = 0
+        goal.status = 'error'
+        goal.outcome = -1
+        goal.error = str(e)
+        logger.exception(f"Goal {goal.id} crashed")
+
+def check_done_condition(condition):
+    # Простейший пример: проверка существования файла
+    if condition.startswith('file_exists:'):
+        path = condition.split(':', 1)[1]
+        return os.path.exists(path)
+    # Можно расширить под свои нужды
+    return True
+```
+
+---
+
+### 2. `goal_queue.py` – с параллельностью и очередью
+
+```python
+import threading
+from collections import deque
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import logging
+
+class GoalQueue:
+    def __init__(self, max_workers=5, config=None):
+        self.max_workers = max_workers
+        self.active_goals = []  # список выполняемых целей
+        self.pending_goals = deque()  # очередь ожидания
+        self.executor = ThreadPoolExecutor(max_workers=max_workers)
+        self.lock = threading.Lock()
+        self.logger = logging.getLogger(__name__)
+        self.futures = {}  # future -> goal
+
+    def add_goal(self, goal):
+        with self.lock:
+            if len(self.active_goals) < self.max_workers:
+                self._start_goal(goal)
+            else:
+                self.pending_goals.append(goal)
+                goal.status = 'pending'
+                self.logger.info(f"Goal {goal.id} queued (active={len(self.active_goals)}, pending={len(self.pending_goals)})")
+
+    def _start_goal(self, goal):
+        self.active_goals.append(goal)
+        goal.status = 'running'
+        future = self.executor.submit(execute_goal, goal)
+        self.futures[future] = goal
+        future.add_done_callback(self._goal_done_callback)
+
+    def _goal_done_callback(self, future):
+        goal = self.futures.pop(future, None)
+        if goal is None:
+            return
+        with self.lock:
+            if goal in self.active_goals:
+                self.active_goals.remove(goal)
+            # После завершения цели – проверить очередь ожидания
+            if self.pending_goals and len(self.active_goals) < self.max_workers:
+                next_goal = self.pending_goals.popleft()
+                self._start_goal(next_goal)
+        self.logger.info(f"Goal {goal.id} finished. Active: {len(self.active_goals)}, Pending: {len(self.pending_goals)}")
+```
+
+---
+
+### 3. Убираем `dept_overloaded` из `bayesian_scorer.py`
+
+Найди этот блок (или подобный) и **закомментируй/удали** его:
+
+```python
+# if len(active_goals) > 5:     # <-- это место
+#     likelihood *= 0.6
+```
+
+Вместо этого можно добавить логирование, но штраф больше не нужен.
+
+---
+
+### 4. Конфиг (`config.yaml`) для портативности
+
+Добавь параметры, которые можно менять в зависимости от мощности железа:
+
+```yaml
+goal_executor:
+  max_workers: 5              # число параллельных целей
+  default_timeout: 3600       # таймаут для цели (сек)
+  pending_queue_enabled: true
+```
+
+При старте система читает эти значения и инициализирует `GoalQueue`.
+
+---
+
+## Что ты получишь после внедрения
+
+1. **Цели выполняются честно** – система знает реальный статус, CIR растёт.
+2. **Параллельность** – несколько целей выполняются одновременно, ускоряя обработку.
+3. **Очередь ожидания** – ни одна полезная цель не теряется, даже при пиковой нагрузке. Все сигналы, прошедшие порог `0.3`, будут сохранены и выполнены.
+4. **Портативность** – при переносе на другой компьютер ты просто меняешь `max_workers` в конфиге под количество ядер/памяти.
+
+---
+
+## Что делать после внедрения
+
+1. Перезапустить систему.
+2. Проверить логи: цели должны завершаться с реальным прогрессом, а не мгновенно.
+3. Посмотреть на количество `pending_goals` – оно может быть > 0, но это нормально.
+4. Измерить CIR – он должен вырасти, потому что теперь циклы доходят до завершения.
+
+---
+
+## Моя оценка времени на внедрение
+
+- Изменение `goal_executor.py` – 10 минут.
+- Изменение `goal_queue.py` – 15 минут (если нет готового класса, то написать с нуля).
+- Удаление штрафа – 1 минута.
+- Добавление конфига – 5 минут.
+
+**Итого:** ~30 минут на код, потом перезапуск и наблюдение.
+
+---
+
+Ты готов? Если да, я могу выдать точные патчи для твоих текущих файлов (на основе того, что у тебя есть) – просто покажи их содержимое, и я скажу, что именно менять.

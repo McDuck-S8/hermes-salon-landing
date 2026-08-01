@@ -10,7 +10,7 @@ This directory contains the main operational scripts. Most are standalone Python
 - All scripts use `sys.path.insert(0, "D:/Portable_Soft/hermes/scripts")` for imports
 - Scripts interact with the Knowledge Cube via `knowledge_cube.py` or `kc_rag.py`
 - Event tracking goes through `event_evolution.py` → `hermes_hooks.py`
-- **System monitoring**: `chain_heartbeat.py` — 5-level event-driven monitoring (no daemons). Events fire at data mutation points: `kc_rag.upsert()` → `knowledge_added`, `self_improvement_loop.main()` → `new_suggestions_ready`
+- **System monitoring**: `chain_heartbeat.py` — 5-level event-driven monitoring (no daemons). Events fire at data mutation points: `kc_rag.upsert()` → `knowledge_added`, `self_improvement_loop.main()` → `new_suggestions_ready`. **Heartbeat поддерживается крон-задачей `heartbeat-fixer` (`system_heartbeat_fixer.py`, каждые 15 мин) — не бить руками.** `fix_heartbeat.py` защищает `chain_heartbeat.json`/`system_heartbeat.json` от удаления.
 - LLM calls use `openrouter_client.py` or `llm_classifier.py`
 
 ## Work Guidance
@@ -18,7 +18,7 @@ This directory contains the main operational scripts. Most are standalone Python
 - **Core modules**: `core_engine.py`, `event_evolution.py`, `hermes_hooks.py`, `auto_recall.py`
 - **Knowledge Cube**: `knowledge_cube.py`, `kc_rag.py` (primary data entry via `upsert()`), `cube_feeder.py`, `cube_categorizer.py`, `knowledge_brain.py`
 - **Autonomous agent**: `autonomous_agent.py` — main decision loop
-- **Self-improvement**: `self_improvement_loop.py` (generates suggestions, fires `new_suggestions_ready`), `suggestion_consumer.py`, `self_system.py`
+- **Self-improvement**: `self_improvement_loop.py` (generates suggestions, fires `new_suggestions_ready`), `suggestion_consumer.py`, `self_system.py`. **Фильтр знаний**: `suggestion_filter.py` — классифицирует записи KC от `improvement_suggestions`/`self_improvement_loop` как LOG_COPY (мусор) или STRUCTURAL (ценность). LOG_COPY архивируются в `experiences_log_archive` (обратимо), не удаляются. `self_improvement_loop.py` НЕ пишет log-копии в KC — только структурные `recurring_fixes` (consumer читает из `improvement_suggestions.json`, auto-skills не зависят от KC).
 - **Proactive executor**: `proactive_executor.py` — self-healing, white-spot detection, knowledge gap filling, skill auto-evolution, LLM analysis, fix verification feedback loop
 - **Cron scripts**: `*_cron.py` files — run on schedule via `cron/jobs.json`
 - **Telegram**: `telegram_bridge.py`, `tg_client.py` — Telegram integration
@@ -49,3 +49,6 @@ This directory contains the main operational scripts. Most are standalone Python
 | `posting/` | Social media posting scripts |
 | `utilities/` | Helper scripts, fixes |
 | `*_cron.py` | Scheduled task scripts |
+| `skill_indexer.py` | Self-improvement: indexes all SKILL.md files into Knowledge Cube (source `skill-indexer`) |
+| `latent_domain_detector.py` | Self-improvement: detects latent domains + logical gaps, `--seed` inserts knowledge-gap seeds (source `latent-domain-detector`) |
+| `skill_evolution_v2.py` | Self-improvement: read-only audit of installed skills, usage events, KC state (cron 4am) |

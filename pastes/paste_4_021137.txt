@@ -1,0 +1,6 @@
+ Attempting to open authentication page in your browser.
+  Otherwise navigate to:
+  https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=http%3A%2F%2F127.0.0.1%3A55493%2Foauth2callback&access_type=offline&scop
+  =https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloud-platform%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20https%3A%2F
+  2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&state=8b9e0ae2f32c39445c181a8dc799f2c7ff27529ce0bc5109dcf302ce99c67dc3&response_typ
+  =code&client_id=681255809395-oo8ft2oprdrnp9e3aqf6av3hmdib135j.apps.googleusercontent.com

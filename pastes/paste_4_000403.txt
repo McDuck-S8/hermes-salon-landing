@@ -1,0 +1,6 @@
+Добавь в goal_queue.json для g-015 поле action_command:
+"action_command": "python projects/money4band/bandwidth_launcher.py"
+
+Или, если goal_executor должен запускать цели без action_command (просто проверяя их статус), измени его, чтобы он выполнял _check_criteria для таких целей, а не требовал action_command.
+
+Выбери вариант и реализуй. Затем перезапусти boot и покажи, что автономный шаг выполняется успешно (autonomous_action: EXECUTED goal g-015 — SUCCESS).

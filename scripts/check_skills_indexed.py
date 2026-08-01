@@ -1,0 +1,12 @@
+import sqlite3
+conn = sqlite3.connect(r"C:\Users\Asus\.hermes\cache\knowledge_cube.db")
+cursor = conn.cursor()
+cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+print("Tables:", cursor.fetchall())
+cursor.execute("SELECT axis_domain, COUNT(*) as cnt FROM experiences WHERE axis_domain='skill' GROUP BY axis_domain ORDER BY cnt DESC LIMIT 20;")
+print("Skills indexed:", cursor.fetchall())
+cursor.execute("SELECT axis_domain, COUNT(*) as cnt FROM experiences WHERE axis_domain='skill_chain' GROUP BY axis_domain ORDER BY cnt DESC LIMIT 20;")
+print("Skill chains indexed:", cursor.fetchall())
+cursor.execute("SELECT COUNT(*) FROM experiences WHERE axis_domain IN ('skill', 'skill_chain');")
+print("Total skill entries:", cursor.fetchall())
+conn.close()

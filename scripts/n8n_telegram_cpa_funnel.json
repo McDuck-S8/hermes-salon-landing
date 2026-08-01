@@ -1,0 +1,269 @@
+{
+  "name": "Telegram CPA Funnel",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "telegram/webhook",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-telegram",
+      "name": "Telegram Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "const update = items[0].json;\nconst message = update.message || update.edited_message;\nif (!message) return [];\n\nconst chatId = message.chat.id;\nconst text = message.text || '';\nconst userId = message.from.id;\nconst username = message.from.username || '';\nconst firstName = message.from.first_name || '';\n\n// Track user state in workflow data\nconst userState = $workflow.getStaticData('global')[userId] || 'START';\n\nreturn [{ json: { chatId, text, userId, username, firstName, userState, update } }];"
+      },
+      "id": "parse-message",
+      "name": "Parse Message",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [500, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            { "value1": "={{$json.text}}", "operation": "startsWith", "value2": "/start" },
+            { "value1": "={{$json.userState}}", "operation": "equal", "value2": "START" }
+          ]
+        }
+      },
+      "id": "check-start",
+      "name": "Is Start Command?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [750, 200]
+    },
+    {
+      "parameters": {
+        "functionCode": "const userId = $json.userId;\nconst chatId = $json.chatId;\nconst firstName = $json.firstName || 'друг';\n\n// Save user to database (placeholder - use your DB)\nconst userData = $workflow.getStaticData('global');\nuserData[userId] = { \n  state: 'WAITING_LEAD_MAGNET',\n  chatId,\n  firstName,\n  username: $json.username,\n  joinedAt: new Date().toISOString(),\n  source: 'telegram'\n};\n\nreturn [{ json: { chatId, userId, firstName } }];"
+      },
+      "id": "save-new-user",
+      "name": "Save New User",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [1000, 100]
+    },
+    {
+      "parameters": {
+        "chatId": "={{$json.chatId}}",
+        "text": "👋 Привет, {{$json.firstName}}!\n\nЯ бот для заработка на CPA — показываю рабочие схемы, даю лид-магниты и автоматизирую рутину.\n\n🎁 **Сразу подарок:** Чек-лист \"Умный дом за вечер\" — 7 схем подключения ESP8266/ESP32, список деталей за $50, готовые ESPHome конфиги.\n\nХочешь получить PDF?",
+        "options": {
+          "parseMode": "Markdown",
+          "replyMarkup": {
+            "inline_keyboard": [
+              [{ "text": "📥 Получить чек-лист (PDF)", "callback_data": "GET_LEAD_MAGNET" }],
+              [{ "text": "💰 Посмотреть CPA офферы", "callback_data": "SHOW_OFFERS" }],
+              [{ "text": "🤖 Автоматизация (n8n)", "callback_data": "SHOW_N8N" }]
+            ]
+          }
+        }
+      },
+      "id": "send-welcome",
+      "name": "Send Welcome + Lead Magnet Offer",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [1250, 100]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            { "value1": "={{$json.text}}", "operation": "equal", "value2": "GET_LEAD_MAGNET" },
+            { "value1": "={{$json.callback_query.data}}", "operation": "equal", "value2": "GET_LEAD_MAGNET" }
+          ]
+        }
+      },
+      "id": "check-lead-magnet",
+      "name": "Wants Lead Magnet?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [750, 400]
+    },
+    {
+      "parameters": {
+        "chatId": "={{$json.chatId}}",
+        "document": "lead_magnet.pdf",
+        "caption": "🎁 Твой чек-лист \"Умный дом за вечер\" готов!\n\nВнутри:\n• 7 схем подключения (ESP8266/ESP32)\n• Шоппинг-лист за $50\n• Готовые ESPHome конфиги\n• Пошаговый план внедрения в Home Assistant\n\n💡 **Совет:** Начни с климат-мониторинга (схема #1) — это база для всего остального.\n\n---\n\nХочешь зарабатывать на этом? В канале @your_channel разбираю как монетзировать умный дом через CPA офферы (умные розетки, датчики, контроллеры).",
+        "options": {
+          "parseMode": "Markdown"
+        }
+      },
+      "id": "send-lead-magnet",
+      "name": "Send Lead Magnet PDF",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [1000, 400]
+    },
+    {
+      "parameters": {
+        "functionCode": "const userId = $json.userId;\nconst userData = $workflow.getStaticData('global');\nif (userData[userId]) {\n  userData[userId].state = 'GOT_LEAD_MAGNET';\n  userData[userId].leadMagnetAt = new Date().toISOString();\n}\nreturn [$json];"
+      },
+      "id": "update-state-lead-magnet",
+      "name": "Update State: Got Lead Magnet",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [1250, 400]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            { "value1": "={{$json.callback_query.data}}", "operation": "equal", "value2": "SHOW_OFFERS" },
+            { "value1": "={{$json.text}}", "operation": "equal", "value2": "SHOW_OFFERS" }
+          ]
+        }
+      },
+      "id": "check-offers",
+      "name": "Wants Offers?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [750, 550]
+    },
+    {
+      "parameters": {
+        "chatId": "={{$json.chatId}}",
+        "text": "💰 **Топ CPA офферы под Умный Дом** (проверены, платят):\n\n1. **Умные розетки (Sonoff/Tuya клоны)** — $2-5 за лид, $15-30 за продажу. GEO: RU, UA, KZ, BY, EU.\n2. **Датчики температуры/влажности (Aqara/Xiaomi)** — $1.5-3 за лид. Высокий CR.\n3. **Умные лампы/светодиодные ленты** — $2-4 за лид. Визуальный продукт — хорошо в видео.\n4. **Контроллеры вентиляции/отопления** — $5-10 за продажу. B2B сегмент выше чек.\n5. **Системы безопасности (датчики утечки, движения)** — $3-8 за продажу. Evergreen.\n\n🔗 **Где брать:**\n• CPAGrip — контент-локеры, удобно для прелендингов\n• ActionPay — финтех/еда/товары, быстрые выплаты\n• AdCombo — COD офферы, свои лендинги\n• MonetaLeads — Ру/СНГ, хорошие ставки\n\n💡 **Совет:** Делай прелендинг \"Чек-лист умного дома\" → контент-локер → оффер умной розетки. Конверсия 15-25%.\n\nХочу показать готовый прелендинг?",
+        "options": {
+          "parseMode": "Markdown",
+          "replyMarkup": {
+            "inline_keyboard": [
+              [{ "text": "🌐 Посмотреть прелендинг", "url": "https://mcduck-s8.github.io/hermes-salon-landing/smart-home-cpa/" }],
+              [{ "text": "📊 Статистика офферов", "callback_data": "SHOW_STATS" }],
+              [{ "text": "🔙 Назад", "callback_data": "BACK_TO_MENU" }]
+            ]
+          }
+        }
+      },
+      "id": "send-offers",
+      "name": "Send CPA Offers",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [1000, 550]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            { "value1": "={{$json.callback_query.data}}", "operation": "equal", "value2": "SHOW_N8N" }
+          ]
+        }
+      },
+      "id": "check-n8n",
+      "name": "Wants n8n?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [750, 700]
+    },
+    {
+      "parameters": {
+        "chatId": "={{$json.chatId}}",
+        "text": "🤖 **Автоматизация через n8n** — твой личный арбитражныйopilot\n\nЧто делает этот workflow:\n\n1. 📥 **Принимает лиды** из Telegram (webhook)\n2. 🎁 **Отдает лид-магнит** автоматически\n3. 📊 **Сегментирует** пользователей по действиям\n4. 🔄 **Дрип-кампания** (последовательность сообщений):\n   - День 0: Лид-магнит + приветствие\n   - День 1: Кейс \"Как заработал $XXX на умных розетках\"\n   - День 3: Прелендинг + контент-локер\n   - День 5: Альтернативный оффер\n   - День 7: Обучение (бесплатный мини-курс)\n5. 📈 **Трекинг:** UTM метки, постбэки, ROI по каналам\n\n📋 **Импорт:** Скопируй JSON выше → n8n → Import from JSON\n\n⚙️ **Настройка:**\n- Telegram Bot Token в Credentials\n- Webhook URL: `https://your-domain.com/webhook/telegram`\n- База данных: замени Function ноды на PostgreSQL/Supabase\n- Постбэки: добавь HTTP Request ноды для CPA сетей\n\nНужен помощь с деплоем?",
+        "options": {
+          "parseMode": "Markdown",
+          "replyMarkup": {
+            "inline_keyboard": [
+              [{ "text": "🚀 Помощь с деплоем", "callback_data": "DEPLOY_HELP" }],
+              [{ "text": "🔙 Назад", "callback_data": "BACK_TO_MENU" }]
+            ]
+          }
+        }
+      },
+      "id": "send-n8n",
+      "name": "Send n8n Info",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [1000, 700]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            { "value1": "={{$json.callback_query.data}}", "operation": "equal", "value2": "BACK_TO_MENU" }
+          ]
+        }
+      },
+      "id": "check-back",
+      "name": "Back to Menu?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [750, 850]
+    },
+    {
+      "parameters": {
+        "chatId": "={{$json.chatId}}",
+        "text": "🏠 **Главное меню**\n\nВыбери что нужно:",
+        "options": {
+          "parseMode": "Markdown",
+          "replyMarkup": {
+            "inline_keyboard": [
+              [{ "text": "📥 Получить чек-лист", "callback_data": "GET_LEAD_MAGNET" }],
+              [{ "text": "💰 CPA офферы", "callback_data": "SHOW_OFFERS" }],
+              [{ "text": "🤖 Автоматизация (n8n)", "callback_data": "SHOW_N8N" }],
+              [{ "text": "📊 Статистика", "callback_data": "SHOW_STATS" }]
+            ]
+          }
+        }
+      },
+      "id": "send-menu",
+      "name": "Send Main Menu",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [1000, 850]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Daily drip campaign - runs via cron\n// Add as separate cron workflow\nconst userData = $workflow.getStaticData('global');\nconst now = new Date();\n\nfor (const [userId, data] of Object.entries(userData)) {\n  if (!data.leadMagnetAt) continue;\n  \n  const daysSince = (now - new Date(data.leadMagnetAt)) / (1000*60*60*24);\n  \n  // Day 1: Case study\n  if (daysSince >= 1 && daysSince < 1.5 && !data.sentDay1) {\n    data.sentDay1 = true;\n    // Send message via Telegram API\n  }\n  \n  // Day 3: Pre-lander\n  if (daysSince >= 3 && daysSince < 3.5 && !data.sentDay3) {\n    data.sentDay3 = true;\n  }\n  \n  // Day 5: Alternative offer\n  if (daysSince >= 5 && daysSince < 5.5 && !data.sentDay5) {\n    data.sentDay5 = true;\n  }\n  \n  // Day 7: Free mini-course\n  if (daysSince >= 7 && daysSince < 7.5 && !data.sentDay7) {\n    data.sentDay7 = true;\n  }\n}\n\nreturn [{ json: { processed: Object.keys(userData).length } }];"
+      },
+      "id": "drip-campaign",
+      "name": "Drip Campaign Logic (Cron)",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [250, 550]
+    }
+  ],
+  "connections": {
+    "Telegram Webhook": { "main": [[{ "node": "Parse Message", "type": "main", "index": 0 }]] },
+    "Parse Message": { "main": [[{ "node": "Is Start Command?", "type": "main", "index": 0 }]] },
+    "Is Start Command?": { 
+      "main": [
+        [{ "node": "Save New User", "type": "main", "index": 0 }],
+        [{ "node": "Wants Lead Magnet?", "type": "main", "index": 0 }]
+      ] 
+    },
+    "Save New User": { "main": [[{ "node": "Send Welcome + Lead Magnet Offer", "type": "main", "index": 0 }]] },
+    "Wants Lead Magnet?": { 
+      "main": [
+        [{ "node": "Send Lead Magnet PDF", "type": "main", "index": 0 }],
+        [{ "node": "Wants Offers?", "type": "main", "index": 0 }]
+      ] 
+    },
+    "Send Lead Magnet PDF": { "main": [[{ "node": "Update State: Got Lead Magnet", "type": "main", "index": 0 }]] },
+    "Wants Offers?": { 
+      "main": [
+        [{ "node": "Send CPA Offers", "type": "main", "index": 0 }],
+        [{ "node": "Wants n8n?", "type": "main", "index": 0 }]
+      ] 
+    },
+    "Wants n8n?": { 
+      "main": [
+        [{ "node": "Send n8n Info", "type": "main", "index": 0 }],
+        [{ "node": "Back to Menu?", "type": "main", "index": 0 }]
+      ] 
+    },
+    "Back to Menu?": { 
+      "main": [
+        [{ "node": "Send Main Menu", "type": "main", "index": 0 }],
+        []
+      ] 
+    }
+  },
+  "active": false,
+  "settings": {},
+  "id": "1"
+}

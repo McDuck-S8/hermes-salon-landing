@@ -1,0 +1,91 @@
+{
+  "base_url": "https://vc.ru",
+  "login_required": true,
+  "auth_type": "cookie",
+  "storage_state": "vc_ru_auth.json",
+  "selectors": {
+    "new_article_button": "a[href*=\"/write\"], button:has-text(\"Написать\")",
+    "title_input": "input[name=\"title\"], input[placeholder*=\"заголовок\" i]",
+    "subtitle_input": "input[placeholder*=\"подзаголовок\" i]",
+    "editor_iframe": "iframe[class*=\"editor\"], iframe[id*=\"editor\"]",
+    "editor_body": "div[contenteditable=\"true\"], body[contenteditable=\"true\"]",
+    "image_button": "button:has-text(\"Изображение\"), button:has-text(\"Картинка\")",
+    "image_upload_input": "input[type=\"file\"][accept*=\"image\"]",
+    "video_button": "button:has-text(\"Видео\")",
+    "video_url_input": "input[placeholder*=\"ссылка на видео\" i]",
+    "link_button": "button:has-text(\"Ссылка\")",
+    "link_url_input": "input[placeholder*=\"ссылка\" i]",
+    "link_text_input": "input[placeholder*=\"текст ссылки\" i]",
+    "tags_input": "input[placeholder*=\"тег\" i], input[placeholder*=\"tag\" i]",
+    "tags_suggest": "div[class*=\"tag-suggest\"]",
+    "category_select": "select[name=\"category\"], button:has-text(\"Категория\")",
+    "publish_button": "button:has-text(\"Опубликовать\")",
+    "save_draft_button": "button:has-text(\"Сохранить черновик\")",
+    "schedule_button": "button:has-text(\"Отложить\")",
+    "schedule_datetime": "input[name=\"publish_at\"], input[placeholder*=\"дата\" i]",
+    "cover_image_button": "button:has-text(\"Обложка\")",
+    "cover_upload_input": "input[type=\"file\"][accept*=\"image\"]",
+    "seo_title_input": "input[name=\"seo_title\"]",
+    "seo_description_input": "textarea[name=\"seo_description\"]",
+    "age_restriction_select": "select[name=\"age_rating\"]",
+    "comments_toggle": "input[name=\"comments_enabled\"]",
+    "monetization_toggle": "input[name=\"monetization_enabled\"]",
+    "source_input": "input[name=\"source\"]",
+    "canonical_input": "input[name=\"canonical_url\"]",
+    "age_restriction_select": "select[name=\"age_rating\"]"
+  },
+  "steps": {
+    "publish_article": [
+      { "action": "goto", "url": "/write" },
+      { "action": "wait", "selector": "input[name=\"title\"]" },
+      { "action": "fill", "selector": "input[name=\"title\"]", "param": "title" },
+      { "action": "fill", "selector": "input[placeholder*=\"подзаголовок\"]", "param": "subtitle" },
+      { "action": "click", "selector": "div[contenteditable=\"true\"]" },
+      { "action": "type", "selector": "div[contenteditable=\"true\"]", "param": "content" },
+      { "action": "click", "selector": "button:has-text(\"Опубликовать\")" },
+      { "action": "wait", "selector": "button:has-text(\"Опубликовать\")" },
+      { "action": "click", "selector": "button:has-text(\"Опубликовать\")" },
+      { "action": "wait_for_navigation" }
+    ],
+    "publish_with_image": [
+      { "action": "goto", "url": "/write" },
+      { "action": "wait", "selector": "input[name=\"title\"]" },
+      { "action": "fill", "selector": "input[name=\"title\"]", "param": "title" },
+      { "action": "click", "selector": "button:has-text(\"Изображение\")" },
+      { "action": "wait", "selector": "input[type=\"file\"][accept*=\"image\"]" },
+      { "action": "fill", "selector": "input[type=\"file\"][accept*=\"image\"]", "param": "image_path" },
+      { "action": "wait", "selector": "img[src*=\"blob:\"]" },
+      { "action": "type", "selector": "div[contenteditable=\"true\"]", "param": "content" },
+      { "action": "click", "selector": "button:has-text(\"Опубликовать\")" }
+    ],
+    "schedule_post": [
+      { "action": "goto", "url": "/write" },
+      { "action": "fill", "selector": "input[name=\"title\"]", "param": "title" },
+      { "action": "type", "selector": "div[contenteditable=\"true\"]", "param": "content" },
+      { "action": "click", "selector": "button:has-text(\"Отложить\")" },
+      { "action": "fill", "selector": "input[name=\"publish_at\"]", "param": "datetime" },
+      { "action": "click", "selector": "button:has-text(\"Отложить\")" }
+    ],
+    "add_cover": [
+      { "action": "click", "selector": "button:has-text(\"Обложка\")" },
+      { "action": "wait", "selector": "input[type=\"file\"][accept*=\"image\"]" },
+      { "action": "fill", "selector": "input[type=\"file\"][accept*=\"image\"]", "param": "cover_path" },
+      { "action": "wait", "selector": "img[src*=\"blob:\"]" }
+    ],
+    "save_draft": [
+      { "action": "goto", "url": "/write" },
+      { "action": "fill", "selector": "input[name=\"title\"]", "param": "title" },
+      { "action": "type", "selector": "div[contenteditable=\"true\"]", "param": "content" },
+      { "action": "click", "selector": "button:has-text(\"Сохранить черновик\")" },
+      { "action": "wait", "selector": "text=Сохранено" }
+    ],
+    "add_source": [
+      { "action": "fill", "selector": "input[name=\"source\"]", "param": "source_url" },
+      { "action": "fill", "selector": "input[name=\"canonical_url\"]", "param": "canonical_url" }
+    ],
+    "set_age_rating": [
+      { "action": "click", "selector": "select[name=\"age_rating\"]" },
+      { "action": "select", "selector": "select[name=\"age_rating\"]", "param": "age_rating" }
+    ]
+  }
+}

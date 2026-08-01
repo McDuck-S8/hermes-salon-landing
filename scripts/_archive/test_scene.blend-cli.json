@@ -1,0 +1,163 @@
+{
+  "cameras": [
+    {
+      "clip_end": 1000.0,
+      "clip_start": 0.1,
+      "dof_aperture": 2.8,
+      "dof_enabled": false,
+      "dof_focus_distance": 10.0,
+      "focal_length": 50.0,
+      "id": 0,
+      "is_active": true,
+      "location": [
+        7.0,
+        -7.0,
+        5.0
+      ],
+      "name": "MainCam",
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "sensor_width": 36.0,
+      "type": "PERSP"
+    }
+  ],
+  "counts": {
+    "cameras": 0,
+    "lights": 0,
+    "materials": 0,
+    "objects": 0
+  },
+  "lights": [
+    {
+      "angle": 0.00918,
+      "color": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "id": 0,
+      "location": [
+        5.0,
+        5.0,
+        10.0
+      ],
+      "name": "Sun",
+      "power": 1.0,
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "type": "SUN"
+    }
+  ],
+  "materials": [
+    {
+      "alpha": 1.0,
+      "color": [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "emission_color": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "emission_strength": 0.0,
+      "id": 0,
+      "metallic": 0.1,
+      "name": "RedPlastic",
+      "roughness": 0.3,
+      "specular": 0.5,
+      "type": "principled",
+      "use_backface_culling": false
+    }
+  ],
+  "metadata": {
+    "created": "2026-05-28T08:02:16.176440",
+    "modified": "2026-05-28T08:03:33.012997",
+    "software": "blender-cli 1.0"
+  },
+  "name": "untitled",
+  "objects": [
+    {
+      "id": 0,
+      "keyframes": [],
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "material": 0,
+      "mesh_params": {
+        "size": 2.0
+      },
+      "mesh_type": "cube",
+      "modifiers": [],
+      "name": "MyCube",
+      "parent": null,
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "type": "MESH",
+      "visible": true
+    },
+    {
+      "id": 1,
+      "keyframes": [],
+      "location": [
+        3.0,
+        0.0,
+        0.0
+      ],
+      "material": null,
+      "mesh_params": {
+        "radius": 1.0,
+        "rings": 16,
+        "segments": 32
+      },
+      "mesh_type": "sphere",
+      "modifiers": [],
+      "name": "MySphere",
+      "parent": null,
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "type": "MESH",
+      "visible": true
+    }
+  ],
+  "render": {
+    "engine": "CYCLES",
+    "output_format": "PNG",
+    "resolution": "1920x1080",
+    "samples": 128
+  },
+  "scene": {
+    "current_frame": 1,
+    "fps": 24,
+    "frame_range": "1-250",
+    "unit_system": "metric"
+  },
+  "version": "1.0"
+}

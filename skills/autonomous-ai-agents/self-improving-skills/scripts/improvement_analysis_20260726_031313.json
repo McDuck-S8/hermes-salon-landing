@@ -1,0 +1,36 @@
+{
+  "timestamp": "2026-07-26T03:13:13.853781",
+  "skill": "self-improving-skills",
+  "eval_score": 0.6,
+  "patterns": [
+    {
+      "pattern": "missing_infrastructure",
+      "case": "improve_analyzes_failures",
+      "confidence": 0.9,
+      "fix": "Create complete eval infrastructure (cases.yaml, rubric.md, run_eval.py)",
+      "missing": [
+        "not_implemented"
+      ]
+    }
+  ],
+  "patches": [
+    {
+      "file": "evals/cases.yaml",
+      "action": "create",
+      "content": "# Auto-generated eval cases\n- name: \"basic_functionality\"\n  description: \"Skill produces expected output for typical input\"\n  input:\n    task: \"Execute skill's primary function\"\n  expect:\n    produces_output: true\n    no_errors: true\n",
+      "reason": "Skill lacks eval test cases"
+    },
+    {
+      "file": "evals/rubric.md",
+      "action": "create",
+      "content": "# Auto-generated Rubric\n## Scoring\n- PASS (1.0): All criteria met\n- PARTIAL (0.5): Most criteria met, minor issues\n- FAIL (0.0): Major issues or no output\n\n## Criteria\n1. Produces expected output type\n2. No runtime errors\n3. Output format matches specification\n4. Handles basic edge cases\n",
+      "reason": "Skill lacks scoring rubric"
+    },
+    {
+      "file": "evals/run_eval.py",
+      "action": "create",
+      "content": "#!/usr/bin/env python3\n\"\"\"Auto-generated eval runner\"\"\"\nimport json, sys\nfrom pathlib import Path\n\ndef run_tests(skill_dir: Path) -> Dict:\n    \"\"\"Run skill eval tests and return results dict\"\"\"\n    print(f\"Running evals for {skill_dir.name}...\")\n    # TODO: Implement actual skill test execution\n    results = {\n        \"total\": 0, \n        \"passed\": 0, \n        \"failed\": 0, \n        \"partial\": 0, \n        \"cases\": [],\n        \"pass_rate\": 0.0\n    }\n    return results\n\ndef main():\n    skill_dir = Path(sys.argv[1]) if len(sys.argv) > 1 else Path.cwd()\n    results = run_tests(skill_dir)\n    (skill_dir / \"evals\" / \"last_results.json\").write_text(json.dumps(results))\n    print(\"No evals implemented yet\")\n    return 0\n\nif __name__ == \"__main__\":\n    sys.exit(main())\n",
+      "reason": "Skill lacks eval runner"
+    }
+  ]
+}

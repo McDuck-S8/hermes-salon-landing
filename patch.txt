@@ -1,0 +1,41 @@
+*** Begin Patch\n*** Update File: D:/Portable_Soft/hermes/scripts/proactive_executor.py\n@@ context hint @@\n         for jid, info in healing_state.items():
+\n             if isinstance(info, dict) and info.get("consecutive_fails", 0) > 0:
+\n                 report(
+\n                     f"  [HEALING] {info.get('name', jid[:8])}: "
+\n                     f"{info['consecutive_fails']} consecutive failures "
+\n                     f"(last OK: {fmt_dt(info.get('last_ok'))})"
+\n                 )
+\n 
+\n     if not errors:
+\n         report("  No cron jobs with errors detected — all green")
+\n     else:
+\n         issues_found += len(errors)
+\n         for err in errors:
+\n             report(f"  [ERROR] {err['name']} ({err['id'][:8]}): {err['error'][:120] if err['error'] else 'unknown'}")
+\n 
+\n         for jid, info in healing_state.items():
+\n             if isinstance(info, dict) and info.get("consecutive_fails", 0) > 0:
+\n                 report(
+\n                     f"  [HEALING] {info.get('name', jid[:8])}: "
+\n                     f"{info['consecutive_fails']} consecutive failures "
+\n                     f"(last OK: {fmt_dt(info.get('last_ok'))})"
+\n                 )
+\n 
+\n     if not errors:
+\n         report("  No cron jobs with errors detected — all green")
+\n     else:
+\n         issues_found += len(errors)
+\n         for err in errors:
+\n             report(f"  [ERROR] {err['name']} ({err['id'][:8]}): {err['error'][:120] if err['error'] else 'unknown'}")
+\n 
+\n+    # ── Phase 2.5: LLM Analysis ──\n\n+    report("\\n[Phase 2.5] LLM Analysis")\n\n+    report("-" * 40)\n\n+    # Combine issues from knowledge gaps and cron errors\n\n+    llm_issues = []\n\n+    # Add knowledge gaps as issues\n\n+    for gap in kc.get("gaps", []):\n\n+        llm_issues.append({"description": gap, "type": "knowledge_gap"})\n\n+    # Add cron errors\n\n+    for err in errors:\n\n+        llm_issues.append({\n\n+            "name": err.get("name"),\n\n+            "error": err.get("error"),\n\n+            "consecutive_fails": err.get("consecutive_fails"),\n\n+            "script": err.get("script"),\n\n+            "id": err.get("id"),\n\n+        })\n\n+    # Run LLM analysis (returns cached suggestions or writes pending)\n\n+    suggested_fixes = analyze_with_llm(llm_issues)\n\n+    llm_fixes_applied = 0\n\n+    llm_fixes_verified = 0\n\n+    if suggested_fixes:\n\n+        report(f"  [LLM] Received {len(suggested_fixes)} suggested fix(es)")\n\n+        if apply_llm_suggested_fixes(suggested_fixes):\n\n+            llm_fixes_applied = len(suggested_fixes)  # approximate\n\n+            report("  [LLM] Fixes applied (verification via manual review or external agent)")\n\n+    else:\n\n+        report("  [LLM] No suggestions yet (awaiting external LLM agent)")\n\n+    # Add to total fixes applied\n\n+    fixes_applied += llm_fixes_applied\n\n     # ── Phase 3: Fix Actions ──
+\n     report("\n[Phase 3] Applying Fixes")
+\n     report("-" * 40)
+\n 
+\n     # Fix 1: Knowledge gaps (core_engine)
+\n     if kc["total"] > 0 and kc["gaps"]:
+\n         if fix_knowledge_gaps(kc, healing_state):
+\n             fixes_applied += 1
+\n             if verify_fix("knowledge_gaps", True):
+\n                 fixes_verified += 1
+\n 

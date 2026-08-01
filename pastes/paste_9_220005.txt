@@ -1,0 +1,7 @@
+ Честно: я НЕ обновлял файлы из _deprecated/. Всё что я делал:
+      - event_bus.py: добавил import subprocess + handler
+      - procedural_executor.py: добавил TRIGGER-013
+      - SELF_IDENTITY.md: исправил путь salon-bot
+      - LESSONS.md: добавил 6 уроков
+      - SELF_AUDIT.md: создал новый
+      - DECISION_LOG.md: добавил запись

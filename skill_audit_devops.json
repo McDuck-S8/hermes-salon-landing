@@ -1,0 +1,239 @@
+{
+  "timestamp": "2026-07-26T17:17:11.658401",
+  "skills_scanned": 1,
+  "files_scanned": 139,
+  "total_findings": 27,
+  "risk": {
+    "score": 100,
+    "severity": "CRITICAL",
+    "recommendation": "DANGEROUS",
+    "critical": 0,
+    "high": 27,
+    "medium": 0,
+    "low": 0
+  },
+  "results": [
+    {
+      "skill": "devops",
+      "files": 139,
+      "findings": [
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\devops\\SKILL.md",
+          "line": 46,
+          "code": "- ry/ corrupts YAML frontmatter. (2) Agent context injection: always XML-wrap with <untrusted-knowledge> tag + strip rol"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\devops\\cron-maintenance\\SKILL.md",
+          "line": 115,
+          "code": "# ❌ subprocess.run([\"python\", \"~/.hermes/memory_tree/scripts/...\"])"
+        },
+        {
+          "rule": "PE3_credential_access",
+          "severity": "HIGH",
+          "category": "Privilege Escalation",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\devops\\kill-switches\\SKILL.md",
+          "line": 44,
+          "code": "- File watcher detects `.env` changes → reloads in ~2 seconds"
+        },
+        {
+          "rule": "PE3_credential_access",
+          "severity": "HIGH",
+          "category": "Privilege Escalation",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\devops\\surgical-fix\\SKILL.md",
+          "line": 233,
+          "code": "- Created `mira-agent/` — separate directory tree with 15 files, its own `requirements.txt`, `.env.example`, `README.md`"
+        },
+        {
+          "rule": "PE3_credential_access",
+          "severity": "HIGH",
+          "category": "Privilege Escalation",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\devops\\surgical-fix\\SKILL.md",
+          "line": 239,
+          "code": "- Used existing `.env` keys: `OPENROUTER_API_KEY`, `TAVILY_API_KEY`, `TELEGRAM_BOT_TOKEN`."
+        },
+        {
+          "rule": "PE3_credential_access",
+          "severity": "HIGH",
+          "category": "Privilege Escalation",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\devops\\surgical-fix\\SKILL.md",
+          "line": 245,
+          "code": "- Check `.env` — what API keys already exist? (OpenRouter, Tavily, Telegram, etc.)"
+        },
+        {
+          "rule": "PE3_credential_access",
+          "severity": "HIGH",
+          "category": "Privilege Escalation",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\devops\\surgical-fix\\SKILL.md",
+          "line": 271,
+          "code": "env = open(\"D:\\\\Portable_Soft\\\\hermes\\\\.env\").read()"
+        },
+        {
+          "rule": "PE3_credential_access",
+          "severity": "HIGH",
+          "category": "Privilege Escalation",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\devops\\surgical-fix\\SKILL.md",
+          "line": 294,
+          "code": "2. Checked `.env` → Hermes already has OpenRouter (LLM), Tavily (search), Telegram (bot)"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\devops\\surgical-fix\\SKILL.md",
+          "line": 168,
+          "code": "**Signal:** `subprocess.run(capture_output=True, text=True)` raises `UnicodeDecodeError: 'utf-8' codec can't decode byte"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\devops\\surgical-fix\\SKILL.md",
+          "line": 175,
+          "code": "result = subprocess.run([...], capture_output=True, text=True, timeout=120)"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\devops\\surgical-fix\\SKILL.md",
+          "line": 178,
+          "code": "result = subprocess.run([...], capture_output=True, timeout=120)"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\devops\\war-room\\scripts\\war_room.py",
+          "line": 125,
+          "code": "result = subprocess.run("
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\devops\\process-supervisor\\scripts\\process_supervisor.py",
+          "line": 83,
+          "code": "r = subprocess.run([\"tasklist\", \"/FI\", f\"PID eq {pid}\"],"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\devops\\process-supervisor\\scripts\\process_supervisor.py",
+          "line": 137,
+          "code": "self.process = subprocess.Popen("
+        },
+        {
+          "rule": "MP1_persistent_injection",
+          "severity": "HIGH",
+          "category": "Memory Poisoning",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\devops\\file-integrity\\references\\memory-guard-fix-2026-06-30.md",
+          "line": 4,
+          "code": "memory_guard.py auto_fill writes garbage to MEMORY.md. Root cause: fix_memory() restores corrupted backup (14 lines of b"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\devops\\dashboard-visualization\\references\\cron-worker-dashboard-api-2026-07-13.md",
+          "line": 74,
+          "code": "out = subprocess.check_output([\"curl\", \"-s\", \"http://localhost:8766/data/tasks.json\"])"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\devops\\dashboard-visualization\\references\\cron-worker-dashboard-api-2026-07-13.md",
+          "line": 86,
+          "code": "subprocess.run(["
+        },
+        {
+          "rule": "AST2_eval_call",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\devops\\dashboard-visualization\\references\\dashboard-js-execution-debug-2026-07-12.md",
+          "line": 46,
+          "code": "6. Evaluated script via `try { eval(document.querySelector('script').textContent); } catch(e) { ... }`"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\devops\\dashboard-visualization\\scripts\\gen_dashboard.py",
+          "line": 16,
+          "code": "result = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=timeout, cwd=HERMES_ROOT)"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\devops\\cron-maintenance\\references\\cron-restoration-2026-07-12-session2.md",
+          "line": 41,
+          "code": "- ❌ `subprocess.run([\"python\", \"~/.hermes/memory_tree/scripts/...\"])`"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\devops\\cron-maintenance\\references\\dashboard-task-api-2026-07-13.md",
+          "line": 65,
+          "code": "tasks_json = subprocess.check_output(["
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\devops\\cron-maintenance\\references\\dashboard-task-api-2026-07-13.md",
+          "line": 83,
+          "code": "subprocess.run(["
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\devops\\cron-maintenance\\references\\gateway-cron-ticker-architecture-2026-07-04.md",
+          "line": 22,
+          "code": "│           → subprocess.Popen([python, script_path], ...)"
+        },
+        {
+          "rule": "AST4_subprocess",
+          "severity": "HIGH",
+          "category": "Code Execution",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\devops\\cron-maintenance\\references\\gateway-cron-ticker-architecture-2026-07-04.md",
+          "line": 54,
+          "code": "result = subprocess.run("
+        },
+        {
+          "rule": "PE3_credential_access",
+          "severity": "HIGH",
+          "category": "Privilege Escalation",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\devops\\codebase-update-audit\\references\\local-cron-safety-patterns-2026-07-08.md",
+          "line": 106,
+          "code": "3. **Configuration philosophy**: Hermes uses `.env` + environment variables for hot-reloadable config; upstream may use "
+        },
+        {
+          "rule": "P6_direct_leakage",
+          "severity": "HIGH",
+          "category": "Prompt Leakage",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\devops\\chain-heartbeat\\references\\emergency-system-recovery.md",
+          "line": 74,
+          "code": "echo '=== SYSTEM RECOVERY COMPLETE ==='"
+        },
+        {
+          "rule": "E2_env_harvesting",
+          "severity": "HIGH",
+          "category": "Data Exfiltration",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\devops\\auto-assign\\scripts\\classifier.py",
+          "line": 72,
+          "code": "key = os.environ.get(\"GEMINI_API_KEY\")"
+        }
+      ]
+    }
+  ]
+}

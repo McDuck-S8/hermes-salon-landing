@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🇺🇦 Ukrainian Parallel Path — CPA & Arbitrage</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #0a0e17;
+    color: #e2e8f0;
+    padding: 0;
+    line-height: 1.6;
+  }
+  .hero {
+    background: linear-gradient(135deg, #0a0e17 0%, #1a2332 50%, #0f1929 100%);
+    padding: 80px 20px;
+    text-align: center;
+    border-bottom: 1px solid #1e3a5f;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at 20% 50%, rgba(0, 87, 184, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(255, 215, 0, 0.08) 0%, transparent 50%);
+  }
+  .hero h1 {
+    font-size: 3em;
+    font-weight: 900;
+    position: relative;
+    background: linear-gradient(135deg, #ffd700, #ff8c00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
+  }
+  .hero .subtitle {
+    font-size: 1.1em;
+    color: #94a3b8;
+    max-width: 600px;
+    margin: 0 auto 24px;
+    position: relative;
+  }
+  .hero .flag {
+    font-size: 0.8em;
+    background: rgba(255,215,0,0.1);
+    border: 1px solid rgba(255,215,0,0.3);
+    padding: 6px 16px;
+    border-radius: 20px;
+    display: inline-block;
+  }
+  .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+
+  .section {
+    padding: 48px 0;
+    border-bottom: 1px solid #1e293b;
+  }
+  .section:last-child { border-bottom: none; }
+
+  h2 {
+    font-size: 1.6em;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  h2 .icon { font-size: 1.2em; }
+  h3 {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #e2e8f0;
+    margin: 20px 0 10px;
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+
+  .card {
+    background: linear-gradient(135deg, #111827, #1a2332);
+    border: 1px solid #1e293b;
+    border-radius: 16px;
+    padding: 24px;
+    transition: all 0.3s;
+  }
+  .card:hover { border-color: #ffd70033; transform: translateY(-2px); }
+  .card .label {
+    font-size: 0.75em;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+    margin-bottom: 8px;
+  }
+  .card .value {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #f1f5f9;
+  }
+  .card .desc {
+    font-size: 0.85em;
+    color: #94a3b8;
+    margin-top: 6px;
+  }
+  .card.gold {
+    border-color: rgba(255,215,0,0.3);
+    background: linear-gradient(135deg, #1a1500, #1a2332);
+  }
+  .card.gold .value { color: #ffd700; }
+
+  .cpa-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 0.9em;
+  }
+  .cpa-table th {
+    background: #1a2332;
+    color: #94a3b8;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75em;
+    letter-spacing: 0.05em;
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 2px solid #1e293b;
+  }
+  .cpa-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #1e293b;
+    color: #cbd5e1;
+  }
+  .cpa-table tr:hover td { background: rgba(30, 41, 59, 0.5); }
+
+  .path-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 24px;
+    background: #111827;
+    border-radius: 12px;
+    margin: 16px 0;
+  }
+  .path-flow .step {
+    background: #1a2332;
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 0.85em;
+    font-weight: 500;
+    min-width: 80px;
+    text-align: center;
+  }
+  .path-flow .step.gold { border-color: #ffd70044; background: #1a1500; }
+  .path-flow .arrow {
+    color: #475569;
+    font-size: 1.2em;
+  }
+
+  .chip {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.75em;
+    font-weight: 600;
+  }
+  .chip.green { background: rgba(34,197,94,0.15); color: #4ade80; }
+  .chip.blue { background: rgba(59,130,246,0.15); color: #60a5fa; }
+  .chip.yellow { background: rgba(234,179,8,0.15); color: #facc15; }
+  .chip.red { background: rgba(239,68,68,0.15); color: #f87171; }
+  .chip.purple { background: rgba(168,85,247,0.15); color: #c084fc; }
+
+  .stats-bar {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin: 16px 0;
+  }
+  .stat {
+    flex: 1;
+    min-width: 140px;
+    background: #111827;
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+  }
+  .stat .num {
+    font-size: 1.8em;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffd700, #ff8c00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .stat .num.blue {
+    background: linear-gradient(135deg, #60a5fa, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .stat .num.green {
+    background: linear-gradient(135deg, #4ade80, #22c55e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .stat .lbl { font-size: 0.8em; color: #64748b; margin-top: 4px; }
+
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .compare-col {
+    background: #111827;
+    border-radius: 16px;
+    border: 1px solid #1e293b;
+    padding: 24px;
+  }
+  .compare-col.ru { border-color: #3b82f644; }
+  .compare-col.ua { border-color: #ffd70044; }
+  .compare-col h3 { margin-top: 0; font-size: 1.2em; }
+  .compare-col.ru h3 { color: #60a5fa; }
+  .compare-col.ua h3 { color: #ffd700; }
+  .compare-col ul { list-style: none; padding: 0; }
+  .compare-col li { padding: 8px 0; border-bottom: 1px solid #1e293b; font-size: 0.9em; }
+  .compare-col li:last-child { border-bottom: none; }
+  .compare-col li .ok { color: #4ade80; margin-right: 8px; }
+  .compare-col li .no { color: #f87171; margin-right: 8px; }
+
+  @media (max-width: 700px) {
+    .grid-2, .grid-3, .compare-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 2em; }
+    .stats-bar { flex-direction: column; }
+    .path-flow { font-size: 0.8em; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>🇺🇦 Ukrainian Parallel Path</h1>
+  <p class="subtitle">
+    Полная схема CPA/arbitrage под украинский ключ.<br>
+    Телефон Kyivstar/Vodafone + карта PrivatBank/Monobank = параллельная воронка
+  </p>
+  <span class="flag">📱 Kyiv + 💳 UAH → USDT</span>
+</div>
+
+<div class="container">
+
+<!-- Stats -->
+<div class="section">
+  <div class="stats-bar">
+    <div class="stat">
+      <div class="num blue">8+</div>
+      <div class="lbl">CPA сетей для Украины</div>
+    </div>
+    <div class="stat">
+      <div class="num green">UAH</div>
+      <div class="lbl">Вывод на карту Privat/Mono</div>
+    </div>
+    <div class="stat">
+      <div class="num">USDT</div>
+      <div class="lbl">P2P Binance/Bybit/WhiteBIT</div>
+    </div>
+    <div class="stat">
+      <div class="num blue">0</div>
+      <div class="lbl">Лимит P2P (скасовано)</div>
+    </div>
+  </div>
+</div>
+
+<!-- Tech Stack -->
+<div class="section">
+  <h2><span class="icon">🛠</span> Tech Stack — Ukrainian Key</h2>
+  <div class="grid-3">
+    <div class="card gold">
+      <div class="label">📱 Mobile</div>
+      <div class="value">Kyivstar / Vodafone UA</div>
+      <div class="desc">Регистрация Telegram, TikTok, Instagram. UA+380 код.</div>
+    </div>
+    <div class="card gold">
+      <div class="label">💳 Cards</div>
+      <div class="value">PrivatBank / Monobank</div>
+      <div class="desc">Visa/Mastercard UAH. Привязка к Binance P2P, Bybit.</div>
+    </div>
+    <div class="card gold">
+      <div class="label">🏦 Crypto Exchanges</div>
+      <div class="value">Binance + Bybit + WhiteBIT</div>
+      <div class="desc">P2P торговля USDT↔UAH. Лучшие курсы, 0 комиссий.</div>
+    </div>
+  </div>
+</div>
+
+<!-- CPA Networks -->
+<div class="section">
+  <h2><span class="icon">🤝</span> CPA Networks for Ukraine</h2>
+  <table class="cpa-table">
+    <tr>
+      <th>Партнерка</th>
+      <th>Тип</th>
+      <th>Мин. выплата</th>
+      <th>Особенности</th>
+    </tr>
+    <tr>
+      <td><strong>PrimeLead</strong></td>
+      <td><span class="chip green">Универсальная</span></td>
+      <td>—</td>
+      <td>400+ офферов, 5000+ конверсий/день, 5 лет на рынке</td>
+    </tr>
+    <tr>
+      <td><strong>SalesDoubler</strong></td>
+      <td><span class="chip blue">Финансы / МФО</span></td>
+      <td>3000 ₴</td>
+      <td>Выплаты 2×/нед, топ для финансовой вертикали</td>
+    </tr>
+    <tr>
+      <td><strong>MyLead</strong></td>
+      <td><span class="chip yellow">Универсальная</span></td>
+      <td>$20</td>
+      <td>Международная, много офферов под UA гео</td>
+    </tr>
+    <tr>
+      <td><strong>CashPort</strong></td>
+      <td><span class="chip green">Товарная</span></td>
+      <td>—</td>
+      <td>CPA+CPS, товарка с доставкой по UA</td>
+    </tr>
+    <tr>
+      <td><strong>CPAGrip</strong></td>
+      <td><span class="chip purple">Content Locking</span></td>
+      <td>$50</td>
+      <td>Content locking, мировые офферы, PayPal/крипта</td>
+    </tr>
+    <tr>
+      <td><strong>Drop1</strong></td>
+      <td><span class="chip blue">Товарка</span></td>
+      <td>500 ₴</td>
+      <td>Товарные офферы с доставкой по Украине</td>
+    </tr>
+    <tr>
+      <td><strong>SellAction</strong></td>
+      <td><span class="chip blue">Товары/услуги</span></td>
+      <td>250 ₴</td>
+      <td>Мгновенные выплаты, низкий порог</td>
+    </tr>
+    <tr>
+      <td><strong>FireAds</strong></td>
+      <td><span class="chip yellow">Универсальная</span></td>
+      <td>$50</td>
+      <td>Международные офферы, 9 дней холд</td>
+    </tr>
+  </table>
+</div>
+
+<!-- Payment Flow -->
+<div class="section">
+  <h2><span class="icon">🔄</span> Payment Flow — UAH → USDT → UAH</h2>
+  <div class="path-flow">
+    <div class="step gold">📱 TikTok/IG<br>трафик</div>
+    <span class="arrow">→</span>
+    <div class="step">🤝 CPA сеть<br>конверсия</div>
+    <span class="arrow">→</span>
+    <div class="step gold">💳 Privat/Mono<br>UAH на карту</div>
+    <span class="arrow">→</span>
+    <div class="step">🔄 Binance P2P<br>UAH → USDT</div>
+    <span class="arrow">→</span>
+    <div class="step gold">💎 WhiteBIT<br>USDT cold</div>
+  </div>
+
+  <div class="grid-2" style="margin-top:20px;">
+    <div class="card">
+      <div class="label">Вариант А — P2P арбитраж</div>
+      <div class="value">Купить USDT по 44.5 → продать по 45.2</div>
+      <div class="desc">Спред 1.5-2.5%. Binance P2P, Bybit. Объёмы от $100. Работает 24/7.</div>
+    </div>
+    <div class="card">
+      <div class="label">Вариант Б — CPA + P2P</div>
+      <div class="value">Заработать в CPA → вывести USDT → UAH</div>
+      <div class="desc">CPA выплаты в USD/USDT на карту PrivatBank или криптокошелёк. Двойная конвертация.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Offers -->
+<div class="section">
+  <h2><span class="icon">🎯</span> Offer Verticals for UA</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="chip purple" style="margin-bottom:10px;">🥇 Приоритет</div>
+      <div class="value">МФО / Кредиты</div>
+      <div class="desc">
+        Самая высокая конверсия в Украине. Payday Loans, Installment Loans, микрозаймы.
+        EPC $0.5-3, CPA $5-25. Низкая конкуренция в 2026.
+      </div>
+    </div>
+    <div class="card">
+      <div class="chip blue" style="margin-bottom:10px;">🥈 Высокий потенциал</div>
+      <div class="value">Крипто-офферы</div>
+      <div class="desc">
+        Регистрация на биржах (WhiteBIT, Binance). Обменники. Крипто-казино.
+        EPC $0.2-2, CPA $3-15. Растущий рынок в UA.
+      </div>
+    </div>
+    <div class="card">
+      <div class="chip yellow" style="margin-bottom:10px;">🥉 Стабильный</div>
+      <div class="value">Гемблинг / Беттинг</div>
+      <div class="desc">
+        Онлайн казино, ставки на спорт. Высокие CPA $50-200.
+        Требует качественного трафика. Есть ограничения по рекламе.
+      </div>
+    </div>
+    <div class="card">
+      <div class="chip green" style="margin-bottom:10px;">📦 Товарка</div>
+      <div class="value">E-commerce / Нутра</div>
+      <div class="desc">
+        Товары с доставкой по Украине. Бады, косметика, электроника.
+        CPS до 30%. Выплаты после подтверждения заказа.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Traffic Sources -->
+<div class="section">
+  <h2><span class="icon">📡</span> Traffic Sources for UA</h2>
+  <div class="grid-3">
+    <div class="card gold">
+      <div class="label">🥇 #1</div>
+      <div class="value">TikTok Украина</div>
+      <div class="desc">
+        10M+ активных пользователей. Формат Shorts 15-60 сек.
+        Продвижение через реферальные ссылки в описании, bio link.
+        <br><span class="chip green">Низкий CPM</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="label">🥈 #2</div>
+      <div class="value">Instagram UA</div>
+      <div class="desc">
+        Reels, Stories, Link in Bio. Реклама через Instagram Ads (UAH).
+        Таргет по городам: Киев, Харьков, Днепр, Одесса, Львов.
+      </div>
+    </div>
+    <div class="card">
+      <div class="label">🥉 #3</div>
+      <div class="value">YouTube Shorts</div>
+      <div class="desc">
+        YouTube Shorts для украинской аудитории. Монетизация через CPA links.
+        SEO-заголовки на украинском/русском.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Comparison -->
+<div class="section">
+  <h2><span class="icon">⚖️</span> Comparison: РФ vs UA</h2>
+  <div class="compare-grid">
+    <div class="compare-col ru">
+      <h3>🇷🇺 Russian Path</h3>
+      <ul>
+        <li><span class="ok">✓</span> USDT → P2P → Карта РФ / Крипта</li>
+        <li><span class="ok">✓</span> CPA: CPAGrip, OGAds (content locking)</li>
+        <li><span class="no">✗</span> Карты РФ под санкциями — ограничения</li>
+        <li><span class="no">✗</span> VPN обязателен для многих сервисов</li>
+        <li><span class="ok">✓</span> TikTok РФ — огромная аудитория</li>
+        <li><span class="no">✗</span> Риск блокировок по 115-ФЗ</li>
+        <li><span class="ok">✓</span> USDT вывод без комиссий через P2P</li>
+        <li><span class="no">✗</span> МФО офферы ограничены регулятором</li>
+      </ul>
+    </div>
+    <div class="compare-col ua">
+      <h3>🇺🇦 Ukrainian Path</h3>
+      <ul>
+        <li><span class="ok">✓</span> UAH → USDT → UAH (полный цикл)</li>
+        <li><span class="ok">✓</span> CPA: PrimeLead, SalesDoubler, MyLead, CashPort</li>
+        <li><span class="ok">✓</span> PrivatBank / Monobank — без ограничений</li>
+        <li><span class="ok">✓</span> Прямой доступ к мировым биржам</li>
+        <li><span class="ok">✓</span> TikTok UA — 10M+, Instagram — активно</li>
+        <li><span class="ok">✓</span> НБУ зняв ліміт P2P 150 000 ₴/міс</li>
+        <li><span class="ok">✓</span> WhiteBIT — украинская биржа, USDT</li>
+        <li><span class="ok">✓</span> МФО — топ-вертикаль, низкая конкуренция</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Budget -->
+<div class="section">
+  <h2><span class="icon">💰</span> Budget for UA Path</h2>
+  <div class="grid-2">
+    <div class="card gold">
+      <div class="label">Стартовый бюджет</div>
+      <div class="value">$100-300 / 4000-12000 ₴</div>
+      <div class="desc">
+        Прокси (не нужны для UA — прямой доступ) — $0<br>
+        TikTok аккаунт — $0 (свой)<br>
+        Рекламный бюджет — $50-150<br>
+        Инструменты — $0-50
+      </div>
+    </div>
+    <div class="card">
+      <div class="label">Ожидаемый доход</div>
+      <div class="value">$5-50/день (Month 1)</div>
+      <div class="desc">
+        CPA МФО: 10-30 лидов/день × $0.5-3 = $5-90/день<br>
+        Content Locking: 50-200 лендов/день × $0.02-0.10 = $1-20/день<br>
+        P2P арбитраж: 1-2% от объёма
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Timeline -->
+<div class="section" style="border-bottom:none;">
+  <h2><span class="icon">📅</span> Timeline: Ukrainian Launch</h2>
+  <div class="grid-3">
+    <div class="card">
+      <div class="label">День 1-3</div>
+      <div class="value">Настройка</div>
+      <div class="desc">
+        ✅ Регистрация в PrimeLead / SalesDoubler<br>
+        ✅ Подключение PrivatBank к Binance P2P<br>
+        ✅ Создание TikTok UA аккаунта (если нет)<br>
+        ✅ Telegram канал @usdt_ua (или аналог)
+      </div>
+    </div>
+    <div class="card">
+      <div class="label">День 4-10</div>
+      <div class="value">Тест трафика</div>
+      <div class="desc">
+        ✅ Запуск 3 креативов TikTok<br>
+        ✅ A/B тест 2 офферов (МФО + крипто)<br>
+        ✅ Бюджет $10-30/день<br>
+        ✅ Анализ CTR, CR, EPC
+      </div>
+    </div>
+    <div class="card gold">
+      <div class="label">День 11-21</div>
+      <div class="value">Масштабирование</div>
+      <div class="desc">
+        ✅ Увеличение бюджета до $50/день<br>
+        ✅ Подключение дополнительных CPA сетей<br>
+        ✅ P2P арбитраж между Binance/Bybit/WhiteBIT<br>
+        ✅ **ПЕРВЫЙ ДОЛЛАР В UAH**
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,223 @@
+#!/usr/bin/env python3
+"""
+Auto-generate docs/index.html from filesystem.
+Run this script when new projects are added to regenerate the portfolio.
+"""
+import json, os, sys
+from pathlib import Path
+
+DOCS_ROOT = Path(__file__).parent.parent / "docs"
+OUTPUT_FILE = DOCS_ROOT / "index.html"
+
+# Category metadata
+CAT_META = {
+    "beauty": {"label": {"ru": "Салон красоты", "en": "Beauty Salon"}, "color": "#e91e63", "icon": "💇"},
+    "business": {"label": {"ru": "Бизнес-сайты", "en": "Business Sites"}, "color": "#6c5ce7", "icon": "🌐"},
+    "cpa": {"label": {"ru": "CPA лендинги", "en": "CPA Landings"}, "color": "#00b894", "icon": "💰"},
+    "arbitrage": {"label": {"ru": "Арбитраж", "en": "Arbitrage"}, "color": "#e17055", "icon": "🕸️"},
+    "ai": {"label": {"ru": "AI-инструменты", "en": "AI Tools"}, "color": "#a29bfe", "icon": "🤖"},
+    "experiments": {"label": {"ru": "Эксперименты", "en": "Experiments"}, "color": "#fd79a8", "icon": "🧪"},
+    "demos": {"label": {"ru": "Демо", "en": "Demos"}, "color": "#74b9ff", "icon": "🎨"},
+    "auto": {"label": {"ru": "Авто", "en": "Auto"}, "color": "#636e72", "icon": "🔧"},
+    "clinic": {"label": {"ru": "Медицина", "en": "Medical"}, "color": "#00cec9", "icon": "🏥"},
+    "funeral": {"label": {"ru": "Ритуальные", "en": "Funeral"}, "color": "#b2bec3", "icon": "🕊️"},
+    "cafe": {"label": {"ru": "Кафе", "en": "Cafe"}, "color": "#fdcb6e", "icon": "🥐"},
+    "portfolio": {"label": {"ru": "Портфолио", "en": "Portfolio"}, "color": "#ffeaa7", "icon": "📁"},
+    "other": {"label": {"ru": "Другое", "en": "Other"}, "color": "#dfe6e9", "icon": "📦"},
+}
+
+# Map folder -> category
+FOLDER_TO_CAT = {
+    "fargo": "beauty", "old-salon": "beauty", "salon": "beauty",
+    "bakery": "cafe",
+    "auto": "auto",
+    "clinic": "clinic",
+    "funeral": "funeral",
+    "smart-home-cpa": "cpa",
+    "cpa": "cpa",
+    "arbitrage": "arbitrage",
+    "fargo-classic": "demos", "fargo-trend": "demos", "fargo-v2": "demos",
+    "demos": "demos",
+    "portfolio": "portfolio",
+    "architecture": "other",
+}
+
+# Project metadata overrides
+PROJECT_META = {
+    "fargo": {
+        "name": {"ru": "Fargo — салон красоты на Позняках", "en": "Fargo — Beauty Salon in Poznyaky"},
+        "desc": {"ru": "Полноценный сайт: прайс (10 категорий, 119+ позиций), галерея, форма записи с выбором даты/времени, 2 адреса, Google Maps, акции.", "en": "Full website: price list (10 categories, 119+ items), gallery, booking form with date/time picker, 2 locations, Google Maps, promotions."},
+        "meta": {"ru": "Киев · 2026", "en": "Kyiv · 2026"},
+    },
+    "old-salon": {
+        "name": {"ru": "MÉLANGE — студия красоты", "en": "MÉLANGE — Beauty Studio"},
+        "desc": {"ru": "Лендинг с услугами, галереей работ, отзывами клиентов, формой записи, темной темой и мобильной версией.", "en": "Landing page with services, portfolio gallery, client reviews, booking form, dark mode, and mobile version."},
+        "meta": {"ru": "Москва · 2026", "en": "Moscow · 2026"},
+    },
+    "salon": {
+        "name": {"ru": "Aurum — Премиум салон красоты", "en": "Aurum — Premium Beauty Salon"},
+        "desc": {"ru": "Премиальный салон с темной темой и золотыми акцентами. Студийный дизайн, анимация, услуги, контакты.", "en": "Premium salon with dark theme and gold accents. Studio-grade design, animations, services, contact."},
+        "meta": {"ru": "2026", "en": "2026"},
+    },
+    "bakery": {
+        "name": {"ru": "La Pâtisserie — Кондитерская & Кафе", "en": "La Pâtisserie — Bakery & Café"},
+        "desc": {"ru": "Сайт кондитерской с меню десертов, галереей, формой заказа и тёплым дизайном в природных тонах.", "en": "Bakery website with dessert menu, gallery, order form, and warm earthy design."},
+        "meta": {"ru": "2026", "en": "2026"},
+    },
+    "auto": {
+        "name": {"ru": "AutoPro — Автосервис", "en": "AutoPro — Auto Service"},
+        "desc": {"ru": "Сайт автосервиса: услуги, запись онлайн, отзывы, контакты. Современный индустриальный дизайн.", "en": "Auto service website: services, online booking, reviews, contacts. Modern industrial design."},
+        "meta": {"ru": "2026", "en": "2026"},
+    },
+    "clinic": {
+        "name": {"ru": "MediCare — Медицинский центр", "en": "MediCare — Medical Center"},
+        "desc": {"ru": "Сайт медцентра: направления, врачи, запись на приём, контакты. Чистый минималистичный дизайн.", "en": "Medical center website: departments, doctors, appointment booking, contacts. Clean minimalist design."},
+        "meta": {"ru": "2026", "en": "2026"},
+    },
+    "funeral": {
+        "name": {"ru": "Тихий Дом — Ритуальные услуги", "en": "Eternal Rest — Funeral Services"},
+        "desc": {"ru": "Сайт ритуальной службы: услуги, церемонии, контакты. Сдержанный тактичный дизайн.", "en": "Funeral services website: services, ceremonies, contacts. Reserved tactful design."},
+        "meta": {"ru": "2026", "en": "2026"},
+    },
+    "smart-home-cpa": {
+        "name": {"ru": "Умный дом своими руками — CPA лендинг", "en": "DIY Smart Home — CPA Landing"},
+        "desc": {"ru": "CPA лендинг под оффер «Умный дом»: гайды, схемы, чек-листы. Контент-локинг, прелендинг → оффер.", "en": "CPA landing for 'Smart Home DIY' offer: guides, diagrams, checklists. Content locking, pre-lander → offer."},
+        "meta": {"ru": "2026", "en": "2026"},
+    },
+}
+
+# Pexels images for categories
+CAT_IMAGES = {
+    "beauty": "https://images.pexels.com/photos/3992875/pexels-photo-3992875.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop",
+    "cafe": "https://images.pexels.com/photos/1857157/pexels-photo-1857157.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop",
+    "auto": "https://images.pexels.com/photos/3807320/pexels-photo-3807320.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop",
+    "clinic": "https://images.pexels.com/photos/40568/medical-appointment-doctor-healthcare-40568.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop",
+    "funeral": "https://images.pexels.com/photos/7241361/pexels-photo-7241361.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop",
+    "cpa": "https://images.pexels.com/photos/7688473/pexels-photo-7688473.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop",
+    "arbitrage": "https://images.pexels.com/photos/7688345/pexels-photo-7688345.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop",
+    "demos": "https://images.pexels.com/photos/3764013/pexels-photo-3764013.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop",
+    "portfolio": "https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop",
+    "other": "https://images.pexels.com/photos/8386434/pexels-photo-8386434.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop",
+}
+
+def scan_projects():
+    """Scan docs/ for projects (folders with index.html or .html files)."""
+    projects = []
+    
+    for item in sorted(DOCS_ROOT.iterdir()):
+        if item.name.startswith('.') or item.name in {'css', 'js', 'images', 'assets'}:
+            continue
+        if not item.is_dir():
+            continue
+            
+        # Check if it has an index.html or any .html file
+        html_files = list(item.glob("*.html"))
+        if not html_files:
+            continue
+            
+        # Determine URL (relative path)
+        url = f"{item.name}/"
+        if (item / "index.html").exists():
+            url = f"{item.name}/"
+        else:
+            url = f"{item.name}/{html_files[0].name}"
+        
+        # Get category
+        cat = FOLDER_TO_CAT.get(item.name, "other")
+        
+        # Get metadata
+        meta = PROJECT_META.get(item.name, {
+            "name": {"ru": item.name.replace('-', ' ').title(), "en": item.name.replace('-', ' ').title()},
+            "desc": {"ru": f"Проект {item.name}", "en": f"Project {item.name}"},
+            "meta": {"ru": "2026", "en": "2026"},
+        })
+        
+        # Image
+        img = CAT_IMAGES.get(cat, CAT_IMAGES["other"])
+        
+        projects.append({
+            "id": item.name,
+            "cat": cat,
+            "url": url,
+            "img": img,
+            "name": meta["name"],
+            "desc": meta["desc"],
+            "meta": meta["meta"],
+        })
+    
+    return projects
+
+def generate_html(projects):
+    """Generate the complete HTML file."""
+    
+    # Build the PROJECTS JS array
+    projects_js = "const PROJECTS = [\n"
+    for p in projects:
+        projects_js += f"  {json.dumps(p, ensure_ascii=False)},\n"
+    projects_js += "];\n"
+    
+    # Build CAT_META JS
+    cat_meta_js = "const CAT_META = {\n"
+    for cat, meta in CAT_META.items():
+        cat_meta_js += f"  {cat}: {json.dumps(meta, ensure_ascii=False)},\n"
+    cat_meta_js += "};\n"
+    
+    # Read template (or use embedded)
+    template = """<!-- AUTO-GENERATED PORTFOLIO — Hermes Work Aggregator -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes Portfolio — All Projects</title>
+<style>
+:root{--bg:#0d0d12;--surface:#16161d;--border:#2a2a3a;--text:#e8e8ee;--muted:#88889a;--accent:#6c5ce7;--accent-hover:#8b7cff;--accent-bg:#1e1a3a;--card-hover:#3a3670;--cat-border:#3a3670;--tag-muted:#555;--footer-border:#2a2a3a;--empty:#555;--nav-btn-bg:#1e1e2a;--nav-btn:#aaa}[data-theme=light]{--bg:#f7f7f8;--surface:#fff;--border:#eaeaea;--text:#1a1a1a;--muted:#888;--accent:#6c5ce7;--accent-hover:#5a4bd1;--accent-bg:#f0edff;--card-hover:#d4ccff;--cat-border:#eeeef0;--tag-muted:#bbb;--footer-border:#eaeaea;--empty:#aaa;--nav-btn-bg:#f0f0f2;--nav-btn:#555}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);transition:background .2s,color .2s;min-height:100vh}img{max-width:100%;height:auto;display:block}a{color:inherit;text-decoration:none}button{cursor:pointer;border:none;background:none;font:inherit}header{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;backdrop-filter:blur(12px);background:rgba(22,22,29,.9)}[data-theme=light] header{background:rgba(255,255,255,.9)}.header-inner{max-width:1400px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.logo{font-weight:800;font-size:20px;letter-spacing:-.5px;text-decoration:none;color:var(--text)}.logo span{color:var(--muted);font-weight:400}.logo em{font-style:normal;color:var(--accent)}.header-right{display:flex;align-items:center;gap:8px}.lang-btn,.theme-btn{padding:6px 10px;border:1px solid var(--border);border-radius:6px;background:var(--nav-btn-bg);color:var(--nav-btn);font-size:12px;font-weight:600;transition:all .15s;font-family:inherit;line-height:1}.lang-btn:hover,.theme-btn:hover{border-color:var(--accent);color:var(--accent)}.lang-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}.lang-btn{min-width:32px;text-align:center;text-transform:uppercase}.theme-btn{font-size:16px;padding:6px 8px;line-height:1}.hero{max-width:1400px;margin:0 auto;padding:40px 24px 0}.hero-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:4px}.hero h1{font-size:32px;font-weight:800;letter-spacing:-1px}.hero .sub{font-size:15px;color:var(--muted);line-height:1.5;max-width:600px}.hero-meta{font-size:14px;color:var(--muted)}.hero-cta{display:flex;gap:8px;margin-top:20px;flex-wrap:wrap}.btn-primary{padding:12px 28px;background:var(--accent);color:#fff;border-radius:8px;font-weight:600;text-decoration:none;font-size:15px;transition:background .15s}.btn-primary:hover{background:var(--accent-hover)}.btn-secondary{padding:12px 28px;background:var(--cat-hover);color:var(--text);border-radius:8px;font-weight:500;text-decoration:none;font-size:15px;transition:background .15s}.btn-secondary:hover{background:var(--card-hover)}.layout{max-width:1400px;margin:0 auto;padding:24px;display:grid;grid-template-columns:220px 1fr;gap:28px}.sidebar{position:sticky;top:85px;align-self:start}.sidebar h3{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:12px;font-weight:600}.cat-list{list-style:none}.cat-list li{margin-bottom:2px}.cat-list a{display:block;padding:8px 12px;border-radius:8px;font-size:14px;font-weight:500;color:var(--muted);text-decoration:none;transition:all .15s}.cat-list a:hover{background:var(--cat-hover);color:var(--text)}.cat-list a.active{background:var(--accent);color:#fff;font-weight:600}.cat-list .count{float:right;color:var(--tag-muted);font-size:12px;font-weight:400}.cat-list a.active .count{color:rgba(255,255,255,.5)}.main{min-height:50vh}.section-title{display:none;align-items:baseline;justify-content:space-between;margin-bottom:16px}.section-title.show{display:flex}.section-title h2{font-size:18px;font-weight:700}.section-title .all-link{font-size:13px;color:var(--accent);text-decoration:none;font-weight:500}.section-title .all-link:hover{text-decoration:underline}.project-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:40px}.project-card{background:var(--surface);border-radius:12px;overflow:hidden;border:1px solid var(--border);transition:all .2s;text-decoration:none;color:inherit;display:block}.project-card:hover{border-color:var(--card-hover);box-shadow:0 4px 20px rgba(108,92,231,.08);transform:translateY(-2px)}.project-card .thumb{width:100%;height:170px;object-fit:cover;display:block;background:var(--cat-hover)}.project-card .info{padding:14px 16px 16px}.project-card .cat-tag{display:inline-block;font-size:11px;font-weight:600;color:var(--accent);background:var(--accent-bg);padding:2px 8px;border-radius:100px;margin-bottom:6px}.project-card h3{font-size:15px;font-weight:600;margin-bottom:4px;line-height:1.3}.project-card .desc{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:8px}.project-card .meta{font-size:12px;color:var(--tag-muted);margin-bottom:10px}.project-card .btn{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;background:var(--accent);color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;transition:background .15s}.project-card .btn:hover{background:var(--accent-hover)}.empty-state{text-align:center;padding:60px 20px;color:var(--empty);font-size:14px;display:none}.empty-state.show{display:block}#stats{max-width:1400px;margin:0 auto;padding:40px 24px;border-top:1px solid var(--border);text-align:center}#stats h2{font-size:24px;font-weight:800;margin-bottom:8px;letter-spacing:-.5px}#stats .sub{color:var(--muted);margin-bottom:24px}.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;max-width:800px;margin:0 auto}.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}.stat-card .num{font-size:32px;font-weight:800;color:var(--accent)}.stat-card .label{font-size:13px;color:var(--muted);margin-top:4px}footer{max-width:1400px;margin:0 auto;padding:32px 24px;border-top:1px solid var(--footer-border);color:var(--tag-muted);font-size:13px;text-align:center}@media(max-width:768px){.layout{grid-template-columns:1fr;padding:16px}.sidebar{position:static;margin-bottom:4px}.sidebar h3{display:none}.cat-list{display:flex;gap:4px;overflow-x:auto;padding-bottom:8px;flex-wrap:nowrap}.cat-list li{flex-shrink:0}.cat-list a{padding:6px 14px;font-size:13px;white-space:nowrap}.project-grid{grid-template-columns:1fr}.hero h1{font-size:24px}.hero .sub{font-size:14px}.header-inner{flex-wrap:wrap}}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<header><div class="header-inner"><a href="./" class="logo">Hermes <span>//</span> <em>Portfolio</em></a><div class="header-right"><button class="lang-btn active" data-lang="ru">RU</button><button class="lang-btn" data-lang="en">EN</button><button class="theme-btn" id="themeToggle" title="Toggle theme">🌙</button></div></div></header>
+<section class="hero"><div class="hero-top"><h1 data-i18n="title">Hermes Portfolio</h1><span class="hero-meta" data-i18n="subtitle">70+ проектов · AI · CPA · Web · Automation</span></div><p class="sub" data-i18n="description">Все работы в одном месте: бизнес-сайты, CPA лендинги, арбитражные схемы, AI-инструменты, Telegram-боты, эксперименты. Открывай файл локально — всё работает без сервера.</p><div class="hero-cta"><a href="#projects" class="btn-primary" data-i18n="view_projects">⟶ Посмотреть работы</a><a href="#stats" class="btn-secondary" data-i18n="stats">Статистика</a></div></section>
+<div class="layout"><aside class="sidebar"><h3 data-i18n="categories">Категории</h3><ul class="cat-list" id="catList"></ul></aside><main class="main" id="projects"></main></div>
+<section id="stats"><h2 data-i18n="stats_title">По цифрам</h2><p data-i18n="stats_sub">Сгенерировано автоматически из структуры папок</p><div class="stats-grid"><div class="stat-card"><div class="num" id="statProjects">0</div><div class="label" data-i18n="stat_projects">Проектов</div></div><div class="stat-card"><div class="num" id="statCategories">0</div><div class="label" data-i18n="stat_categories">Категорий</div></div><div class="stat-card"><div class="num" id="statFiles">0</div><div class="label" data-i18n="stat_files">HTML файлов</div></div><div class="stat-card"><div class="num" id="statTypes">0</div><div class="label" data-i18n="stat_types">Типов работ</div></div></div></section>
+<footer data-i18n="footer">Hermes Portfolio · обновляется автоматически при добавлении новых работ</footer>
+<script>
+const LANG = {ru:{title:'Hermes Portfolio',subtitle:'70+ проектов · AI · CPA · Web · Automation',description:'Все работы в одном месте: бизнес-сайты, CPA лендинги, арбитражные схемы, AI-инструменты, Telegram-боты, эксперименты. Открывай файл локально — всё работает без сервера.',view_projects:'⟶ Посмотреть работы',stats:'Статистика',categories:'Категории',all:'Все проекты',footer:'Hermes Portfolio · обновляется автоматически при добавлении новых работ',stats_title:'По цифрам',stats_sub:'Сгенерировано автоматически из структуры папок',stat_projects:'Проектов',stat_categories:'Категорий',stat_files:'HTML файлов',stat_types:'Типов работ',cat_beauty:'Салон красоты',cat_business:'Бизнес-сайты',cat_cpa:'CPA лендинги',cat_arbitrage:'Арбитраж',cat_ai:'AI-инструменты',cat_experiments:'Эксперименты',cat_demos:'Демо',cat_auto:'Авто',cat_clinic:'Медицина',cat_funeral:'Ритуальные',cat_cafe:'Кафе',cat_portfolio:'Портфолио',cat_other:'Другое',empty:'Здесь пока пусто. Скоро появится первый проект.'},en:{title:'Hermes Portfolio',subtitle:'70+ projects · AI · CPA · Web · Automation',description:'All work in one place: business sites, CPA landings, arbitrage schemes, AI tools, Telegram bots, experiments. Open file locally — everything works without a server.',view_projects:'⟶ View Projects',stats:'Stats',categories:'Categories',all:'All Projects',footer:'Hermes Portfolio · auto-updates when new work is added',stats_title:'By the Numbers',stats_sub:'Auto-generated from folder structure',stat_projects:'Projects',stat_categories:'Categories',stat_files:'HTML Files',stat_types:'Work Types',cat_beauty:'Beauty Salon',cat_business:'Business Sites',cat_cpa:'CPA Landings',cat_arbitrage:'Arbitrage',cat_ai:'AI Tools',cat_experiments:'Experiments',cat_demos:'Demos',cat_auto:'Auto',cat_clinic:'Medical',cat_funeral:'Funeral',cat_cafe:'Cafe',cat_portfolio:'Portfolio',cat_other:'Other',empty:'Nothing here yet. First project coming soon.'}};
+
+""" + cat_meta_js + projects_js + """
+
+let currentLang='ru';let currentCat='all';let theme=localStorage.getItem('theme')||'light';
+document.documentElement.setAttribute('data-theme',theme);
+document.getElementById('themeToggle').textContent=theme==='dark'?'☀️':'🌙';
+document.getElementById('themeToggle').addEventListener('click',()=>{theme=theme==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',theme);localStorage.setItem('theme',theme);document.getElementById('themeToggle').textContent=theme==='dark'?'☀️':'🌙';});
+function translate(lang){currentLang=lang;document.querySelectorAll('[data-i18n]').forEach(el=>{const key=el.dataset.i18n;if(LANG[lang][key])el.textContent=LANG[lang][key];});document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));renderProjects();}
+function renderProjects(){const main=document.getElementById('projects');const filtered=currentCat==='all'?PROJECTS:PROJECTS.filter(p=>p.cat===currentCat);if(!filtered.length){main.innerHTML=`<div class="empty-state show">${LANG[currentLang].empty}</div>`;return;}const groups={};filtered.forEach(p=>{if(!groups[p.cat])groups[p.cat]=[];groups[p.cat].push(p);});let html='';for(const[cat,items] of Object.entries(groups)){const catMeta=CAT_META[cat]||{label:{ru:cat,en:cat},icon:'📦'};const catName=catMeta.label[currentLang]||cat;html+=`<section class="project-section" data-cat="${cat}">`;html+=`<div class="section-title show"><h2>${catMeta.icon} ${catName}</h2></div>`;html+=`<div class="project-grid">`;items.forEach(p=>{html+=`<a href="${p.url}" class="project-card" target="_blank">`;html+=`<img class="thumb" src="${p.img}" alt="" loading="lazy">`;html+=`<div class="info">`;html+=`<span class="cat-tag">${catName}</span>`;html+=`<h3>${p.name[currentLang]}</h3>`;html+=`<p class="desc">${p.desc[currentLang]}</p>`;html+=`<div class="meta">${p.meta[currentLang]}</div>`;html+=`<span class="btn">↗ ${currentLang==='en'?'Open':'Открыть'}</span>`;html+=`</div></a>`;});html+=`</div></section>`;}main.innerHTML=html;}
+document.getElementById('catList').addEventListener('click',e=>{const a=e.target.closest('a');if(!a)return;e.preventDefault();document.querySelectorAll('.cat-list a').forEach(x=>x.classList.remove('active'));a.classList.add('active');currentCat=a.dataset.cat;renderProjects();});
+document.querySelectorAll('.lang-btn').forEach(btn=>{btn.addEventListener('click',()=>translate(btn.dataset.lang));});
+function buildCatList(){const cats=[...new Set(PROJECTS.map(p=>p.cat))];let html='<li><a href="#" class="active" data-cat="all" data-i18n="all"><span data-i18n="all">Все проекты</span> <span class="count">'+PROJECTS.length+'</span></a></li>';cats.forEach(cat=>{const meta=CAT_META[cat]||{label:{ru:cat,en:cat},icon:'📦'};const count=PROJECTS.filter(p=>p.cat===cat).length;const label=meta.label[currentLang]||cat;html+=`<li><a href="#" data-cat="${cat}"><span>${meta.icon} ${label}</span> <span class="count">${count}</span></a></li>`;});document.getElementById('catList').innerHTML=html;updateStats();}
+function updateStats(){const cats=new Set(PROJECTS.map(p=>p.cat));document.getElementById('statProjects').textContent=PROJECTS.length;document.getElementById('statCategories').textContent=cats.size;document.getElementById('statFiles').textContent=PROJECTS.length;document.getElementById('statTypes').textContent=cats.size;}
+translate('ru');buildCatList();
+</script>
+</body>
+</html>"""
+    
+    return template
+
+if __name__ == "__main__":
+    print("Scanning projects...")
+    projects = scan_projects()
+    print(f"Found {len(projects)} projects")
+    
+    html = generate_html(projects)
+    OUTPUT_FILE.write_text(html, encoding="utf-8")
+    print(f"Generated {OUTPUT_FILE}")
+    
+    # Print summary
+    cats = {}
+    for p in projects:
+        cats[p['cat']] = cats.get(p['cat'], 0) + 1
+    print("\nCategories:")
+    for cat, count in sorted(cats.items()):
+        meta = CAT_META.get(cat, {"label": {"ru": cat}})
+        print(f"  {meta['label']['ru']} ({cat}): {count}")

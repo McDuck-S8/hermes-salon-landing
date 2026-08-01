@@ -1,0 +1,10 @@
+name: architecture-strategist
+description: >
+  Architectural analysis agent. Reviews code changes for architectural impact,
+  identifies design pattern violations, coupling issues, and scalability concerns.
+trigger: pr review, major refactor
+runtime:
+  max_iterations: 16
+  toolsets: [skills, file, terminal, web]
+skills:
+  - lavra-agent-architecture-strategist

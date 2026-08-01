@@ -1,0 +1,51 @@
+ Hermes ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+    Проблема найдена. Данные есть (curl подтверждает: 26 задач, 35 кронов, 1 профиль), но JS в браузере не выполняется —
+    fetch в контексте BrowserClaw не работает (нет document, fetch молча падает).
+
+    Dashboard работает — открой http://localhost:8765/dashboard.html в своём браузере (Chrome/Firefox/Edge). Там всё отобразится.
+
+
+
+    Что на дашборде сейчас (реальные данные):
+
+    | Колонка | Задач | Статус                  |
+    |---------|-------|-------------------------|
+    | Ready   | 18    | ▶ готовы                |
+    | Running | 0     | никто не работает       |
+    | Blocked | 6     | ⊘ ждут                  |
+    | Done    | 2     | ✅ f8ed6f79, t_5e97e9e3 |
+
+    Готовые к работе (18):
+    - e3d20e1f — Salon bot: 2-й токен
+    - 125f3acf — salon handlers в gateway
+    - 8043bfbd — RAG автозаполнение KC
+    - c28e15ce — Self-improvement апгрейд
+    - 3bdec397 — Организовать файлы scripts/cache/data
+    - 565fef3d — Hermes upstream обновления
+    - e8a3d135 — Daemon workflow
+    - t_explore1 — Telegram CPA funnel
+    - t_affiliate_bot — Affiliate bot (Tara Bot для РФ)
+    - t_pinterest — Pinterest 100+ pins/day
+    - 954fc27e — Fix event_daemon.py
+    - b8ef7c2f — agent_daemon.py: os.kill → taskkill
+    - ac368a22 — Clean dead scripts (122 в _dead_scripts.json)
+    - t_explore2 — Telegram Stars affiliate
+    - t_explore3 — Profitable bot ideas
+    - t_explore5 — MyLead publisher
+    - t_explore4 — Telegram Ads дешёвый трафик
+    - t_2e60ace1 — Fill knowledge gaps (392 white spots)
+
+    Blocked (6) — ждут тебя:
+    - t_a70b1bbb — EverOS сервер + кристалл
+    - t_99ca84d6 — Kanban multi-agent воркеры
+    - t_f3991a02 — Oh-my-pi провайдер
+    - t_50898141 — Browser notes из Chrome
+    - t_cc82f2af — Crystal self-docs
+    - t_89ed980e — Fler БД
+
+    Кроны: 35 активных (включая новые trend_scout, market_research, knowledge_gap_filler, anomaly_detector)
+
+
+
+    Открывай в своём браузере: http://localhost:8765/dashboard.html — там всё видно. BrowserClaw не умеет выполнять JS
+    дашборда.

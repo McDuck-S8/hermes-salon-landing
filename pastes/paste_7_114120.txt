@@ -1,0 +1,6 @@
+PS D:\Portable_Soft\hermes> wsl pkill -f telegram_bot.py
+PS D:\Portable_Soft\hermes> wsl bash -c "nohup python3 /mnt/d/Portable_Soft/hermes/scripts/telegram_bot.py > /tmp/bot.log 2>&1 &"
+PS D:\Portable_Soft\hermes> wsl ps aux | wsl grep telegram_bot | wsl grep -v grep
+PS D:\Portable_Soft\hermes> wsl tail -5 /tmp/bot.log
+tail: cannot open '/tmp/bot.log' for reading: No such file or directory
+PS D:\Portable_Soft\hermes>

@@ -1966,6 +1966,13 @@ def save_decision(decision: dict, state: dict, result: str):
 # ---------------------------------------------------------------------------
 
 def main():
+    # Heartbeat: module alive
+    try:
+        from chain_heartbeat import beat
+        beat("autonomous_agent")
+    except ImportError:
+        pass
+
     dry_run = "--dry" in sys.argv
     report_mode = "--report" in sys.argv
 

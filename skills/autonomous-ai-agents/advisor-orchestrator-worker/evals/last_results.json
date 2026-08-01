@@ -1,0 +1,49 @@
+{
+  "total": 8,
+  "passed": 8,
+  "partial": 0,
+  "failed": 0,
+  "pass_rate": 1.0,
+  "results": [
+    {
+      "name": "plan_before_dispatch",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "name": "advisor_consultation",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "name": "parallel_dispatch_limit",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "name": "timeout_handling",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "name": "verification_step",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "name": "taste_pass",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "name": "delegate_task_usage",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "name": "isolated_context",
+      "status": "PASS",
+      "error": null
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "session": 38,
+  "style": "fantasy",
+  "model": "seedream",
+  "count": 5,
+  "success_count": 0,
+  "fail_count": 5,
+  "timestamp": "2026-07-17T22:37:02.577656+00:00",
+  "provider": "pollinations.ai",
+  "images": [
+    {
+      "index": 1,
+      "style": "fantasy",
+      "prompt": "Ethereal fantasy woman with glowing crystal skin, detailed digital art, cinematic lighting, artstation style, symmetrical face, perfect skin, flowing magical dress, intricate jewelry, golden hour lighting, photorealistic, hyperdetailed, 8k",
+      "seed": 482285,
+      "caption": "💫 Fantasy collection | Member access only",
+      "model": "seedream",
+      "filename": "fantasy_38_01.jpg",
+      "filepath": "D:\\Portable_Soft\\hermes\\projects\\ai-ofm-tribute\\content\\sessions\\38\\fantasy_38_01.jpg",
+      "success": false
+    },
+    {
+      "index": 2,
+      "style": "fantasy",
+      "prompt": "Goddess of moonlight standing on ancient temple ruins, silver-white dress, glowing eyes, mystical aura, starry night sky, fantasy art, cinematic composition, photorealistic",
+      "seed": 550611,
+      "caption": "⭐ Enchanted | Subscriber preview",
+      "model": "seedream",
+      "filename": "fantasy_38_02.jpg",
+      "filepath": "D:\\Portable_Soft\\hermes\\projects\\ai-ofm-tribute\\content\\sessions\\38\\fantasy_38_02.jpg",
+      "success": false
+    },
+    {
+      "index": 3,
+      "style": "fantasy",
+      "prompt": "Forest nymph with flower crown, dewdrop skin, emerald eyes, magical forest background, soft sunlight filtering through leaves, dreamy atmosphere, hyperdetailed portrait",
+      "seed": 175553,
+      "caption": "⭐ Enchanted | Subscriber preview",
+      "model": "seedream",
+      "filename": "fantasy_38_03.jpg",
+      "filepath": "D:\\Portable_Soft\\hermes\\projects\\ai-ofm-tribute\\content\\sessions\\38\\fantasy_38_03.jpg",
+      "success": false
+    },
+    {
+      "index": 4,
+      "style": "fantasy",
+      "prompt": "Ethereal fantasy woman with glowing crystal skin, detailed digital art, cinematic lighting, artstation style, symmetrical face, perfect skin, flowing magical dress, intricate jewelry, golden hour lighting, photorealistic, hyperdetailed, 8k",
+      "seed": 487792,
+      "caption": "✨ New fantasy art | Exclusive content",
+      "model": "seedream",
+      "filename": "fantasy_38_04.jpg",
+      "filepath": "D:\\Portable_Soft\\hermes\\projects\\ai-ofm-tribute\\content\\sessions\\38\\fantasy_38_04.jpg",
+      "success": false
+    },
+    {
+      "index": 5,
+      "style": "fantasy",
+      "prompt": "Mystical elf queen in enchanted forest, bioluminescent flowers, shimmering dress, elegant pose, detailed face, dappled sunlight, fantasy art, intricate details, volumetric fog",
+      "seed": 816588,
+      "caption": "⭐ Enchanted | Subscriber preview",
+      "model": "seedream",
+      "filename": "fantasy_38_05.jpg",
+      "filepath": "D:\\Portable_Soft\\hermes\\projects\\ai-ofm-tribute\\content\\sessions\\38\\fantasy_38_05.jpg",
+      "success": false
+    }
+  ]
+}

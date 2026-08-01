@@ -1,0 +1,23 @@
+=== DAILY P&L === 2026-07-24 ===
+BALANCE: $1,247 | 37410-day runway
+
+ACTIVE SCHEMES:
+┌──────────────────┬────────┬────────┬────────┬──────┬────────┬────────────┐
+│ Scheme           │ Spend  │ Revenue│ Profit │ ROI  │ Status │ Action     │
+├──────────────────┼────────┼────────┼────────┼──────┼────────┼────────────┤
+│ always-on-agent  │ $  0.01 │ $  0.00 │ $ -0.01 │  -100% │ testin │ 🟠 FIX      │
+└──────────────────┴────────┴────────┴────────┴──────┴────────┴────────────┘
+
+ALERTS:
+  ⚠️ always-on-agent: $0.01 spend, $0 revenue (ROI: -100%)
+
+TOP NEW OPPORTUNITIES (from arbitrage sensors):
+  • Кредитная карта Тинькофф (admitad) + kadam → ROI 244% | $2075/day
+  • Игра Raid Shadow Legends (admitad) + richads → ROI 240% | $1080/day
+  • Нутра: Просталин (продажа) (adcombo) + kadam → ROI 65% | $780/day
+
+RECOMMENDATION:
+  Reallocate $0/day across active schemes
+  Reserve $249 for testing new offers
+
+NEXT REVIEW: 07:00 tomorrow

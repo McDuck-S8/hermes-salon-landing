@@ -1,0 +1,101 @@
+{
+  "tactical_analyze_kc_20260614": {
+    "description": "Проанализировать 3000 записей KC, найти пробелы и проблемы",
+    "status": "completed",
+    "type": "tactical_analyze_kc",
+    "priority": 5,
+    "created_at": "2026-06-14T09:30:00",
+    "executed_at": "2026-06-14T09:45:00",
+    "executed_by": "hermes",
+    "result": {
+      "total_analyzed": 3000,
+      "quality": {
+        "no_outcome": 252,
+        "no_outcome_percent": 8.4,
+        "no_source": 11,
+        "no_source_percent": 0.4,
+        "no_domain": 0
+      },
+      "top_sources": [
+        ["skill-indexer", 754],
+        ["crystal", 682],
+        ["crystal_will", 593],
+        ["improvement_suggestions", 486],
+        ["latent-domain-detector", 143]
+      ],
+      "top_domains": [
+        ["crystal", 770],
+        ["crystal_will", 587],
+        ["bugfix", 404],
+        ["skill", 259],
+        ["file_ops", 196]
+      ],
+      "outcome_distribution": {
+        "snapshot": 695,
+        "indexed": 675,
+        "will_action": 587,
+        "system_note": 362,
+        "success": 196,
+        "discovery": 66,
+        "failure": 51,
+        "unknown": 34
+      },
+      "problems": [
+        "252 web_research entries have outcome=None — missing result status"
+      ],
+      "recommendations": [
+        "Fix web_research or cube_feeder.py to set outcome (success/failure/indexed) after URL processing"
+      ]
+    },
+    "report_path": "D:/Portable_Soft/hermes/crystal_analysis_report.json"
+  },
+  "everos_integration_20260614": {
+    "description": "EverOS — интеграция с кристаллом",
+    "status": "pending",
+    "type": "everos_integration",
+    "priority": 3,
+    "created_at": "2026-06-14T09:30:00"
+  },
+  "everos_launch_20260614": {
+    "description": "EverOS — запуск сервера",
+    "status": "pending",
+    "type": "everos_launch",
+    "priority": 3,
+    "created_at": "2026-06-14T09:30:00"
+  },
+  "everos_first_run_20260614": {
+    "description": "EverOS — первый запуск",
+    "status": "pending",
+    "type": "everos_first_run",
+    "priority": 3,
+    "created_at": "2026-06-14T09:30:00"
+  },
+  "self_upgrade_level3": {
+    "description": "Самосознание Level 3",
+    "status": "pending",
+    "type": "self_upgrade",
+    "priority": 4,
+    "created_at": "2026-06-14T09:30:00"
+  },
+  "everos_setup_20260614": {
+    "description": "EverOS — настройка",
+    "status": "pending",
+    "type": "everos_setup",
+    "priority": 3,
+    "created_at": "2026-06-14T09:30:00"
+  },
+  "tactical_report_20260612": {
+    "description": "Тактический отчёт за 2026-06-12",
+    "status": "pending",
+    "type": "tactical_report",
+    "priority": 2,
+    "created_at": "2026-06-14T09:30:00"
+  },
+  "tactical_report_20260613": {
+    "description": "Тактический отчёт за 2026-06-13",
+    "status": "pending",
+    "type": "tactical_report",
+    "priority": 2,
+    "created_at": "2026-06-14T09:30:00"
+  }
+}

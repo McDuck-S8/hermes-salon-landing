@@ -1,0 +1,7 @@
+{
+  "template": "myth_busting",
+  "niche": "beauty",
+  "prompt": "Generate a 15-30 second TikTok/Reels/Shorts script for beauty niche using 'myth_busting' format.\nStructure: Hook (0-1s) → Value/Problem (1-5s) → Solution/Demo (5-15s) → Result/Proof (15-20s) → CTA (20-30s).\nInclude: visual cues, text overlays, timing, music suggestion.\nNiche specifics: beauty business automation, AI bots, client retention.\nOutput: JSON with fields: template, niche, hook, scenes[], cta, hashtags[]",
+  "generated_at": "2026-07-29T22:38:03.207012",
+  "status": "prompt_ready"
+}

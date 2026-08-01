@@ -1,0 +1,11 @@
+Crystal self-docs — восстановить документацию кристалла
+ID
+t_cc82f2af
+Status
+blocked
+Assignee
+default
+Created
+12.07.2026, 15:22:35
+Description
+Документация кристалла (Crystal self-docs) устарела/потеряна. Восстановить: прочитать исходники, сгенерировать AGENTS.md и SKILL.md.

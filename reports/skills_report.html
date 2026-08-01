@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes Agent — Скиллы</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0d1117; color: #c9d1d9; padding: 20px; }
+h1 { color: #FFD700; text-align: center; margin-bottom: 8px; font-size: 28px; }
+.subtitle { text-align: center; color: #8b949e; margin-bottom: 30px; font-size: 14px; }
+.legend { display: flex; justify-content: center; gap: 30px; margin-bottom: 25px; flex-wrap: wrap; }
+.legend-item { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+.dot { width: 12px; height: 12px; border-radius: 50%; }
+.dot.active { background: #3fb950; box-shadow: 0 0 6px #3fb950; }
+.dot.optional { background: #f0883e; box-shadow: 0 0 6px #f0883e; }
+.dot.installed { background: #a371f7; box-shadow: 0 0 6px #a371f7; }
+.category { margin-bottom: 25px; }
+.category-header { 
+    font-size: 18px; font-weight: 600; color: #58a6ff; 
+    padding: 8px 12px; background: #161b22; border-radius: 6px;
+    border-left: 4px solid #58a6ff; margin-bottom: 10px;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.category-count { font-size: 13px; color: #8b949e; font-weight: normal; }
+.skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 8px; padding-left: 8px; }
+.skill { 
+    padding: 10px 14px; border-radius: 6px; font-size: 13px;
+    border: 1px solid #21262d; transition: all 0.15s; cursor: pointer;
+}
+.skill:hover { transform: translateY(-1px); }
+.skill.active { background: #0d1d0d; border-color: #23863644; }
+.skill.active:hover { border-color: #3fb950; }
+.skill.optional { background: #1d1508; border-color: #f0883e44; }
+.skill.optional:hover { border-color: #f0883e; }
+.skill.installed { background: #1a0d2e; border-color: #a371f744; }
+.skill.installed:hover { border-color: #a371f7; }
+.skill-name { font-weight: 600; font-size: 14px; margin-bottom: 3px; }
+.skill-name a { color: inherit; text-decoration: none; }
+.skill-name a:hover { text-decoration: underline; }
+.skill.active .skill-name { color: #3fb950; }
+.skill.optional .skill-name { color: #f0883e; }
+.skill.installed .skill-name { color: #a371f7; }
+.skill-desc { color: #8b949e; line-height: 1.4; }
+.badge { 
+    display: inline-block; font-size: 10px; padding: 1px 6px; 
+    border-radius: 10px; font-weight: 600; margin-left: 6px; vertical-align: middle;
+}
+.badge.active { background: #238636; color: #fff; }
+.badge.optional { background: #f0883e; color: #fff; }
+.badge.installed { background: #a371f7; color: #fff; }
+.stats { 
+    text-align: center; margin-bottom: 25px; 
+    display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;
+}
+.stat { 
+    background: #161b22; padding: 12px 20px; border-radius: 8px;
+    border: 1px solid #21262d;
+}
+.stat-num { font-size: 28px; font-weight: 700; }
+.stat-label { font-size: 12px; color: #8b949e; }
+.stat-num.green { color: #3fb950; }
+.stat-num.orange { color: #f0883e; }
+.stat-num.purple { color: #a371f7; }
+</style>
+</head>
+<body>
+<h1>⚡ Hermes Agent — Скиллы</h1>
+<p class="subtitle">Все доступные скиллы · нажми на название чтобы открыть папку</p>
+
+<div class="legend">
+    <div class="legend-item"><div class="dot active"></div> Встроенные (активны)</div>
+    <div class="legend-item"><div class="dot installed"></div> Установлены вручную</div>
+    <div class="legend-item"><div class="dot optional"></div> Опциональные (не установлены)</div>
+</div>
+
+<div class="stats">
+    <div class="stat"><div class="stat-num green">81</div><div class="stat-label">Встроенных</div></div>
+    <div class="stat"><div class="stat-num purple">1</div><div class="stat-label">Установлено вручную</div></div>
+    <div class="stat"><div class="stat-num orange">76</div><div class="stat-label">Опциональных</div></div>
+</div>
+
+<div class="category">
+<div class="category-header">Apple <span class="category-count">5 встроенных · 0 установлено · 0 доступно</span></div>
+<div class="skills-grid">
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/apple/apple-notes" target="_blank">apple-notes</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Apple Notes</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/apple/apple-reminders" target="_blank">apple-reminders</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Apple Reminders</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/apple/findmy" target="_blank">findmy</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Find My</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/apple/imessage" target="_blank">imessage</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">iMessage</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/apple/macos-computer-use" target="_blank">macos-computer-use</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">macOS — управление</div></div>
+</div></div>
+<div class="category">
+<div class="category-header">Автономные ИИ-агенты <span class="category-count">5 встроенных · 0 установлено · 2 доступно</span></div>
+<div class="skills-grid">
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/autonomous-ai-agents/claude-code" target="_blank">claude-code</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Делегирование кодинга в Claude Code CLI</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/autonomous-ai-agents/codex" target="_blank">codex</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Делегирование кодинга в OpenAI Codex CLI</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/autonomous-ai-agents/hermes-agent" target="_blank">hermes-agent</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Настройка, расширение и вклад в Hermes Agent</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/autonomous-ai-agents/kanban-codex-lane" target="_blank">kanban-codex-lane</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Запуск Codex CLI как изолированной полосы из Kanban</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/autonomous-ai-agents/opencode" target="_blank">opencode</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Делегирование кодинга в OpenCode CLI</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/autonomous-ai-agents/blackbox" target="_blank">blackbox</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Blackbox AI — делегирование кода</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/autonomous-ai-agents/honcho" target="_blank">honcho</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Honcho — сессии и память</div></div>
+</div></div>
+<div class="category">
+<div class="category-header">Блокчейн <span class="category-count">0 встроенных · 0 установлено · 3 доступно</span></div>
+<div class="skills-grid">
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/blockchain/evm" target="_blank">evm</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Evm</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/blockchain/hyperliquid" target="_blank">hyperliquid</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Hyperliquid</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/blockchain/solana" target="_blank">solana</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Solana</div></div>
+</div></div>
+<div class="category">
+<div class="category-header">Коммуникации <span class="category-count">0 встроенных · 0 установлено · 1 доступно</span></div>
+<div class="skills-grid">
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/communication/one-three-one-rule" target="_blank">one-three-one-rule</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">One Three One Rule</div></div>
+</div></div>
+<div class="category">
+<div class="category-header">Творчество <span class="category-count">20 встроенных · 0 установлено · 5 доступно</span></div>
+<div class="skills-grid">
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/creative/architecture-diagram" target="_blank">architecture-diagram</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Тёмные SVG-диаграммы архитектуры в HTML</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/creative/ascii-art" target="_blank">ascii-art</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">ASCII-арт: pyfiglet, cowsay, boxes</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/creative/ascii-video" target="_blank">ascii-video</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">ASCII-видео: видео/аудио → цветной ASCII MP4/GIF</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/creative/baoyu-article-illustrator" target="_blank">baoyu-article-illustrator</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Иллюстрации к статьям: тип × стиль × палитра</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/creative/baoyu-comic" target="_blank">baoyu-comic</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Познавательные комиксы</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/creative/baoyu-infographic" target="_blank">baoyu-infographic</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Инфографика: 21 макет × 21 стиль</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/creative/claude-design" target="_blank">claude-design</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">HTML-артефакты (лендинг, презентация, прототип)</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/creative/comfyui" target="_blank">comfyui</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Генерация изображений, видео и аудио через ComfyUI</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/creative/creative-ideation" target="_blank">creative-ideation</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Генерация идей проектов</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/creative/design-md" target="_blank">design-md</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Спецификации Google DESIGN.md</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/creative/excalidraw" target="_blank">excalidraw</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Рисованные Excalidraw-диаграммы</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/creative/humanizer" target="_blank">humanizer</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Очеловечивание текста</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/creative/manim-video" target="_blank">manim-video</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Анимации Manim (3Blue1Brown)</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/creative/p5js" target="_blank">p5js</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">p5.js скетчи: генеративное искусство, 3D</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/creative/pixel-art" target="_blank">pixel-art</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Пиксель-арт (NES, Game Boy, PICO-8)</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/creative/popular-web-designs" target="_blank">popular-web-designs</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">54 дизайн-системы (Stripe, Linear, Vercel)</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/creative/pretext" target="_blank">pretext</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Креативные браузерные демо с pretext</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/creative/sketch" target="_blank">sketch</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Быстрые HTML-мокапы</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/creative/songwriting-and-ai-music" target="_blank">songwriting-and-ai-music</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Написание песен + Suno AI</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/creative/touchdesigner-mcp" target="_blank">touchdesigner-mcp</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">TouchDesigner через MCP</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/creative/blender-mcp" target="_blank">blender-mcp</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Blender через MCP</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/creative/concept-diagrams" target="_blank">concept-diagrams</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Концептуальные диаграммы</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/creative/hyperframes" target="_blank">hyperframes</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Интерактивные гиперфреймы</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/creative/kanban-video-orchestrator" target="_blank">kanban-video-orchestrator</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Видео-оркестратор через Kanban</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/creative/meme-generation" target="_blank">meme-generation</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Генерация мемов</div></div>
+</div></div>
+<div class="category">
+<div class="category-header">Наука о данных <span class="category-count">1 встроенных · 0 установлено · 0 доступно</span></div>
+<div class="skills-grid">
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/data-science/jupyter-live-kernel" target="_blank">jupyter-live-kernel</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Живое ядро Jupyter</div></div>
+</div></div>
+<div class="category">
+<div class="category-header">DevOps <span class="category-count">3 встроенных · 0 установлено · 4 доступно</span></div>
+<div class="skills-grid">
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/devops/kanban-orchestrator" target="_blank">kanban-orchestrator</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Оркестратор Kanban</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/devops/kanban-worker" target="_blank">kanban-worker</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Воркеры Hermes Kanban</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/devops/webhook-subscriptions" target="_blank">webhook-subscriptions</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Вебхук-подписки</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/devops/cli" target="_blank">cli</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Hermes CLI</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/devops/docker-management" target="_blank">docker-management</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Управление Docker</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/devops/pinggy-tunnel" target="_blank">pinggy-tunnel</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Туннели Pinggy</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/devops/watchers" target="_blank">watchers</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Файловые вотчеры</div></div>
+</div></div>
+<div class="category">
+<div class="category-header">Тестирование (Dogfood) <span class="category-count">1 встроенных · 0 установлено · 1 доступно</span></div>
+<div class="skills-grid">
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/dogfood/SKILL" target="_blank">SKILL</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">QA веб-приложений</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/dogfood/adversarial-ux-test" target="_blank">adversarial-ux-test</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Adversarial Ux Test</div></div>
+</div></div>
+<div class="category">
+<div class="category-header">Электронная почта <span class="category-count">1 встроенных · 0 установлено · 1 доступно</span></div>
+<div class="skills-grid">
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/email/himalaya" target="_blank">himalaya</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">IMAP/SMTP почта из терминала</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/email/agentmail" target="_blank">agentmail</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Почта для ИИ-агентов</div></div>
+</div></div>
+<div class="category">
+<div class="category-header">Финансы <span class="category-count">0 встроенных · 0 установлено · 8 доступно</span></div>
+<div class="skills-grid">
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/finance/3-statement-model" target="_blank">3-statement-model</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Модель 3 отчётов</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/finance/comps-analysis" target="_blank">comps-analysis</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Сравнительный анализ</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/finance/dcf-model" target="_blank">dcf-model</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">DCF модель</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/finance/excel-author" target="_blank">excel-author</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Создание Excel</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/finance/lbo-model" target="_blank">lbo-model</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">LBO модель</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/finance/merger-model" target="_blank">merger-model</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">M&A модель</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/finance/pptx-author" target="_blank">pptx-author</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Создание PowerPoint</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/finance/stocks" target="_blank">stocks</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Акции</div></div>
+</div></div>
+<div class="category">
+<div class="category-header">Игры <span class="category-count">2 встроенных · 0 установлено · 0 доступно</span></div>
+<div class="skills-grid">
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/gaming/minecraft-modpack-server" target="_blank">minecraft-modpack-server</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Сервер модпаков Minecraft</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/gaming/pokemon-player" target="_blank">pokemon-player</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Pokemon через эмулятор</div></div>
+</div></div>
+<div class="category">
+<div class="category-header">GitHub <span class="category-count">6 встроенных · 0 установлено · 0 доступно</span></div>
+<div class="skills-grid">
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/github/codebase-inspection" target="_blank">codebase-inspection</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Анализ кодовой базы</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/github/github-auth" target="_blank">github-auth</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">GitHub авторизация</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/github/github-code-review" target="_blank">github-code-review</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Ревью PR</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/github/github-issues" target="_blank">github-issues</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">GitHub Issues</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/github/github-pr-workflow" target="_blank">github-pr-workflow</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Жизненный цикл PR</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/github/github-repo-management" target="_blank">github-repo-management</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Управление репозиториями</div></div>
+</div></div>
+<div class="category">
+<div class="category-header">Здоровье <span class="category-count">0 встроенных · 0 установлено · 2 доступно</span></div>
+<div class="skills-grid">
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/health/fitness-nutrition" target="_blank">fitness-nutrition</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Фитнес и питание</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/health/neuroskill-bci" target="_blank">neuroskill-bci</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Интерфейс мозг-компьютер</div></div>
+</div></div>
+<div class="category">
+<div class="category-header">MCP (Model Context Protocol) <span class="category-count">1 встроенных · 0 установлено · 2 доступно</span></div>
+<div class="skills-grid">
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/mcp/native-mcp" target="_blank">native-mcp</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">MCP-клиент</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/mcp/fastmcp" target="_blank">fastmcp</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Быстрое создание MCP-серверов</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/mcp/mcporter" target="_blank">mcporter</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Портирование в MCP</div></div>
+</div></div>
+<div class="category">
+<div class="category-header">Медиа <span class="category-count">5 встроенных · 0 установлено · 0 доступно</span></div>
+<div class="skills-grid">
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/media/gif-search" target="_blank">gif-search</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Поиск GIF через Tenor</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/media/heartmula" target="_blank">heartmula</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Генерация песен как Suno</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/media/songsee" target="_blank">songsee</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Аудио-спектрограммы</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/media/spotify" target="_blank">spotify</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Spotify: воспроизведение, поиск, плейлисты</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/media/youtube-content" target="_blank">youtube-content</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">YouTube-транскрипты → саммари</div></div>
+</div></div>
+<div class="category">
+<div class="category-header">Миграция <span class="category-count">0 встроенных · 0 установлено · 1 доступно</span></div>
+<div class="skills-grid">
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/migration/openclaw-migration" target="_blank">openclaw-migration</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Миграция OpenClaw</div></div>
+</div></div>
+<div class="category">
+<div class="category-header">MLOps (ML инфраструктура) <span class="category-count">1 встроенных · 1 установлено · 23 доступно</span></div>
+<div class="skills-grid">
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/mlops/huggingface-hub" target="_blank">huggingface-hub</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">HuggingFace: модели и датасеты</div></div>
+<div class="skill installed"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/data/skills/mlops/chroma" target="_blank">chroma</a> <span class="badge installed">✓ установлен</span></div><div class="skill-desc">ChromaDB — векторная БД</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/mlops/accelerate" target="_blank">accelerate</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Распределённое обучение HF</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/mlops/clip" target="_blank">clip</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">CLIP — мультимодальные эмбеддинги</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/mlops/faiss" target="_blank">faiss</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">FAISS — поиск по векторам</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/mlops/flash-attention" target="_blank">flash-attention</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Flash Attention для трансформеров</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/mlops/guidance" target="_blank">guidance</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Структурированная генерация LLM</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/mlops/huggingface-tokenizers" target="_blank">huggingface-tokenizers</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Быстрая токенизация HF</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/mlops/instructor" target="_blank">instructor</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Структурированный вывод из LLM</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/mlops/lambda-labs" target="_blank">lambda-labs</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Lambda Labs — GPU-облако</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/mlops/llava" target="_blank">llava</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">LLaVA — зрение + текст</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/mlops/modal" target="_blank">modal</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Modal — серверless для ML</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/mlops/nemo-curator" target="_blank">nemo-curator</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">NeMo Curator — курирование данных</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/mlops/peft" target="_blank">peft</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">PEFT — эффективное дообучение</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/mlops/pinecone" target="_blank">pinecone</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Pinecone — векторная БД</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/mlops/pytorch-fsdp" target="_blank">pytorch-fsdp</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">PyTorch FSDP</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/mlops/pytorch-lightning" target="_blank">pytorch-lightning</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">PyTorch Lightning</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/mlops/qdrant" target="_blank">qdrant</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Qdrant — векторная БД</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/mlops/saelens" target="_blank">saelens</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">SAELens — автоэнкодеры</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/mlops/simpo" target="_blank">simpo</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">SimPO — выравнивание</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/mlops/slime" target="_blank">slime</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">SLiME — обучение с минимумом примеров</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/mlops/stable-diffusion" target="_blank">stable-diffusion</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Stable Diffusion — генерация изображений</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/mlops/tensorrt-llm" target="_blank">tensorrt-llm</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">TensorRT-LLM — оптимизация</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/mlops/torchtitan" target="_blank">torchtitan</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">TorchTitan — крупномасштабное обучение</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/mlops/whisper" target="_blank">whisper</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Whisper — распознавание речи</div></div>
+</div></div>
+<div class="category">
+<div class="category-header">Заметки <span class="category-count">1 встроенных · 0 установлено · 0 доступно</span></div>
+<div class="skills-grid">
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/note-taking/obsidian" target="_blank">obsidian</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Obsidian: заметки</div></div>
+</div></div>
+<div class="category">
+<div class="category-header">Продуктивность <span class="category-count">9 встроенных · 0 установлено · 7 доступно</span></div>
+<div class="skills-grid">
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/productivity/airtable" target="_blank">airtable</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Airtable REST API</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/productivity/google-workspace" target="_blank">google-workspace</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Gmail, Calendar, Drive, Docs, Sheets</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/productivity/linear" target="_blank">linear</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Linear: задачи, проекты, команды</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/productivity/maps" target="_blank">maps</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Геокодирование и маршруты</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/productivity/nano-pdf" target="_blank">nano-pdf</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Редактирование PDF</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/productivity/notion" target="_blank">notion</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Notion API: страницы, базы данных</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/productivity/ocr-and-documents" target="_blank">ocr-and-documents</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Извлечение текста из PDF/сканов</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/productivity/powerpoint" target="_blank">powerpoint</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Презентации .pptx</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/productivity/teams-meeting-pipeline" target="_blank">teams-meeting-pipeline</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Саммари встреч Teams</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/productivity/canvas" target="_blank">canvas</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Визуальный интерфейс</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/productivity/here-now" target="_blank">here-now</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Геолокация</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/productivity/memento-flashcards" target="_blank">memento-flashcards</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Карточки для запоминания</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/productivity/shop-app" target="_blank">shop-app</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Управление покупками</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/productivity/shopify" target="_blank">shopify</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Shopify</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/productivity/siyuan" target="_blank">siyuan</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">SiYuan — заметки</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/productivity/telephony" target="_blank">telephony</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Телефония</div></div>
+</div></div>
+<div class="category">
+<div class="category-header">Ред-тиминг <span class="category-count">1 встроенных · 0 установлено · 0 доступно</span></div>
+<div class="skills-grid">
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/red-teaming/godmode" target="_blank">godmode</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Взлом LLM: Parseltongue, GODMODE</div></div>
+</div></div>
+<div class="category">
+<div class="category-header">Исследования <span class="category-count">5 встроенных · 0 установлено · 11 доступно</span></div>
+<div class="skills-grid">
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/research/arxiv" target="_blank">arxiv</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Поиск статей arXiv</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/research/blogwatcher" target="_blank">blogwatcher</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Мониторинг блогов и RSS</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/research/llm-wiki" target="_blank">llm-wiki</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">LLM Wiki Карпати</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/research/polymarket" target="_blank">polymarket</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Polymarket: рынки, цены</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/research/research-paper-writing" target="_blank">research-paper-writing</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Написание научных статей</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/research/bioinformatics" target="_blank">bioinformatics</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Биоинформатика</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/research/darwinian-evolver" target="_blank">darwinian-evolver</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Генетические алгоритмы</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/research/domain-intel" target="_blank">domain-intel</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Разведка доменов</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/research/drug-discovery" target="_blank">drug-discovery</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Открытие лекарств</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/research/duckduckgo-search" target="_blank">duckduckgo-search</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Поиск DuckDuckGo</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/research/gitnexus-explorer" target="_blank">gitnexus-explorer</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Анализ Git-репозиториев</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/research/osint-investigation" target="_blank">osint-investigation</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">OSINT-расследования</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/research/parallel-cli" target="_blank">parallel-cli</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Параллельные команды</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/research/qmd" target="_blank">qmd</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Quarto Markdown</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/research/scrapling" target="_blank">scrapling</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Веб-скрейпинг</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/research/searxng-search" target="_blank">searxng-search</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Поиск SearXNG</div></div>
+</div></div>
+<div class="category">
+<div class="category-header">Безопасность <span class="category-count">0 встроенных · 0 установлено · 3 доступно</span></div>
+<div class="skills-grid">
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/security/1password" target="_blank">1password</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">1Password</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/security/oss-forensics" target="_blank">oss-forensics</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">OSS-форензика</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/security/sherlock" target="_blank">sherlock</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Поиск аккаунтов</div></div>
+</div></div>
+<div class="category">
+<div class="category-header">Умный дом <span class="category-count">1 встроенных · 0 установлено · 0 доступно</span></div>
+<div class="skills-grid">
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/smart-home/openhue" target="_blank">openhue</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Philips Hue: лампы, сцены</div></div>
+</div></div>
+<div class="category">
+<div class="category-header">Социальные сети <span class="category-count">1 встроенных · 0 установлено · 0 доступно</span></div>
+<div class="skills-grid">
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/social-media/xurl" target="_blank">xurl</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">X (Twitter)</div></div>
+</div></div>
+<div class="category">
+<div class="category-header">Разработка ПО <span class="category-count">11 встроенных · 0 установлено · 1 доступно</span></div>
+<div class="skills-grid">
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/software-development/debugging-hermes-tui-commands" target="_blank">debugging-hermes-tui-commands</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Отладка команд TUI</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/software-development/hermes-agent-skill-authoring" target="_blank">hermes-agent-skill-authoring</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Создание SKILL.md</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/software-development/node-inspect-debugger" target="_blank">node-inspect-debugger</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Отладка Node.js</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/software-development/plan" target="_blank">plan</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Режим плана</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/software-development/python-debugpy" target="_blank">python-debugpy</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Отладка Python через debugpy</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/software-development/requesting-code-review" target="_blank">requesting-code-review</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Пре-коммит ревью</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/software-development/spike" target="_blank">spike</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Пробные эксперименты</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/software-development/subagent-driven-development" target="_blank">subagent-driven-development</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Планы через subagent</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/software-development/systematic-debugging" target="_blank">systematic-debugging</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">4-фазная отладка</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/software-development/test-driven-development" target="_blank">test-driven-development</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">TDD: RED-GREEN-REFACTOR</div></div>
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/software-development/writing-plans" target="_blank">writing-plans</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">Планы реализации</div></div>
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/software-development/rest-graphql-debug" target="_blank">rest-graphql-debug</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Отладка REST/GraphQL</div></div>
+</div></div>
+<div class="category">
+<div class="category-header">Веб-разработка <span class="category-count">0 встроенных · 0 установлено · 1 доступно</span></div>
+<div class="skills-grid">
+<div class="skill optional"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/optional-skills/web-development/page-agent" target="_blank">page-agent</a> <span class="badge optional">опциональный</span></div><div class="skill-desc">Автоматизация веб-страниц</div></div>
+</div></div>
+<div class="category">
+<div class="category-header">Yuanbao <span class="category-count">1 встроенных · 0 установлено · 0 доступно</span></div>
+<div class="skills-grid">
+<div class="skill active"><div class="skill-name"><a href="file:///D:/Portable_Soft/hermes-usb-portable-main/src/hermes-agent/skills/yuanbao/SKILL" target="_blank">SKILL</a> <span class="badge active">✓ активен</span></div><div class="skill-desc">QA веб-приложений</div></div>
+</div></div>
+</body></html>

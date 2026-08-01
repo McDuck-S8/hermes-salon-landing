@@ -1,0 +1,797 @@
+domain_definitions:
+  architecture:
+    description: "System architecture patterns, design decisions, module relationships"
+    keywords:
+      - architecture
+      - architectural
+      - system design
+      - module
+      - component
+      - infrastructure
+      - topology
+      - microservice
+      - pattern
+      - abstraction
+      - layer
+      - dependency
+      - integration
+      - pipeline
+      - workflow
+    exclude_keywords:
+      - bug
+      - error
+      - fix
+      - patch
+      - crash
+
+  bugfix:
+    description: "Bug fixes, error resolutions, patches, workarounds"
+    keywords:
+      - bug
+      - fix
+      - patch
+      - error
+      - crash
+      - exception
+      - traceback
+      - issue
+      - resolve
+      - workaround
+      - hotfix
+      - regression
+      - broken
+      - fail
+      - timeout
+      - indent
+      - syntax
+      - import error
+      - attribute error
+      - type error
+    exclude_keywords:
+      - feature
+      - enhancement
+      - new
+
+  learning:
+    description: "Lessons learned, insights, knowledge gained from experience"
+    keywords:
+      - lesson
+      - learned
+      - insight
+      - takeaway
+      - knowledge
+      - wisdom
+      - principle
+      - best practice
+      - anti-pattern
+      - never
+      - always
+      - remember
+      - important
+      - critical
+      - key finding
+      - discovered
+      - realized
+    exclude_keywords:
+      - bug
+      - fix
+      - error
+
+  coding:
+    description: "Code implementation, algorithms, data structures, functions"
+    keywords:
+      - function
+      - class
+      - method
+      - algorithm
+      - data structure
+      - variable
+      - loop
+      - condition
+      - implement
+      - refactor
+      - optimize
+      - performance
+      - syntax
+      - type
+      - return
+      - parameter
+    exclude_keywords:
+      - bug
+      - error
+      - fix
+
+  debugging:
+    description: "Debugging techniques, troubleshooting, investigation"
+    keywords:
+      - debug
+      - troubleshoot
+      - investigate
+      - diagnose
+      - trace
+      - log
+      - log level
+      - breakpoint
+      - step
+      - stack trace
+      - profiling
+      - monitoring
+    exclude_keywords:
+      - fix
+      - patch
+
+  devops:
+    description: "Deployment, infrastructure, CI/CD, server management"
+    keywords:
+      - deploy
+      - deployment
+      - server
+      - docker
+      - container
+      - kubernetes
+      - k8s
+      - nginx
+      - cron
+      - scheduler
+      - service
+      - daemon
+      - process
+      - environment
+      - config
+      - configuration
+      - terraform
+      - ansible
+    exclude_keywords:
+      - bug
+      - error
+
+  browser:
+    description: "Browser automation, web scraping, DOM interaction"
+    keywords:
+      - browser
+      - selenium
+      - playwright
+      - puppeteer
+      - dom
+      - html
+      - css
+      - selector
+      - xpath
+      - screenshot
+      - navigation
+      - click
+      - scroll
+      - form
+      - input
+    exclude_keywords:
+      - error
+      - bug
+
+  communication:
+    description: "Messaging, notifications, API communication, protocols"
+    keywords:
+      - telegram
+      - discord
+      - slack
+      - email
+      - smtp
+      - imap
+      - webhook
+      - api
+      - rest
+      - graphql
+      - websocket
+      - notification
+      - message
+      - bot
+      - command
+    exclude_keywords:
+      - error
+      - bug
+
+  research:
+    description: "Research, analysis, investigation, fact-finding"
+    keywords:
+      - research
+      - analyze
+      - analysis
+      - investigate
+      - survey
+      - compare
+      - evaluate
+      - assessment
+      - review
+      - study
+      - literature
+      - paper
+      - reference
+      - source
+      - evidence
+    exclude_keywords:
+      - error
+      - bug
+
+  file_ops:
+    description: "File operations, reading, writing, managing files"
+    keywords:
+      - file
+      - read
+      - write
+      - open
+      - save
+      - directory
+      - folder
+      - path
+      - copy
+      - move
+      - delete
+      - rename
+      - permission
+      - encoding
+      - format
+      - json
+      - yaml
+      - csv
+    exclude_keywords:
+      - error
+      - bug
+
+  data:
+    description: "Data processing, transformation, analysis"
+    keywords:
+      - data
+      - process
+      - transform
+      - parse
+      - serialize
+      - deserialize
+      - database
+      - sqlite
+      - sql
+      - query
+      - filter
+      - map
+      - reduce
+      - aggregate
+      - statistics
+      - visualization
+    exclude_keywords:
+      - error
+      - bug
+
+  terminal:
+    description: "Terminal, shell, command-line operations"
+    keywords:
+      - terminal
+      - shell
+      - bash
+      - command
+      - pipe
+      - redirect
+      - background
+      - foreground
+      - process
+      - spawn
+      - exec
+      - signal
+      - environment variable
+      - path
+    exclude_keywords:
+      - error
+      - bug
+
+  creative:
+    description: "Creative content, design, visualization"
+    keywords:
+      - creative
+      - design
+      - visualization
+      - diagram
+      - chart
+      - graph
+      - image
+      - video
+      - animation
+      - color
+      - style
+      - layout
+      - presentation
+    exclude_keywords:
+      - error
+      - bug
+
+  social-media:
+    description: "Социальные сети, мессенджеры, публичные коммуникации"
+    keywords:
+      - twitter
+      - x
+      - telegram
+      - discord
+      - social media
+      - social network
+      - messaging
+      - channel
+      - пост
+      - твит
+      - message
+      - dm
+      - follower
+      - subscriber
+      - audience
+      - engagement
+      - platform
+      - тг
+      - tg
+      - youtube comment
+      - community
+      - group
+      - чат
+      - chat
+      - канал
+    exclude_keywords: []
+
+  finance:
+    description: "Финансы, инвестиции, криптовалюты, платежи"
+    keywords:
+      - finance
+      - financial
+      - stock
+      - crypto
+      - bitcoin
+      - ethereum
+      - invest
+      - investment
+      - trading
+      - trade
+      - money
+      - payment
+      - price
+      - market
+      - portfolio
+      - asset
+      - доход
+      - прибыль
+      - budget
+      - budget
+      - cost
+      - fee
+      - revenue
+      - earning
+      - fund
+      - polymarket
+      - prediction market
+    exclude_keywords: []
+
+  health-fitness:
+    description: "Здоровье, фитнес, питание, тренировки"
+    keywords:
+      - health
+      - fitness
+      - gym
+      - workout
+      - exercise
+      - nutrition
+      - diet
+      - тренировка
+      - спорт
+      - здоровье
+      - protein
+      - weight
+      - muscle
+      - calories
+      - meal
+      - food
+      - supplement
+      - running
+      - cardio
+    exclude_keywords: []
+
+  entertainment:
+    description: "Игры, развлечения, хобби, досуг"
+    keywords:
+      - game
+      - gaming
+      - pokemon
+      - pokémon
+      - minecraft
+      - игра
+      - entertainment
+      - play
+      - gameplay
+      - server
+      - mod
+      - modpack
+      - emulator
+      - pyboy
+      - gba
+      - nes
+      - snes
+      - arcade
+      - retro
+      - pixel art
+    exclude_keywords:
+      - bug
+      - error
+
+  smart-home:
+    description: "Умный дом, IoT, автоматизация жилья"
+    keywords:
+      - hue
+      - philips hue
+      - light
+      - smart home
+      - iot
+      - automation
+      - sensor
+      - умный дом
+      - thermostat
+      - switch
+      - scene
+      - voice control
+      - alexa
+      - home assistant
+      - openhue
+    exclude_keywords: []
+
+  business-marketing:
+    description: "Бизнес, маркетинг, SEO, монетизация"
+    keywords:
+      - business
+      - marketing
+      - seo
+      - monetize
+      - monetization
+      - revenue
+      - audience
+      - growth
+      - strategy
+      - бизнес
+      - маркетинг
+      - продажи
+      - customer
+      - клиент
+      - lead
+      - funnel
+      - conversion
+      - campaign
+      - advertising
+      - brand
+      - market research
+    exclude_keywords: []
+
+  music-audio:
+    description: "Музыка, аудио, подкасты, звук"
+    keywords:
+      - music
+      - audio
+      - song
+      - album
+      - spotify
+      - podcast
+      - sound
+      - beat
+      - melody
+      - lyrics
+      - музыка
+      - трек
+      - spectrogram
+      - soundcloud
+      - suno
+      - heartmula
+      - generation
+      - musicgen
+    exclude_keywords: []
+
+  video-content:
+    description: "Видео, YouTube, контент-креация"
+    keywords:
+      - youtube
+      - video
+      - content
+      - upload
+      - stream
+      - streaming
+      - ascii video
+      - ютуб
+      - видео
+      - канал
+      - creator
+      - subscriber
+      - edit
+      - production
+      - tutorial
+      - vlog
+    exclude_keywords: []
+
+  education:
+    description: "Обучение, академические знания, исследования"
+    keywords:
+      - study
+      - learn
+      - course
+      - tutorial
+      - academic
+      - paper
+      - research
+      - arxiv
+      - science
+      - university
+      - обучение
+      - курс
+      - лекция
+      - education
+      - teach
+      - lesson
+      - class
+      - учебник
+      - exam
+      - degree
+      - knowledge base
+      - wiki
+    exclude_keywords:
+      - bug
+      - error
+      - fix
+
+  lifestyle:
+    description: "Образ жизни, привычки, организация, заметки"
+    keywords:
+      - lifestyle
+      - habit
+      - routine
+      - note
+      - journal
+      - diary
+      - reminder
+      - todo
+      - task
+      - список
+      - plan
+      - schedule
+      - calendar
+      - apple
+      - macos
+      - ios
+      - iphone
+      - ipad
+      - reminder
+      - notes app
+      - obsidian
+    exclude_keywords: []
+
+  productivity:
+    description: "Инструменты продуктивности, управление проектами"
+    keywords:
+      - productivity
+      - notion
+      - linear
+      - airtable
+      - todoist
+      - project management
+      - kanban
+      - board
+      - task
+      - workflow
+      - asana
+      - trello
+      - agile
+      - sprint
+      - planning
+      - organization
+      - calendar
+      - gmail
+      - google workspace
+      - drive
+      - docs
+      - sheets
+    exclude_keywords:
+      - bug
+      - error
+      - fix
+
+  advanced-analytics:
+    description: "Статистическая значимость, байесовские A/B-тесты, аналитика данных для принятия решений"
+    keywords:
+      - statistics
+      - statistical significance
+      - bayesian
+      - a/b test
+      - ab test
+      - hypothesis testing
+      - p-value
+      - confidence interval
+      - regression
+      - correlation
+      - anova
+      - monte carlo
+      - attribution
+      - funnel analysis
+      - cohort
+      - retention
+      - метрики
+      - аналитика
+      - конверсия
+    exclude_keywords: []
+
+  behavioral-psychology:
+    description: "Когнитивные искажения, нейромаркетинг, психология принятия решений"
+    keywords:
+      - cognitive bias
+      - confirmation bias
+      - loss aversion
+      - anchoring
+      - framing
+      - social proof
+      - authority
+      - scarcity
+      - reciprocity
+      - commitment
+      - neuromarketing
+      - nudge
+      - behavioral economics
+      - decision making
+      - psychology
+      - persuasion
+      - influence
+      - психология
+      - когнитив
+      - смещение
+      - убеждение
+    exclude_keywords: []
+
+  organic-traffic:
+    description: "SEO, YouTube, Pinterest, AI-статьи. Как получать трафик бесплатно"
+    keywords:
+      - seo
+      - search engine optimization
+      - organic traffic
+      - keyword research
+      - backlink
+      - serp
+      - google
+      - yandex
+      - bing
+      - youtube seo
+      - youtube algorithm
+      - pinterest seo
+      - pinterest marketing
+      - ai content
+      - ai articles
+      - content marketing
+      - blog
+      - organic reach
+      - трафик
+      - поиск
+      - ключевые слова
+      - индексация
+    exclude_keywords: []
+
+  crypto-web3:
+    description: "DeFi, стейкинг, MEV-арбитраж. Как работать с деньгами без банков"
+    keywords:
+      - defi
+      - decentralized finance
+      - staking
+      - yield farming
+      - liquidity pool
+      - mev
+      - arbitrage
+      - flash loan
+      - amm
+      - dex
+      - uniswap
+      - curve
+      - aave
+      - compound
+      - ethereum
+      - polygon
+      - arbitrum
+      - optimism
+      - base
+      - solana
+      - web3
+      - blockchain
+      - smart contract
+      - token
+      - крипта
+      - дефи
+      - стейкинг
+      - арбитраж
+    exclude_keywords: []
+
+  ai-content-factory:
+    description: "Локальные нейросети для генерации фото/видео. Свой продакшен без подписок"
+    keywords:
+      - stable diffusion
+      - sdxl
+      - flux
+      - midjourney
+      - dall-e
+      - comfyui
+      - automatic1111
+      - lora
+      - controlnet
+      - inpaint
+      - outpaint
+      - img2img
+      - txt2img
+      - video generation
+      - svd
+      - animate-diff
+      - runway
+      - pika
+      - kling
+      - luma
+      - gen-3
+      - ai video
+      - ai image
+      - local inference
+      - gguf
+      - quantized
+      - генерация
+      - нейросеть
+      - локально
+    exclude_keywords: []
+
+  b2b-sales:
+    description: "Прямые продажи, холодные письма, работа с возражениями. Как продавать 'руками'"
+    keywords:
+      - b2b sales
+      - cold email
+      - cold call
+      - outbound
+      - lead generation
+      - prospecting
+      - qualification
+      - discovery call
+      - demo
+      - proposal
+      - negotiation
+      - closing
+      - objection handling
+      - crm
+      - pipedrive
+      - hubspot
+      - salesforce
+      - sales funnel
+      - conversion rate
+      - average deal size
+      - sales cycle
+      - продажи
+      - холодные
+      - лид
+      - сделка
+      - возражение
+    exclude_keywords: []
+
+  referral-automation:
+    description: "Реферальный маркетинг. Как зарабатывать на рекомендациях, не создавая свой продукт"
+    keywords:
+      - referral
+      - affiliate
+      - referral program
+      - referral marketing
+      - partner program
+      - recurring commission
+      - lifetime commission
+      - referral link
+      - invite
+      - travelpayouts
+      - admitad
+      - saas affiliate
+      - dropbox referral
+      - notion affiliate
+      - referral automation
+      - referral funnel
+      - viral loop
+      - k-factor
+      - реферал
+      - партнёрка
+      - рекомендация
+      - приглашение
+    exclude_keywords: []
+
+  uncategorized:
+    description: "Entries that don't fit other domains"
+    keywords: []
+    exclude_keywords: []

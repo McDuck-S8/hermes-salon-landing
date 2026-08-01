@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SalonBot — Telegram-бот для салона красоты | Business Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: #12121a;
+  --surface2: #1a1a28;
+  --border: #2a2a3e;
+  --text: #e8e8f0;
+  --text2: #8888a0;
+  --accent: #6c5ce7;
+  --accent2: #a29bfe;
+  --green: #00b894;
+  --orange: #fdcb6e;
+  --red: #e17055;
+  --gradient: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 50%, #00b894 100%);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+/* Hero */
+.hero {
+  padding: 80px 24px 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(ellipse at 30% 50%, rgba(108,92,231,0.08) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 50%, rgba(0,184,148,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero-badge {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 100px;
+  background: rgba(108,92,231,0.15);
+  border: 1px solid rgba(108,92,231,0.3);
+  font-size: 13px;
+  color: var(--accent2);
+  margin-bottom: 24px;
+  letter-spacing: 0.5px;
+}
+.hero h1 {
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero p {
+  font-size: 18px;
+  color: var(--text2);
+  max-width: 600px;
+  margin: 0 auto 32px;
+}
+.hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 32px; border-radius: 12px; font-weight: 600; font-size: 15px;
+  text-decoration: none; cursor: pointer; transition: all 0.2s;
+  border: none;
+}
+.btn-primary {
+  background: var(--gradient);
+  color: #fff;
+  box-shadow: 0 4px 24px rgba(108,92,231,0.3);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 32px rgba(108,92,231,0.4); }
+.btn-secondary {
+  background: var(--surface2);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover { background: var(--border); }
+
+/* Stats Bar */
+.stats-bar {
+  display: flex; justify-content: center; gap: 48px; flex-wrap: wrap;
+  padding: 40px 24px; border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  max-width: 900px; margin: 0 auto;
+}
+.stat { text-align: center; }
+.stat-value { font-size: 28px; font-weight: 800; color: var(--accent2); }
+.stat-label { font-size: 13px; color: var(--text2); margin-top: 4px; }
+
+/* Sections */
+.section {
+  max-width: 1000px; margin: 0 auto; padding: 60px 24px;
+}
+.section-label {
+  display: inline-block;
+  padding: 4px 12px; border-radius: 6px;
+  background: rgba(108,92,231,0.1);
+  font-size: 12px; font-weight: 600; color: var(--accent2);
+  text-transform: uppercase; letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+.section h2 {
+  font-size: 32px; font-weight: 800; margin-bottom: 12px;
+}
+.section > p { color: var(--text2); font-size: 16px; max-width: 600px; margin-bottom: 36px; }
+
+/* Pain/Promise */
+.pain-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.pain-card, .promise-card {
+  padding: 24px; border-radius: 16px;
+  background: var(--surface); border: 1px solid var(--border);
+}
+.pain-card h3, .promise-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px; }
+.pain-card h3 { color: var(--red); }
+.promise-card h3 { color: var(--green); }
+.pain-card ul, .promise-card ul { list-style: none; }
+.pain-card li, .promise-card li {
+  padding: 8px 0; font-size: 14px; color: var(--text2);
+  border-bottom: 1px solid var(--border);
+}
+.pain-card li:last-child, .promise-card li:last-child { border-bottom: none; }
+.pain-card li::before { content: '✕ '; color: var(--red); font-weight: 700; }
+.promise-card li::before { content: '✓ '; color: var(--green); font-weight: 700; }
+
+/* Pricing */
+.pricing-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+.pricing-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 20px; padding: 32px 24px;
+  transition: all 0.2s; position: relative;
+}
+.pricing-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+.pricing-card.featured {
+  border-color: var(--accent);
+  background: linear-gradient(135deg, rgba(108,92,231,0.08) 0%, rgba(0,184,148,0.04) 100%);
+}
+.pricing-card.featured::after {
+  content: 'Рекомендуем'; position: absolute; top: -10px; right: 20px;
+  background: var(--gradient); color: #fff; font-size: 11px; font-weight: 700;
+  padding: 4px 14px; border-radius: 100px;
+}
+.pricing-name { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text2); margin-bottom: 8px; }
+.pricing-price { font-size: 36px; font-weight: 900; margin-bottom: 4px; }
+.pricing-price span { font-size: 14px; font-weight: 400; color: var(--text2); }
+.pricing-desc { color: var(--text2); font-size: 14px; margin-bottom: 24px; }
+.pricing-features { list-style: none; margin-bottom: 24px; }
+.pricing-features li {
+  padding: 8px 0; font-size: 14px; color: var(--text2);
+  border-bottom: 1px solid var(--border);
+}
+.pricing-features li:last-child { border-bottom: none; }
+.pricing-features li::before { content: '✓ '; color: var(--green); font-weight: 700; }
+.pricing-card .btn { width: 100%; justify-content: center; }
+
+/* Finance table */
+.finance-table {
+  width: 100%; border-collapse: collapse; margin-top: 20px;
+}
+.finance-table th, .finance-table td {
+  padding: 12px 16px; text-align: left;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+.finance-table th {
+  color: var(--text2); font-weight: 600; font-size: 12px;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.finance-table tr:hover td { background: var(--surface); }
+.finance-table .totals td { font-weight: 700; color: var(--accent2); border-top: 2px solid var(--accent); }
+
+/* Roadmap */
+.roadmap { position: relative; padding-left: 32px; }
+.roadmap::before {
+  content: ''; position: absolute; left: 11px; top: 8px; bottom: 8px;
+  width: 2px; background: var(--border);
+}
+.roadmap-item {
+  position: relative; padding: 20px 0;
+}
+.roadmap-item::before {
+  content: ''; position: absolute; left: -24px; top: 24px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--surface2); border: 2px solid var(--accent);
+}
+.roadmap-item.done::before { background: var(--green); border-color: var(--green); }
+.roadmap-item.active::before { background: var(--accent); box-shadow: 0 0 12px rgba(108,92,231,0.4); }
+.roadmap-day { font-size: 12px; color: var(--text2); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+.roadmap-title { font-size: 16px; font-weight: 700; margin: 4px 0 8px; }
+.roadmap-desc { font-size: 14px; color: var(--text2); }
+.roadmap-tag {
+  display: inline-block; padding: 2px 8px; border-radius: 4px;
+  font-size: 11px; font-weight: 600;
+  margin-left: 8px;
+}
+.tag-done { background: rgba(0,184,148,0.15); color: var(--green); }
+.tag-active { background: rgba(108,92,231,0.15); color: var(--accent2); }
+.tag-pending { background: rgba(255,255,255,0.05); color: var(--text2); }
+
+/* Market table */
+.market-table { width: 100%; border-collapse: collapse; }
+.market-table th, .market-table td {
+  padding: 12px 16px; text-align: left;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+.market-table th {
+  color: var(--text2); font-weight: 600; font-size: 12px;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.market-table .winner td { color: var(--accent2); font-weight: 600; }
+
+/* Footer */
+.footer {
+  text-align: center; padding: 40px 24px;
+  border-top: 1px solid var(--border); color: var(--text2); font-size: 13px;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .pain-grid { grid-template-columns: 1fr; }
+  .stats-bar { gap: 24px; }
+  .pricing-grid { grid-template-columns: 1fr; }
+}
+
+/* Competitors section */
+.competitor-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.competitor-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 20px; text-align: center;
+}
+.competitor-card.our {
+  border-color: var(--accent);
+  background: linear-gradient(135deg, rgba(108,92,231,0.1) 0%, rgba(0,184,148,0.05) 100%);
+}
+.competitor-name { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.competitor-price { font-size: 13px; color: var(--text2); margin-bottom: 8px; }
+.competitor-pros { font-size: 12px; color: var(--green); }
+.competitor-cons { font-size: 12px; color: var(--red); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">🚀 Hermes Project — 2026</div>
+  <h1>Telegram-бот для салона<br>красоты за 7 дней</h1>
+  <p>Готовый продукт: бронирование, напоминания, админка, статистика. Разработка → Деплой → Поддержка = Регулярный доход.</p>
+  <div class="hero-actions">
+    <a href="#pricing" class="btn btn-primary">💰 Смотреть цены</a>
+    <a href="#roadmap" class="btn btn-secondary">📋 План запуска</a>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat"><div class="stat-value">$1 500+</div><div class="stat-label">Средняя установка</div></div>
+  <div class="stat"><div class="stat-value">$30-50</div><div class="stat-label">Подписка / мес</div></div>
+  <div class="stat"><div class="stat-value">-30%</div><div class="stat-label">Снижение неявок</div></div>
+  <div class="stat"><div class="stat-value">+25%</div><div class="stat-label">Рост записи</div></div>
+  <div class="stat"><div class="stat-value">3/8</div><div class="stat-label">Проектов с кодом</div></div>
+</div>
+
+<div class="section" id="problem">
+  <div class="section-label">Проблема</div>
+  <h2>Что теряет салон без бота?</h2>
+  <p>Малый бизнес в beauty-сфере теряет до 30% клиентов из-за ручной записи.</p>
+  <div class="pain-grid">
+    <div class="pain-card">
+      <h3>Без бота</h3>
+      <ul>
+        <li>30% неявок — клиенты забывают</li>
+        <li>Ручная запись в WhatsApp/Telegram</li>
+        <li>Нет статистики по выручке</li>
+        <li>Клиенты уходят, не могут записаться 24/7</li>
+        <li>Админ тратит ~10ч/нед на запись</li>
+      </ul>
+    </div>
+    <div class="promise-card">
+      <h3>С ботом</h3>
+      <ul>
+        <li>Авто-напоминания за 24ч и 2ч</li>
+        <li>Онлайн-запись 24/7 с календарём</li>
+        <li>Статистика: доход, клиенты, неявки</li>
+        <li>Кабинет мастера со своей статистикой</li>
+        <li>Экономия ~10ч/нед администратора</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="pricing">
+  <div class="section-label">Продукт</div>
+  <h2>Тарифы</h2>
+  <p>Три пакета под любой бюджет. От базового бронирования до полной автоматизации с Mini App.</p>
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <div class="pricing-name">Базовый</div>
+      <div class="pricing-price">$1 500 <span>единоразово</span></div>
+      <div class="pricing-desc">Бот с бронированием для салона до 3 мастеров</div>
+      <ul class="pricing-features">
+        <li>Бронирование: услуги + мастера + дата/время</li>
+        <li>Авто-напоминания за 24ч и 2ч</li>
+        <li>Админ-панель (CRUD услуги/мастера)</li>
+        <li>Кабинет мастера (свои записи, статистика)</li>
+        <li>База данных SQLite</li>
+      </ul>
+      <a href="#roadmap" class="btn btn-secondary">Заказать</a>
+    </div>
+
+    <div class="pricing-card featured">
+      <div class="pricing-name">Продвинутый</div>
+      <div class="pricing-price">$2 500 <span>единоразово</span></div>
+      <div class="pricing-desc">Полная автоматизация с Mini App и лояльностью</div>
+      <ul class="pricing-features">
+        <li>Всё из базового</li>
+        <li>Telegram Mini App — календарь + выбор времени</li>
+        <li>Система лояльности (визиты → скидки)</li>
+        <li>Отзывы и рейтинг мастеров</li>
+        <li>Интеграция с ЮKassa / CloudPayments</li>
+      </ul>
+      <a href="#roadmap" class="btn btn-primary">Выбрать</a>
+    </div>
+
+    <div class="pricing-card">
+      <div class="pricing-name">Абонемент</div>
+      <div class="pricing-price">$30 <span>/мес</span></div>
+      <div class="pricing-desc">Техподдержка, хостинг, обновления</div>
+      <ul class="pricing-features">
+        <li>Техподдержка (режим 24/7)</li>
+        <li>Обновления и новые фичи</li>
+        <li>Хостинг и uptime мониторинг</li>
+        <li>Ежемесячная аналитика</li>
+        <li>Бекап данных</li>
+      </ul>
+      <a href="#roadmap" class="btn btn-secondary">Подписаться</a>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="finance">
+  <div class="section-label">Финансы</div>
+  <h2>Прогноз на 6 месяцев</h2>
+  <p>Консервативный план: 1-2 клиента в месяц с учётом сезонности и времени на разработку.</p>
+  <table class="finance-table">
+    <tr>
+      <th>Месяц</th>
+      <th>Новые установки</th>
+      <th>Абонементы</th>
+      <th>Выручка</th>
+      <th>Накопительно</th>
+    </tr>
+    <tr><td>1</td><td>1</td><td>0</td><td>$1 500</td><td>$1 500</td></tr>
+    <tr><td>2</td><td>1</td><td>1</td><td>$1 540</td><td>$3 040</td></tr>
+    <tr><td>3</td><td>2</td><td>2</td><td>$3 080</td><td>$6 120</td></tr>
+    <tr><td>4</td><td>2</td><td>4</td><td>$3 160</td><td>$9 280</td></tr>
+    <tr><td>5</td><td>3</td><td>6</td><td>$4 740</td><td>$14 020</td></tr>
+    <tr><td>6</td><td>3</td><td>9</td><td>$4 860</td><td>$18 880</td></tr>
+    <tr class="totals"><td colspan="2"><strong>Итого за 6 мес</strong></td><td>12 установок</td><td><strong>$18 880</strong></td><td></td></tr>
+  </table>
+</div>
+
+<div class="section" id="market">
+  <div class="section-label">Рынок</div>
+  <h2>Конкуренты</h2>
+  <p>Рынок beauty-CRM в РФ: дорогие монстры vs простое решение.</p>
+  <div class="competitor-grid">
+    <div class="competitor-card">
+      <div class="competitor-name">YCLIENTS</div>
+      <div class="competitor-price">$50-150/мес</div>
+      <div class="competitor-cons">✕ Сложный интерфейс</div>
+      <div class="competitor-cons">✕ Дорого для малого бизнеса</div>
+      <div class="competitor-cons">✕ Перегружен функционалом</div>
+    </div>
+    <div class="competitor-card">
+      <div class="competitor-name">Prostories</div>
+      <div class="competitor-price">$30/мес</div>
+      <div class="competitor-cons">✕ Только Instagram</div>
+      <div class="competitor-cons">✕ Нет Telegram-бота</div>
+      <div class="competitor-cons">✕ Нет записи 24/7</div>
+    </div>
+    <div class="competitor-card">
+      <div class="competitor-name">Своя разработка</div>
+      <div class="competitor-price">$1 000+</div>
+      <div class="competitor-cons">✕ Долго (2-4 недели)</div>
+      <div class="competitor-cons">✕ Нужно искать разработчика</div>
+      <div class="competitor-cons">✕ Риск получить «сырой» продукт</div>
+    </div>
+    <div class="competitor-card our">
+      <div class="competitor-name" style="color: var(--accent2);">⭐ Hermes SalonBot</div>
+      <div class="competitor-price" style="color: var(--accent2);">$1 500 + $40/мес</div>
+      <div class="competitor-pros">✓ Простота (бот в Telegram)</div>
+      <div class="competitor-pros">✓ Быстро (7 дней до деплоя)</div>
+      <div class="competitor-pros">✓ Под ключ + поддержка</div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="roadmap">
+  <div class="section-label">План действий</div>
+  <h2>Дорожная карта</h2>
+  <p>От аудита до первого платящего клиента — автономный план Hermes.</p>
+  <div class="roadmap">
+    <div class="roadmap-item done">
+      <div class="roadmap-day">Неделя 1 · сделано</div>
+      <div class="roadmap-title">📋 Аудит и подготовка</div>
+      <div class="roadmap-desc">
+        Проверен salon-bot на readiness<span class="roadmap-tag tag-done">✓</span><br>
+        Создана PROJECT_MAP.md<span class="roadmap-tag tag-done">✓</span><br>
+        Создан бизнес-план<span class="roadmap-tag tag-done">✓</span><br>
+        Создана landing page<span class="roadmap-tag tag-done">✓</span><br>
+        Навык earning-with-ai создан<span class="roadmap-tag tag-done">✓</span>
+      </div>
+    </div>
+    <div class="roadmap-item active">
+      <div class="roadmap-day">Сейчас · в работе</div>
+      <div class="roadmap-title">🎯 Лиды и первое КП</div>
+      <div class="roadmap-desc">
+        Собрать базу 20 салонов-лидов<span class="roadmap-tag tag-active">в работе</span><br>
+        Создать шаблон КП<span class="roadmap-tag tag-pending">ожидает</span><br>
+        Разослать коммерческие предложения<span class="roadmap-tag tag-pending">ожидает</span>
+      </div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-day">Неделя 2</div>
+      <div class="roadmap-title">🚀 Первый клиент</div>
+      <div class="roadmap-desc">
+        Развернуть демо-бота на VPS<br>
+        Показать клиенту живую демку<br>
+        Закрыть gaps в коде под его требования
+      </div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-day">Неделя 3-4</div>
+      <div class="roadmap-title">💰 Первые деньги</div>
+      <div class="roadmap-desc">
+        Первый платящий клиент<br>
+        Задокументировать процесс «лид→деньги» в Cube<br>
+        Создать reusable workflow для новых установок
+      </div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-day">Месяц 2+</div>
+      <div class="roadmap-title">📈 Масштабирование</div>
+      <div class="roadmap-desc">
+        Telegram Mini App (выше чек)<br>
+        Multi-salon dashboard<br>
+        Онлайн-оплата (ЮKassa)<br>
+        Партнёрства с бьюти-школами
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="projects">
+  <div class="section-label">Экосистема</div>
+  <h2>Все проекты Hermes</h2>
+  <p>Каждый проект — готовый продукт или компонент. Зелёные = готовы к деплою.</p>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+    <div style="background: var(--surface); border: 1px solid var(--green); border-radius: 12px; padding: 20px;">
+      <div style="font-size: 24px; margin-bottom: 8px;">🛒</div>
+      <div style="font-weight: 700; margin-bottom: 4px;">salon-bot</div>
+      <div style="font-size: 13px; color: var(--green); margin-bottom: 8px;">🟢 Готов к деплою</div>
+      <div style="font-size: 13px; color: var(--text2);">aiogram 3 · SQLite · Mini App · $1 500+</div>
+    </div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px;">
+      <div style="font-size: 24px; margin-bottom: 8px;">🏖️</div>
+      <div style="font-weight: 700; margin-bottom: 4px;">crimea-bots</div>
+      <div style="font-size: 13px; color: var(--orange); margin-bottom: 8px;">🟡 Требует рефакторинга</div>
+      <div style="font-size: 13px; color: var(--text2);">Hotel · Restaurant · Transfer</div>
+    </div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px;">
+      <div style="font-size: 24px; margin-bottom: 8px;">📝</div>
+      <div style="font-weight: 700; margin-bottom: 4px;">content-monetization</div>
+      <div style="font-size: 13px; color: var(--red); margin-bottom: 8px;">🔴 Пусто</div>
+      <div style="font-size: 13px; color: var(--text2);">Pipeline генерации контента</div>
+    </div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px;">
+      <div style="font-size: 24px; margin-bottom: 8px;">🌐</div>
+      <div style="font-weight: 700; margin-bottom: 4px;">auto-microsites</div>
+      <div style="font-size: 13px; color: var(--red); margin-bottom: 8px;">🔴 Пусто</div>
+      <div style="font-size: 13px; color: var(--text2);">Генератор лендингов</div>
+    </div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px;">
+      <div style="font-size: 24px; margin-bottom: 8px;">🧠</div>
+      <div style="font-weight: 700; margin-bottom: 4px;">ai-education-bot</div>
+      <div style="font-size: 13px; color: var(--orange); margin-bottom: 8px;">🟡 Есть файлы</div>
+      <div style="font-size: 13px; color: var(--text2);">demo_bot.py</div>
+    </div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px;">
+      <div style="font-size: 24px; margin-bottom: 8px;">⚡</div>
+      <div style="font-weight: 700; margin-bottom: 4px;">agentmemory</div>
+      <div style="font-size: 13px; color: var(--green); margin-bottom: 8px;">🟢 Работает</div>
+      <div style="font-size: 13px; color: var(--text2);">TypeScript · MCP сервер</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">Метрики</div>
+  <h2>Здоровье проекта</h2>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px;">
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; text-align: center;">
+      <div style="font-size: 28px; font-weight: 800; color: var(--accent2);">3/8</div>
+      <div style="font-size: 13px; color: var(--text2);">Проектов с running кодом</div>
+      <div style="font-size: 12px; color: var(--text2); margin-top: 4px;">Цель: 6/8</div>
+    </div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; text-align: center;">
+      <div style="font-size: 28px; font-weight: 800; color: var(--red);">0/8</div>
+      <div style="font-size: 13px; color: var(--text2);">Приносят деньги</div>
+      <div style="font-size: 12px; color: var(--text2); margin-top: 4px;">Цель: 3/8</div>
+    </div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; text-align: center;">
+      <div style="font-size: 28px; font-weight: 800; color: var(--green);">✅</div>
+      <div style="font-size: 13px; color: var(--text2);">Business Plan</div>
+      <div style="font-size: 12px; color: var(--green); margin-top: 4px;">Готов</div>
+    </div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; text-align: center;">
+      <div style="font-size: 28px; font-weight: 800; color: var(--green);">✅</div>
+      <div style="font-size: 13px; color: var(--text2);">Landing Page</div>
+      <div style="font-size: 12px; color: var(--green); margin-top: 4px;">Готова</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <p>Hermes Agent · 2026 · Автономная система</p>
+  <p style="margin-top: 4px;">Приоритет: Заработок > Проекты > Технологии</p>
+</div>
+
+</body>
+</html>

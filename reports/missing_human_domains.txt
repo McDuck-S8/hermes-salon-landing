@@ -1,0 +1,134 @@
+========================================================================
+  CUBE DOMAINS vs TAG DOMAINS — Gap Analysis
+========================================================================
+
+Existing axis_domain values: 96
+Tag domain:XXX values: 12
+
+--- Domains in TAGS (domain:XXX) but MISSING from axis_domain ---
+  domain:ai-agents                       3 entries tagged, but NO axis_domain entry
+  domain:lavra-plan                      3 entries tagged, but NO axis_domain entry
+  domain:productivity                    3 entries tagged, but NO axis_domain entry
+  domain:development                     3 entries tagged, but NO axis_domain entry
+  domain:self-improvement                2 entries tagged, but NO axis_domain entry
+
+Total missing tag→domain mappings: 5
+
+--- HUMAN-CENTRIC CATEGORIES (from tags) ---
+  category:auto-generated                     2
+  category:apple                              1
+  category:file_ops                           1
+
+========================================================================
+  HUMAN-CENTRIC DOMAINS WITH ZERO CUBE REPRESENTATION
+========================================================================
+
+  [finance]
+    axis_domain: NOT FOUND (0 entries)
+    tag mentions: 46
+    skills with this domain: 3
+    GAP: HUMAN DOMAIN EXISTS IN SKILLS/TAGS BUT CUBE NEVER CLASSIFIES → finance
+
+  [social-media]
+    axis_domain: NOT FOUND (0 entries)
+    tag mentions: 1393
+    skills with this domain: 2
+    GAP: HUMAN DOMAIN EXISTS IN SKILLS/TAGS BUT CUBE NEVER CLASSIFIES → social-media
+
+  [health-fitness]
+    axis_domain: NOT FOUND (0 entries)
+    tag mentions: 22
+    skills with this domain: 0
+    GAP: HUMAN DOMAIN EXISTS IN SKILLS/TAGS BUT CUBE NEVER CLASSIFIES → health-fitness
+
+  [entertainment]
+    axis_domain: NOT FOUND (0 entries)
+    tag mentions: 69
+    skills with this domain: 0
+    GAP: HUMAN DOMAIN EXISTS IN SKILLS/TAGS BUT CUBE NEVER CLASSIFIES → entertainment
+
+  [smart-home]
+    axis_domain: NOT FOUND (0 entries)
+    tag mentions: 8
+    skills with this domain: 1
+    GAP: HUMAN DOMAIN EXISTS IN SKILLS/TAGS BUT CUBE NEVER CLASSIFIES → smart-home
+
+  [business]
+    axis_domain: NOT FOUND (0 entries)
+    tag mentions: 5
+    skills with this domain: 1
+    GAP: HUMAN DOMAIN EXISTS IN SKILLS/TAGS BUT CUBE NEVER CLASSIFIES → business
+
+  [design-creative]
+    axis_domain: NOT FOUND (0 entries)
+    tag mentions: 289
+    skills with this domain: 0
+    GAP: HUMAN DOMAIN EXISTS IN SKILLS/TAGS BUT CUBE NEVER CLASSIFIES → design-creative
+
+  [productivity]
+    axis_domain: NOT FOUND (0 entries)
+    tag mentions: 43
+    skills with this domain: 5
+    GAP: HUMAN DOMAIN EXISTS IN SKILLS/TAGS BUT CUBE NEVER CLASSIFIES → productivity
+
+  [education]
+    axis_domain: NOT FOUND (0 entries)
+    tag mentions: 223
+    skills with this domain: 0
+    GAP: HUMAN DOMAIN EXISTS IN SKILLS/TAGS BUT CUBE NEVER CLASSIFIES → education
+
+  [lifestyle]
+    axis_domain: NOT FOUND (0 entries)
+    tag mentions: 53
+    skills with this domain: 0
+    GAP: HUMAN DOMAIN EXISTS IN SKILLS/TAGS BUT CUBE NEVER CLASSIFIES → lifestyle
+
+  [music-audio]
+    axis_domain: NOT FOUND (0 entries)
+    tag mentions: 51
+    skills with this domain: 0
+    GAP: HUMAN DOMAIN EXISTS IN SKILLS/TAGS BUT CUBE NEVER CLASSIFIES → music-audio
+
+  [video-content]
+    axis_domain: NOT FOUND (0 entries)
+    tag mentions: 40
+    skills with this domain: 0
+    GAP: HUMAN DOMAIN EXISTS IN SKILLS/TAGS BUT CUBE NEVER CLASSIFIES → video-content
+
+========================================================================
+  SKILLS WITH NO CUBE DOMAIN COUNTERPART
+========================================================================
+
+Skills with missing cube domain: 0
+
+========================================================================
+  SUMMARY — MISSING HUMAN DOMAINS
+========================================================================
+
+  ✗ finance                   — Stocks, crypto, investing, payments
+
+  ✗ social-media              — Twitter/X, Telegram, social networks
+
+  ✗ health-fitness            — Gym, nutrition, wellness, workouts
+
+  ✗ entertainment             — Gaming, Pokemon, Minecraft, music
+
+  ✗ smart-home-iot            — Philips Hue, home automation
+
+  ✗ business-marketing        — SEO, marketing, monetization, audience
+
+  ✗ music-audio               — Music creation, Spotify, audio analysis
+
+  ✗ video-content             — YouTube, video, content creation
+
+  ✗ education                 — Academic research, papers, learning
+
+  ✗ lifestyle                 — Notes, journaling, personal preferences
+
+  ✗ productivity-personal     — Notion, Linear, Airtable, planning
+
+────────────────────────────────────────────────────────────
+ИТОГО: 11 человеко-доменов полностью отсутствуют в Cube
+При этом: навыки и теги для них СУЩЕСТВУЮТ (см. skill_index, tags)
+Проблема: event_evolution / auto_tagger НЕ КЛАССИФИЦИРУЮТ записи по этим доменам
+────────────────────────────────────────────────────────────

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hermes Dashboard</title>
+  <style>
+    :root {
+      --bg: #0d0d0d; --bg-card: #161616; --bg-hover: #1e1e1e;
+      --fg: #e8e8e8; --muted: #888; --accent: #00d4aa; --accent-dim: #00d4aa33;
+      --warn: #ffb800; --err: #ff4d4f; --ok: #00d4aa; --info: #1890ff;
+      --border: #2a2a2a; --radius: 8px; --mono: 'JetBrains Mono', 'Fira Code', monospace;
+    }
+    @media (prefers-color-scheme: light) {
+      :root { --bg: #f5f5f5; --bg-card: #fff; --bg-hover: #f0f0f0; --fg: #1a1a1a; --muted: #666; --border: #e0e0e0; }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--fg); line-height: 1.5; min-height: 100vh; }
+    .mono { font-family: var(--mono); font-size: 0.85em; }
+    header { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--border); padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    header h1 { font-size: 1.25rem; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+    header h1::before { content: "⚡"; font-size: 1.4rem; }
+    .status-bar { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; font-size: 0.85rem; }
+    .badge { padding: 3px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; font-family: var(--mono); }
+    .badge-ok { background: var(--accent-dim); color: var(--ok); }
+    .badge-warn { background: #ffb80033; color: var(--warn); }
+    .badge-err { background: #ff4d4f33; color: var(--err); }
+    .badge-info { background: #1890ff33; color: var(--info); }
+    .refresh-btn { background: var(--bg-card); border: 1px solid var(--border); color: var(--fg); padding: 6px 14px; border-radius: var(--radius); cursor: pointer; font-size: 0.8rem; display: flex; align-items: center; gap: 6px; }
+    .refresh-btn:hover { background: var(--bg-hover); }
+    .refresh-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    main { padding: 24px; max-width: 1600px; margin: 0 auto; }
+    .grid { display: grid; gap: 16px; }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-4 { grid-template-columns: repeat(4, 1fr); }
+    @media (max-width: 1200px) { .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 800px) { .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; } }
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; transition: border-color 0.2s, box-shadow 0.2s; }
+    .card:hover { border-color: var(--accent-dim); box-shadow: 0 0 0 1px var(--accent-dim); }
+    .card h2 { font-size: 0.95rem; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    .card h2::before { content: attr(data-icon); font-size: 1.1rem; }
+    .stat-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); }
+    .stat-row:last-child { border-bottom: none; }
+    .stat-label { color: var(--muted); font-size: 0.9rem; }
+    .stat-value { font-weight: 600; font-family: var(--mono); }
+    .kanban-board { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; min-height: 400px; }
+    .kanban-col { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px; display: flex; flex-direction: column; min-height: 300px; }
+    .kanban-col h3 { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .kanban-col .count { background: var(--accent-dim); color: var(--accent); padding: 1px 8px; border-radius: 999px; font-size: 0.7rem; font-family: var(--mono); }
+    .kanban-col.ready { border-color: var(--info); }
+    .kanban-col.running { border-color: var(--ok); }
+    .kanban-col.blocked { border-color: var(--err); }
+    .kanban-col.done { border-color: var(--muted); }
+    .task-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px; margin-bottom: 8px; font-size: 0.8rem; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s; position: relative; }
+    .task-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); border-color: var(--accent); z-index: 10; }
+    .task-card.blocked { border-left: 3px solid var(--err); }
+    .task-card.running { border-left: 3px solid var(--ok); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 var(--accent-dim); } 50% { box-shadow: 0 0 0 4px transparent; } }
+    .task-id { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); margin-bottom: 4px; }
+    .task-title { font-weight: 500; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .task-assignee { font-size: 0.7rem; color: var(--muted); display: flex; align-items: center; gap: 4px; }
+    .task-assignee::before { content: "👤"; font-size: 0.7rem; }
+    .task-age { font-size: 0.65rem; color: var(--warn); margin-top: 4px; font-family: var(--mono); }
+    .cron-list { max-height: 400px; overflow-y: auto; }
+    .cron-item { display: flex; gap: 12px; padding: 10px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 8px; font-size: 0.75rem; flex-wrap: wrap; align-items: flex-start; }
+    .cron-item.error { border-color: var(--err); background: #ff4d4f15; }
+    .cron-item.ok { border-color: var(--ok); background: #00d4aa15; }
+    .cron-item.warning { border-color: var(--warn); background: #ffb80015; }
+    .cron-name { font-weight: 600; flex: 1; min-width: 180px; }
+    .cron-schedule { color: var(--muted); font-family: var(--mono); min-width: 120px; }
+    .cron-next { color: var(--info); font-family: var(--mono); min-width: 150px; }
+    .cron-last { font-family: var(--mono); min-width: 160px; }
+    .cron-last.ok { color: var(--ok); }
+    .cron-last.err { color: var(--err); }
+    .cron-last.warn { color: var(--warn); }
+    .cron-script { font-family: var(--mono); color: var(--muted); font-size: 0.7rem; width: 100%; margin-top: 4px; padding-top: 4px; border-top: 1px dashed var(--border); }
+    .profile-card { display: flex; justify-content: space-between; align-items: center; padding: 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; }
+    .profile-name { font-weight: 600; font-family: var(--mono); }
+    .profile-model { color: var(--muted); font-size: 0.8rem; }
+    .profile-status { display: flex; align-items: center; gap: 8px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
+    .dot.active { background: var(--ok); box-shadow: 0 0 8px var(--ok); }
+    .dot.stopped { background: var(--err); }
+    .progress-bar { height: 6px; background: var(--bg); border-radius: 3px; overflow: hidden; margin-top: 8px; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--info)); border-radius: 3px; transition: width 0.3s ease; }
+    .empty-state { text-align: center; color: var(--muted); padding: 40px 20px; font-size: 0.9rem; }
+    .empty-state::before { content: attr(data-icon); display: block; font-size: 2rem; margin-bottom: 8px; opacity: 0.3; }
+    .footer-note { text-align: center; color: var(--muted); font-size: 0.75rem; padding: 20px; }
+    .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; visibility: hidden; transition: 0.2s; }
+    .modal.open { opacity: 1; visibility: visible; }
+    .modal-content { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; transform: scale(0.95); transition: transform 0.2s; }
+    .modal.open .modal-content { transform: scale(1); }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .modal-close { background: none; border: none; color: var(--muted); font-size: 1.5rem; cursor: pointer; line-height: 1; }
+    .modal-close:hover { color: var(--fg); }
+    .task-detail { font-size: 0.9rem; line-height: 1.7; }
+    .task-detail .field { margin-bottom: 12px; }
+    .task-detail .label { color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+    .task-detail .value { font-family: var(--mono); word-break: break-word; }
+    .task-detail pre { background: var(--bg); padding: 12px; border-radius: 6px; overflow-x: auto; font-size: 0.8rem; max-height: 300px; }
+    .timestamp { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); }
+    .health-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+    .health-item { text-align: center; padding: 16px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); }
+    .health-value { font-size: 2rem; font-weight: 700; font-family: var(--mono); line-height: 1; }
+    .health-label { font-size: 0.75rem; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .health-item.ok .health-value { color: var(--ok); }
+    .health-item.warn .health-value { color: var(--warn); }
+    .health-item.err .health-value { color: var(--err); }
+    .health-item.info .health-value { color: var(--info); }
+    .log-entry { font-family: var(--mono); font-size: 0.7rem; padding: 4px 8px; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; margin-bottom: 4px; white-space: pre-wrap; word-break: break-word; }
+    .log-entry.error { border-color: var(--err); color: var(--err); }
+    .log-entry.warn { border-color: var(--warn); color: var(--warn); }
+    .log-entry.ok { border-color: var(--ok); color: var(--ok); }
+    .tabs { display: flex; gap: 4px; margin-bottom: 16px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+    .tab { padding: 6px 14px; background: none; border: none; color: var(--muted); font-size: 0.85rem; cursor: pointer; border-radius: 4px 4px 0 0; position: relative; }
+    .tab.active { color: var(--accent); font-weight: 600; }
+    .tab.active::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 2px; background: var(--accent); }
+    .tab:hover { color: var(--fg); background: var(--bg-hover); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; animation: fadeIn 0.2s; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Hermes Dashboard</h1>
+    <div class="status-bar">
+      <span class="badge badge-ok" id="badge-kanban">Kanban: —</span>
+      <span class="badge badge-info" id="badge-cron">Cron: —</span>
+      <span class="badge badge-warn" id="badge-errors">Errors: —</span>
+      <span class="badge badge-info" id="badge-profiles">Profiles: —</span>
+      <span class="timestamp" id="last-updated">Never</span>
+      <button class="refresh-btn" id="refresh-btn" onclick="loadAll()">
+        <span class="spinner" id="spinner" style="display:none"></span>
+        Refresh
+      </button>
+    </div>
+  </header>
+  <main>
+    <div class="grid grid-4">
+      <div class="card health-item ok"><div class="health-value" id="stat-ready">0</div><div class="health-label">Ready</div></div>
+      <div class="card health-item info"><div class="health-value" id="stat-running">0</div><div class="health-label">Running</div></div>
+      <div class="card health-item err"><div class="health-value" id="stat-blocked">0</div><div class="health-label">Blocked</div></div>
+      <div class="card health-item"><div class="health-value" id="stat-total">0</div><div class="health-label">Total Tasks</div></div>
+    </div>
+
+    <div class="grid grid-2" style="margin-top: 16px;">
+      <div class="card">
+        <h2 data-icon="📋">Kanban Board</h2>
+        <div class="kanban-board" id="kanban-board">
+          <div class="kanban-col ready" data-status="ready"><h3>Ready <span class="count" id="count-ready">0</span></h3><div class="task-list" id="list-ready"></div></div>
+          <div class="kanban-col running" data-status="running"><h3>Running <span class="count" id="count-running">0</span></h3><div class="task-list" id="list-running"></div></div>
+          <div class="kanban-col blocked" data-status="blocked"><h3>Blocked <span class="count" id="count-blocked">0</span></h3><div class="task-list" id="list-blocked"></div></div>
+          <div class="kanban-col done" data-status="done"><h3>Done <span class="count" id="count-done">0</span></h3><div class="task-list" id="list-done"></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <h2 data-icon="⏰">Cron Jobs (<span id="cron-total">0</span>)</h2>
+        <div class="cron-list" id="cron-list"></div>
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-top: 16px;">
+      <div class="card">
+        <h2 data-icon="👤">Profiles (<span id="profile-count">0</span>)</h2>
+        <div id="profiles-list"></div>
+      </div>
+      <div class="card">
+        <h2 data-icon="💾">System Health</h2>
+        <div class="health-grid" id="health-grid">
+          <div class="health-item ok"><div class="health-value" id="health-uptime">—</div><div class="health-label">Uptime</div></div>
+          <div class="health-item info"><div class="health-value" id="health-memory">—</div><div class="health-label">Memory</div></div>
+          <div class="health-item"><div class="health-value" id="health-disk">—</div><div class="health-label">Disk Free</div></div>
+          <div class="health-item"><div class="health-value" id="health-cpu">—</div><div class="health-label">CPU %</div></div>
+        </div>
+        <div style="margin-top: 16px;">
+          <h3 style="font-size: 0.8rem; color: var(--muted); margin-bottom: 8px; text-transform: uppercase;">Recent Logs</h3>
+          <div id="recent-logs" style="max-height: 200px; overflow-y: auto;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-note">Data refreshed: <span id="refresh-time">—</span> | <button class="refresh-btn" onclick="copyDataPath()" style="padding: 4px 12px; font-size: 0.75rem;">Copy Data Path</button></div>
+  </main>
+
+  <div class="modal" id="task-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modal-title">Task Details</h3>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="task-detail" id="modal-body"></div>
+    </div>
+  </div>
+
+  <script>
+    let allTasks = [], allCrons = [], allProfiles = [];
+    const REFRESH_MS = 30000;
+    let refreshTimer = setInterval(loadAll, REFRESH_MS);
+
+    async function loadAll() {
+      try {
+        const [tasksRes, cronsRes, profilesRes] = await Promise.all([
+          fetch('tasks.json', { cache: 'no-store' }),
+          fetch('crons.json', { cache: 'no-store' }),
+          fetch('profiles.json', { cache: 'no-store' })
+        ]);
+        allTasks = tasksRes.ok ? await tasksRes.json() : [];
+        allCrons = cronsRes.ok ? await cronsRes.json() : [];
+        allProfiles = profilesRes.ok ? await profilesRes.json() : [];
+        renderAll();
+        document.getElementById('refresh-time').textContent = new Date().toLocaleString();
+        document.getElementById('last-updated').textContent = new Date().toLocaleString();
+      } catch (e) {
+        console.error('Load error:', e);
+      }
+    }
+
+    function renderAll() {
+      renderKanban();
+      renderCrons();
+      renderProfiles();
+      renderStats();
+      renderHealth();
+    }
+
+    function renderStats() {
+      const byStatus = {};
+      allTasks.forEach(t => { byStatus[t.status] = (byStatus[t.status] || 0) + 1; });
+      document.getElementById('stat-ready').textContent = byStatus.ready || 0;
+      document.getElementById('stat-running').textContent = byStatus.running || 0;
+      document.getElementById('stat-blocked').textContent = byStatus.blocked || 0;
+      document.getElementById('stat-total').textContent = allTasks.length;
+      document.getElementById('badge-kanban').textContent = `Kanban: ${allTasks.length}`;
+      document.getElementById('badge-cron').textContent = `Cron: ${allCrons.length}`;
+      const errors = allCrons.filter(c => c.last_status === 'error').length;
+      document.getElementById('badge-errors').textContent = `Errors: ${errors}`;
+      document.getElementById('badge-profiles').textContent = `Profiles: ${allProfiles.length}`;
+      document.getElementById('cron-total').textContent = allCrons.length;
+      document.getElementById('profile-count').textContent = allProfiles.length;
+    }
+
+    function renderKanban() {
+      const byStatus = { ready: [], running: [], blocked: [], done: [], todo: [], triage: [], scheduled: [] };
+      allTasks.forEach(t => { if (byStatus[t.status]) byStatus[t.status].push(t); });
+      ['ready', 'running', 'blocked', 'done'].forEach(status => {
+        const list = document.getElementById('list-' + status);
+        const countEl = document.getElementById('count-' + status);
+        const tasks = byStatus[status] || [];
+        countEl.textContent = tasks.length;
+        list.innerHTML = tasks.map(createTaskCard).join('');
+      });
+    }
+
+    function createTaskCard(t) {
+      const age = formatAge(t.created_at);
+      const cls = t.status === 'running' ? 'running' : t.status === 'blocked' ? 'blocked' : '';
+      return `<div class="task-card ${cls}" onclick="openTaskModal('${t.id}')">
+        <div class="task-id">${t.id}</div>
+        <div class="task-title" title="${escapeHtml(t.title)}">${escapeHtml(t.title)}</div>
+        <div class="task-assignee">${escapeHtml(t.assignee)}</div>
+        <div class="task-age">${age}</div>
+      </div>`;
+    }
+
+    function openTaskModal(id) {
+      const task = allTasks.find(t => t.id === id);
+      if (!task) return;
+      document.getElementById('modal-title').textContent = task.title;
+      document.getElementById('modal-body').innerHTML = `
+        <div class="field"><div class="label">ID</div><div class="value">${escapeHtml(task.id)}</div></div>
+        <div class="field"><div class="label">Status</div><div class="value"><span class="badge badge-${task.status === 'blocked' ? 'err' : task.status === 'running' ? 'ok' : 'info'}">${task.status}</span></div></div>
+        <div class="field"><div class="label">Assignee</div><div class="value">${escapeHtml(task.assignee)}</div></div>
+        <div class="field"><div class="label">Created</div><div class="value timestamp">${formatDate(task.created_at)}</div></div>
+        <div class="field"><div class="label">Updated</div><div class="value timestamp">${formatDate(task.updated_at)}</div></div>
+        <div class="field"><div class="label">Description</div><div class="value"><pre>${escapeHtml(task.title)}</pre></div></div>
+      `;
+      document.getElementById('task-modal').classList.add('open');
+    }
+
+    function closeModal() {
+      document.getElementById('task-modal').classList.remove('open');
+    }
+
+    function renderCrons() {
+      const list = document.getElementById('cron-list');
+      list.innerHTML = allCrons.map(c => {
+        const statusClass = c.last_status === 'error' ? 'error' : c.last_status === 'ok' ? 'ok' : c.last_status === 'warning' ? 'warning' : '';
+        const lastClass = c.last_status === 'error' ? 'err' : c.last_status === 'ok' ? 'ok' : c.last_status === 'warning' ? 'warn' : '';
+        const lastText = c.last_run ? `${c.last_status || '—'} @ ${formatDate(c.last_run)}` : 'Never';
+        return `<div class="cron-item ${statusClass}">
+          <div class="cron-name">${escapeHtml(c.name)}</div>
+          <div class="cron-schedule">${escapeHtml(c.schedule)}</div>
+          <div class="cron-next">Next: ${escapeHtml(c.next_run || '—')}</div>
+          <div class="cron-last ${lastClass}">${escapeHtml(lastText)}</div>
+          <div class="cron-script">${escapeHtml(c.script || '')}</div>
+        </div>`;
+      }).join('');
+    }
+
+    function renderProfiles() {
+      const list = document.getElementById('profiles-list');
+      list.innerHTML = allProfiles.map(p => `
+        <div class="profile-card">
+          <div>
+            <div class="profile-name">${escapeHtml(p.name)}</div>
+            <div class="profile-model">${escapeHtml(p.model || '—')}</div>
+          </div>
+          <div class="profile-status">
+            <span class="dot ${p.gateway === 'stopped' ? 'stopped' : 'active'}"></span>
+            <span>${escapeHtml(p.gateway || '—')}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderHealth() {
+      document.getElementById('health-uptime').textContent = '—';
+      document.getElementById('health-memory').textContent = '—';
+      document.getElementById('health-disk').textContent = '—';
+      document.getElementById('health-cpu').textContent = '—';
+      document.getElementById('recent-logs').innerHTML = `
+        <div class="log-entry ok">Dashboard loaded successfully</div>
+        <div class="log-entry ok">Tasks: ${allTasks.length} | Crons: ${allCrons.length} | Profiles: ${allProfiles.length}</div>
+      `;
+    }
+
+    function formatDate(iso) {
+      if (!iso) return '—';
+      try { return new Date(iso).toLocaleString(); } catch { return iso; }
+    }
+
+    function formatAge(iso) {
+      if (!iso) return '—';
+      try {
+        const diff = Date.now() - new Date(iso).getTime();
+        const days = Math.floor(diff / 86400000);
+        const hours = Math.floor((diff % 86400000) / 3600000);
+        const mins = Math.floor((diff % 3600000) / 60000);
+        if (days > 0) return `${days}d ${hours}h ago`;
+        if (hours > 0) return `${hours}h ${mins}m ago`;
+        return `${mins}m ago`;
+      } catch { return '—'; }
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      return String(text).replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>').replace(/"/g, '"').replace(/'/g, ''');
+    }
+
+    function copyDataPath() {
+      const path = window.location.href.replace('dashboard.html', '');
+      navigator.clipboard.writeText(path).then(() => {
+        const btn = document.querySelector('.footer-note .refresh-btn');
+        const orig = btn.textContent;
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = orig, 2000);
+      });
+    }
+
+    document.getElementById('task-modal').addEventListener('click', e => {
+      if (e.target === document.getElementById('task-modal')) closeModal();
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    loadAll();
+  </script>
+</body>
+</html>

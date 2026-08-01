@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLAM Beauty Salon — Салон красоты премиум-класса | Запись онлайн</title>
+    <meta name="description" content="Премиум салон красоты GLAM: стрижки, окрашивание, маникюр, ламинирование ресниц, макияж. Авторские техники, премиум бренды (Wella, Olaplex, Kerastase), гарантия результата 14 дней. Запишитесь онлайн и получите -20% на первый визит.">
+    
+    <!-- Meta Pixel -->
+    <script>
+        !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', 'YOUR_PIXEL_ID'); fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></noscript>
+    
+    <!-- TikTok Pixel -->
+    <script>
+        !function (w, d, t) { w.TiktokAnalyticsObject=t; var ttq=w[t]=w[t]||[]; ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"]; ttq.setAndDefer=function(t,e){ttq[t]=ttq[t]||function(){(ttq.queue=ttq.queue||[]).push([t,e])}}; ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<e.length;n++)ttq.setAndDefer(e[n][0],e[n][1])}; ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js"; ttq._i=ttq._i||{}; ttq._i[e]=[]; ttq._i[e]._u=i; var o=d.createElement("script"); o.async=!0; o.src=i; var s=d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(o,s); ttq.instance(e); ttq.load(e,n); ttq._i[e]._loaded=!0}; var ttq=w[t]=w[t]||[]; ttq.load("YOUR_TT_PIXEL_ID"); ttq.page();}(window, document, 'ttq');
+    </script>
+    
+    <!-- GA4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date()); gtag('config', 'G-XXXXXXXXXX');
+    </script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #2d2d2d; line-height: 1.6; background-color: #faf8f5; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .header { background: linear-gradient(135deg, #2c1810, #4a2c24); color: #fff; padding: 20px 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 15px rgba(0,0,0,0.1); }
+        .header .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo { font-size: 28px; font-weight: 700; letter-spacing: 2px; }
+        .logo span { color: #e8c9b5; }
+        .nav a { color: #fff; text-decoration: none; margin-left: 30px; font-weight: 500; transition: color 0.3s; font-size: 16px; }
+        .nav a:hover { color: #e8c9b5; }
+        .hero { background: linear-gradient(135deg, #f5e6dc, #e8d5c4); padding: 100px 0 80px; text-align: center; position: relative; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; top: -50%; right: -20%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(232,201,181,0.3) 0%, transparent 70%); border-radius: 50%; }
+        .urgency-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.9); padding: 8px 16px; border-radius: 30px; margin-top: 1rem; font-size: 0.9rem; backdrop-filter: blur(10px); box-shadow: 0 4px 20px rgba(44,24,16,0.1); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100% { box-shadow: 0 4px 20px rgba(232,201,181,0.3); } 50% { box-shadow: 0 4px 30px rgba(232,201,181,0.6); } }
+        .countdown { font-family: 'Courier New', monospace; font-weight: 700; color: #e65100; font-size: 1.1rem; }
+        .urgency-text { color: #4a2c24; font-weight: 600; }
+        .hero h1 { font-size: 56px; font-weight: 300; letter-spacing: 2px; margin-bottom: 20px; color: #2c1810; position: relative; }
+        .hero h1 strong { font-weight: 700; color: #4a2c24; }
+        .hero .hook { font-size: 1.5rem; color: #e65100; font-weight: 700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px; position: relative; }
+        .hero p { font-size: 20px; color: #4a3a34; max-width: 600px; margin: 0 auto 40px; position: relative; }
+        .btn { display: inline-block; background: #2c1810; color: #fff; padding: 18px 56px; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 18px; transition: all 0.3s; border: none; cursor: pointer; position: relative; box-shadow: 0 4px 20px rgba(44,24,16,0.3); }
+        .btn:hover { background: #4a2c24; transform: translateY(-3px); box-shadow: 0 8px 30px rgba(44,24,16,0.4); }
+        .btn-light { background: #fff; color: #2c1810; }
+        .btn-light:hover { background: #f5e6dc; }
+        .btn-primary { background: linear-gradient(135deg, #e65100, #ff6f00); }
+        .btn-primary:hover { background: linear-gradient(135deg, #ff6f00, #e65100); box-shadow: 0 8px 30px rgba(230,81,0,0.4); }
+        .services { padding: 80px 0; background: #fff; }
+        .section-title { text-align: center; font-size: 40px; font-weight: 300; margin-bottom: 15px; color: #2c1810; }
+        .section-subtitle { text-align: center; font-size: 18px; color: #7a6a64; margin-bottom: 50px; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .service-card { background: #faf8f5; padding: 40px 30px; border-radius: 16px; text-align: center; transition: all 0.3s; border: 1px solid #f0e8e0; }
+        .service-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(44,24,16,0.1); border-color: #e8c9b5; }
+        .service-icon { font-size: 48px; margin-bottom: 20px; display: block; }
+        .service-card h3 { font-size: 22px; color: #2c1810; margin-bottom: 10px; }
+        .service-card p { color: #7a6a64; font-size: 15px; }
+        .service-card .price-tag { display: inline-block; background: #e8c9b5; color: #2c1810; padding: 6px 16px; border-radius: 20px; font-size: 14px; font-weight: 600; margin-top: 12px; }
+        .benefits { padding: 80px 0; background: linear-gradient(135deg, #faf8f5, #fff); }
+        .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto; }
+        .benefit-card { background: #fff; padding: 2.5rem 2rem; border-radius: 16px; text-align: center; transition: transform 0.3s; border: 1px solid #f0e8e0; box-shadow: 0 4px 20px rgba(44,24,16,0.05); }
+        .benefit-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(44,24,16,0.1); }
+        .benefit-card .icon { font-size: 3rem; margin-bottom: 1.5rem; }
+        .benefit-card h3 { color: #2c1810; margin-bottom: 0.75rem; font-size: 1.4rem; }
+        .benefit-card p { color: #7a6a64; font-size: 1rem; }
+        .guarantee-box { background: linear-gradient(135deg, #fff3e0, #ffe0b2); border: 2px solid #ffb300; border-radius: 16px; padding: 2rem; max-width: 700px; margin: 2rem auto; text-align: center; }
+        .guarantee-box h3 { color: #e65100; margin-bottom: 1rem; font-size: 1.5rem; }
+        .guarantee-box p { color: #4a3a34; font-size: 1.1rem; }
+        .social-proof { padding: 80px 0; background: #fff; }
+        .testimonials { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto; }
+        .testimonial { background: #fff; padding: 2.5rem 2rem; border-radius: 16px; box-shadow: 0 4px 25px rgba(44,24,16,0.08); position: relative; border: 1px solid #f0e8e0; }
+        .testimonial::before { content: '"'; font-size: 5rem; color: #e8c9b5; opacity: 0.15; position: absolute; top: 10px; left: 20px; font-family: serif; }
+        .stars { color: #ffc107; font-size: 1.5rem; margin-bottom: 1.25rem; letter-spacing: 2px; }
+        .testimonial blockquote { font-style: italic; color: #4a3a34; margin-bottom: 1.5rem; line-height: 1.7; font-size: 1.05rem; }
+        .testimonial-author { display: flex; align-items: center; gap: 1rem; }
+        .testimonial-avatar { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, #e8c9b5, #d4b49e); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1.3rem; }
+        .testimonial-author strong { color: #2c1810; font-size: 1.1rem; display: block; }
+        .testimonial-author small { color: #7a6a64; display: block; margin-top: 2px; }
+        .about { padding: 80px 0; background: linear-gradient(135deg, #f5e6dc, #fff); }
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .about-content h2 { font-size: 36px; font-weight: 300; color: #2c1810; margin-bottom: 20px; }
+        .about-content p { color: #4a3a34; font-size: 17px; margin-bottom: 20px; }
+        .features-list { list-style: none; }
+        .features-list li { padding: 12px 0; border-bottom: 1px solid #f0e8e0; color: #4a3a34; font-size: 16px; position: relative; padding-left: 30px; }
+        .features-list li::before { content: '✦'; color: #e8c9b5; position: absolute; left: 0; font-size: 1.2rem; }
+        .about-image { background: linear-gradient(135deg, #e8c9b5, #d4b49e); height: 400px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 80px; color: #fff; font-weight: 300; letter-spacing: 4px; box-shadow: 0 20px 60px rgba(44,24,16,0.15); }
+        .contact { padding: 80px 0; background: linear-gradient(135deg, #2c1810, #4a2c24); color: #fff; }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+        .contact-info h2 { font-size: 36px; font-weight: 300; margin-bottom: 20px; }
+        .contact-info p { color: #e0d0c8; margin-bottom: 30px; font-size: 17px; }
+        .contact-item { display: flex; align-items: center; margin-bottom: 20px; color: #e0d0c8; font-size: 16px; }
+        .contact-item span { margin-right: 15px; font-size: 24px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: #e0d0c8; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 14px 18px; border: 2px solid rgba(255,255,255,0.1); border-radius: 10px; background: rgba(255,255,255,0.05); color: #fff; font-size: 16px; transition: border-color 0.3s, background 0.3s; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #e8c9b5; background: rgba(255,255,255,0.08); }
+        .form-group input::placeholder, .form-group textarea::placeholder { color: #a09088; }
+        .form-group select option { color: #2d2d2d; }
+        .form-group textarea { resize: vertical; min-height: 120px; }
+        .form-message { margin-top: 15px; padding: 12px; border-radius: 8px; display: none; }
+        .form-message.success { display: block; background: rgba(76, 175, 80, 0.2); border: 1px solid #4CAF50; color: #a5d6a7; }
+        .form-message.error { display: block; background: rgba(244, 67, 54, 0.2); border: 1px solid #f44336; color: #ef9a9a; }
+        .trust-bar { display: flex; justify-content: center; flex-wrap: wrap; gap: 1.5rem; margin-top: 2rem; opacity: 0.8; font-size: 0.9rem; }
+        .trust-item { display: flex; align-items: center; gap: 6px; color: #e0d0c8; }
+        .footer { background: #1a0e0a; color: #a09088; padding: 30px 0; text-align: center; }
+        .refund-policy { background: #f5f5f5; padding: 60px 20px; text-align: center; }
+        .refund-policy h3 { margin-bottom: 1.5rem; color: #2c1810; font-size: 1.8rem; }
+        .refund-policy ul { text-align: left; max-width: 500px; margin: 0 auto; padding-left: 1.5rem; color: #4a3a34; }
+        .refund-policy li { margin: 0.75rem 0; }
+        @media (max-width: 768px) { 
+            .hero h1 { font-size: 36px; } 
+            .hero .hook { font-size: 1.2rem; } 
+            .header .container { flex-direction: column; gap: 15px; } 
+            .nav a { margin: 0 15px; font-size: 14px; } 
+            .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 30px; } 
+            .about-image { height: 250px; order: -1; } 
+            .section-title { font-size: 30px; } 
+            .services-grid { grid-template-columns: 1fr 1fr; } 
+            .btn { padding: 16px 40px; font-size: 16px; } 
+        }
+        @media (max-width: 480px) { 
+            .services-grid { grid-template-columns: 1fr; } 
+            .hero { padding: 60px 0 50px; } 
+            .hero h1 { font-size: 28px; } 
+            .hero .hook { font-size: 1rem; } 
+            .benefits-grid { grid-template-columns: 1fr; } 
+            .testimonials { grid-template-columns: 1fr; } 
+        }
+        #countdown-timer { display: inline-flex; gap: 4px; align-items: center; }
+        #countdown-timer span { background: #2c1810; color: #fff; padding: 4px 8px; border-radius: 6px; font-family: 'Courier New', monospace; font-weight: 700; min-width: 32px; text-align: center; }
+        #countdown-timer .separator { background: transparent; color: #e65100; animation: blink 1s infinite; }
+        @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+        
+        /* Date picker styling */
+        .date-group { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .date-group input { width: 100%; }
+        @media (max-width: 480px) { .date-group { grid-template-columns: 1fr; } }
+        
+        .time-slots { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+        .time-slot { padding: 10px 16px; background: rgba(255,255,255,0.05); border: 2px solid rgba(255,255,255,0.1); border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 14px; color: #e0d0c8; }
+        .time-slot:hover { border-color: #e8c9b5; background: rgba(232,201,181,0.1); }
+        .time-slot.selected { border-color: #e8c9b5; background: #e8c9b5; color: #2c1810; font-weight: 600; }
+        .time-slot.unavailable { opacity: 0.4; cursor: not-allowed; text-decoration: line-through; }
+        .selected-time-input { display: none; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">GLAM <span>Beauty</span></div>
+            <nav class="nav">
+                <a href="#services">Услуги и цены</a>
+                <a href="#about">О нас</a>
+                <a href="#reviews">Отзывы</a>
+                <a href="#contact">Записаться</a>
+            </nav>
+        </div>
+    </header>
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hook">ПЕРЕСТАНИТЕ ПЕРЕПЛАЧИВАТЬ ЗА САЛОН, КОТОРЫЙ НЕ ГАРАНТИРУЕТ РЕЗУЛЬТАТ!</div>
+            <h1>Преображение,<br>которое <strong>вдохновляет</strong></h1>
+            <p>Премиум салон красоты с индивидуальным подходом. Авторские техники, лучшие бренды (Wella, Olaplex, Kerastase) и честная гарантия 14 дней.</p>
+            <a href="#contact" class="btn btn-primary" onclick="fbq('track', 'Lead'); ttq.track('CompleteRegistration'); gtag('event', 'generate_lead');">Забронировать со скидкой 20% →</a>
+            <div class="urgency-badge" id="urgency-badge">
+                <div id="countdown-timer"><span id="timer-min">15</span><span class="separator">:</span><span id="timer-sec">00</span></div>
+                <span class="urgency-text">до конца акции -20% на первый визит</span>
+            </div>
+        </div>
+    </section>
+    <section class="benefits" id="benefits">
+        <div class="container">
+            <h2 class="section-title">Почему 2000+ клиентов выбирают нас</h2>
+            <p class="section-subtitle">Чёткие преимущества, а не пустые обещания</p>
+            <div class="benefits-grid">
+                <div class="benefit-card"><div class="icon">✨</div><h3>Топ-мастера с опытом 10+ лет</h3><p>Сертифицированные профи с обучением за рубежом ежегодно. 50+ наград профильных чемпионатов. <strong>Получаете</strong> результат, который <strong>преобразует</strong> ваш образ. <strong>Экономите</strong> время и деньги на исправлениях.</p></div>
+                <div class="benefit-card"><div class="icon">💎</div><h3>Только премиум косметика</h3><p>Профессиональные линии: Wella, Olaplex, Kerastase, Moroccanoil, OPI. Никаких масс-маркет аналогов. <strong>Получаете</strong> стойкий эффект на 4+ месяца. <strong>Исключаете</strong> потребность в частой коррекции.</p></div>
+                <div class="benefit-card"><div class="icon">⚡</div><h3>Видимый результат за 1 визит</h3><p>Кератиновое выпрямление держится 4+ месяца. Окрашивание без перегорания — 8 недель насыщенного цвета. <strong>Улучшаете</strong> состояние волос с первого раза. <strong>Поднимаете</strong> уверенность в образе.</p></div>
+                <div class="benefit-card"><div class="icon">🛡️</div><h3>Гарантия результата 14 дней</h3><p>Не понравилось — переделаем бесплатно. Не помогло — вернём 100% денег за 14 дней. Без вопросов. <strong>Получаете</strong> полную уверенность или деньги назад. <strong>Снижаете</strong> риск до нуля.</p></div>
+            </div>
+        </div>
+    </section>
+    <div class="guarantee-box">
+        <h3>🛡️ Честная гарантия: 14 дней на возврат денег (money-back guarantee)</h3>
+        <p>Если после процедуры результат не соответствует обещанному на лендинге — пишите в течение 14 дней. Вернём 100% стоимости тем же способом оплаты за 3-5 рабочих дней. Без бюрократии — просто напишите администратору. Подробнее в <a href="#refund" style="color: #e65100; text-decoration: underline; font-weight: 600;">политике возврата (refund policy)</a>.</p>
+    </div>
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">Наши услуги и цены</h2>
+            <p class="section-subtitle">Прозрачные цены, никаких скрытых доплат</p>
+            <div class="services-grid">
+                <div class="service-card"><span class="service-icon">✂️</span><h3>Стрижка</h3><p>Классические и креативные стрижки от топ-стилистов с учётом формы лица.</p><span class="price-tag">от 800₽</span></div>
+                <div class="service-card"><span class="service-icon">🎨</span><h3>Окрашивание</h3><p>Безаммиачные краски, техники balayage, shatush, airtouch и сложное цветное окрашивание.</p><span class="price-tag">от 3000₽</span></div>
+                <div class="service-card"><span class="service-icon">💅</span><h3>Маникюр</h3><p>Классический, аппаратный, SPA-маникюр и покрытие гель-лаком премиум-брендов.</p><span class="price-tag">от 1200₽</span></div>
+                <div class="service-card"><span class="service-icon">🦶</span><h3>Педикюр</h3><p>Комплексный уход за ногами с массажем, пилингом и долговременным покрытием.</p><span class="price-tag">от 1500₽</span></div>
+                <div class="service-card"><span class="service-icon">👁️</span><h3>Ламинирование ресниц</h3><p>Эффектный изгиб и объём без наращивания — здоровый, ухоженный взгляд на 6 недель.</p><span class="price-tag">от 2000₽</span></div>
+                <div class="service-card"><span class="service-icon">💄</span><h3>Макияж</h3><p>Дневной, вечерний, свадебный макияж с фиксацией на 12 часов и индивидуальным подбором тона.</p><span class="price-tag">от 2500₽</span></div>
+            </div>
+        </div>
+    </section>
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <h2>Создаём красоту<br>с 2015 года</h2>
+                    <p>GLAM Beauty Salon — это пространство, где профессионализм встречается с теплотой. Мы используем только премиальную косметику и следим за мировыми трендами.</p>
+                    <ul class="features-list">
+                        <li>Авторские методики колористики</li>
+                        <li>Стерильность и безопасность (автоклавирование инструментов)</li>
+                        <li>Индивидуальный подбор продуктов под тип волос/кожи</li>
+                        <li>Уютная атмосфера, авторский чай/кофе, парковка для гостей</li>
+                    </ul>
+                </div>
+                <div class="about-image">GLAM</div>
+            </div>
+        </div>
+    </section>
+    <section class="social-proof" id="reviews">
+        <div class="container">
+            <h2 class="section-title">Реальные результаты реальных клиентов</h2>
+            <p class="section-subtitle">Более 500 отзывов на Google Maps — рейтинг 4.9/5</p>
+            <div class="testimonials">
+                <div class="testimonial review client">
+                    <div class="stars">★★★★★</div>
+                    <blockquote>"Лучший салон в городе! Сделала окрашивание в технике balayage — волосы никогда не выглядели так здорово и дорого. Мастер поняла меня с полуслова. Уже 2 года только сюда."</blockquote>
+                    <div class="testimonial-author"><div class="testimonial-avatar">МК</div><div><strong>Марина К.</strong><small>Верный клиент 2+ года • 28 посещений • Google Maps</small></div></div>
+                </div>
+                <div class="testimonial review client">
+                    <div class="stars">★★★★★</div>
+                    <blockquote>"Наконец нашла место с качественной косметикой. Кератин держится 4 месяца! Маникюр 4 недели без сколов. Очень рекомендую — цены адекватные за это качество."</blockquote>
+                    <div class="testimonial-author"><div class="testimonial-avatar">АС</div><div><strong>Анна С.</strong><small>Клиент с 2022 • 15 процедур • 8 отзывов на Google Maps</small></div></div>
+                </div>
+                <div class="testimonial review client">
+                    <div class="stars">★★★★★</div>
+                    <blockquote>"Делала макияж на свадьбу — был идеальный, держался весь день до самого утра. Визажист учла все пожелания, подобрала идеальный тон. Спасибо команде!"</blockquote>
+                    <div class="testimonial-author"><div class="testimonial-avatar">ОС</div><div><strong>Ольга С.</strong><small>Свадебный макияж • 5 звёзд • Яндекс Карты</small></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h2>Запишитесь<br>на процедуру</h2>
+                    <p>Мы перезвоним в течение 15 минут, чтобы подтвердить удобное время.</p>
+                    <div class="contact-item"><span>📍</span> ул. Тверская, д. 15, Москва (м. Тверская/Пушкинская)</div>
+                    <div class="contact-item"><span>📞</span> +7 (495) 123-45-67</div>
+                    <div class="contact-item"><span>✉️</span> hello@glambeauty.ru</div>
+                    <div class="contact-item"><span>🕐</span> Ежедневно 9:00 — 21:00</div>
+                    
+                    <div class="trust-bar">
+                        <span class="trust-item">🔒 Бронирование за 30 сек</span>
+                        <span class="trust-item">💳 Оплата после услуги</span>
+                        <span class="trust-item">⭐ 4.9/5 Google Maps</span>
+                        <span class="trust-item">🛡 14 дней на возврат</span>
+                    </div>
+                    
+                    <div style="margin-top: 2rem; font-size: 0.85rem; color: #a09088;">
+                        <a href="#privacy" style="color: #e8c9b5;">Privacy Policy</a> | 
+                        <a href="#terms" style="color: #e8c9b5;">Terms of Service</a> | 
+                        <a href="#refund" style="color: #e8c9b5;">Refund Policy</a> | 
+                        <a href="#privacy" style="color: #e8c9b5;">Политика конфиденциальности</a>
+                    </div>
+                </div>
+                <div>
+                    <form id="bookingForm">
+                        <div class="form-group"><label for="name">Ваше имя</label><input type="text" id="name" name="name" placeholder="Иван Иванов" required></div>
+                        <div class="form-group"><label for="phone">Телефон</label><input type="tel" id="phone" name="phone" placeholder="+7 (___) ___-__-__" required></div>
+                        <div class="form-group"><label for="service">Услуга</label><select id="service" name="service" required><option value="">Выберите услугу</option><option value="стрижка">Стрижка (от 800₽)</option><option value="окрашивание">Окрашивание (от 3000₽)</option><option value="маникюр">Маникюр (от 1200₽)</option><option value="педикюр">Педикюр (от 1500₽)</option><option value="ламинирование ресниц">Ламинирование ресниц (от 2000₽)</option><option value="макияж">Макияж (от 2500₽)</option></select></div>
+                        <div class="form-group"><label for="date">Дата визита</label><input type="date" id="date" name="date" required min=""></div>
+                        <div class="form-group"><label>Удобное время (выберите слот)</label><div class="time-slots" id="timeSlots"></div><input type="hidden" id="selectedTime" name="time" class="selected-time-input"></div>
+                        <div class="form-group"><label for="message">Пожелания</label><textarea id="message" name="message" placeholder="Например: хочу конкретного мастера, аллергия на компоненты..." rows="3"></textarea></div>
+                        <button type="submit" class="btn btn-light" style="width: 100%;">Отправить заявку и получить -20%</button>
+                    </form>
+                    <div id="formMessage" class="form-message"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="refund" class="refund-policy">
+        <h3>Политика возврата (14 дней) — Money-back guarantee</h3>
+        <ul>
+            <li>Возврат 100% стоимости, если результат не соответствует обещанному на лендинге</li>
+            <li>Заявка принимается в течение 14 дней после процедуры</li>
+            <li>Деньги возвращаются тем же способом оплаты в течение 3-5 рабочих дней</li>
+            <li>Без вопросов, без бюрократии — просто напишите администратору в Telegram/WhatsApp/телефон</li>
+        </ul>
+    </section>
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 GLAM Beauty Salon. Все права защищены. ИП Иванов И.И., ИНН 7701234567</p>
+            <p style="margin-top: 0.5rem; font-size: 0.8rem;"><a href="#privacy" style="color: #7a6a64;">Privacy Policy</a> | <a href="#terms" style="color: #7a6a64;">Terms of Service</a> | <a href="#refund" style="color: #7a6a64;">Refund Policy</a></p>
+        </div>
+    </footer>
+    <script>
+        (function(){
+            let time = 15 * 60;
+            const minEl = document.getElementById('timer-min');
+            const secEl = document.getElementById('timer-sec');
+            const timer = setInterval(() => {
+                time--;
+                const m = Math.floor(time / 60).toString().padStart(2, '0');
+                const s = (time % 60).toString().padStart(2, '0');
+                if (minEl) minEl.textContent = m;
+                if (secEl) secEl.textContent = s;
+                if (time <= 0) {
+                    clearInterval(timer);
+                    if (minEl) minEl.textContent = '00';
+                    if (secEl) secEl.textContent = '00';
+                    document.getElementById('urgency-badge').innerHTML = '<span class="urgency-text">Акция завершена — напишите нам для индивидуального предложения</span>';
+                }
+            }, 1000);
+
+            document.addEventListener('DOMContentLoaded', function() {
+                const form = document.getElementById('bookingForm');
+                const messageDiv = document.getElementById('formMessage');
+                const dateInput = document.getElementById('date');
+                const timeSlots = document.getElementById('timeSlots');
+                const selectedTimeInput = document.getElementById('selectedTime');
+                const phoneInput = document.getElementById('phone');
+
+                // Set min date to today
+                const today = new Date().toISOString().split('T')[0];
+                dateInput.min = today;
+
+                // Generate time slots
+                function generateTimeSlots() {
+                    const slots = [];
+                    for (let h = 9; h <= 20; h++) {
+                        slots.push(`${h.toString().padStart(2, '0')}:00`);
+                        if (h < 20) slots.push(`${h.toString().padStart(2, '0')}:30`);
+                    }
+                    return slots;
+                }
+
+                const allSlots = generateTimeSlots();
+                let selectedSlot = null;
+
+                function renderSlots(dateStr) {
+                    timeSlots.innerHTML = '';
+                    // Simulate some booked slots (in real app, fetch from API)
+                    const booked = ['10:00', '14:30', '18:00'];
+                    allSlots.forEach(slot => {
+                        const btn = document.createElement('button');
+                        btn.type = 'button';
+                        btn.className = 'time-slot' + (booked.includes(slot) ? ' unavailable' : '');
+                        btn.textContent = slot;
+                        btn.disabled = booked.includes(slot);
+                        if (!booked.includes(slot)) {
+                            btn.addEventListener('click', () => {
+                                document.querySelectorAll('.time-slot').forEach(b => b.classList.remove('selected'));
+                                btn.classList.add('selected');
+                                selectedSlot = slot;
+                                selectedTimeInput.value = slot;
+                            });
+                        }
+                        timeSlots.appendChild(btn);
+                    });
+                }
+
+                // Initial render
+                renderSlots(today);
+                dateInput.addEventListener('change', () => renderSlots(dateInput.value));
+
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const name = document.getElementById('name').value.trim();
+                    const phone = document.getElementById('phone').value.trim();
+                    const service = document.getElementById('service').value;
+                    const date = document.getElementById('date').value;
+                    const time = selectedTimeInput.value;
+
+                    if (!name || !phone || !service || !date || !time) {
+                        messageDiv.className = 'form-message error';
+                        messageDiv.textContent = 'Пожалуйста, заполните все обязательные поля, включая дату и время.';
+                        return;
+                    }
+
+                    fbq('track', 'Lead', { content_name: service, value: 0.01, currency: 'RUB' });
+                    ttq.track('CompleteRegistration', { content_name: service });
+                    gtag('event', 'generate_lead', { service: service });
+
+                    const formData = { name, phone, service, date, time, message: document.getElementById('message').value.trim() };
+                    console.log('Form submitted:', formData);
+
+                    messageDiv.className = 'form-message success';
+                    messageDiv.textContent = 'Спасибо! Мы перезвоним вам в течение 15 минут для подтверждения записи и применения скидки 20%.';
+                    form.reset();
+                    selectedSlot = null;
+                    selectedTimeInput.value = '';
+                    document.querySelectorAll('.time-slot').forEach(b => b.classList.remove('selected'));
+                    setTimeout(() => { messageDiv.className = 'form-message'; }, 5000);
+                });
+
+                phoneInput.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length > 0) {
+                        let formatted = '+7 (';
+                        if (value.length > 1) { formatted += value.substring(1, 4); }
+                        if (value.length >= 4) { formatted += ') '; formatted += value.substring(4, 7); }
+                        if (value.length >= 7) { formatted += '-'; formatted += value.substring(7, 9); }
+                        if (value.length >= 9) { formatted += '-'; formatted += value.substring(9, 11); }
+                        e.target.value = formatted;
+                    }
+                });
+            });
+        })();
+    </script>
+</body>
+</html>

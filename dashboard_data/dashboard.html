@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes Agent Dashboard</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --surface2: #1c2333;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text2: #8b949e;
+  --green: #3fb950;
+  --blue: #58a6ff;
+  --red: #f85149;
+  --orange: #d29922;
+  --purple: #bc8cff;
+  --radius: 8px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+body { font: 14px/1.5 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); padding: 16px; min-height: 100vh; }
+h1 { font-size: 20px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+h1 .icon { font-size: 22px; }
+
+/* Header */
+.header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+.badges { display: flex; gap: 8px; flex-wrap: wrap; }
+.badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; white-space: nowrap; }
+.badge.kanban { background: #2d4a2e; color: var(--green); }
+.badge.cron  { background: #1c3a5c; color: var(--blue); }
+.badge.errors { background: #4a2e2e; color: var(--red); }
+.badge.profiles { background: #2e2a4a; color: var(--purple); }
+.header-right { display: flex; align-items: center; gap: 8px; }
+.refresh-time { font-size: 11px; color: var(--text2); }
+.btn { padding: 6px 14px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface2); color: var(--text); cursor: pointer; font-size: 13px; display: inline-flex; align-items: center; gap: 4px; }
+.btn:hover { background: #212c42; }
+.btn.primary { background: var(--blue); color: #fff; border-color: var(--blue); }
+.btn.primary:hover { background: #4a96ff; }
+.btn.danger { background: var(--red); color: #fff; border-color: var(--red); }
+.btn.danger:hover { background: #e03a32; }
+.btn.sm { padding: 3px 10px; font-size: 11px; }
+.btn.green { background: var(--green); color: #fff; border-color: var(--green); }
+
+/* KPI */
+.kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+.kpi-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; text-align: center; }
+.kpi-circle { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 6px; font-size: 22px; font-weight: 700; border: 3px solid; }
+.kpi-card.ready .kpi-circle { border-color: var(--green); color: var(--green); }
+.kpi-card.running .kpi-circle { border-color: var(--blue); color: var(--blue); }
+.kpi-card.blocked .kpi-circle { border-color: var(--red); color: var(--red); }
+.kpi-card.total .kpi-circle { border-color: var(--text2); color: var(--text); }
+.kpi-label { font-size: 11px; color: var(--text2); text-transform: uppercase; letter-spacing: 1px; }
+
+/* Main layout */
+.main-layout { display: grid; grid-template-columns: 3fr 2fr; gap: 16px; }
+
+/* Kanban */
+.section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 16px; }
+.section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.section-title { font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.section-count { font-size: 12px; color: var(--text2); }
+.kanban-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.kanban-col { background: var(--surface2); border-radius: 6px; padding: 10px; min-height: 120px; }
+.kanban-col-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+.kanban-col-header .count { background: var(--bg); padding: 1px 8px; border-radius: 10px; font-size: 11px; }
+.col-ready .kanban-col-header { color: var(--green); }
+.col-running .kanban-col-header { color: var(--blue); }
+.col-blocked .kanban-col-header { color: var(--red); }
+.col-done .kanban-col-header { color: var(--text2); }
+
+.task-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 10px; margin-bottom: 8px; cursor: grab; transition: all 0.15s; position: relative; }
+.task-card:hover { border-color: var(--blue); box-shadow: 0 0 0 1px var(--blue); }
+.task-card:active { cursor: grabbing; }
+.task-card.dragging { opacity: 0.5; }
+.task-card.drag-over { border-color: var(--green); box-shadow: 0 0 0 2px var(--green); }
+.task-card.running { border-left: 3px solid var(--blue); }
+.task-card.blocked { border-left: 3px solid var(--red); }
+.task-card .task-id { font-size: 10px; color: var(--text2); }
+.task-card .task-title { font-size: 13px; margin: 2px 0; }
+.task-card .task-meta { display: flex; justify-content: space-between; font-size: 10px; color: var(--text2); }
+.task-card .task-actions { display: none; position: absolute; top: 6px; right: 6px; gap: 3px; }
+.task-card:hover .task-actions { display: flex; }
+.task-card .task-actions button { padding: 2px 6px; font-size: 10px; border: 1px solid var(--border); border-radius: 4px; background: var(--bg); color: var(--text); cursor: pointer; }
+.task-card .task-actions button:hover { background: var(--surface2); }
+.task-card .task-actions .del { color: var(--red); }
+.task-card .task-actions .del:hover { background: #4a2e2e; }
+.kanban-col.drag-over-col { outline: 2px dashed var(--blue); outline-offset: -4px; }
+
+/* Right panels */
+.right-panel .section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 16px; }
+.cron-item { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+.cron-item:last-child { border-bottom: none; }
+.cron-name { font-size: 13px; font-weight: 500; }
+.cron-schedule { font-size: 11px; color: var(--text2); }
+.cron-meta { font-size: 10px; color: var(--text2); }
+.cron-status { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; }
+.cron-status.ok { background: var(--green); }
+.cron-status.error { background: var(--red); }
+.cron-status.triggered { background: var(--orange); }
+.cron-status.never { background: var(--text2); }
+.cron-right { display: flex; align-items: center; gap: 6px; }
+.cron-empty { color: var(--text2); font-size: 13px; padding: 20px 0; text-align: center; }
+
+.profile-card { display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+.profile-card:last-child { border-bottom: none; }
+.profile-name { font-weight: 500; }
+.profile-model { font-size: 11px; color: var(--text2); }
+.dot { width: 8px; height: 8px; border-radius: 50%; margin-left: auto; }
+.dot.active { background: var(--green); }
+.dot.stopped { background: var(--red); }
+
+.health-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.health-item { background: var(--surface2); border-radius: 6px; padding: 10px; text-align: center; }
+.health-item .val { font-size: 18px; font-weight: 600; }
+.health-item .lbl { font-size: 10px; color: var(--text2); }
+
+/* Modal */
+.modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; }
+.modal-overlay.open { display: flex; }
+.modal { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto; }
+.modal-title { font-size: 18px; font-weight: 600; margin-bottom: 16px; }
+.modal-body .field { display: flex; gap: 8px; margin-bottom: 8px; }
+.modal-body .field .label { font-weight: 500; min-width: 80px; color: var(--text2); }
+.modal-body .field .value { color: var(--text); }
+.modal-body .desc-field .value { white-space: pre-wrap; line-height: 1.6; }
+.dim { color: var(--text2); font-style: italic; }
+.modal-actions { display: flex; gap: 8px; margin-top: 20px; justify-content: flex-end; flex-wrap: wrap; }
+
+/* New Task form */
+.create-form { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.create-form input { flex: 1; min-width: 150px; padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface2); color: var(--text); font-size: 13px; }
+.create-form input::placeholder { color: var(--text2); }
+
+.empty-state { text-align: center; padding: 30px 0; color: var(--text2); font-size: 13px; }
+
+@media (max-width: 900px) {
+  .main-layout { grid-template-columns: 1fr; }
+  .kanban-grid { grid-template-columns: 1fr 1fr; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1><span class="icon">⚡</span> Hermes Agent Dashboard</h1>
+  <div class="header-right">
+    <div class="badges">
+      <span class="badge kanban" id="badge-kanban">Kanban: -</span>
+      <span class="badge cron" id="badge-cron">Cron: -</span>
+      <span class="badge errors" id="badge-errors">Errors: -</span>
+      <span class="badge profiles" id="badge-profiles">Profiles: -</span>
+    </div>
+    <span class="refresh-time" id="refresh-time">Never</span>
+    <button class="btn" id="refresh-btn" onclick="loadAll()">🔄 Refresh</button>
+    <button class="btn" onclick="location.href='/kanban.html'">📋 Kanban</button>
+  </div>
+</div>
+
+<div class="kpi-grid">
+  <div class="kpi-card ready"><div class="kpi-circle" id="stat-ready">0</div><div class="kpi-label">Ready</div></div>
+  <div class="kpi-card running"><div class="kpi-circle" id="stat-running">0</div><div class="kpi-label">Running</div></div>
+  <div class="kpi-card blocked"><div class="kpi-circle" id="stat-blocked">0</div><div class="kpi-label">Blocked</div></div>
+  <div class="kpi-card total"><div class="kpi-circle" id="stat-total">0</div><div class="kpi-label">Total Tasks</div></div>
+</div>
+
+<div class="main-layout">
+  <div class="left-panel">
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">Kanban Board</div>
+        <div class="section-count"><span id="kanban-total">0</span> tasks</div>
+      </div>
+      <div class="create-form">
+        <input type="text" id="new-task-input" placeholder="New task title..." onkeydown="if(event.key==='Enter') createTask()">
+        <input type="text" id="new-assignee-input" placeholder="Assignee (optional)">
+        <input type="text" id="new-desc-input" placeholder="Short description (optional)" style="flex:1.5;min-width:200px">
+        <button class="btn primary" onclick="createTask()">+ Add</button>
+      </div>
+      <div class="kanban-grid">
+        <div class="kanban-col col-ready" data-status="ready" ondrop="onDrop(event)" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)">
+          <div class="kanban-col-header">Ready <span class="count" id="count-ready">0</span></div>
+          <div id="list-ready"></div>
+        </div>
+        <div class="kanban-col col-running" data-status="running" ondrop="onDrop(event)" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)">
+          <div class="kanban-col-header">Running <span class="count" id="count-running">0</span></div>
+          <div id="list-running"></div>
+        </div>
+        <div class="kanban-col col-blocked" data-status="blocked" ondrop="onDrop(event)" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)">
+          <div class="kanban-col-header">Blocked <span class="count" id="count-blocked">0</span></div>
+          <div id="list-blocked"></div>
+        </div>
+        <div class="kanban-col col-done" data-status="done" ondrop="onDrop(event)" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)">
+          <div class="kanban-col-header">Done <span class="count" id="count-done">0</span></div>
+          <div id="list-done"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="right-panel">
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">Cron Jobs (<span id="cron-total">0</span>)</div>
+      </div>
+      <div id="cron-list"><div class="cron-empty">No cron jobs</div></div>
+    </div>
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">Profiles (<span id="profile-count">0</span>)</div>
+      </div>
+      <div id="profiles-list"><div class="cron-empty">No profiles</div></div>
+    </div>
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">System Health</div>
+      </div>
+      <div class="health-grid">
+        <div class="health-item"><div class="val" id="health-uptime">-</div><div class="lbl">Uptime</div></div>
+        <div class="health-item"><div class="val" id="health-memory">-</div><div class="lbl">Memory</div></div>
+        <div class="health-item"><div class="val" id="health-disk">-</div><div class="lbl">Disk</div></div>
+        <div class="health-item"><div class="val" id="health-cpu">-</div><div class="lbl">CPU</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="task-modal" onclick="if(event.target===this) closeModal()">
+  <div class="modal">
+    <div class="modal-title" id="modal-title">Task</div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-actions">
+      <button class="btn green sm" id="modal-start" style="display:none" onclick="modalAction('running')">Start</button>
+      <button class="btn sm" id="modal-block" style="display:none" onclick="modalAction('blocked')">Block</button>
+      <button class="btn sm" id="modal-ready" style="display:none" onclick="modalAction('ready')">Move to Ready</button>
+      <button class="btn primary sm" id="modal-done" style="display:none" onclick="modalAction('done')">Done</button>
+      <button class="btn danger sm" id="modal-delete" onclick="modalDelete()">Delete</button>
+      <button class="btn sm" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var allTasks = [];
+var allCrons = [];
+var allProfiles = [];
+var modalTaskId = null;
+var dragTaskId = null;
+
+function loadAll() {
+  Promise.all([
+    fetch('data/tasks.json', { cache: 'no-store' }).then(function(r) { return r.ok ? r.json() : []; }),
+    fetch('data/crons.json', { cache: 'no-store' }).then(function(r) { return r.ok ? r.json() : []; }),
+    fetch('data/profiles.json', { cache: 'no-store' }).then(function(r) { return r.ok ? r.json() : []; })
+  ]).then(function(results) {
+    allTasks = results[0];
+    allCrons = results[1];
+    allProfiles = results[2];
+    renderAll();
+    document.getElementById('refresh-time').textContent = new Date().toLocaleString('ru-RU');
+  }).catch(function(e) {
+    console.error('Load error:', e);
+  });
+}
+
+function renderAll() {
+  renderStats();
+  renderKanban();
+  renderCrons();
+  renderProfiles();
+  renderHealth();
+}
+
+function renderStats() {
+  var byStatus = { ready: 0, running: 0, blocked: 0, done: 0 };
+  for (var i = 0; i < allTasks.length; i++) {
+    var s = allTasks[i].status;
+    if (byStatus[s] !== undefined) byStatus[s]++;
+  }
+  setText('stat-ready', byStatus.ready);
+  setText('stat-running', byStatus.running);
+  setText('stat-blocked', byStatus.blocked);
+  setText('stat-total', allTasks.length);
+  setText('badge-kanban', 'Kanban: ' + allTasks.length);
+  setText('badge-cron', 'Cron: ' + allCrons.length);
+  var errCount = 0;
+  for (var j = 0; j < allCrons.length; j++) {
+    if (allCrons[j].last_status === 'error') errCount++;
+  }
+  setText('badge-errors', 'Errors: ' + errCount);
+  setText('badge-profiles', 'Profiles: ' + allProfiles.length);
+  setText('kanban-total', allTasks.length);
+}
+
+function setText(id, val) {
+  var el = document.getElementById(id);
+  if (el) el.textContent = val;
+}
+
+function renderKanban() {
+  var lists = { ready: [], running: [], blocked: [], done: [] };
+  for (var i = 0; i < allTasks.length; i++) {
+    var t = allTasks[i];
+    if (lists[t.status]) lists[t.status].push(t);
+  }
+  var statuses = ['ready', 'running', 'blocked', 'done'];
+  for (var s = 0; s < statuses.length; s++) {
+    var status = statuses[s];
+    var list = document.getElementById('list-' + status);
+    var countEl = document.getElementById('count-' + status);
+    var tasks = lists[status] || [];
+    if (countEl) countEl.textContent = tasks.length;
+    if (!list) continue;
+    var html = '';
+    for (var k = 0; k < tasks.length; k++) {
+      var t = tasks[k];
+      var cls = t.status === 'running' ? 'running' : t.status === 'blocked' ? 'blocked' : '';
+      html += '<div class="task-card ' + cls + '" draggable="true" data-id="' + escAttr(t.id) + '" onclick="openModal(\'' + escAttr(t.id) + '\')" ondragstart="onDragStart(event)" ondragend="onDragEnd(event)">';
+      html += '<div class="task-id">' + escHtml(t.id) + '</div>';
+      html += '<div class="task-title">' + escHtml(t.title) + '</div>';
+      html += '<div class="task-meta"><span>' + escHtml(t.assignee || '') + '</span><span>' + formatAge(t.created_at) + '</span></div>';
+      html += '<div class="task-actions">';
+      if (t.status === 'ready') html += '<button onclick="event.stopPropagation(); quickMove(\'' + escAttr(t.id) + '\',\'running\')" title="Start">Start</button>';
+      if (t.status === 'running') html += '<button onclick="event.stopPropagation(); quickMove(\'' + escAttr(t.id) + '\',\'blocked\')" title="Block">Block</button>';
+      if (t.status !== 'done') html += '<button onclick="event.stopPropagation(); quickMove(\'' + escAttr(t.id) + '\',\'done\')" title="Done">Done</button>';
+      html += '<button class="del" onclick="event.stopPropagation(); deleteTask(\'' + escAttr(t.id) + '\')" title="Delete">X</button>';
+      html += '</div></div>';
+    }
+    list.innerHTML = html || '<div class="empty-state">No tasks</div>';
+  }
+}
+
+function renderCrons() {
+  var list = document.getElementById('cron-list');
+  var total = document.getElementById('cron-total');
+  if (total) total.textContent = allCrons.length;
+  if (!list) return;
+  if (!allCrons.length) {
+    list.innerHTML = '<div class="cron-empty">No cron jobs</div>';
+    return;
+  }
+  var html = '';
+  for (var i = 0; i < allCrons.length; i++) {
+    var c = allCrons[i];
+    var sc = 'never';
+    if (c.last_status === 'ok') sc = 'ok';
+    else if (c.last_status === 'error') sc = 'error';
+    else if (c.last_status === 'triggered') sc = 'triggered';
+    var lt = c.last_run ? (c.last_status || '-') + ' @ ' + formatDate(c.last_run) : 'Never';
+    html += '<div class="cron-item">';
+    html += '<div>';
+    html += '<div class="cron-name"><span class="cron-status ' + sc + '"></span>' + escHtml(c.name || c.id || '?') + '</div>';
+    html += '<div class="cron-schedule">' + escHtml(c.schedule || '-') + '</div>';
+    html += '<div class="cron-meta">Next: ' + (c.next_run || '-') + ' | Last: ' + lt + '</div>';
+    html += '</div>';
+    html += '<div class="cron-right"><button class="btn sm" onclick="runCron(\'' + escAttr(c.id || c.name) + '\')">Run</button></div>';
+    html += '</div>';
+  }
+  list.innerHTML = html;
+}
+
+function renderProfiles() {
+  var list = document.getElementById('profiles-list');
+  var count = document.getElementById('profile-count');
+  if (count) count.textContent = allProfiles.length;
+  if (!list) return;
+  if (!allProfiles.length) {
+    list.innerHTML = '<div class="cron-empty">No profiles</div>';
+    return;
+  }
+  var html = '';
+  for (var i = 0; i < allProfiles.length; i++) {
+    var p = allProfiles[i];
+    var cls = p.gateway === 'stopped' ? 'stopped' : 'active';
+    html += '<div class="profile-card">';
+    html += '<div class="profile-name">' + escHtml(p.name) + '</div>';
+    html += '<div class="profile-model">' + escHtml(p.model || '-') + '</div>';
+    html += '<span class="dot ' + cls + '"></span>';
+    html += '</div>';
+  }
+  list.innerHTML = html;
+}
+
+function renderHealth() {
+  setText('health-uptime', '-');
+  setText('health-memory', '-');
+  setText('health-disk', '-');
+  setText('health-cpu', '-');
+}
+
+/* Modal */
+function openModal(id) {
+  modalTaskId = id;
+  var task = null;
+  for (var i = 0; i < allTasks.length; i++) {
+    if (allTasks[i].id === id) { task = allTasks[i]; break; }
+  }
+  if (!task) return;
+  document.getElementById('modal-title').textContent = task.title;
+  document.getElementById('modal-body').innerHTML =
+    '<div class="field"><div class="label">ID</div><div class="value">' + escHtml(task.id) + '</div></div>' +
+    '<div class="field"><div class="label">Status</div><div class="value">' + task.status + '</div></div>' +
+    '<div class="field"><div class="label">Assignee</div><div class="value">' + escHtml(task.assignee || '-') + '</div></div>' +
+    '<div class="field"><div class="label">Created</div><div class="value">' + formatDate(task.created_at) + '</div></div>' +
+    '<div class="field desc-field"><div class="label">Description</div><div class="value">' + (task.description ? escHtml(task.description) : '<span class="dim">—</span>') + '</div></div>';
+
+  document.getElementById('modal-start').style.display = task.status === 'ready' ? 'inline-block' : 'none';
+  document.getElementById('modal-block').style.display = task.status === 'running' ? 'inline-block' : 'none';
+  document.getElementById('modal-ready').style.display = (task.status === 'blocked' || task.status === 'done') ? 'inline-block' : 'none';
+  document.getElementById('modal-done').style.display = task.status !== 'done' ? 'inline-block' : 'none';
+
+  document.getElementById('task-modal').classList.add('open');
+}
+
+function closeModal() {
+  modalTaskId = null;
+  document.getElementById('task-modal').classList.remove('open');
+}
+
+function modalAction(newStatus) {
+  if (!modalTaskId) return;
+  quickMove(modalTaskId, newStatus);
+  closeModal();
+}
+
+function modalDelete() {
+  if (!modalTaskId) return;
+  deleteTask(modalTaskId);
+  closeModal();
+}
+
+/* API calls */
+function quickMove(id, status) {
+  fetch('/api/task/move', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id: id, status: status })
+  }).then(function(r) { return r.json(); }).then(function(d) {
+    if (d.ok) { loadAll(); }
+  }).catch(function(e) { console.error('Move error:', e); });
+}
+
+function deleteTask(id) {
+  if (!confirm('Delete task ' + id + '?')) return;
+  fetch('/api/task/delete', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id: id })
+  }).then(function(r) { return r.json(); }).then(function(d) {
+    if (d.ok) { loadAll(); }
+  }).catch(function(e) { console.error('Delete error:', e); });
+}
+
+function createTask() {
+  var title = document.getElementById('new-task-input').value.trim();
+  if (!title) return;
+  var assignee = document.getElementById('new-assignee-input').value.trim();
+  var desc = document.getElementById('new-desc-input').value.trim();
+  fetch('/api/task/create', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ title: title, assignee: assignee, description: desc })
+  }).then(function(r) { return r.json(); }).then(function(d) {
+    if (d.ok) {
+      document.getElementById('new-task-input').value = '';
+      document.getElementById('new-assignee-input').value = '';
+      document.getElementById('new-desc-input').value = '';
+      loadAll();
+    }
+  }).catch(function(e) { console.error('Create error:', e); });
+}
+
+function runCron(id) {
+  fetch('/api/cron/run', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id: id })
+  }).then(function(r) { return r.json(); }).then(function(d) {
+    if (d.ok) { loadAll(); }
+  }).catch(function(e) { console.error('Run error:', e); });
+}
+
+/* Drag & Drop */
+function onDragStart(e) {
+  dragTaskId = e.target.closest('.task-card').dataset.id;
+  e.target.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/plain', dragTaskId);
+}
+
+function onDragEnd(e) {
+  e.target.classList.remove('dragging');
+  dragTaskId = null;
+  var cols = document.querySelectorAll('.kanban-col');
+  for (var i = 0; i < cols.length; i++) {
+    cols[i].classList.remove('drag-over-col');
+  }
+}
+
+function onDragOver(e) {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  var col = e.target.closest('.kanban-col');
+  if (col) col.classList.add('drag-over-col');
+}
+
+function onDragLeave(e) {
+  var col = e.target.closest('.kanban-col');
+  if (col) col.classList.remove('drag-over-col');
+}
+
+function onDrop(e) {
+  e.preventDefault();
+  var col = e.target.closest('.kanban-col');
+  if (!col || !dragTaskId) return;
+  col.classList.remove('drag-over-col');
+  var newStatus = col.dataset.status;
+  quickMove(dragTaskId, newStatus);
+  dragTaskId = null;
+}
+
+/* Helpers */
+function escHtml(text) {
+  if (!text) return '';
+  return String(text).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function escAttr(text) {
+  if (!text) return '';
+  return String(text).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+function formatDate(iso) {
+  if (!iso) return '-';
+  try { return new Date(iso).toLocaleString('ru-RU'); } catch(e) { return iso; }
+}
+
+function formatAge(iso) {
+  if (!iso) return '-';
+  try {
+    var diff = Date.now() - new Date(iso).getTime();
+    var d = Math.floor(diff / 86400000);
+    var h = Math.floor((diff % 86400000) / 3600000);
+    var m = Math.floor((diff % 3600000) / 60000);
+    if (d > 0) return d + 'd ' + h + 'h';
+    if (h > 0) return h + 'h ' + m + 'm';
+    return m + 'm';
+  } catch(e) { return '-'; }
+}
+
+// Auto-refresh
+setInterval(loadAll, 30000);
+loadAll();
+</script>
+</body>
+</html>

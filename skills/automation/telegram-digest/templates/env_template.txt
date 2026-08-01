@@ -1,0 +1,12 @@
+# Telegram API Credentials
+# Get from: https://my.telegram.org → API development tools
+TELEGRAM_API_ID=your_api_id_here
+TELEGRAM_API_HASH=your_api_hash_here
+
+# Session name (default: hermes_session)
+TELEGRAM_SESSION_NAME=hermes_session
+
+# Digest settings
+DIGEST_DEFAULT_HOURS=24
+DIGEST_DEFAULT_STYLE=telegram
+DIGEST_CHANNELS=openai,anthropic,deepseek,hugging_face

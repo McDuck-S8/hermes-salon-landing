@@ -1,0 +1,211 @@
+Вот перевод твоей проблемы — по-русски и по делу.
+
+---
+
+## �� Проблема: opencode.exe виснет при вызове из Python
+
+### Что происходит по шагам
+
+```mermaid
+graph LR
+    A[proactive_executor.py<br/>каждые 15 мин] --> B[пишет pending_analysis.json]
+    B --> C[llm_analyst.py<br/>каждую минуту]
+    C --> D[subprocess.run<br/>opencode.exe]
+    D --> E[opencode.exe виснет 120 сек]
+    E --> F[❌ TIMEOUT]
+    F --> G[suggested_fixes.json<br/>НЕ создаётся]
+    G --> H[proactive_executor<br/>ничего не чинит]
+
+    style D fill:#ff6b6b
+    style E fill:#ff6b6b
+    style F fill:#ff0000,color:#fff
+```
+
+### Симптомы
+
+| Что делаешь | Результат |
+|-------------|-----------|
+| `opencode.exe run "Say OK"` из **терминала** | ✅ Работает, возвращает "Hello!" |
+| **Ту же команду** через `subprocess.run()` из Python | ❌ Виснет 120 секунд → таймаут |
+
+---
+
+## �� Почему так происходит (подозрения подтверждаются)
+
+### 1. **TTY detection — это главная причина** 
+
+OpenCode — это **Node.js CLI**, который определяет, запущен ли он в интерактивном терминале (с TTY/PTY). Когда ты запускаешь его из `subprocess` в Python на Windows — **TTY нет**. OpenCode думает, что он в "неинтерактивном" окружении, и начинает ждать ввод от пользователя, которого никогда не будет.
+
+> OpenCode's shell environment is strictly **non-interactive**. It lacks a TTY/PTY, meaning any command that waits for user input, confirmation, or launches a UI will hang indefinitely and timeout. 
+
+### 2. **Windows-specific проблемы с обёртками** 
+
+npm-обёртка `opencode.ps1` на Windows вызывает `/bin/sh.exe` — которого в нормальной Windows нет. Это ломает вызов.
+
+### 3. **Node.js child_process ведёт себя иначе без TTY**
+
+Некоторые CLI-инструменты на Node.js при запуске без TTY:
+- Не флашат stdout
+- Ждут сигнала, что pipe открыт
+- Виснут в ожидании "нормального" терминала
+
+---
+
+## ��️ Решения (от простого к сложному)
+
+### Решение 1: Использовать `agent-zw` (проще всего)
+
+Это специальный wrapper, который решает именно твою проблему — таймауты и зависания subprocess .
+
+```bash
+npm install -g agent-zw
+```
+
+В Python:
+```python
+# Вместо subprocess.run(["opencode.exe", ...])
+subprocess.run(["agent-run", "120", "opencode", "run", prompt])
+```
+
+`agent-run` сам:
+- Убивает команду по таймауту
+- Обрезает огромный вывод
+- Работает на Windows через .cmd/.ps1
+
+### Решение 2: Использовать OpenCode через HTTP API (надежнее)
+
+Запусти OpenCode в режиме сервера один раз :
+
+```bash
+# В отдельном окне терминала (или как фоновый процесс)
+opencode serve --port 3000
+```
+
+А в Python просто шли HTTP запросы — без subprocess и TTY-проблем:
+
+```python
+import requests
+
+response = requests.post(
+    "http://localhost:3000/api/run",
+    json={
+        "prompt": "Say OK",
+        "model": "mimo-v2.5-free"
+    },
+    timeout=120
+)
+print(response.json())
+```
+
+### Решение 3: Обойти opencode полностью (альтернатива OpenRouter)
+
+Ты уже пробовал OpenRouter через `requests` и получил exit 1. Проблема может быть в API-ключе или формате запроса.
+
+Вот рабочий пример прямого вызова через `requests` (без opencode):
+
+```python
+import requests
+
+response = requests.post(
+    "https://openrouter.ai/api/v1/chat/completions",
+    headers={
+        "Authorization": f"Bearer {os.environ['OPENROUTER_API_KEY']}",
+        "Content-Type": "application/json"
+    },
+    json={
+        "model": "nousresearch/hermes-3-llama-3.1-405b:free",
+        "messages": [
+            {"role": "user", "content": "Say OK"}
+        ],
+        "max_tokens": 50
+    },
+    timeout=60
+)
+
+if response.status_code == 200:
+    return response.json()["choices"][0]["message"]["content"]
+else:
+    print(f"Error {response.status_code}: {response.text}")
+```
+
+### Решение 4: Исправить subprocess вызов (грязный хак)
+
+Создай **временный batch-файл** и запускай его через `shell=True`:
+
+```python
+import tempfile
+import subprocess
+
+with tempfile.NamedTemporaryFile(mode='w', suffix='.bat', delete=False) as f:
+    f.write(f'@echo off\nopencode.exe run "{prompt}" --model mimo-v2.5-free\n')
+    temp_file = f.name
+
+result = subprocess.run(
+    ['cmd.exe', '/c', temp_file],
+    capture_output=True,
+    text=True,
+    timeout=120
+)
+```
+
+Это костыль, но иногда работает, когда прямой вызов падает.
+
+---
+
+## �� Сравнение решений для твоего случая
+
+| Решение | Сложность | Надёжность | Убирает TTY проблему? | Работает на Windows |
+|---------|-----------|------------|----------------------|---------------------|
+| agent-zw wrapper | ⭐ Low | �� High | ✅ Да | ✅ Да |
+| HTTP API (opencode serve) | ⭐⭐ Medium | �� High | ✅ Да | ✅ Да |
+| Прямой OpenRouter API | ⭐ Low | �� Medium | N/A (не использует opencode) | ✅ Да |
+| Batch-файл костыль | ⭐ Low | �� Low | �� Частично | ✅ Да |
+
+---
+
+## �� Что я рекомендую именно тебе
+
+**Выбери один из двух путей:**
+
+### Путь А (быстрый) — `agent-zw`
+```bash
+npm install -g agent-zw
+```
+Поменяй в `llm_analyst.py`:
+```python
+# Было
+subprocess.run(["opencode", "run", prompt], timeout=120)
+
+# Стало
+subprocess.run(["agent-run", "120", "opencode", "run", prompt])
+```
+
+### Путь Б (надежный) — прямой OpenRouter API
+
+Выясни, почему у тебя `requests` возвращает exit 1. Скорее всего:
+- Не хватает `OPENROUTER_API_KEY` в окружении Python
+- Неправильный URL или headers
+- Модель недоступна (free модели иногда выпиливают)
+
+Проверь окружение в Python:
+```python
+import os
+print(os.environ.get("OPENROUTER_API_KEY", "NOT FOUND"))
+```
+
+---
+
+## �� Дополнительный совет
+
+Если выберешь **opencode serve** (решение 2) — это самый правильный путь. Ты поднимаешь сервер один раз, а дальше все вызовы идут по HTTP. Никаких TTY-проблем, никаких таймаутов от subprocess.
+
+OpenCode поддерживает этот режим нативно :
+```bash
+opencode serve --port 3000 --model mimo-v2.5-free
+```
+
+После этого твой `llm_analyst.py` превращается в обычный HTTP-клиент — и всё работает.
+
+---
+
+Что выберешь? Нужна помощь с кодом для любого из решений — пиши.

@@ -1,0 +1,66 @@
+{
+  "base_url": "https://gitlab.com",
+  "login_required": true,
+  "auth_type": "cookie",
+  "storage_state": "gitlab_auth.json",
+  "selectors": {
+    "new_project_button": "a[href*=\"/projects/new\"]",
+    "project_name_input": "input[name=\"project[name]\"]",
+    "project_description": "textarea[name=\"project[description]\"]",
+    "visibility_private": "input[value=\"private\"]",
+    "visibility_internal": "input[value=\"internal\"]",
+    "visibility_public": "input[value=\"public\"]",
+    "create_button": "button[type=\"submit\"]",
+    "file_upload_button": "a[href*=\"upload\"]",
+    "file_upload_input": "input[type=\"file\"]",
+    "commit_message": "input[name=\"commit_message\"]",
+    "commit_button": "button[type=\"submit\"]",
+    "merge_request_tab": "a[href*=\"/merge_requests\"]",
+    "new_mr_button": "a[href*=\"/merge_requests/new\"]",
+    "mr_title": "input[name=\"merge_request[title]\"]",
+    "mr_description": "textarea[name=\"merge_request[description]\"]",
+    "target_branch": "select[name=\"merge_request[target_branch]\"]",
+    "source_branch": "select[name=\"merge_request[source_branch]\"]",
+    "create_mr_button": "button[type=\"submit\"]",
+    "pipeline_tab": "a[href*=\"/pipelines\"]",
+    "run_pipeline_button": "button:has-text(\"Run pipeline\")",
+    "variable_key": "input[name=\"variable[key]\"]",
+    "variable_value": "input[name=\"variable[value]\"]",
+    "save_variable": "button:has-text(\"Save variables\")"
+  },
+  "steps": {
+    "create_project": [
+      { "action": "goto", "url": "/projects/new" },
+      { "action": "wait", "selector": "input[name=\"project[name]\"]" },
+      { "action": "fill", "selector": "input[name=\"project[name]\"]", "param": "name" },
+      { "action": "fill", "selector": "textarea[name=\"project[description]\"]", "param": "description" },
+      { "action": "click", "selector": "input[value=\"private\"]", "condition": "private" },
+      { "action": "click", "selector": "button[type=\"submit\"]" },
+      { "action": "wait_for_navigation" }
+    ],
+    "create_merge_request": [
+      { "action": "goto", "url": "{project_url}/-/merge_requests/new" },
+      { "action": "wait", "selector": "input[name=\"merge_request[title]\"]" },
+      { "action": "fill", "selector": "input[name=\"merge_request[title]\"]", "param": "title" },
+      { "action": "fill", "selector": "textarea[name=\"merge_request[description]\"]", "param": "description" },
+      { "action": "select", "selector": "select[name=\"merge_request[target_branch]\"]", "param": "target_branch" },
+      { "action": "select", "selector": "select[name=\"merge_request[source_branch]\"]", "param": "source_branch" },
+      { "action": "click", "selector": "button[type=\"submit\"]" }
+    ],
+    "run_pipeline": [
+      { "action": "goto", "url": "{project_url}/-/pipelines" },
+      { "action": "click", "selector": "button:has-text(\"Run pipeline\")" },
+      { "action": "wait", "selector": "select[name=\"ref\"]" },
+      { "action": "select", "selector": "select[name=\"ref\"]", "param": "branch" },
+      { "action": "click", "selector": "button:has-text(\"Run pipeline\")" }
+    ],
+    "add_ci_variable": [
+      { "action": "goto", "url": "{project_url}/-/settings/ci_cd" },
+      { "action": "click", "selector": "button:has-text(\"Expand\")", "selector_parent": "section:has-text(\"Variables\")" },
+      { "action": "click", "selector": "button:has-text(\"Add variable\")" },
+      { "action": "fill", "selector": "input[name=\"variable[key]\"]", "param": "key" },
+      { "action": "fill", "selector": "input[name=\"variable[value]\"]", "param": "value" },
+      { "action": "click", "selector": "button:has-text(\"Save variables\")" }
+    ]
+  }
+}

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head><meta charset="UTF-8"><title>Карта сервисов — Экосистема</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0d1117;color:#e6edf3;font-family:-apple-system,system-ui,sans-serif;padding:30px}
+h1{color:#58a6ff;text-align:center;margin-bottom:5px}
+.sub{text-align:center;color:#8b949e;margin-bottom:25px}
+.cluster{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:20px;margin-bottom:20px}
+.cluster h2{color:#ff7b72;font-size:14px;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+.card{background:#1c2128;border:1px solid #30363d;border-radius:8px;padding:12px;transition:.2s}
+.card:hover{border-color:#58a6ff;box-shadow:0 0 12px rgba(88,166,255,.15)}
+.card .name{color:#58a6ff;font-weight:600;font-size:14px}
+.card .url{color:#8b949e;font-size:12px;margin:3px 0}
+.card .desc{color:#c9d1d9;font-size:13px}
+.card .meta{color:#8b949e;font-size:11px;margin-top:6px}
+.tag{display:inline-block;background:#1f6feb33;color:#58a6ff;font-size:10px;padding:1px 6px;border-radius:4px;margin:2px}
+.tag.green{background:#23863633;color:#3fb950}
+.tag.yellow{background:#d2992233;color:#d29922}
+/* Arrow connections */
+.arrows{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:20px;margin-bottom:20px}
+.arrows svg{width:100%;max-height:400px}
+.flow{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:15px 0}
+.flow-item{background:#1c2128;border:1px solid #30363d;padding:8px 14px;border-radius:6px;font-size:13px;position:relative}
+.flow-arrow{color:#58a6ff;font-size:20px;display:flex;align-items:center}
+/* Legend */
+.legend{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:15px;margin-bottom:20px;display:flex;gap:20px;flex-wrap:wrap;justify-content:center}
+.legend-item{font-size:12px;color:#8b949e}
+.legend-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:middle}
+</style></head>
+<body>
+
+<h1>🌐 Экосистема сервисов</h1>
+<p class="sub">Полная карта — что с чем связано и как использовать</p>
+
+<!-- Flow -->
+<div class="arrows">
+<h2 style="color:#58a6ff;font-size:14px;text-transform:uppercase;letter-spacing:1px;margin-bottom:15px">⬡ ГРАФ: Ресурсы → Инструменты → Публикация → Трафик → Деньги</h2>
+<div class="flow">
+  <div class="flow-item">🎯 Идея / Ниша</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-item">🧠 AI-генерация<br><small>Bing/Suno/ElevenLabs</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-item">📄 Контент<br><small>Текст/Изо/Видео</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-item">🌍 Хостинг<br><small>GitHub Pages/Carrd/Tilda</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-item">🔗 Домен<br><small>Freenom/NIC.UA</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-item">📱 Продвижение<br><small>Накрутка/Фриланс</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-item">💰 Монетизация<br><small>CPA/Telega.io/Crypto</small></div>
+</div>
+</div>
+
+<!-- Legend -->
+<div class="legend">
+  <span class="legend-item"><span class="legend-dot" style="background:#58a6ff"></span> AI-генерация</span>
+  <span class="legend-item"><span class="legend-dot" style="background:#ff7b72"></span> Хостинг/Домены</span>
+  <span class="legend-item"><span class="legend-dot" style="background:#3fb950"></span> Продвижение</span>
+  <span class="legend-item"><span class="legend-dot" style="background:#d29922"></span> Деньги</span>
+  <span class="legend-item"><span class="legend-dot" style="background:#bc8cff"></span> Помощники</span>
+  <span class="legend-item">🟢 mapped</span>
+  <span class="legend-item">🟡 unmapped</span>
+</div>
+
+<!-- Generated clusters -->
+<div class="cluster">
+<h2>🎨 AI — Изображения (доступ: Bing ✅, остальные через прокси)</h2>
+<div class="grid">
+  <div class="card"><div class="name">🟢 Bing Image Creator</div><div class="url">bing.com/images/create</div><div class="desc">DALL-E 3, 15-25 gen/день</div><div class="meta"><span class="tag">mapped</span><span class="tag green">free</span></div></div>
+  <div class="card"><div class="name">🟡 Leonardo AI</div><div class="url">leonardo.ai</div><div class="desc">~150 tokens/день</div><div class="meta"><span class="tag yellow">Cloudflare</span></div></div>
+  <div class="card"><div class="name">🟡 Playground AI</div><div class="url">playgroundai.com</div><div class="desc">500 gen/мес</div><div class="meta"><span class="tag green">proxy works</span></div></div>
+  <div class="card"><div class="name">🟢 Pollinations AI</div><div class="url">pollinations.ai</div><div class="desc">Безлимит FLUX, без API ключа</div><div class="meta"><span class="tag green">используется</span></div></div>
+</div></div>
+
+<div class="cluster">
+<h2>🎬 AI — Видео</h2>
+<div class="grid">
+  <div class="card"><div class="name">🟡 Runway ML</div><div class="url">runwayml.com</div><div class="desc">~125 creds/мес</div><div class="meta"><span class="tag green">proxy works</span></div></div>
+  <div class="card"><div class="name">🟡 Pika.art</div><div class="url">pika.art</div><div class="desc">~30 gen/день</div><div class="meta"><span class="tag green">proxy works</span></div></div>
+  <div class="card"><div class="name">🟡 CapCut</div><div class="url">capcut.com</div><div class="desc">Базовые функции, водяной знак</div><div class="meta"><span class="tag green">proxy works</span></div></div>
+</div></div>
+
+<div class="cluster">
+<h2>🎤 AI — Голос и Музыка</h2>
+<div class="grid">
+  <div class="card"><div class="name">🟡 ElevenLabs</div><div class="url">elevenlabs.io</div><div class="desc">~10 мин/мес, 5K+ голосов</div><div class="meta"><span class="tag green">proxy works</span></div></div>
+  <div class="card"><div class="name">🟡 Suno</div><div class="url">suno.com</div><div class="desc">10 песен/день</div><div class="meta"><span class="tag green">proxy works</span></div></div>
+</div></div>
+
+<div class="cluster">
+<h2>🌍 Хостинг и Сайты</h2>
+<div class="grid">
+  <div class="card"><div class="name">🟢 Tilda</div><div class="url">tilda.cc</div><div class="desc">1 сайт, 50 стр, конструктор с AI</div><div class="meta"><span class="tag">mapped</span><span class="tag green">free</span></div></div>
+  <div class="card"><div class="name">🟡 Carrd</div><div class="url">carrd.co</div><div class="desc">3 сайта, адаптивные шаблоны</div><div class="meta"><span class="tag green">proxy works</span></div></div>
+  <div class="card"><div class="name">🟢 GitHub Pages</div><div class="url">pages.github.com</div><div class="desc">Статика, 1GB, бесплатно</div><div class="meta"><span class="tag green">free</span></div></div>
+  <div class="card"><div class="name">🟢 Netlify</div><div class="url">netlify.com</div><div class="desc">Формы, функции, 100GB</div><div class="meta"><span class="tag green">free</span></div></div>
+  <div class="card"><div class="name">🟢 Vercel</div><div class="url">vercel.com</div><div class="desc">Serverless, 100GB</div><div class="meta"><span class="tag green">free</span></div></div>
+  <div class="card"><div class="name">🟢 Cloudflare Pages</div><div class="url">pages.cloudflare.com</div><div class="desc">Неограниченный трафик</div><div class="meta"><span class="tag green">free</span></div></div>
+</div></div>
+
+<div class="cluster">
+<h2>🔗 Домены и Публикация</h2>
+<div class="grid">
+  <div class="card"><div class="name">Freenom</div><div class="url">freenom.com</div><div class="desc">Бесплатные .tk .ml .ga .cf</div></div>
+  <div class="card"><div class="name">NIC.UA</div><div class="url">nic.ua</div><div class="desc">Бюджетные украинские домены</div></div>
+  <div class="card"><div class="name">Cloudflare Registrar</div><div class="url">cloudflare.com</div><div class="desc">Себестоимость доменов</div></div>
+  <div class="card"><div class="name">.tk домены</div><div class="url">my.dot.tk</div><div class="desc">Бесплатные, продление каждый год</div></div>
+</div></div>
+
+<div class="cluster">
+<h2>👥 Фриланс (найти исполнителя)</h2>
+<div class="grid">
+  <div class="card"><div class="name">FL.ru</div><div class="url">fl.ru</div><div class="desc">Крупнейшая RU биржа</div></div>
+  <div class="card"><div class="name">Kwork</div><div class="url">kwork.ru</div><div class="desc">Услуги от 500р</div></div>
+  <div class="card"><div class="name">WeBlancer</div><div class="url">weblancer.net</div><div class="desc">RU/UA фриланс</div></div>
+  <div class="card"><div class="name">Upwork</div><div class="url">upwork.com</div><div class="desc">Мир фриланс</div></div>
+  <div class="card"><div class="name">Fiverr</div><div class="url">fiverr.com</div><div class="desc">Услуги от $5</div></div>
+  <div class="card"><div class="name">Telegram чаты</div><div class="url">t.me</div><div class="desc">Поиск исполнителей в ТГ</div></div>
+</div></div>
+
+<div class="cluster">
+<h2>📈 Накрутка соцсетей</h2>
+<div class="grid">
+  <div class="card"><div class="name">Smos</div><div class="desc">Панель накрутки подписчиков/лайков</div></div>
+  <div class="card"><div class="name">JustAnotherPanel</div><div class="desc">SMM панель</div></div>
+  <div class="card"><div class="name">TelegramBooster</div><div class="desc">Накрутка TG каналов</div></div>
+  <div class="card"><div class="name">SOCIALIZE</div><div class="desc">Приём USDT/крипты</div></div>
+</div></div>
+
+<div class="cluster">
+<h2>💰 CPA и Монетизация</h2>
+<div class="grid">
+  <div class="card"><div class="name">CPAGrip</div><div class="desc">CPA, тизеры, мин. $10</div></div>
+  <div class="card"><div class="name">Adverline</div><div class="desc">CPA сеть</div></div>
+  <div class="card"><div class="name">Monetizer</div><div class="desc">Smartlinks, CPA</div></div>
+  <div class="card"><div class="name">OGAds</div><div class="desc">CPA, incent-трафик</div></div>
+  <div class="card"><div class="name">Telega.io</div><div class="desc">Продажа TG каналов</div></div>
+  <div class="card"><div class="name">TGStat Market</div><div class="desc">Биржа TG каналов</div></div>
+  <div class="card"><div class="name">KuCoin</div><div class="desc">Криптобиржа</div></div>
+  <div class="card"><div class="name">BestChange</div><div class="desc">Обменники крипты</div></div>
+</div></div>
+
+<p class="sub" style="margin-top:25px">📁 JSON: <code>file:///D:/Portable_Soft/hermes/data/services_registry.json</code><br>
+🔧 Граф — редактируй, добавляй связи, перестраивай под свою схему</p>
+
+</body></html>

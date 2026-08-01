@@ -1,0 +1,22 @@
+name: github-deploy
+role: deployer
+description: Deploy folder to GitHub Pages
+params:
+  - name: folder
+    type: string
+    required: true
+  - name: repo
+    type: string
+    default: "McDuck-S8/hermes-salon-landing"
+    required: false
+  - name: branch
+    type: string
+    default: "gh-pages"
+    required: false
+script: |
+  cd {{folder}}
+  git add .
+  git commit -m "Deploy {{folder}} $(date)"
+  git push origin {{branch}}
+timeout: 120
+tags: ["deploy", "github", "pages"]

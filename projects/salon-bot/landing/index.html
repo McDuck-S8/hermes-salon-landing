@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram-бот для салона красоты — Запись онлайн за 5 минут</title>
+    <meta name="description" content="Telegram-бот для автоматизации записи клиентов в салон красоты. Экономит 3 часа в день. ROI 462%.">
+    <meta name="keywords" content="telegram бот, салон красоты, запись онлайн, автоматизация, крым, симферополь">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0a; color: #e0e0e0; line-height: 1.6; }
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+        .hero { text-align: center; padding: 60px 20px 40px; }
+        .hero h1 { font-size: 2.2em; color: #fff; margin-bottom: 15px; }
+        .hero h1 span { color: #6c5ce7; }
+        .hero p { font-size: 1.2em; color: #999; margin-bottom: 30px; }
+        .badge { display: inline-block; background: #6c5ce7; color: #fff; padding: 8px 20px; border-radius: 20px; font-weight: 600; margin: 5px; }
+        .badge.green { background: #00b894; }
+        .badge.orange { background: #fdcb6e; color: #333; }
+        .section { padding: 40px 20px; }
+        .section h2 { font-size: 1.8em; margin-bottom: 20px; color: #fff; }
+        .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+        .card { background: #1a1a2e; border-radius: 12px; padding: 25px; border: 1px solid #333; }
+        .card h3 { color: #6c5ce7; margin-bottom: 10px; font-size: 1.1em; }
+        .card p { color: #999; font-size: 0.95em; }
+        .card .icon { font-size: 2em; margin-bottom: 10px; }
+        .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; text-align: center; margin: 30px 0; }
+        .stat { background: #1a1a2e; padding: 30px; border-radius: 12px; }
+        .stat .number { font-size: 2.5em; font-weight: 700; color: #6c5ce7; }
+        .stat .label { color: #999; font-size: 0.9em; margin-top: 5px; }
+        .pricing { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+        .price-card { background: #1a1a2e; border-radius: 12px; padding: 30px; text-align: center; border: 2px solid #333; }
+        .price-card.popular { border-color: #6c5ce7; }
+        .price-card h3 { font-size: 1.3em; margin-bottom: 10px; }
+        .price-card .price { font-size: 2.5em; font-weight: 700; color: #fff; margin: 15px 0; }
+        .price-card .price small { font-size: 0.4em; color: #999; }
+        .price-card ul { list-style: none; text-align: left; margin: 20px 0; }
+        .price-card ul li { padding: 8px 0; color: #ccc; }
+        .price-card ul li::before { content: "✓ "; color: #00b894; }
+        .cta { background: linear-gradient(135deg, #6c5ce7, #a855f7); color: #fff; border: none; padding: 18px 40px; border-radius: 12px; font-size: 1.2em; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; margin-top: 15px; transition: transform 0.2s; }
+        .cta:hover { transform: scale(1.05); }
+        .footer { text-align: center; padding: 40px 20px; color: #666; font-size: 0.9em; }
+        .demo-link { color: #6c5ce7; text-decoration: none; border-bottom: 1px dashed #6c5ce7; }
+        .demo-link:hover { color: #a855f7; }
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 1.6em; }
+            .stats { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>Telegram-бот для <span>салона красоты</span></h1>
+        <p>Клиент записывается через Telegram за 15 секунд. Бот напоминает о визите. Вы получаете статистику.</p>
+        <div>
+            <span class="badge green">ROI 462%</span>
+            <span class="badge orange">5 минут на установку</span>
+            <span class="badge">24/7 без выходных</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="section">
+            <h2>Как это работает</h2>
+            <div class="cards">
+                <div class="card">
+                    <div class="icon">📱</div>
+                    <h3>Клиент</h3>
+                    <p>Открывает Telegram, нажимает /start, выбирает мастера, услугу и время. Готово.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">🤖</div>
+                    <h3>Бот</h3>
+                    <p>Мгновенно записывает, отправляет подтверждение и напоминание за 1 час до визита.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">📊</div>
+                    <h3>Администратор</h3>
+                    <p>Видит расписание, статистику визитов и выручки в одном окне. Управляет через /admin.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">👩‍🎨</div>
+                    <h3>Мастер</h3>
+                    <p>Получает расписание на день, подтверждает или переносит записи. Всё в Telegram.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat">
+                <div class="number">3ч</div>
+                <div class="label">экономии в день</div>
+            </div>
+            <div class="stat">
+                <div class="number">50+</div>
+                <div class="label">клиентов в месяц</div>
+            </div>
+            <div class="stat">
+                <div class="number">0</div>
+                <div class="label">пропущенных записей</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Что включено</h2>
+            <div class="cards">
+                <div class="card">
+                    <div class="icon">📅</div>
+                    <h3>Онлайн-запись</h3>
+                    <p>Выбор мастера → услуги → дата/время. Автоматическая проверка доступных слотов.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">🔔</div>
+                    <h3>Напоминания</h3>
+                    <p>За 1 час до визита. Автоматически. Клиент не забудет и не опоздает.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">💌</div>
+                    <h3>Рассылка</h3>
+                    <p>"Давно не были?" через 30 дней. Возврат клиентов без усилий.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">🌐</div>
+                    <h3>Mini App</h3>
+                    <p>Веб-запись прямо в Telegram. Современный интерфейс, работает на любом устройстве.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Тарифы</h2>
+            <div class="pricing">
+                <div class="price-card">
+                    <h3>Базовый</h3>
+                    <div class="price">1 000₽<small>/мес</small></div>
+                    <ul>
+                        <li>Telegram-бот</li>
+                        <li>Запись + напоминания</li>
+                        <li>Панель администратора</li>
+                        <li>Техподдержка</li>
+                    </ul>
+                    <a href="https://t.me/HotelCrimeaBot" class="cta" style="background:#333;">Демо</a>
+                </div>
+                <div class="price-card popular">
+                    <h3>⭐ Стандарт</h3>
+                    <div class="price">3 000₽<small> разово</small></div>
+                    <ul>
+                        <li>Всё из Базового</li>
+                        <li>Mini App запись</li>
+                        <li>Рассылка клиентам</li>
+                        <li>Настройка под ваш салон</li>
+                    </ul>
+                    <a href="https://t.me/HotelCrimeaBot" class="cta">Заказать</a>
+                </div>
+                <div class="price-card">
+                    <h3>Премиум</h3>
+                    <div class="price">5 000₽<small> разово</small></div>
+                    <ul>
+                        <li>Всё из Стандарт</li>
+                        <li>Обучение персонала</li>
+                        <li>Интеграция с оплатой</li>
+                        <li>30 дней поддержки</li>
+                    </ul>
+                    <a href="https://t.me/HotelCrimeaBot" class="cta" style="background:#333;">Демо</a>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align:center; padding:40px 20px;">
+            <h2 style="color:#fff; margin-bottom:15px;">Попробуйте демо-бота</h2>
+            <p style="color:#999; margin-bottom:20px;">Посмотрите как выглядит бот для ваших клиентов</p>
+            <a href="https://t.me/HotelCrimeaBot" class="cta">Открыть @HotelCrimeaBot →</a>
+        </div>
+
+        <div class="footer">
+            <p>Telegram Bot для салона красоты — Powered by AI</p>
+            <p style="margin-top:10px;">Крым · Симферополь · 2026</p>
+        </div>
+    </div>
+</body>
+</html>

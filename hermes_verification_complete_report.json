@@ -1,0 +1,60 @@
+{
+  "timestamp": "2026-07-20T02:52:28.323961",
+  "verification_status": "FAIL",
+  "components": {
+    "ui_ux_pro_max": {
+      "status": "FAIL",
+      "details": {
+        "status": "FAIL",
+        "issues": [
+          "UI/UX documentation (skills\\ui-ux-pro-max\\src\\ui-ux-pro-max\\SKILL.md)"
+        ]
+      },
+      "issues": [
+        "UI/UX documentation (skills\\ui-ux-pro-max\\src\\ui-ux-pro-max\\SKILL.md)"
+      ]
+    },
+    "validate_flow": {
+      "status": "FAIL",
+      "details": {
+        "status": "FAIL",
+        "issues": [
+          "Validation report generation"
+        ]
+      },
+      "issues": [
+        "Validation report generation"
+      ]
+    },
+    "generate_income_pipeline_flow": {
+      "status": "FAIL",
+      "details": {
+        "status": "FAIL",
+        "issues": [
+          "Closing HTML tag"
+        ]
+      },
+      "issues": [
+        "Closing HTML tag"
+      ]
+    },
+    "hermes_integration": {
+      "status": "VALID",
+      "details": {
+        "skills_directory_exists": true,
+        "ui_ux_pro_max_in_skills": true,
+        "skill_json_valid": true,
+        "skill_loading_available": true,
+        "issues": [],
+        "status": "VALID"
+      },
+      "issues": []
+    }
+  },
+  "summary": {
+    "total_steps": 4,
+    "passed": 0,
+    "failed": 3,
+    "warnings": 0
+  }
+}

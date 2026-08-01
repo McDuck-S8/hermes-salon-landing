@@ -16,6 +16,13 @@ def run_script(script, *args):
     return result.stdout.strip(), result.stderr.strip(), result.returncode
 
 def main():
+    # Heartbeat: module alive
+    try:
+        from chain_heartbeat import beat
+        beat("pipeline_cron")
+    except ImportError:
+        pass
+
     print("=" * 60)
     print("HERMES STUDIO — Weekly Hot Leads Pipeline")
     print("=" * 60)

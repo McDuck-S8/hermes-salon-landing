@@ -1,0 +1,29 @@
+«brain_daemon.py не должен работать по cron. 6 часов — это неэффективно. Ты уже построил событийную тягу.
+
+Переделай brain_daemon.py:
+
+Удали --loop режим. Демон не спит 6 часов. Он ждёт событие.
+
+Добавь триггер в event_bus:
+
+Новое событие: knowledge_cube_updated
+
+Источник: kc_rag.py или cube_feeder.py после вставки новых записей → emit_event("knowledge_cube_updated", {"count": 5, "domains": ["bugfix", "learning"]})
+
+brain_daemon.py становится обработчиком этого события:
+
+Получает событие → подключается к knowledge_cube.db
+
+Анализирует ТОЛЬКО новые записи (по timestamp > последнего анализа)
+
+Выявляет паттерны
+
+Пишет в cache/brain_insights.md
+
+Обновляет MEMORY.md
+
+Зарегистрируй обработчик в DIRECT_EVENT_HANDLERS:
+
+"knowledge_cube_updated" → brain_daemon.py
+
+Результат: brain_daemon срабатывает мгновенно при появлении новых знаний. Не ждёт 6 часов.»**

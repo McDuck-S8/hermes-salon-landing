@@ -1,0 +1,189 @@
+{
+  "version": "1.0",
+  "updated": "2026-07-24",
+  "categories": {
+    "ai_image": "AI-генерация изображений",
+    "ai_video": "AI-генерация видео",
+    "ai_voice": "AI-генерация голоса/музыки",
+    "ai_site": "Конструкторы сайтов с AI",
+    "hosting": "Хостинг и деплой",
+    "domains": "Доменные имена",
+    "freelance": "Биржи фриланса",
+    "smm": "Накрутка соцсетей",
+    "traffic": "Источники трафика",
+    "payment": "Приём платежей",
+    "cpa": "CPA-сети",
+    "tools": "Вспомогательные инструменты"
+  },
+  "services": [
+    {
+      "id": "bing-create",
+      "name": "Bing Image Creator",
+      "url": "https://www.bing.com/images/create",
+      "category": "ai_image",
+      "free": "15-25 gen/день, DALL-E 3",
+      "login": true,
+      "vpn": false,
+      "proxy": true,
+      "mapped": true,
+      "path": "skills/site-maps/bing-create/SKILL.md"
+    },
+    {
+      "id": "leonardo-ai",
+      "name": "Leonardo AI",
+      "url": "https://leonardo.ai",
+      "category": "ai_image",
+      "free": "~150 tokens/день",
+      "login": true,
+      "vpn": true,
+      "proxy": false,
+      "mapped": false,
+      "note": "Cloudflare — нужны резиденты"
+    },
+    {
+      "id": "playground-ai",
+      "name": "Playground AI",
+      "url": "https://playgroundai.com",
+      "category": "ai_image",
+      "free": "500 gen/мес",
+      "login": true,
+      "vpn": false,
+      "proxy": true,
+      "mapped": false
+    },
+    {
+      "id": "runway-ml",
+      "name": "Runway ML",
+      "url": "https://runwayml.com",
+      "category": "ai_video",
+      "free": "~125 creds/мес",
+      "login": true,
+      "vpn": false,
+      "proxy": true,
+      "mapped": false
+    },
+    {
+      "id": "pika-art",
+      "name": "Pika.art",
+      "url": "https://pika.art",
+      "category": "ai_video",
+      "free": "~30 gen/день",
+      "login": true,
+      "vpn": false,
+      "proxy": true,
+      "mapped": false
+    },
+    {
+      "id": "capcut",
+      "name": "CapCut",
+      "url": "https://www.capcut.com",
+      "category": "ai_video",
+      "free": "Базовые функции, водяной знак",
+      "login": false,
+      "vpn": false,
+      "proxy": true,
+      "mapped": false
+    },
+    {
+      "id": "elevenlabs",
+      "name": "ElevenLabs",
+      "url": "https://elevenlabs.io",
+      "category": "ai_voice",
+      "free": "~10 мин/мес, 5K+ голосов",
+      "login": true,
+      "vpn": false,
+      "proxy": true,
+      "mapped": false
+    },
+    {
+      "id": "suno",
+      "name": "Suno",
+      "url": "https://suno.com",
+      "category": "ai_voice",
+      "free": "10 песен/день",
+      "login": true,
+      "vpn": false,
+      "proxy": true,
+      "mapped": false
+    },
+    {
+      "id": "tilda",
+      "name": "Tilda",
+      "url": "https://tilda.cc",
+      "category": "ai_site",
+      "free": "1 сайт, 50 стр",
+      "login": true,
+      "vpn": false,
+      "proxy": false,
+      "mapped": true,
+      "path": "skills/site-maps/tilda/SKILL.md"
+    },
+    {
+      "id": "carrd",
+      "name": "Carrd",
+      "url": "https://carrd.co",
+      "category": "ai_site",
+      "free": "3 сайта, базовые шаблоны",
+      "login": true,
+      "vpn": false,
+      "proxy": true,
+      "mapped": false
+    },
+    {
+      "id": "pollinations",
+      "name": "Pollinations AI",
+      "url": "https://pollinations.ai",
+      "category": "ai_image",
+      "free": "Безлимит FLUX, 30s/gen",
+      "login": false,
+      "vpn": false,
+      "proxy": false,
+      "mapped": false,
+      "note": "Уже используется, без API ключа"
+    }
+  ],
+  "infrastructure": {
+    "hosting_free": [
+      {"name": "GitHub Pages", "url": "https://pages.github.com", "desc": "Статика, 1GB, бесплатно"},
+      {"name": "Netlify", "url": "https://netlify.com", "desc": "Формы, функции, 100GB"},
+      {"name": "Vercel", "url": "https://vercel.com", "desc": "Serverless, 100GB"},
+      {"name": "Cloudflare Pages", "url": "https://pages.cloudflare.com", "desc": "Неогранич. трафик"},
+      {"name": "Render", "url": "https://render.com", "desc": "Статика+бэкенд"},
+      {"name": "PythonAnywhere", "url": "https://pythonanywhere.com", "desc": "Python хостинг"}
+    ],
+    "domains_free": [
+      {"name": "Freenom", "url": "https://freenom.com", "desc": "Бесплатные .tk .ml .ga .cf"},
+      {"name": "NIC.UA", "url": "https://nic.ua", "desc": "Бюджетные .ua"},
+      {"name": ".tk домены", "url": "https://my.dot.tk", "desc": "Бесплатные, продление"},
+      {"name": "Cloudflare Registrar", "url": "https://cloudflare.com", "desc": "Себестоимость"}
+    ],
+    "freelance": [
+      {"name": "FL.ru", "url": "https://fl.ru", "desc": "RU фриланс"},
+      {"name": "Kwork", "url": "https://kwork.ru", "desc": "Биржа услуг от 500р"},
+      {"name": "WeBlancer", "url": "https://weblancer.net", "desc": "RU/UA фриланс"},
+      {"name": "Upwork", "url": "https://upwork.com", "desc": "Мир фриланс"},
+      {"name": "Fiverr", "url": "https://fiverr.com", "desc": "Услуги от $5"},
+      {"name": "Telegram чаты", "url": "https://t.me", "desc": "Поиск исполнителей"}
+    ],
+    "smm_services": [
+      {"name": "Smos", "url": "https://smos.ru", "desc": "Накрутка соцсетей"},
+      {"name": "SMM Prime", "url": "", "desc": "Панель накрутки"},
+      {"name": "JustAnotherPanel", "url": "https://justanotherpanel.com", "desc": "Панель SMM"},
+      {"name": "TelegramBooster", "url": "", "desc": "Накрутка TG"},
+      {"name": "SOCIALIZE", "url": "", "desc": "USDT/крипта"}
+    ],
+    "cpa_networks": [
+      {"name": "CPAGrip", "url": "https://cpagrip.com", "desc": "CPA, тизеры, $10 мин"},
+      {"name": "Adverline", "url": "https://adverline.com", "desc": "CPA сеть"},
+      {"name": "Monetizer", "url": "https://monetizer.com", "desc": "Smartlinks, CPA"},
+      {"name": "OGAds", "url": "https://ogads.com", "desc": "CPA, incent"}
+    ],
+    "payment_crypto": [
+      {"name": "BestChange", "url": "https://bestchange.ru", "desc": "Обменники"},
+      {"name": "Telega.io", "url": "https://telega.io", "desc": "Продажа TG каналов"},
+      {"name": "TGStat Market", "url": "https://tgstat.ru/market", "desc": "Биржа TG каналов"},
+      {"name": "Epicchange", "url": "", "desc": "USDT -> RUB"},
+      {"name": "KuCoin", "url": "https://kucoin.com", "desc": "Криптобиржа"}
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+PS D:\Portable_Soft\hermes> wsl ps aux | grep telegram_bot.py | grep -v grep
+grep : Имя "grep" не распознано как имя командлета, функции, файла сценария или выполняемой программы. Проверьте правильность
+написания имени, а также наличие и правильность пути, после чего повторите попытку.
+строка:1 знак:14
++ wsl ps aux | grep telegram_bot.py | grep -v grep
++              ~~~~
+    + CategoryInfo          : ObjectNotFound: (grep:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS D:\Portable_Soft\hermes> wsl tail -50 /tmp/telegram_bot.log
+tail: cannot open '/tmp/telegram_bot.log' for reading: No such file or directory
+PS D:\Portable_Soft\hermes> wsl curl -s "https://api.telegram.org/bot8890942263:AAFKeJTU-Po3lRgGkQxpIZvSQ-UxLVkwcpk/getUpdates"
+{"ok":true,"result":[{"update_id":71343669,
+"message":{"message_id":3,"from":{"id":737433175,"is_bot":false,"first_name":"\u0410\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440","username":"McDuck3","language_code":"ru"},"chat":{"id":737433175,"first_name":"\u0410\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440","username":"McDuck3","type":"private"},"date":1781504809,"text":"/start","entities":[{"offset":0,"length":6,"type":"bot_command"}]}},{"update_id":71343670,
+"message":{"message_id":4,"from":{"id":737433175,"is_bot":false,"first_name":"\u0410\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440","username":"McDuck3","language_code":"ru"},"chat":{"id":737433175,"first_name":"\u0410\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440","username":"McDuck3","type":"private"},"date":1781504819,"text":"\u043f\u0440\u0438\u0432\u0435\u0442"}},{"update_id":71343671,
+"message":{"message_id":5,"from":{"id":737433175,"is_bot":false,"first_name":"\u0410\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440","username":"McDuck3","language_code":"ru"},"chat":{"id":737433175,"first_name":"\u0410\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440","username":"McDuck3","type":"private"},"date":1781504970,"text":"/status","entities":[{"offset":0,"length":7,"type":"bot_command"}]}},{"update_id":71343672,
+"message":{"message_id":6,"from":{"id":737433175,"is_bot":false,"first_name":"\u0410\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440","username":"McDuck3","language_code":"ru"},"chat":{"id":737433175,"first_name":"\u0410\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440","username":"McDuck3","type":"private"},"date":1781505105,"text":"/status","entities":[{"offset":0,"length":7,"type":"bot_command"}]}},{"update_id":71343673,
+"message":{"message_id":7,"from":{"id":737433175,"is_bot":false,"first_name":"\u0410\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440","username":"McDuck3","language_code":"ru"},"chat":{"id":737433175,"first_name":"\u0410\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440","username":"McDuck3","type":"private"},"date":1781505114,"text":"/status","entities":[{"offset":0,"length":7,"type":"bot_command"}]}},{"update_id":71343674,
+"message":{"message_id":8,"from":{"id":737433175,"is_bot":false,"first_name":"\u0410\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440","username":"McDuck3","language_code":"ru"},"chat":{"id":737433175,"first_name":"\u0410\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440","username":"McDuck3","type":"private"},"date":1781505315,"text":"/status","entities":[{"offset":0,"length":7,"type":"bot_command"}]}},{"update_id":71343675,
+"message":{"message_id":9,"from":{"id":737433175,"is_bot":false,"first_name":"\u0410\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440","username":"McDuck3","language_code":"ru"},"chat":{"id":737433175,"first_name":"\u0410\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440","username":"McDuck3","type":"private"},"date":1781505376,"text":"/status","entities":[{"offset":0,"length":7,"type":"bot_command"}]}}]}
+PS D:\Portable_Soft\hermes> wsl curl -s "https://api.telegram.org/bot8890942263:AAFKeJTU-Po3lRgGkQxpIZvSQ-UxLVkwcpk/sendMessage?chat_id=737433175&text=test_from_api"
+PS D:\Portable_Soft\hermes>

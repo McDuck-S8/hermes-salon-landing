@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Income Pipeline — BEFORE vs AFTER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ===== TASTE-SKILL: DESIGN READ =====
+ * Reading this as: Comparison dashboard for technical user (arbitrage operator),
+ * with a clean, data-heavy language, leaning toward:
+ * - Sans-serif primary (Plus Jakarta Sans) — modern but not generic
+ * - High contrast, low visual density, restrained color
+ * - DIALS: VARIANCE=5, MOTION=3, DENSITY=4
+ * - Anti-default: no purple gradients, no glassmorphism, no centered hero
+ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+    --bg: #0a0c10;
+    --surface: #111418;
+    --border: #1e2329;
+    --text-primary: #e8edf2;
+    --text-secondary: #88929e;
+    --text-muted: #5c6570;
+    --accent: #2b825b;
+    --accent-glow: rgba(43, 130, 91, 0.15);
+    --accent-red: #d44242;
+    --accent-yellow: #d4a030;
+    --accent-green: #2b825b;
+    --accent-blue: #3b7dd4;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ===== HEADER (Hero-substitute) =====
+ * taste-skill: Hero fits viewport, max 2 line headline, CTA visible without scroll
+ */
+.header {
+    padding: 32px 40px 0;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+.header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: var(--text-primary);
+}
+.header p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: 6px;
+    max-width: 65ch;
+}
+.header-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+}
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+.btn-primary {
+    background: var(--accent);
+    color: #fff;
+}
+.btn-primary:hover {
+    background: #347a5d;
+    transform: translateY(-1px);
+}
+.btn-secondary {
+    background: var(--surface);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+}
+.btn-secondary:hover {
+    border-color: var(--text-muted);
+    color: var(--text-primary);
+}
+
+/* ===== LAYOUT: BEFORE / AFTER SPLIT ===== */
+.comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    padding: 24px 40px 40px;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+.column {
+    min-width: 0;
+}
+.column-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--border);
+}
+.column-label.before { border-bottom-color: var(--accent-red); }
+.column-label.after { border-bottom-color: var(--accent-green); }
+.column-label .badge {
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+.badge-before {
+    background: var(--accent-red);
+    color: #fff;
+}
+.badge-after {
+    background: var(--accent-green);
+    color: #fff;
+}
+.column-label h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+.column-label .subtitle {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-left: auto;
+}
+
+/* ===== FLOW CARD (shared by both) ===== */
+.flow-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* ===== BEFORE STYLES (cluttered, LLM-default, no design) ===== */
+.before-flow {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    line-height: 1.3;
+    color: #ccc;
+    background: #0d0d0d;
+    padding: 12px;
+    overflow: auto;
+    max-height: 75vh;
+}
+.before-flow .section {
+    margin-bottom: 14px;
+    padding: 8px;
+    border: 1px solid #333;
+    background: #111;
+    border-radius: 4px;
+}
+.before-flow .section-title {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: #888;
+    margin-bottom: 6px;
+}
+.before-flow .item {
+    padding: 2px 4px;
+    border-bottom: 1px solid #1a1a1a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.before-flow .item:last-child { border-bottom: none; }
+.before-flow .arrow-row {
+    text-align: center;
+    color: #555;
+    font-size: 0.5rem;
+    padding: 4px 0;
+}
+.before-flow .tag {
+    display: inline-block;
+    padding: 0 4px;
+    border-radius: 2px;
+    font-size: 0.55rem;
+    font-weight: 700;
+    margin-left: 3px;
+}
+
+/* ===== AFTER STYLES (taste-skill applied) ===== */
+.after-flow {
+    padding: 0;
+    overflow: hidden;
+}
+
+/* taste-skill: tabs for readability (DENSITY=4) */
+.flow-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    overflow-x: auto;
+}
+.flow-tab {
+    padding: 10px 16px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+    font-family: var(--font-sans);
+}
+.flow-tab:hover {
+    color: var(--text-secondary);
+}
+.flow-tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+}
+.flow-tab .count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--border);
+    color: var(--text-muted);
+    font-size: 0.65rem;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 6px;
+    margin-left: 5px;
+    min-width: 18px;
+}
+.flow-tab.active .count {
+    background: var(--accent-glow);
+    color: var(--accent);
+}
+
+/* taste-skill: pane content */
+.flow-pane {
+    display: none;
+    padding: 16px;
+}
+.flow-pane.active { display: block; }
+
+/* taste-skill: group cards within pane */
+.group-card {
+    margin-bottom: 12px;
+}
+.group-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.12s;
+    font-size: 0.82rem;
+    font-weight: 500;
+}
+.group-header:hover {
+    background: rgba(255,255,255,0.06);
+}
+.group-header .count {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-weight: 400;
+}
+.group-items {
+    display: none;
+    padding: 6px 8px 6px 16px;
+    border-left: 2px solid var(--border);
+    margin-left: 6px;
+    margin-top: 4px;
+}
+.group-items.open { display: block; }
+
+/* taste-skill: item row */
+.item-row {
+    display: flex;
+    align-items: center;
+    padding: 4px 0;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    gap: 6px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+.item-row:last-child { border-bottom: none; }
+
+/* taste-skill: status badges - one accent color, saturated < 80% */
+.status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+.dot-unverified { background: var(--accent-red); }
+.dot-testing { background: var(--accent-yellow); }
+.dot-verified { background: var(--accent-green); }
+.dot-unblockable { background: var(--accent-blue); }
+
+.item-label {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.item-blockers {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    flex-shrink: 0;
+}
+.item-num {
+    color: var(--text-muted);
+    font-size: 0.6rem;
+    min-width: 20px;
+    text-align: right;
+}
+
+/* taste-skill: connection arrows */
+.flow-arrow {
+    text-align: center;
+    padding: 6px 0;
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+}
+
+/* taste-skill: stats bar */
+.stats-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 0 16px 16px;
+}
+.stat-card {
+    flex: 1;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 12px;
+    text-align: center;
+}
+.stat-card .stat-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+.stat-card .stat-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+/* taste-skill: color consistency lock */
+.stat-card.unver { border-left: 2px solid var(--accent-red); }
+.stat-card.test { border-left: 2px solid var(--accent-yellow); }
+.stat-card.ver { border-left: 2px solid var(--accent-green); }
+.stat-card.code { border-left: 2px solid var(--accent-blue); }
+
+/* taste-skill: overview flow */
+.overview-flow {
+    padding: 20px;
+}
+.overview-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    align-items: start;
+}
+.overview-box {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    text-align: center;
+}
+.overview-box .icon {
+    font-size: 1.3rem;
+    margin-bottom: 4px;
+}
+.overview-box .title {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: 2px;
+}
+.overview-box .value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+.overview-box .desc {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+.overview-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    padding: 0 2px;
+}
+
+/* taste-skill: responsive */
+@media (max-width: 1100px) {
+    .comparison { grid-template-columns: 1fr; }
+    .header { padding: 24px 20px 0; }
+    .comparison { padding: 16px 20px 32px; }
+}
+
+/* taste-skill: tooltip */
+[data-tooltip] {
+    position: relative;
+    cursor: help;
+}
+[data-tooltip]:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 4px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1e2329;
+    color: var(--text-primary);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-family: var(--font-sans);
+    white-space: nowrap;
+    border: 1px solid var(--border);
+    z-index: 10;
+    pointer-events: none;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+    <h1>💰 Income Pipeline — BEFORE vs AFTER</h1>
+    <p>Сравнение: старый дашборд (50 строк, нечитаемо) vs новый, построенный по принципам taste-skill (анти-slop, читаемая иерархия, правильная типографика)</p>
+    <div class="header-actions">
+        <button class="btn btn-primary" onclick="document.querySelector('.column-label.after').scrollIntoView({behavior:'smooth'})">→ К AFTER</button>
+        <button class="btn btn-secondary" onclick="window.open('income_pipeline_dashboard.html')">Старый дашборд</button>
+        <button class="btn btn-secondary" onclick="alert('Запусти: python scripts/generate_flowchart.py')">🔄 Обновить данные</button>
+    </div>
+</div>
+
+<div class="comparison">
+
+<!-- ===== BEFORE COLUMN ===== -->
+<div class="column">
+    <div class="column-label before">
+        <span class="badge badge-before">BEFORE</span>
+        <h2>50 строк списком</h2>
+        <span class="subtitle">Нечитаемо × Нет картины</span>
+    </div>
+    <div class="flow-card">
+        <div class="before-flow" id="beforeContent">
+            <!-- populated by JS -->
+        </div>
+    </div>
+</div>
+
+<!-- ===== AFTER COLUMN ===== -->
+<div class="column">
+    <div class="column-label after">
+        <span class="badge badge-after">AFTER</span>
+        <h2>taste-skill дизайн</h2>
+        <span class="subtitle">Читаемо × Иерархия × Цвета × Zoom</span>
+    </div>
+    <div class="flow-card">
+        <div class="after-flow">
+
+            <!-- Stats row -->
+            <div class="stats-row" id="statsRow"></div>
+
+            <!-- Tabs -->
+            <div class="flow-tabs" id="flowTabs">
+                <div class="flow-tab active" data-tab="overview">📊 Обзор</div>
+                <div class="flow-tab" data-tab="sources">📥 Источники</div>
+                <div class="flow-tab" data-tab="proxies">⚙️ Прокладки</div>
+                <div class="flow-tab" data-tab="offers">💰 Офферы</div>
+                <div class="flow-tab" data-tab="withdrawal">💸 Вывод</div>
+            </div>
+
+            <!-- Tab panes -->
+            <div class="flow-pane active" id="pane-overview">
+                <div class="overview-flow" id="afterOverview"></div>
+            </div>
+            <div class="flow-pane" id="pane-sources"></div>
+            <div class="flow-pane" id="pane-proxies"></div>
+            <div class="flow-pane" id="pane-offers"></div>
+            <div class="flow-pane" id="pane-withdrawal"></div>
+
+        </div>
+    </div>
+</div>
+
+</div>
+
+<script>
+// ===== DATA (from ARBITRAGE_BONDS.md) =====
+const DATA = {
+    schemas: {},
+    groups: {}
+};
+
+// Parse the actual data from the script 
+// We embed the parsed JSON from generate_flowchart.py
+const RAW_SCHEMAS = [
+  {id:1, name:"FinCPANetwork FinTech RU", source:"TG", proxy:"Direct CPA link / TG Bot", offer:"FinCPA Credit RU", withdrawal:"USDT TRC20 → Binance P2P → T-Bank", status:"testing", blockers:[]},
+  {id:2, name:"HotelCrimeaBot Travelpayouts", source:"TG", proxy:"HotelCrimeaBot → Hotel Link", offer:"Hotels Booking/Ostrovok", withdrawal:"WebMoney → T-Bank", status:"testing", blockers:[]},
+  {id:3, name:"salon-bot sales Kwork/FL", source:"Freelance", proxy:"Demo Bot + Portfolio", offer:"salon-bot Sale", withdrawal:"Direct Card SBP", status:"verified", blockers:[]},
+  {id:4, name:"Admitad Multi-vertical RU", source:"TG", proxy:"Direct deeplink / Taplink", offer:"2000+ Offers RU", withdrawal:"WebMoney → T-Bank", status:"unverified", blockers:["AD_BUDGET"]},
+  {id:5, name:"VPN Payoneer", source:"YouTube", proxy:"Direct link / Taplink", offer:"VPN Surfshark/Nord/Atlas", withdrawal:"Payoneer → USDT → T-Bank", status:"unverified", blockers:["AD_BUDGET","VIDEO_SCRIPT"]},
+  {id:6, name:"FinTech/Games/Goods", source:"TikTok", proxy:"Profile Linktree → Landing", offer:"Admitad/Travelpayouts/MaxBounty", withdrawal:"WebMoney/USDT/Direct Card", status:"unverified", blockers:["AD_BUDGET","VIDEO_SCRIPT"]},
+  {id:7, name:"FinTech Credit/Mortgage", source:"Avito", proxy:"Avito Chat → Consult → Link", offer:"FinCPA/Admitad/Leadbit Credit", withdrawal:"USDT/WebMoney/Direct", status:"unverified", blockers:["AD_BUDGET"]},
+  {id:8, name:"AI Pins Goods/Travel/Fin", source:"Pinterest", proxy:"Direct link / Taplink", offer:"Travel + Admitad Goods", withdrawal:"WebMoney/USDT/Payoneer/Wire", status:"unverified", blockers:["AD_BUDGET","RAW_ACCOUNT"]},
+  {id:9, name:"US/Global VPN/SaaS/Crypto", source:"Reddit", proxy:"Reddit Profile Linktree", offer:"Payoneer/Wire/USDT/Crypto", withdrawal:"Payoneer/Wire/USDT/Crypto", status:"unverified", blockers:["AD_BUDGET","RAW_ACCOUNT"]},
+  {id:10, name:"50+ Sites AdSense/CPA", source:"SEO", proxy:"Review Articles + Links", offer:"AdSense $0.05-2/click", withdrawal:"AdSense Wire → Payoneer", status:"unverified", blockers:["AD_BUDGET"]},
+  {id:11, name:"Pay-Per-Call Insurance", source:"Craigslist", proxy:"Ad → Landing w/ Instant Quote", offer:"Pay-Per-Call Insurance/Home", withdrawal:"Payoneer/Wire/USDT P2P", status:"unverified", blockers:["AD_BUDGET"]},
+  {id:12, name:"Nutra/Finance COD", source:"OLX", proxy:"OLX Chat → Send Link", offer:"AdCombo/CPAmatica/Everad Nutra COD", withdrawal:"WebMoney/USDT TRC20 → P2P", status:"unverified", blockers:["AD_BUDGET","LANDING_PAGE"]},
+  {id:13, name:"Local Services", source:"Gumtree", proxy:"Gumtree → Landing Get Quote", offer:"Impact/CJ UK/AU Services", withdrawal:"Payoneer/Wire UK Bank", status:"unverified", blockers:["AD_BUDGET","BOT"]},
+  {id:14, name:"Dating/Jobs/Education", source:"Locanto", proxy:"Hook → Landing", offer:"CrakRevenue/ClickDealer Dating", withdrawal:"Payoneer/USDT/WebMoney", status:"unverified", blockers:["AD_BUDGET","BOT"]},
+  {id:15, name:"Finance/Insurance", source:"Kijiji", proxy:"Ad → Quote Landing", offer:"CJ/Impact CA Finance", withdrawal:"Payoneer/Wire US Bank", status:"unverified", blockers:["AD_BUDGET","BOT"]},
+  {id:16, name:"Email Lead Magnet", source:"Email", proxy:"Lead Magnet PDF → Autoresponder", offer:"Impact/CJ SaaS Semrush", withdrawal:"Payoneer/USDT/WebMoney", status:"unverified", blockers:["AD_BUDGET","LANDING_PAGE","RAW_ACCOUNT"]},
+  {id:17, name:"Bot SaaS Rental", source:"Avito", proxy:"Demo Bot + Portfolio + Cases", offer:"Bot Rental $50-200/mo", withdrawal:"СБП/Карта/WebMoney", status:"unverified", blockers:["AD_BUDGET","BOT"]},
+  {id:18, name:"API Wrapper Reselling", source:"Reddit", proxy:"API Landing / TG Bot", offer:"AI API Wrapper", withdrawal:"Stripe/PayPal → Wise → USDT", status:"unverified", blockers:["AD_BUDGET","LANDING_PAGE"]},
+  {id:19, name:"Digital Products", source:"TG", proxy:"Etsy/Gumroad + Landing", offer:"Notion/Canva Templates", withdrawal:"Stripe/PayPal → Wise → USDT", status:"unverified", blockers:["AD_BUDGET","RAW_ACCOUNT"]},
+  {id:20, name:"P2P Crypto Arb", source:"Other", proxy:"Multi-Exchange P2P", offer:"USDT/RUB P2P Spreads", withdrawal:"Card→Exchange→P2P→Card", status:"unverified", blockers:["AD_BUDGET","RAW_ACCOUNT"]},
+  {id:21, name:"Google Maps Lead Gen", source:"Other", proxy:"Google Business → Site", offer:"Local Lead Gen", withdrawal:"СБП/Карта/Venmo", status:"unverified", blockers:["AD_BUDGET","LANDING_PAGE"]},
+  {id:22, name:"Push Ads PropellerAds", source:"Other", proxy:"CPA → Landing", offer:"MaxBounty/MyLead VPN", withdrawal:"Payoneer/USDT/WebMoney", status:"unverified", blockers:["AD_BUDGET","LANDING_PAGE"]},
+  {id:23, name:"Popunder PopCash", source:"Other", proxy:"CPA → Bright Landing", offer:"CrakRevenue/ClickDealer/CPAGrip Dating", withdrawal:"Payoneer/USDT/WebMoney", status:"unverified", blockers:["AD_BUDGET"]},
+  {id:24, name:"Native Ads Taboola", source:"Other", proxy:"Advertorial → CPA", offer:"CJ/Impact Finance $20-100", withdrawal:"Payoneer/Wire US Bank", status:"unverified", blockers:["AD_BUDGET","LANDING_PAGE","RAW_ACCOUNT"]},
+  {id:25, name:"Micro-Influencer", source:"TikTok", proxy:"Influencer Post → Link", offer:"CrakRevenue Dating + Impact", withdrawal:"Payoneer/USDT/Crypto", status:"unverified", blockers:["AD_BUDGET","BOT"]},
+  {id:26, name:"Quora Answers", source:"Other", proxy:"Quora Answer → Link", offer:"Impact/CJ SaaS Semrush", withdrawal:"Payoneer/Wire/USDT", status:"unverified", blockers:["AD_BUDGET","RAW_ACCOUNT"]},
+  {id:27, name:"Medium Articles", source:"Other", proxy:"Best VPN Article", offer:"Impact/CJ VPN $2-30", withdrawal:"Payoneer/Wire/USDT", status:"unverified", blockers:["AD_BUDGET","RAW_ACCOUNT"]},
+  {id:28, name:"LinkedIn B2B", source:"Other", proxy:"LinkedIn InMail → Demo", offer:"B2B Email/Phone Bases", withdrawal:"PayPal/Wise/Wire", status:"unverified", blockers:["AD_BUDGET","BOT"]},
+  {id:29, name:"X/Twitter Threads", source:"Other", proxy:"X Thread → Link", offer:"Payoneer/USDT/Crypto", withdrawal:"Payoneer/USDT/Crypto", status:"unverified", blockers:["AD_BUDGET","RAW_ACCOUNT"]},
+  {id:30, name:"Facebook Groups", source:"Other", proxy:"Useful Post → Link", offer:"Ozon/WB/AliExpress 3-10%", withdrawal:"WebMoney/Payoneer/USDT", status:"unverified", blockers:["AD_BUDGET","BOT"]},
+  {id:31, name:"Discord Communities", source:"Other", proxy:"Free → Premium Channel", offer:"Payoneer/USDT/Crypto", withdrawal:"PayPal/Stripe/Crypto/USDT", status:"unverified", blockers:["AD_BUDGET","BOT"]},
+  {id:32, name:"AI Pins Fashion", source:"Pinterest", proxy:"AI Pin → Blog/Landing", offer:"Amazon Associates 3-8%", withdrawal:"Amazon Gift Card/Wire/PayPal", status:"unverified", blockers:["AD_BUDGET","LANDING_PAGE","RAW_ACCOUNT"]},
+  {id:33, name:"TikTok Shop", source:"TikTok", proxy:"TikTok Product Tag → Shop", offer:"TikTok Shop 5-20%", withdrawal:"TikTok Shop Bank Transfer", status:"unverified", blockers:["AD_BUDGET","VIDEO_SCRIPT"]},
+  {id:34, name:"Long-form Reviews", source:"YouTube", proxy:"YouTube Video → Affiliate", offer:"Impact/CJ VPN $2-30", withdrawal:"Wire/Payoneer/USDT", status:"unverified", blockers:["AD_BUDGET","VIDEO_SCRIPT","RAW_ACCOUNT"]},
+  {id:35, name:"Niche Sites", source:"SEO", proxy:"SEO Article → AdSense", offer:"AdSense + Impact/CJ", withdrawal:"AdSense Wire → Payoneer", status:"unverified", blockers:["AD_BUDGET","LANDING_PAGE"]},
+  {id:36, name:"Domain Parking", source:"Other", proxy:"Domain → Parked Page", offer:"Parking Sedo/GoDaddy", withdrawal:"PayPal/Wire/USDT", status:"unverified", blockers:["AD_BUDGET"]},
+  {id:37, name:"Adult Traffic", source:"Other", proxy:"CPA → Adult Landing", offer:"CrakRevenue/ExoClick Dating", withdrawal:"Payoneer/Wire/Crypto/USDT", status:"unverified", blockers:["AD_BUDGET","LANDING_PAGE"]},
+  {id:38, name:"Mobile CPI", source:"YouTube", proxy:"Video Review → Link", offer:"OGAds $5-12/install", withdrawal:"Payoneer/PayPal/USDT/Crypto", status:"unverified", blockers:["AD_BUDGET","VIDEO_SCRIPT","MANUAL_ACCOUNT"]},
+  {id:39, name:"Survey/Sweepstakes", source:"TG", proxy:"Free Giveaway → Sweep", offer:"Zeydoo/CPAGrip/MyLead Sweepstakes", withdrawal:"Payoneer/USDT/WebMoney", status:"unverified", blockers:["AD_BUDGET","LANDING_PAGE","MANUAL_ACCOUNT"]},
+  {id:40, name:"Advertorial → COD Landing", source:"Other", proxy:"Advertorial → COD Landing", offer:"AdCombo/CPAmatica/Everad Nutra COD", withdrawal:"WebMoney/USDT/Wire", status:"unverified", blockers:["AD_BUDGET","LANDING_PAGE","RAW_ACCOUNT"]},
+  {id:41, name:"iGaming/Casino", source:"TG", proxy:"Casino Comparison Site", offer:"ClickDealer/Income Access Casino", withdrawal:"Payoneer/Wire/Crypto USDT", status:"unverified", blockers:["AD_BUDGET","LANDING_PAGE","MANUAL_ACCOUNT"]},
+  {id:42, name:"Pay-Per-Call Home", source:"Craigslist", proxy:"Ad → Virtual Number", offer:"ClickDealer/Perform[cb] Home", withdrawal:"Payoneer/Wire/USDT", status:"unverified", blockers:["AD_BUDGET"]},
+  {id:43, name:"Content Locking", source:"YouTube", proxy:"Video → Link in Bio → Locker", offer:"CPAGrip $1-8/lead", withdrawal:"Payoneer/PayPal/USDT/Crypto", status:"unverified", blockers:["AD_BUDGET","VIDEO_SCRIPT"]},
+  {id:44, name:"OnlyFans Management", source:"TG", proxy:"OF Account Management", offer:"OF Management 20-40%", withdrawal:"PayPal/Wire/Crypto/USDT", status:"unverified", blockers:["AD_BUDGET","RAW_ACCOUNT"]},
+  {id:45, name:"AI Companion/Dating", source:"TikTok", proxy:"AI Companion Video → Landing", offer:"CrakRevenue/MyLead AI Dating", withdrawal:"Payoneer/Crypto/USDT", status:"unverified", blockers:["AD_BUDGET","VIDEO_SCRIPT","MANUAL_ACCOUNT"]},
+  {id:46, name:"SmartLink AI", source:"SmartLink", proxy:"Direct / Landing → SmartLink", offer:"Mobidea/Zeydoo SmartLinks", withdrawal:"Payoneer/USDT/Crypto", status:"unverified", blockers:["AD_BUDGET","LANDING_PAGE"]},
+  {id:47, name:"Coupons/Cashback Site", source:"Other", proxy:"Coupons/Cashback Site", offer:"Ozon/WB/AliExpress 3-10%", withdrawal:"WebMoney/Payoneer/USDT", status:"unverified", blockers:["AD_BUDGET","LANDING_PAGE"]},
+  {id:48, name:"Travel Meta-search", source:"TG", proxy:"Tickets Site → Affiliate", offer:"Aviasales 0.5-3%", withdrawal:"WebMoney/PayPal/USDT/Wire", status:"unverified", blockers:["AD_BUDGET","LANDING_PAGE"]},
+  {id:49, name:"Hosting/SaaS Reselling", source:"SmartLink", proxy:"White-label Hosting/VPN", offer:"White-label Hosting $3-10", withdrawal:"СБП/Карта/WebMoney", status:"unverified", blockers:["AD_BUDGET","LANDING_PAGE","RAW_ACCOUNT"]},
+  {id:50, name:"Offline→Online QR", source:"TG", proxy:"QR Flyer → TG Bot/Landing", offer:"CPA Admitad/FinCPA FinTech", withdrawal:"СБП/Карта/WebMoney", status:"unverified", blockers:["AD_BUDGET","LANDING_PAGE"]}
+];
+
+// Compute stats
+const statusCounts = {unverified:0, testing:0, verified:0};
+const blockerCounts = {};
+const sourceGroups = {};
+const proxyGroups = {};
+const offerGroups = {};
+const withdrawalGroups = {};
+
+RAW_SCHEMAS.forEach(s => {
+    statusCounts[s.status]++;
+    (s.blockers||[]).forEach(b => { blockerCounts[b] = (blockerCounts[b]||0)+1; });
+    
+    const sg = s.source || 'Other';
+    sourceGroups[sg] = (sourceGroups[sg]||0)+1;
+    
+    // Classify proxy
+    let pg = 'Other';
+    if (/landing|site|page|blog|article/i.test(s.proxy)) pg = 'Landing / Site';
+    else if (/bot|telegram|tg/i.test(s.proxy)) pg = 'Telegram Bot';
+    else if (/link|bio|profile/i.test(s.proxy) && !/landing/i.test(s.proxy)) pg = 'Direct Link';
+    else if (/video|tiktok|youtube/i.test(s.proxy)) pg = 'Video / Script';
+    proxyGroups[pg] = (proxyGroups[pg]||0)+1;
+    
+    // Classify offer
+    let og = 'Other';
+    if (/fincpa|credit/i.test(s.offer)) og = 'FinCPA';
+    else if (/travel|hotel|ostrovok|booking|aviasales/i.test(s.offer)) og = 'Travelpayouts';
+    else if (/salon|bot/i.test(s.offer)) og = 'Own Product';
+    else if (/admitad/i.test(s.offer)) og = 'Admitad';
+    else if (/maxbounty|surfshark/i.test(s.offer)) og = 'MaxBounty';
+    else if (/clickdealer|income access/i.test(s.offer)) og = 'ClickDealer';
+    else if (/adcombo|cpa.*matica|everad/i.test(s.offer)) og = 'AdCombo';
+    else if (/impact|cj /i.test(s.offer)) og = 'Impact / CJ';
+    else if (/mylead|crakrevenue|exoclick/i.test(s.offer)) og = 'MyLead / Crak';
+    else if (/amazon|shareasale/i.test(s.offer)) og = 'Amazon';
+    else if (/cpagrip|ogads|zeydoo/i.test(s.offer)) og = 'CPAGrip';
+    else if (/mobidea|smartlink|white-label/i.test(s.offer)) og = 'VPN / SmartLink';
+    else if (/adsense|parking/i.test(s.offer)) og = 'AdSense';
+    offerGroups[og] = (offerGroups[og]||0)+1;
+    
+    // Classify withdrawal
+    let wg = 'USDT → P2P → Card';
+    if (/webmoney/i.test(s.withdrawal) && !/usdt/i.test(s.withdrawal)) wg = 'WebMoney';
+    else if (/sbp|сбп|direct card|card sbp/i.test(s.withdrawal)) wg = 'СБП / Card';
+    else if (/payoneer|wire/i.test(s.withdrawal) && !/usdt/i.test(s.withdrawal)) wg = 'Payoneer / Wire';
+    else if (/stripe|paypal|wise/i.test(s.withdrawal)) wg = 'Stripe/PayPal';
+    withdrawalGroups[wg] = (withdrawalGroups[wg]||0)+1;
+});
+
+// ===== RENDER BEFORE =====
+function renderBefore() {
+    const container = document.getElementById('beforeContent');
+    let html = '';
+    
+    // Overview stats
+    html += `<div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap">
+        <span style="background:#d44242;color:#fff;padding:2px 6px;border-radius:3px;font-size:0.6rem">UNVERIFIED ${statusCounts.unverified}</span>
+        <span style="background:#d4a030;color:#000;padding:2px 6px;border-radius:3px;font-size:0.6rem">TESTING ${statusCounts.testing}</span>
+        <span style="background:#2b825b;color:#fff;padding:2px 6px;border-radius:3px;font-size:0.6rem">VERIFIED ${statusCounts.verified}</span>
+    </div>`;
+    
+    // Sources section
+    html += `<div class="section"><div class="section-title">📥 Sources (${Object.keys(sourceGroups).length} groups)</div>`;
+    Object.entries(sourceGroups).sort((a,b)=>b[1]-a[1]).forEach(([k,v]) => {
+        html += `<div class="item">${k} <span style="color:#555">×${v}</span></div>`;
+    });
+    html += `</div><div class="arrow-row">▼ TRAFFIC ▼</div>`;
+    
+    // Proxies section
+    html += `<div class="section"><div class="section-title">⚙️ Proxies (${Object.keys(proxyGroups).length} groups)</div>`;
+    Object.entries(proxyGroups).sort((a,b)=>b[1]-a[1]).forEach(([k,v]) => {
+        html += `<div class="item">${k} <span style="color:#555">×${v}</span></div>`;
+    });
+    html += `</div><div class="arrow-row">▼ LEADS ▼</div>`;
+    
+    // Offers section
+    html += `<div class="section"><div class="section-title">💰 Offers (${Object.keys(offerGroups).length} groups)</div>`;
+    Object.entries(offerGroups).sort((a,b)=>b[1]-a[1]).forEach(([k,v]) => {
+        html += `<div class="item">${k} <span style="color:#555">×${v}</span></div>`;
+    });
+    html += `</div><div class="arrow-row">▼ PAYOUTS ▼</div>`;
+    
+    // Withdrawal section
+    html += `<div class="section"><div class="section-title">💸 Withdrawal (${Object.keys(withdrawalGroups).length} groups)</div>`;
+    Object.entries(withdrawalGroups).sort((a,b)=>b[1]-a[1]).forEach(([k,v]) => {
+        html += `<div class="item">${k} <span style="color:#555">×${v}</span></div>`;
+    });
+    html += `</div>`;
+    
+    // All 50 rows
+    html += `<div class="section"><div class="section-title">📋 All 50 Schemes</div>`;
+    RAW_SCHEMAS.forEach(s => {
+        const dot = s.status === 'verified' ? '#2b825b' : s.status === 'testing' ? '#d4a030' : '#d44242';
+        html += `<div class="item"><span style="color:${dot}">●</span> #${s.id} ${s.name} <span class="tag" style="background:${dot};color:#fff">${s.status}</span></div>`;
+    });
+    html += `</div>`;
+    
+    container.innerHTML = html;
+}
+
+// ===== RENDER AFTER =====
+function renderAfter() {
+    // Stats
+    const statsEl = document.getElementById('statsRow');
+    statsEl.innerHTML = `
+        <div class="stat-card unver"><div class="stat-value" style="color:var(--accent-red)">${statusCounts.unverified}</div><div class="stat-label">UNVERIFIED</div></div>
+        <div class="stat-card test"><div class="stat-value" style="color:var(--accent-yellow)">${statusCounts.testing}</div><div class="stat-label">TESTING</div></div>
+        <div class="stat-card ver"><div class="stat-value" style="color:var(--accent-green)">${statusCounts.verified}</div><div class="stat-label">VERIFIED</div></div>
+        <div class="stat-card code"><div class="stat-value" style="color:var(--accent-blue)">${RAW_SCHEMAS.filter(s => s.blockers.length === 0).length}</div><div class="stat-label">Code-unblockable</div></div>
+    `;
+    
+    // Overview
+    const overviewEl = document.getElementById('afterOverview');
+    overviewEl.innerHTML = `
+        <div class="overview-row">
+            <div class="overview-box">
+                <div class="icon">📥</div>
+                <div class="title">Traffic Sources</div>
+                <div class="value">${Object.keys(sourceGroups).length}</div>
+                <div class="desc">${Object.entries(sourceGroups).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([k,v])=>`${k} ${v}`).join(' · ')} ...</div>
+            </div>
+            <div class="overview-arrow">→</div>
+            <div class="overview-box">
+                <div class="icon">⚙️</div>
+                <div class="title">Proxies / Layers</div>
+                <div class="value">${Object.keys(proxyGroups).length}</div>
+                <div class="desc">${Object.entries(proxyGroups).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([k,v])=>`${k} ${v}`).join(' · ')}</div>
+            </div>
+            <div class="overview-arrow">→</div>
+            <div class="overview-box">
+                <div class="icon">💰</div>
+                <div class="title">Offers / Networks</div>
+                <div class="value">${Object.keys(offerGroups).length}</div>
+                <div class="desc">${Object.entries(offerGroups).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([k,v])=>`${k} ${v}`).join(' · ')}</div>
+            </div>
+            <div class="overview-arrow">→</div>
+            <div class="overview-box">
+                <div class="icon">💸</div>
+                <div class="title">Withdrawal Paths</div>
+                <div class="value">${Object.keys(withdrawalGroups).length}</div>
+                <div class="desc">${Object.entries(withdrawalGroups).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([k,v])=>`${k} ${v}`).join(' · ')}</div>
+            </div>
+        </div>
+        <div style="margin-top:14px;padding:10px 14px;background:rgba(255,255,255,0.02);border-radius:6px;font-size:0.75rem;color:var(--text-secondary)">
+            <strong style="color:var(--text-primary)">Total: ${RAW_SCHEMAS.length} schemes</strong> — 
+            <span style="color:var(--accent-red)">${statusCounts.unverified} UNVERIFIED</span> · 
+            <span style="color:var(--accent-yellow)">${statusCounts.testing} TESTING</span> · 
+            <span style="color:var(--accent-green)">${statusCounts.verified} VERIFIED</span>
+            <span style="float:right;color:var(--text-muted)">🔍 Click tabs below for details</span>
+        </div>
+    `;
+    
+    // Sources pane
+    renderGroupPane('sources', sourceGroups, '📥');
+    renderSchemaPane('sources', 'source');
+    
+    // Proxies pane
+    renderGroupPane('proxies', proxyGroups, '⚙️');
+    renderSchemaPane('proxies', 'proxy');
+    
+    // Offers pane
+    renderGroupPane('offers', offerGroups, '💰');
+    renderSchemaPane('offers', 'offer');
+    
+    // Withdrawal pane
+    renderGroupPane('withdrawal', withdrawalGroups, '💸');
+    renderSchemaPane('withdrawal', 'withdrawal');
+}
+
+function renderGroupPane(paneId, groups, icon) {
+    const el = document.getElementById(`pane-${paneId}`);
+    const entries = Object.entries(groups).sort((a,b)=>b[1]-a[1]);
+    const total = entries.reduce((s,[,v]) => s+v, 0);
+    let html = `<div style="margin-bottom:8px;font-size:0.8rem;color:var(--text-secondary)">${icon} <strong>${total} схем(ы)</strong> в ${entries.length} групп(ах)</div>`;
+    entries.forEach(([name, count]) => {
+        const pct = Math.round(count/total*100);
+        html += `<div class="group-card">
+            <div class="group-header" onclick="this.nextElementSibling.classList.toggle('open')">
+                <span>${name} <span class="count">${count} схем</span></span>
+                <span style="font-size:0.65rem;color:var(--text-muted)">${pct}% · ▼</span>
+            </div>
+            <div class="group-items"></div>
+        </div>`;
+    });
+    el.innerHTML = html;
+}
+
+function renderSchemaPane(paneId, field) {
+    const groupField = field === 'source' ? 'source' : field === 'proxy' ? 'proxy' : field === 'offer' ? 'offer' : 'withdrawal';
+    const el = document.getElementById(`pane-${paneId}`);
+    const cards = el.querySelectorAll('.group-card');
+    
+    // Group schemas by this field
+    const groups = {};
+    if (field === 'source') {
+        RAW_SCHEMAS.forEach(s => {
+            const g = s.source || 'Other';
+            if (!groups[g]) groups[g] = [];
+            groups[g].push(s);
+        });
+    } else if (field === 'proxy') {
+        RAW_SCHEMAS.forEach(s => {
+            let g = 'Other';
+            if (/landing|site|page|blog|article/i.test(s.proxy)) g = 'Landing / Site';
+            else if (/bot|telegram|tg/i.test(s.proxy)) g = 'Telegram Bot';
+            else if (/link|bio|profile/i.test(s.proxy) && !/landing/i.test(s.proxy)) g = 'Direct Link';
+            else if (/video|tiktok|youtube/i.test(s.proxy)) g = 'Video / Script';
+            if (!groups[g]) groups[g] = [];
+            groups[g].push(s);
+        });
+    } else if (field === 'offer') {
+        RAW_SCHEMAS.forEach(s => {
+            let g = 'Other';
+            if (/fincpa|credit/i.test(s.offer)) g = 'FinCPA';
+            else if (/travel|hotel|ostrovok|booking|aviasales/i.test(s.offer)) g = 'Travelpayouts';
+            else if (/salon|bot/i.test(s.offer)) g = 'Own Product';
+            else if (/admitad/i.test(s.offer)) g = 'Admitad';
+            else if (/maxbounty|surfshark/i.test(s.offer)) g = 'MaxBounty';
+            else if (/clickdealer|income access/i.test(s.offer)) g = 'ClickDealer';
+            else if (/adcombo|cpa.*matica|everad/i.test(s.offer)) g = 'AdCombo';
+            else if (/impact|cj /i.test(s.offer)) g = 'Impact / CJ';
+            else if (/mylead|crakrevenue|exoclick/i.test(s.offer)) g = 'MyLead / Crak';
+            else if (/amazon|shareasale/i.test(s.offer)) g = 'Amazon';
+            else if (/cpagrip|ogads|zeydoo/i.test(s.offer)) g = 'CPAGrip';
+            else if (/mobidea|smartlink|white-label/i.test(s.offer)) g = 'VPN / SmartLink';
+            else if (/adsense|parking/i.test(s.offer)) g = 'AdSense';
+            if (!groups[g]) groups[g] = [];
+            groups[g].push(s);
+        });
+    } else {
+        RAW_SCHEMAS.forEach(s => {
+            let g = 'USDT → P2P → Card';
+            if (/webmoney/i.test(s.withdrawal) && !/usdt/i.test(s.withdrawal)) g = 'WebMoney';
+            else if (/sbp|сбп|direct card|card sbp/i.test(s.withdrawal)) g = 'СБП / Card';
+            else if (/payoneer|wire/i.test(s.withdrawal) && !/usdt/i.test(s.withdrawal)) g = 'Payoneer / Wire';
+            else if (/stripe|paypal|wise/i.test(s.withdrawal)) g = 'Stripe/PayPal';
+            if (!groups[g]) groups[g] = [];
+            groups[g].push(s);
+        });
+    }
+    
+    cards.forEach(card => {
+        const name = card.querySelector('.group-header span:first-child').childNodes[0].textContent.trim();
+        const itemsEl = card.querySelector('.group-items');
+        const schemas = groups[name] || [];
+        
+        let html = '';
+        schemas.sort((a,b) => a.id - b.id).forEach(s => {
+            const dot = s.status === 'verified' ? 'dot-verified' : s.status === 'testing' ? 'dot-testing' : 'dot-unverified';
+            const st = s.status === 'verified' ? 'VERIFIED' : s.status === 'testing' ? 'TESTING' : 'UNVERIFIED';
+            const blockers = (s.blockers||[]).join(', ');
+            html += `<div class="item-row">
+                <span class="status-dot ${dot}" data-tooltip="${st}"></span>
+                <span class="item-label" data-tooltip="#${s.id} ${s.name}">#${s.id} ${s.name}</span>
+                ${blockers ? `<span class="item-blockers">🛑 ${blockers}</span>` : `<span class="item-blockers" style="color:var(--accent-blue)">✅ no blockers</span>`}
+                <span class="item-num">${s.status === 'verified' ? '✓' : s.status === 'testing' ? '◷' : '○'}</span>
+            </div>`;
+        });
+        itemsEl.innerHTML = html;
+        // Auto-open first group
+        if (schemas.length > 0) itemsEl.classList.add('open');
+    });
+}
+
+// ===== TAB SWITCHING =====
+document.addEventListener('click', function(e) {
+    const tab = e.target.closest('.flow-tab');
+    if (!tab) return;
+    
+    document.querySelectorAll('.flow-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.flow-pane').forEach(p => p.classList.remove('active'));
+    
+    tab.classList.add('active');
+    document.getElementById(`pane-${tab.dataset.tab}`).classList.add('active');
+});
+
+// ===== INIT =====
+renderBefore();
+renderAfter();
+</script>
+</body>
+</html>

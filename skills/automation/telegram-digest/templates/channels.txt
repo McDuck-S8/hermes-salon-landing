@@ -1,0 +1,30 @@
+# Telegram Digest Configuration
+# 
+# Add your channels here (one per line, without @)
+# Lines starting with # are comments
+
+# AI & Tech News
+openai
+GoogleAI
+anthropic
+deepseek
+hugging_face
+nabormi_ai
+
+# Crypto & Finance
+binance
+coinbase
+crypto
+
+# News
+rt_russian
+tass_agency
+rianovosti
+
+# Business & Marketing
+vcru
+rbk_news
+
+# Custom channels (add your own)
+# my_channel_1
+# my_channel_2

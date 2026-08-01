@@ -1,0 +1,32 @@
+parsers:
+  telegram:
+    max_posts: 100
+    include_comments: true
+    max_comments_per_post: 50
+  youtube:
+    max_videos: 30
+    max_comments_per_video: 100
+    use_yt_dlp: true
+  vk:
+    max_posts: 100
+    max_comments: 50
+
+analysis:
+  dimensions:
+    frustrations: 0.3
+    sins: 0.2
+    norms: 0.2
+    strengths: 0.15
+    context: 0.15
+  min_cluster_size: 5
+  max_clusters: 8
+
+ripple_engine:
+  max_depth: 3
+  conflict_threshold: 0.7
+  stop_on_conflict: true
+
+output:
+  format: markdown
+  include_raw_data: false
+  include_clusters: true

@@ -1,0 +1,210 @@
+[
+  {
+    "id": "e3d20e1f",
+    "status": "ready",
+    "assignee": "unassigned",
+    "title": "Salon bot: нужен второй токен от BotFather",
+    "created_at": "2026-07-13T21:33:27.198302",
+    "updated_at": "2026-07-13T21:33:27.198376"
+  },
+  {
+    "id": "125f3acf",
+    "status": "ready",
+    "assignee": "unassigned",
+    "title": "Интегрировать salon handlers в gateway",
+    "created_at": "2026-07-13T21:33:27.198399",
+    "updated_at": "2026-07-13T21:33:27.198404"
+  },
+  {
+    "id": "8043bfbd",
+    "status": "ready",
+    "assignee": "unassigned",
+    "title": "RAG: автозаполнение KC из сессий",
+    "created_at": "2026-07-13T21:33:27.198417",
+    "updated_at": "2026-07-13T21:33:27.198421"
+  },
+  {
+    "id": "c28e15ce",
+    "status": "ready",
+    "assignee": "unassigned",
+    "title": "Self-improvement: апгрейд цикла",
+    "created_at": "2026-07-13T21:33:27.198430",
+    "updated_at": "2026-07-13T21:33:27.198434"
+  },
+  {
+    "id": "3bdec397",
+    "status": "ready",
+    "assignee": "unassigned",
+    "title": "Организовать файлы scripts cache data",
+    "created_at": "2026-07-13T21:33:27.198443",
+    "updated_at": "2026-07-13T21:33:27.198447"
+  },
+  {
+    "id": "565fef3d",
+    "status": "ready",
+    "assignee": "unassigned",
+    "title": "Hermes upstream: проверить обновления",
+    "created_at": "2026-07-13T21:33:27.198456",
+    "updated_at": "2026-07-13T21:33:27.198460"
+  },
+  {
+    "id": "e8a3d135",
+    "status": "ready",
+    "assignee": "unassigned",
+    "title": "Daemon workflow: триггер→проверка→действие→лог",
+    "created_at": "2026-07-13T21:33:27.198468",
+    "updated_at": "2026-07-13T21:33:27.198472"
+  },
+  {
+    "id": "t_explore1",
+    "status": "ready",
+    "assignee": "unassigned",
+    "title": "Telegram CPA funnel: bot → channel → offer",
+    "created_at": "2026-07-13T21:33:27.198481",
+    "updated_at": "2026-07-13T21:33:27.198485"
+  },
+  {
+    "id": "t_affiliate_bot",
+    "status": "ready",
+    "assignee": "unassigned",
+    "title": "Build affiliate bot: adapt Tara Bot for RF market",
+    "created_at": "2026-07-13T21:33:27.198495",
+    "updated_at": "2026-07-13T21:33:27.198498"
+  },
+  {
+    "id": "t_pinterest",
+    "status": "ready",
+    "assignee": "unassigned",
+    "title": "Pinterest automation: 100+ pins/day, free traffic",
+    "created_at": "2026-07-13T21:33:27.198507",
+    "updated_at": "2026-07-13T21:33:27.198511"
+  },
+  {
+    "id": "954fc27e",
+    "status": "ready",
+    "assignee": "unassigned",
+    "title": "Fix event_daemon.py - dead 3 days, no meta-health",
+    "created_at": "2026-07-13T21:33:27.198520",
+    "updated_at": "2026-07-13T21:33:27.198523"
+  },
+  {
+    "id": "b8ef7c2f",
+    "status": "ready",
+    "assignee": "unassigned",
+    "title": "agent_daemon.py: replace os.kill(SIGTERM) with taskkill",
+    "created_at": "2026-07-13T21:33:27.198533",
+    "updated_at": "2026-07-13T21:33:27.198537"
+  },
+  {
+    "id": "ac368a22",
+    "status": "ready",
+    "assignee": "unassigned",
+    "title": "Clean dead scripts: 122 known dead in _dead_scripts.json",
+    "created_at": "2026-07-13T21:33:27.198545",
+    "updated_at": "2026-07-13T21:33:27.198549"
+  },
+  {
+    "id": "t_explore2",
+    "status": "ready",
+    "assignee": "unassigned",
+    "title": "Telegram Stars affiliate: earn from mini apps",
+    "created_at": "2026-07-13T21:33:27.198557",
+    "updated_at": "2026-07-13T21:33:27.198560"
+  },
+  {
+    "id": "t_explore3",
+    "status": "ready",
+    "assignee": "unassigned",
+    "title": "Profitable bot ideas: revenue models",
+    "created_at": "2026-07-13T21:33:27.198569",
+    "updated_at": "2026-07-13T21:33:27.198572"
+  },
+  {
+    "id": "t_explore5",
+    "status": "ready",
+    "assignee": "unassigned",
+    "title": "MyLead publisher account: start earning",
+    "created_at": "2026-07-13T21:33:27.198599",
+    "updated_at": "2026-07-13T21:33:27.198604"
+  },
+  {
+    "id": "t_explore4",
+    "status": "ready",
+    "assignee": "unassigned",
+    "title": "Telegram Ads: cheap traffic source",
+    "created_at": "2026-07-13T21:33:27.198623",
+    "updated_at": "2026-07-13T21:33:27.198628"
+  },
+  {
+    "id": "t_a70b1bbb",
+    "status": "blocked",
+    "assignee": "default",
+    "title": "EverOS — запуск сервера, интеграция с кристаллом",
+    "created_at": "2026-07-13T21:33:27.198641",
+    "updated_at": "2026-07-13T21:33:27.198645"
+  },
+  {
+    "id": "t_99ca84d6",
+    "status": "blocked",
+    "assignee": "default",
+    "title": "Kanban multi-agent — настроить параллельных воркеров",
+    "created_at": "2026-07-13T21:33:27.198655",
+    "updated_at": "2026-07-13T21:33:27.198658"
+  },
+  {
+    "id": "t_f3991a02",
+    "status": "blocked",
+    "assignee": "default",
+    "title": "Oh-my-pi (omp) — настройка провайдера",
+    "created_at": "2026-07-13T21:33:27.198667",
+    "updated_at": "2026-07-13T21:33:27.198671"
+  },
+  {
+    "id": "t_50898141",
+    "status": "blocked",
+    "assignee": "default",
+    "title": "Browser notes — обработать заметки из вкладок хрома",
+    "created_at": "2026-07-13T21:33:27.198680",
+    "updated_at": "2026-07-13T21:33:27.198683"
+  },
+  {
+    "id": "t_cc82f2af",
+    "status": "blocked",
+    "assignee": "default",
+    "title": "Crystal self-docs — восстановить документацию кристалла",
+    "created_at": "2026-07-13T21:33:27.198692",
+    "updated_at": "2026-07-13T21:33:27.198696"
+  },
+  {
+    "id": "t_89ed980e",
+    "status": "blocked",
+    "assignee": "default",
+    "title": "Fler — починка базы данных",
+    "created_at": "2026-07-13T21:33:27.198704",
+    "updated_at": "2026-07-13T21:33:27.198708"
+  },
+  {
+    "id": "t_2e60ace1",
+    "status": "blocked",
+    "assignee": "default",
+    "title": "Fill knowledge gaps - 392 white spots in KC",
+    "created_at": "2026-07-13T21:33:27.198730",
+    "updated_at": "2026-07-13T21:33:27.198736"
+  },
+  {
+    "id": "t_249e3212",
+    "status": "blocked",
+    "assignee": "default",
+    "title": "Curiosity: Investigate Show HN: CLI tool for agents repo context (g-curiosity-122, p6)",
+    "created_at": "2026-07-13T21:33:27.198746",
+    "updated_at": "2026-07-13T21:33:27.198750"
+  },
+  {
+    "id": "t_ebd8043f",
+    "status": "blocked",
+    "assignee": "default",
+    "title": "Curiosity: Kimi K2.7 Code available on GitHub (g-curiosity-135, p4)",
+    "created_at": "2026-07-13T21:33:27.198771",
+    "updated_at": "2026-07-13T21:33:27.198776"
+  }
+]

@@ -1,0 +1,12 @@
+model: claude-sonnet-4
+tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - WebFetch
+display_name: "Content"
+description: "Content pipeline specialist for Hermes Hive Mind. Owns content lifecycle: research → create → publish → repurpose → analyze."

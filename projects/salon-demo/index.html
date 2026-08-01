@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAYA Salon — Премиум салон красоты в Симферополе</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Sticky header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 15px 0;
+        }
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, #d4af37, #f4e4bc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .header-cta {
+            background: linear-gradient(135deg, #d4af37, #b8942e);
+            color: #000;
+            padding: 12px 28px;
+            border: none;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .header-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background: linear-gradient(135deg, rgba(10,10,10,0.9) 0%, rgba(30,20,10,0.8) 100%);
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="1" fill="rgba(212,175,55,0.1)"/><circle cx="80" cy="40" r="0.5" fill="rgba(212,175,55,0.08)"/><circle cx="40" cy="80" r="1.5" fill="rgba(212,175,55,0.06)"/></svg>');
+            pointer-events: none;
+        }
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #d4af37;
+            margin-bottom: 30px;
+        }
+        .hero h1 {
+            font-size: clamp(40px, 6vw, 80px);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+        .hero h1 span {
+            background: linear-gradient(135deg, #d4af37, #f4e4bc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 18px;
+            color: rgba(255,255,255,0.7);
+            max-width: 500px;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #d4af37, #b8942e);
+            color: #000;
+            padding: 16px 40px;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .btn-secondary {
+            background: transparent;
+            color: #fff;
+            padding: 16px 40px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .hero-stats {
+            display: flex;
+            gap: 60px;
+            margin-top: 60px;
+        }
+        .stat h3 {
+            font-size: 36px;
+            color: #d4af37;
+        }
+        .stat p {
+            font-size: 14px;
+            color: rgba(255,255,255,0.5);
+            margin: 0;
+        }
+
+        /* Services */
+        .services {
+            padding: 100px 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-label {
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #d4af37;
+            margin-bottom: 15px;
+        }
+        .section-title {
+            font-size: clamp(32px, 4vw, 52px);
+            font-weight: 700;
+            margin-bottom: 60px;
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .service-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 30px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .service-card:hover {
+            border-color: rgba(212, 175, 55, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .service-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .service-card h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+        .service-card .duration {
+            font-size: 14px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 15px;
+        }
+        .service-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .service-price .price {
+            font-size: 24px;
+            font-weight: 700;
+            color: #d4af37;
+        }
+        .service-price .unit {
+            font-size: 14px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* Gallery */
+        .gallery {
+            padding: 100px 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .gallery-item {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, rgba(212,175,55,0.1), rgba(10,10,10,0.8));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            position: relative;
+            overflow: hidden;
+        }
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40%;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+        }
+
+        /* Reviews */
+        .reviews {
+            padding: 100px 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        .review-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 30px;
+        }
+        .review-stars {
+            color: #d4af37;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        .review-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 20px;
+        }
+        .review-author {
+            font-size: 14px;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* CTA */
+        .cta {
+            padding: 100px 30px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(212,175,55,0.05), rgba(10,10,10,0.8));
+        }
+        .cta h2 {
+            font-size: clamp(32px, 4vw, 48px);
+            margin-bottom: 20px;
+        }
+        .cta p {
+            font-size: 18px;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 40px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Contact */
+        .contact {
+            padding: 100px 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+        .contact-item h4 {
+            font-size: 14px;
+            color: #d4af37;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .contact-item p {
+            font-size: 16px;
+            color: rgba(255,255,255,0.8);
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 40px 30px;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: rgba(255,255,255,0.3);
+            font-size: 14px;
+        }
+
+        /* Mobile booking bar */
+        .mobile-booking {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(20px);
+            padding: 15px;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            z-index: 100;
+        }
+        .mobile-booking a {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, #d4af37, #b8942e);
+            color: #000;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .hero-stats { gap: 30px; flex-wrap: wrap; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+            .mobile-booking { display: block; }
+            .hero-buttons { flex-direction: column; }
+            .btn-primary, .btn-secondary { width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo">MAYA</div>
+            <a href="https://t.me/MayaSimfBot" class="header-cta">Записаться в Telegram</a>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">✦ Премиум салон красоты</div>
+            <h1>Красота — это <span>ваш стиль</span></h1>
+            <p>Профессиональные услуги для тех, кто ценит качество. Запишитесь прямо сейчас через Telegram-бот — это удобно и быстро.</p>
+            <div class="hero-buttons">
+                <a href="https://t.me/MayaSimfBot" class="btn-primary">Записаться в Telegram →</a>
+                <a href="#services" class="btn-secondary">Смотреть услуги</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <h3>8+</h3>
+                    <p>лет опыта</p>
+                </div>
+                <div class="stat">
+                    <h3>2500+</h3>
+                    <p>довольных клиентов</p>
+                </div>
+                <div class="stat">
+                    <h3>15+</h3>
+                    <p>мастеров</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section class="services" id="services">
+        <div class="section-label">Услуги</div>
+        <h2 class="section-title">Что мы предлагаем</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">✂️</div>
+                <h3>Стрижка мужская</h3>
+                <div class="duration">30 минут</div>
+                <div class="service-price">
+                    <span class="price">800 ₽</span>
+                    <span class="unit">/ процедура</span>
+                </div>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">💇</div>
+                <h3>Стрижка женская</h3>
+                <div class="duration">60 минут</div>
+                <div class="service-price">
+                    <span class="price">1 500 ₽</span>
+                    <span class="unit">/ процедура</span>
+                </div>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🎨</div>
+                <h3>Окрашивание</h3>
+                <div class="duration">120 минут</div>
+                <div class="service-price">
+                    <span class="price">3 000 ₽</span>
+                    <span class="unit">/ процедура</span>
+                </div>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">💅</div>
+                <h3>Маникюр</h3>
+                <div class="duration">60 минут</div>
+                <div class="service-price">
+                    <span class="price">1 200 ₽</span>
+                    <span class="unit">/ процедура</span>
+                </div>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🦶</div>
+                <h3>Педикюр</h3>
+                <div class="duration">90 минут</div>
+                <div class="service-price">
+                    <span class="price">1 500 ₽</span>
+                    <span class="unit">/ процедура</span>
+                </div>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">💋</div>
+                <h3>Укладка</h3>
+                <div class="duration">45 минут</div>
+                <div class="service-price">
+                    <span class="price">1 000 ₽</span>
+                    <span class="unit">/ процедура</span>
+                </div>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🪒</div>
+                <h3>Бритьё</h3>
+                <div class="duration">30 минут</div>
+                <div class="service-price">
+                    <span class="price">600 ₽</span>
+                    <span class="unit">/ процедура</span>
+                </div>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">✨</div>
+                <h3>Ламинирование бровей</h3>
+                <div class="duration">60 минут</div>
+                <div class="service-price">
+                    <span class="price">2 000 ₽</span>
+                    <span class="unit">/ процедура</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="gallery" id="gallery">
+        <div class="section-label">Портфолио</div>
+        <h2 class="section-title">Наши работы</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item">💇‍♀️</div>
+            <div class="gallery-item">✂️</div>
+            <div class="gallery-item">🎨</div>
+            <div class="gallery-item">💅</div>
+            <div class="gallery-item">🪒</div>
+            <div class="gallery-item">✨</div>
+        </div>
+    </section>
+
+    <!-- Reviews -->
+    <section class="reviews" id="reviews">
+        <div class="section-label">Отзывы</div>
+        <h2 class="section-title">Что говорят клиенты</h2>
+        <div class="reviews-grid">
+            <div class="review-card">
+                <div class="review-stars">★★★★★</div>
+                <div class="review-text">«Отличный салон! Хожу уже второй год. Мастера знают своё дело. Особенно нравится окрашивание — цвет держится долго.»</div>
+                <div class="review-author">Анна К. • Google Maps</div>
+            </div>
+            <div class="review-card">
+                <div class="review-stars">★★★★★</div>
+                <div class="review-text">«Записалась через Telegram-бот — очень удобно! Не нужно звонить и ждать ответа. Всё чётко и быстро.»</div>
+                <div class="review-author">Мария С. • Яндекс Карты</div>
+            </div>
+            <div class="review-card">
+                <div class="review-stars">★★★★★</div>
+                <div class="review-text">«Лучший барбершоп в Симферополе. Атмосфера на высоте, мастера — профи. Рекомендую!»</div>
+                <div class="review-author">Дмитрий В. • 2ГИС</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <h2>Готовы записаться?</h2>
+        <p>Откройте Telegram и начните диалог с ботом. Выберите услугу, дату и время — всё занимает 30 секунд.</p>
+        <a href="https://t.me/MayaSimfBot" class="btn-primary">Открыть Telegram →</a>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact" id="contact">
+        <div class="section-label">Контакты</div>
+        <h2 class="section-title">Как нас найти</h2>
+        <div class="contact-grid">
+            <div class="contact-item">
+                <h4>Адрес</h4>
+                <p>Симферополь<br>ул. Севастопольская 30/4<br>с. Мирное, ул. Крымской весны 5к6</p>
+            </div>
+            <div class="contact-item">
+                <h4>Телефон</h4>
+                <p><a href="tel:+79788614804" style="color: #d4af37; text-decoration: none;">+7 (978) 861-48-04</a><br>Администратор</p>
+            </div>
+            <div class="contact-item">
+                <h4>Telegram</h4>
+                <p><a href="https://t.me/maya_simf" style="color: #d4af37; text-decoration: none;">@maya_simf</a><br>Канал салона</p>
+            </div>
+            <div class="contact-item">
+                <h4>Часы работы</h4>
+                <p>Пн-Сб: 9:00 — 20:00<br>Вс: выходной</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2026 MAYA Salon. Все права защищены.</p>
+    </footer>
+
+    <!-- Mobile sticky booking -->
+    <div class="mobile-booking">
+        <a href="https://t.me/MayaSimfBot">📅 Записаться в Telegram</a>
+    </div>
+</body>
+</html>

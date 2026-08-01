@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Money Plan — Бизнес-план</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0f;color:#e0e0e0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6}
+.container{max-width:1100px;margin:0 auto;padding:40px 20px}
+h1{font-size:2.5rem;background:linear-gradient(135deg,#00d4aa,#00a3ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px}
+.subtitle{color:#888;font-size:1.1rem;margin-bottom:40px}
+.section{margin:60px 0}
+.section h2{color:#00d4aa;font-size:1.5rem;margin-bottom:20px;border-bottom:1px solid #1a1a2e;padding-bottom:10px}
+.card{background:#111122;border:1px solid #1a1a2e;border-radius:12px;padding:20px;margin-bottom:16px;transition:border-color .2s}
+.card:hover{border-color:#00d4aa44}
+.card h3{color:#fff;font-size:1.1rem;margin-bottom:8px}
+.card .meta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.badge{padding:2px 8px;border-radius:4px;font-size:.75rem;font-weight:600}
+.badge-quick{background:#00d4aa22;color:#00d4aa}
+.badge-passive{background:#a855f722;color:#a855f7}
+.badge-mixed{background:#f59e0b22;color:#f59e0b}
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:.9rem}
+th{text-align:left;padding:10px 12px;border-bottom:2px solid #00d4aa44;color:#00d4aa;font-weight:600}
+td{padding:10px 12px;border-bottom:1px solid #1a1a2e}
+tr:hover td{background:#11112288}
+.canvas-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:20px 0}
+.canvas-cell{background:#111122;border:1px solid #00d4aa33;border-radius:8px;padding:14px;font-size:.85rem}
+.canvas-cell h4{color:#00d4aa;font-size:.8rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.canvas-cell ul{list-style:none;padding:0}
+.canvas-cell li{color:#ccc;margin-bottom:3px;font-size:.82rem;padding-left:10px;position:relative}
+.canvas-cell li::before{content:'▸';position:absolute;left:0;color:#00d4aa}
+.canvas-wide{grid-column:span 3}
+.roadmap{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0}
+.phase{background:#111122;border:1px solid #1a1a2e;border-radius:10px;padding:16px;border-top:2px solid}
+.phase h4{font-size:.9rem;margin-bottom:6px}
+.phase .time{color:#00d4aa;font-size:.75rem;margin-bottom:6px;display:block}
+.phase ul{list-style:none;font-size:.82rem;color:#aaa}
+.phase li{margin-bottom:2px;padding-left:10px}
+.phase li::before{content:'•';color:#00d4aa;position:absolute;margin-left:-10px}
+.phase-1{border-top-color:#00d4aa}
+.phase-2{border-top-color:#a855f7}
+.phase-3{border-top-color:#f59e0b}
+.phase-4{border-top-color:#ef4444}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.compare-item{background:#111122;border:1px solid #1a1a2e;border-radius:10px;padding:16px}
+.compare-item h4{color:#00d4aa;margin-bottom:6px}
+.compare-item .row{display:flex;justify-content:space-between;padding:4px 0;font-size:.85rem;border-bottom:1px solid #0a0a1a}
+.compare-item .row:last-child{border:0}
+.compare-item .label{color:#888}
+.compare-item .value{color:#eee}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>AI Money Plan</h1>
+<p class="subtitle">Бизнес-план монетизации Hermes Agent на базе opencode.ai/zen/v1 (бесплатный LLM)</p>
+
+<!-- Executive Summary -->
+<div class="section">
+<h2>Executive Summary</h2>
+<div class="card">
+<p style="color:#aaa;margin-bottom:12px">Hermes Agent — автономная AI-система с бесплатным LLM-доступом. 10 методов монетизации с общим потенциалом от 50 т.р. до 3.8 млн руб./мес. Ключевое преимущество: 90%+ маржинальность за счёт бесплатного LLM. Старт от 0 руб. Первые деньги через 1-2 недели.</p>
+<div class="meta">
+<span class="badge badge-quick">Старт: 0 руб.</span>
+<span class="badge badge-passive">Окупаемость: 1-2 нед</span>
+<span class="badge badge-mixed">Маржинальность: 90%+</span>
+</div>
+</div>
+</div>
+
+<!-- Lean Canvas — сводный -->
+<div class="section">
+<h2>Lean Canvas — сводный для Hermes</h2>
+<div class="canvas-grid">
+<div class="canvas-cell">
+<h4>Проблема</h4>
+<ul>
+<li>Нет пассивного дохода с AI</li>
+<li>Дорогие API (OpenAI/Claude)</li>
+<li>Ручное управление процессами</li>
+</ul>
+</div>
+<div class="canvas-cell">
+<h4>Решение</h4>
+<ul>
+<li>Hermes + бесплатный LLM</li>
+<li>Автоматизация 80-95% процессов</li>
+<li>Готовые skills из коробки</li>
+</ul>
+</div>
+<div class="canvas-cell">
+<h4>Ключевые метрики</h4>
+<ul>
+<li>CAC: 500-2000 руб.</li>
+<li>LTV: 50000-150000 руб.</li>
+<li>Churn: &lt;5%/мес</li>
+<li>Конверсия: 3-5%</li>
+</ul>
+</div>
+<div class="canvas-cell">
+<h4>Уникальное ценностное предложение</h4>
+<ul>
+<li>Бесплатный LLM = маржа 90%+</li>
+<li>Полная автоматизация из коробки</li>
+<li>10 готовых методов монетизации</li>
+</ul>
+</div>
+<div class="canvas-cell">
+<h4>Каналы привлечения</h4>
+<ul>
+<li>Telegram-каналы</li>
+<li>FL.ru / freelance</li>
+<li>Сарафанное радио</li>
+<li>Партнёрская сеть</li>
+</ul>
+</div>
+<div class="canvas-cell">
+<h4>Сегменты клиентов</h4>
+<ul>
+<li>Малый бизнес (автоматизация)</li>
+<li>Digital-агентства (white-label)</li>
+<li>Фрилансеры (обучение)</li>
+<li>Владельцы Telegram-каналов</li>
+</ul>
+</div>
+<div class="canvas-cell">
+<h4>Структура издержек</h4>
+<ul>
+<li>Хостинг: 500-2000 руб./мес</li>
+<li>Домены: 500 руб./год</li>
+<li>Инструменты: 0-1000 руб./мес</li>
+<li>Платежи: 3-5% комиссии</li>
+</ul>
+</div>
+<div class="canvas-cell">
+<h4>Потоки дохода</h4>
+<ul>
+<li>Разовые проекты (боты)</li>
+<li>Подписки (SaaS, лидоген)</li>
+<li>White-label (контент-студия)</li>
+<li>Консалтинг (обучение)</li>
+</ul>
+</div>
+<div class="canvas-cell">
+<h4>Несправедливое преимущество</h4>
+<ul>
+<li>Бесплатный LLM навсегда</li>
+<li>Готовая инфраструктура</li>
+<li>85+ skills из коробки</li>
+<li>Knowledge Cube (2145 записей)</li>
+</ul>
+</div>
+</div>
+</div>
+
+<!-- Топ-5 методов — детально -->
+<div class="section">
+<h2>Топ-5 методов: Business Model Canvas</h2>
+
+<div class="card">
+<h3>1. White-Label AI-студия контента</h3>
+<p style="color:#888;font-size:.85rem;margin-bottom:10px">Доход: 300K — 2.5 млн/мес | Авто: 88% | Срок: 4-8 нед | Старт: 5-10 т.р.</p>
+<div class="canvas-grid">
+<div class="canvas-cell"><h4>Партнёры</h4>Digital-агентства, SMM-специалисты</div>
+<div class="canvas-cell"><h4>Активности</h4>Генерация контента, SEO, публикация</div>
+<div class="canvas-cell"><h4>Ценность</h4>Готовый контент под брендом клиента, 95% авто</div>
+<div class="canvas-cell"><h4>Клиенты</h4>Digital-агентства, блогеры, медиа</div>
+<div class="canvas-cell"><h4>Каналы</h4>Telegram, прямые договоры</div>
+<div class="canvas-cell"><h4>Ресурсы</h4>Hermes, Zen API, навыки контента</div>
+<div class="canvas-cell"><h4>Издержки</h4>1000-3000 руб./мес</div>
+<div class="canvas-cell"><h4>Доход</h4>300K — 2.5 млн/мес</div>
+</div>
+</div>
+
+<div class="card">
+<h3>2. AI-консалтинг и обучение</h3>
+<p style="color:#888;font-size:.85rem;margin-bottom:10px">Доход: 200K — 2 млн+/мес | Авто: 40% | Срок: 4-12 нед | Старт: 0-5 т.р.</p>
+<div class="canvas-grid">
+<div class="canvas-cell"><h4>Партнёры</h4>Онлайн-школы, платформы курсов</div>
+<div class="canvas-cell"><h4>Активности</h4>Проведение вебинаров, создание курсов</div>
+<div class="canvas-cell"><h4>Ценность</h4>Практические навыки AI-автоматизации</div>
+<div class="canvas-cell"><h4>Клиенты</h4>Предприниматели, фрилансеры</div>
+<div class="canvas-cell"><h4>Каналы</h4>Telegram, YouTube, профильные форумы</div>
+<div class="canvas-cell"><h4>Ресурсы</h4>Hermes + кейсы + демо</div>
+<div class="canvas-cell"><h4>Издержки</h4>500-2000 руб./мес</div>
+<div class="canvas-cell"><h4>Доход</h4>200K — 2 млн+/мес</div>
+</div>
+</div>
+
+<div class="card">
+<h3>3. Faceless YouTube-канал</h3>
+<p style="color:#888;font-size:.85rem;margin-bottom:10px">Доход: 85K — 3.8 млн/мес | Авто: 80% | Срок: 12-24 нед | Старт: 4-15 т.р./мес</p>
+<div class="canvas-grid">
+<div class="canvas-cell"><h4>Партнёры</h4>Рекламодатели, партнёрские сети</div>
+<div class="canvas-cell"><h4>Активности</h4>Скриптинг, озвучка, монтаж, заливка</div>
+<div class="canvas-cell"><h4>Ценность</h4>Контент 24/7 без лица автора</div>
+<div class="canvas-cell"><h4>Клиенты</h4>Зрители YouTube (нишевые)</div>
+<div class="canvas-cell"><h4>Каналы</h4>YouTube + Google Ads</div>
+<div class="canvas-cell"><h4>Ресурсы</h4>Hermes + AI-видео генерация</div>
+<div class="canvas-cell"><h4>Издержки</h4>4000-15000 руб./мес</div>
+<div class="canvas-cell"><h4>Доход</h4>85K — 3.8 млн/мес</div>
+</div>
+</div>
+
+<div class="card">
+<h3>4. AI-агентство автоматизации бизнеса</h3>
+<p style="color:#888;font-size:.85rem;margin-bottom:10px">Доход: 200K — 1.5 млн/мес | Авто: 85% | Срок: 4-8 нед | Старт: 30-50 т.р.</p>
+<div class="canvas-grid">
+<div class="canvas-cell"><h4>Партнёры</h4>CRM-системы, платёжные шлюзы</div>
+<div class="canvas-cell"><h4>Активности</h4>Аудит, внедрение, поддержка ботов</div>
+<div class="canvas-cell"><h4>Ценность</h4>Автоматизация бизнес-процессов под ключ</div>
+<div class="canvas-cell"><h4>Клиенты</h4>Малый и средний бизнес</div>
+<div class="canvas-cell"><h4>Каналы</h4>Холодные продажи, Telegram, конференции</div>
+<div class="canvas-cell"><h4>Ресурсы</h4>Команда + Hermes + Zen API</div>
+<div class="canvas-cell"><h4>Издержки</h4>30000-50000 руб./мес</div>
+<div class="canvas-cell"><h4>Доход</h4>200K — 1.5 млн/мес</div>
+</div>
+</div>
+
+<div class="card">
+<h3>5. Чат-боты на заказ (Telegram/WhatsApp AI)</h3>
+<p style="color:#888;font-size:.85rem;margin-bottom:10px">Доход: 100-350K/мес | Авто: 90% | Срок: 1-2 нед | Старт: 0-10 т.р.</p>
+<div class="canvas-grid">
+<div class="canvas-cell"><h4>Партнёры</h4>Платежные системы, CRM</div>
+<div class="canvas-cell"><h4>Активности</h4>Разработка, тестирование, поддержка</div>
+<div class="canvas-cell"><h4>Ценность</h4>AI-бот для бизнеса за 1-2 недели</div>
+<div class="canvas-cell"><h4>Клиенты</h4>Малый бизнес, ритейл, услуги</div>
+<div class="canvas-cell"><h4>Каналы</h4>FL.ru, Telegram, рекомендации</div>
+<div class="canvas-cell"><h4>Ресурсы</h4>Hermes + навыки Telegram-ботов</div>
+<div class="canvas-cell"><h4>Издержки</h4>0-3000 руб./мес</div>
+<div class="canvas-cell"><h4>Доход</h4>100-350K/мес</div>
+</div>
+</div>
+</div>
+
+<!-- Финансовая модель -->
+<div class="section">
+<h2>Финансовая модель</h2>
+<div class="compare">
+<div class="compare-item">
+<h4>Консервативный сценарий</h4>
+<div class="row"><span class="label">Месяц 1</span><span class="value">50-100 т.р.</span></div>
+<div class="row"><span class="label">Месяц 3</span><span class="value">150-300 т.р.</span></div>
+<div class="row"><span class="label">Месяц 6</span><span class="value">300-700 т.р.</span></div>
+<div class="row"><span class="label">CAC</span><span class="value">1500 руб.</span></div>
+<div class="row"><span class="label">LTV</span><span class="value">45000 руб.</span></div>
+<div class="row"><span class="label">LTV/CAC</span><span class="value">30x</span></div>
+<div class="row"><span class="label">Точка БУ</span><span class="value">2 недели</span></div>
+</div>
+<div class="compare-item">
+<h4>Оптимистичный сценарий</h4>
+<div class="row"><span class="label">Месяц 1</span><span class="value">100-200 т.р.</span></div>
+<div class="row"><span class="label">Месяц 3</span><span class="value">300-700 т.р.</span></div>
+<div class="row"><span class="label">Месяц 6</span><span class="value">700K-2.5 млн</span></div>
+<div class="row"><span class="label">CAC</span><span class="value">800 руб.</span></div>
+<div class="row"><span class="label">LTV</span><span class="value">120000 руб.</span></div>
+<div class="row"><span class="label">LTV/CAC</span><span class="value">150x</span></div>
+<div class="row"><span class="label">Точка БУ</span><span class="value">1 неделя</span></div>
+</div>
+</div>
+</div>
+
+<!-- Рынок -->
+<div class="section">
+<h2>Анализ рынка</h2>
+<table>
+<tr><th>Показатель</th><th>Значение</th></tr>
+<tr><td>TAM (Total Addressable Market)</td><td>Рынок AI-услуг в РФ: ~150 млрд руб./год</td></tr>
+<tr><td>SAM (Serviceable Available Market)</td><td>AI-автоматизация для малого бизнеса: ~30 млрд руб./год</td></tr>
+<tr><td>SOM (Serviceable Obtainable Market)</td><td>Цель на 6 мес: 0.5-2.5 млн руб./мес (0.01% SAM)</td></tr>
+<tr><td>Конкуренты</td><td>OpenAI-решения (дорогие), ручные агентства (медленные)</td></tr>
+<tr><td>Наше преимущество</td><td>Бесплатный LLM = цена в 5-10x ниже конкурентов</td></tr>
+</table>
+</div>
+
+<!-- Дорожная карта -->
+<div class="section">
+<h2>Дорожная карта на 6 месяцев</h2>
+<div class="roadmap">
+<div class="phase phase-1">
+<span class="time">Месяц 1</span>
+<h4>Быстрый старт</h4>
+<ul>
+<li>Чат-боты: 3-5 проектов</li>
+<li>Консалтинг: 2-3 клиента</li>
+<li>Платежные шлюзы</li>
+<li>Telegram-канал</li>
+</ul>
+<p style="color:#00d4aa;font-size:.8rem;margin-top:6px">50-100 т.р.</p>
+</div>
+<div class="phase phase-2">
+<span class="time">Месяц 2</span>
+<h4>Масштабирование</h4>
+<ul>
+<li>Lead Gen сервис</li>
+<li>White-label контент</li>
+<li>Автоматизация процессов</li>
+<li>Партнёрская сеть</li>
+</ul>
+<p style="color:#a855f7;font-size:.8rem;margin-top:6px">150-300 т.р.</p>
+</div>
+<div class="phase phase-3">
+<span class="time">Месяц 3-4</span>
+<h4>Пассивные потоки</h4>
+<ul>
+<li>YouTube канал</li>
+<li>Контент-сайты (2-3 ниши)</li>
+<li>SaaS продукты</li>
+<li>Доведение до автопилота</li>
+</ul>
+<p style="color:#f59e0b;font-size:.8rem;margin-top:6px">300-700 т.р.</p>
+</div>
+<div class="phase phase-4">
+<span class="time">Месяц 5-6</span>
+<h4>Рост</h4>
+<ul>
+<li>Масштабирование успешного</li>
+<li>2-3 контент-сайта</li>
+<li>2 YouTube канала</li>
+<li>Оптимизация всего</li>
+</ul>
+<p style="color:#ef4444;font-size:.8rem;margin-top:6px">700K-2.5 млн</p>
+</div>
+</div>
+</div>
+
+<!-- Первые шаги -->
+<div class="section">
+<h2>Первые шаги — что сделать прямо сейчас</h2>
+<div class="compare">
+<div class="compare-item">
+<h4>Шаг 1: Платёжные шлюзы</h4>
+<p style="font-size:.82rem;color:#888">Подключить ЮMoney и/или Crypto Bot для приёма платежей</p>
+</div>
+<div class="compare-item">
+<h4>Шаг 2: Демо-бот</h4>
+<p style="font-size:.82rem;color:#888">Создать Telegram-бота на Hermes с AI-функциями для демонстрации клиентам</p>
+</div>
+<div class="compare-item">
+<h4>Шаг 3: Telegram-канал</h4>
+<p style="font-size:.82rem;color:#888">Запустить канал «Hermes AI — автоматизация» с кейсами и ценами</p>
+</div>
+<div class="compare-item">
+<h4>Шаг 4: Первый клиент</h4>
+<p style="font-size:.82rem;color:#888">Найти заказчика на FL.ru / через знакомых. Сделать бота за 1-2 недели.</p>
+</div>
+</div>
+</div>
+
+</div>
+</body>
+</html>

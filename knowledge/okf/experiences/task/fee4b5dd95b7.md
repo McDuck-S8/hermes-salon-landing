@@ -1,0 +1,55 @@
+---
+type: task
+title: "User task from @McDuck8Bot: ты исправляешь?
+📊 System Report
+
+Events: 1/3 HEALTHY"
+timestamp: 2026-07-20T17:45:10.200811
+confidence: 0.900
+verification_method: manual
+source_table: kc_entries
+importance: 7
+tags:
+  - task
+  - telegram
+  - mcduck
+  - error
+resource: mcduck_bot
+---
+
+User task from @McDuck8Bot: ты исправляешь?
+📊 System Report
+
+Events: 1/3 HEALTHY
+Modules: 0/24 HEALTHY
+Pipelines: 0/3 HEALTHY
+Services: 4/5 HEALTHY
+Alerts: 12 active
+
+  ⚠️ new_suggestions_ready: SILENT
+  ⚠️ architecture_scan_complete: SILENT
+  ⚠️ core: SILENT
+  ⚠️ event_system: SILENT
+  ⚠️ knowledge: SILENT
+  ⚠️ knowledge_pipeline: SILENT
+  ⚠️ llm: SILENT
+  ⚠️ cron_tools: SILENT
+  ⚠️ tools: SILENT
+  ⚠️ telegram: SILENT
+  ⚠️ posting: SILENT
+  ⚠️ health: SILENT
+  ⚠️ curiosity: SILENT
+  ⚠️ anomaly_detector: SILENT
+  ⚠️ orchestrator: SILENT
+  ⚠️ market_research: SILENT
+  ⚠️ self_improvement_loop: SILENT
+  ⚠️ uncertainty_observer: SILENT
+  ⚠️ crystal_base: SILENT
+  ⚠️ plugins_websrch: SILENT
+  ⚠️ plugins_selfev: SILENT
+  ⚠️ plugins_icarus: SILENT
+  ⚠️ plugins_lcm: SILENT
+  ⚠️ config: SILENT
+  ⚠️ skills: SILENT
+  ⚠️ deprecated: SILENT
+  ⚠️ telegram_api: DOWN - Connection to api.telegram.org:443 failed

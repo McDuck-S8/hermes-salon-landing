@@ -1,0 +1,28 @@
++## Config
++
++```yaml
++arbitrage:
++  cpa_networks:
++    - name: admitad
++      api_key: ${ADMITAD_API_KEY}
++      enabled: true
++    - name: cityads
++      api_key: ${CITYADS_API_KEY}
++      enabled: true
++  traffic_sources:
++    - facebook
++    - google
++    - tiktok
++    - kadam
++    - richads
++  gap_threshold_roi: 30  # %
++  min_payout: 100  # RUB
++  max_cpc: 50  # RUB
++  scan_interval_minutes: 60
++```
++
++## Data Models
++
++```python
++@dataclass
+… omitted 35 diff line(s) across 1 additional file(s)/section(s)

@@ -1,0 +1,10 @@
+{
+  "name": "design-button-component",
+  "version": "1.0.0",
+  "category": "design-button",
+  "patterns_used": null,
+  "components": [
+    "button"
+  ],
+  "templates_dir": "templates"
+}

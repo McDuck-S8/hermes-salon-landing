@@ -1,0 +1,523 @@
+# Rules of Engagement (RoE) Templates for Crimea Security Framework
+# Наследует структуру T3MP3ST RoE + требования российского законодательства
+
+templates:
+  # === STRICT — для госорганов, КИИ, 152-ФЗ, 187-ФЗ ===
+  - id: strict
+    name: "Strict RoE — Госорганы, КИИ, Критическая инфраструктура"
+    version: "2.0"
+    description: "Жёсткие правила для тестирования государственных систем, объектов КИИ, систем обработки ПДн. Только recon + scan + analyze. Никакой эксплуатации."
+    legal_basis:
+      - "152-ФЗ «О персональных данных» ст. 19 (защита ПДн)"
+      - "187-ФЗ «О безопасности КИИ» ст. 10 (аудит КИИ)"
+      - "ГОСТ Р 57580-2017 (процесс ИБ аудита)"
+      - "ФСТЭК приказ №21 (защита ГС/КИИ)"
+      - "УК РФ ст. 272, 273, 274 (предупреждение преступлений)"
+    authorization:
+      required_documents:
+        - "Соглашение о тестировании (договор/акт)"
+        - "Scope Receipt (подписанный заказчиком)"
+        - "Уведомление ФСТЭК (для КИИ кат. 1-2)"
+        - "Согласование с НКЦКИ (для КИИ кат. 1)"
+        - "NDA с персоналом тестирования"
+      scope_receipt:
+        required: true
+        format: "json|pdf"
+        fields:
+          - "customer_legal_entity"
+          - "customer_authorized_representative"
+          - "target_systems"
+          - "ip_ranges"
+          - "domains"
+          - "excluded_paths"
+          - "testing_window_start"
+          - "testing_window_end"
+          - "emergency_contact"
+          - "authorized_signature"
+          - "signature_date"
+      validity_days_valid_until:
+        required: true
+    allowed_phases:
+      - "reconnaissance"
+      - "scanning"
+      - "enumeration"
+      - "vulnerability_assessment"
+      - "analysis"
+      - "reporting"
+    forbidden_phases:
+      - "exploitation"
+      - "post_exploitation"
+      - "privilege_escalation"
+      - "lateral_movement"
+      - "persistence"
+      - "exfiltration"
+      - "denial_of_service"
+      - "social_engineering"
+      - "physical_access"
+    tool_gates:
+      # Nmap — только безопасные сканы
+      nmap:
+        allowed: true
+        allowed_flags:
+          - "-sS"
+          - "-sV"
+          - "-O"
+          - "--script=vuln"
+          - "--script=safe"
+          - "-T2"
+          - "-T3"
+        forbidden_flags:
+          - "-A"
+          - "-T4"
+          - "-T5"
+          - "--script=exploit"
+          - "--script=brute"
+          - "--script=dos"
+          - "-f"
+          - "--mtu"
+          - "-D"
+        max_parallelism: 50
+        host_timeout: "30m"
+      # Nuclei — только безопасные шаблоны
+      nuclei:
+        allowed: true
+        severity_filter: ["info", "low", "medium", "high"]
+        exclude_tags:
+          - "dos"
+          - "fuzz"
+          - "intrusive"
+          - "exploit"
+          - "rce"
+          - "sqli"
+          - "lfi"
+          - "rfi"
+          - "ssrf"
+          - "xxe"
+          - "ssti"
+        max_rate: 10
+        timeout: "10s"
+        retries: 1
+      # FFUF — контролируемая брутфорс
+      ffuf:
+        allowed: true
+        max_rate: 20
+        max_concurrent: 10
+        wordlists: ["raft-small", "common", "directory-list-2.3-small"]
+        forbidden_wordlists: ["raft-large", "rockyou", "seclists/Passwords"]
+        filters:
+          - "fc=404,403,500"
+          - "fs=0"
+      # SQLMap — ЗАПРЕЩЁН в strict
+      sqlmap:
+        allowed: false
+        reason: "Active exploitation forbidden in strict RoE"
+      # Metasploit — ЗАПРЕЩЁН
+      msfconsole:
+        allowed: false
+        reason: "Exploitation framework forbidden in strict RoE"
+      # Hydra/Medusa — ЗАПРЕЩЁНЫ
+      hydra:
+        allowed: false
+      medusa:
+        allowed: false
+      # Custom scripts — только read-only
+      custom_scripts:
+        allowed: true
+        restrictions:
+          - "read_only_operations"
+          - "no_state_change"
+          - "no_data_modification"
+          - "timeout_max_30s"
+    evidence_requirements:
+      screenshot_required: true
+      curl_command_required: true
+      raw_request_required: true
+      raw_response_required: true
+      timestamp_required: true
+      operator_id_required: true
+      tool_version_required: true
+      chain_of_custody: true
+    data_handling:
+      encrypt_at_rest: true
+      encryption_algorithm: "AES-256-GCM"
+      pii_redaction: true
+      pii_patterns:
+        - "email"
+        - "phone_ru"
+        - "passport_ru"
+        - "inn_ru"
+        - "snils_ru"
+        - "credit_card"
+        - "ipv4"
+        - "ipv6"
+        - "mac"
+        - "jwt"
+        - "api_key"
+        - "password"
+      sanitize_before_storage: true
+      retention_days: 90
+      secure_deletion: true
+      export_control: true
+    kill_switch:
+      enabled: true
+      triggers:
+        - "detection_risk_exceeded"
+        - "scope_violation"
+        - "unauthorized_access_attempt"
+        - "data_exfiltration_attempt"
+        - "critical_system_impact"
+        - "manual_abort"
+        - "emergency_contact_notified"
+      action: "immediate_abort_cleanup_notify"
+      notification_channels:
+        - "email"
+        - "telegram"
+        - "webhook"
+      grace_period_seconds: 30
+    compliance:
+      audit_log:
+        enabled: true
+        format: "jsonl"
+        immutable: true
+        storage: "append_only"
+        fields:
+          - "timestamp"
+          - "mission_id"
+          - "operator_id"
+          - "action"
+          - "target"
+          - "tool"
+          - "parameters"
+          - "result_hash"
+          - "detection_risk"
+          - "phase"
+      reporting:
+        interim_report_interval_hours: 4
+        final_report_formats: ["pdf", "html", "json", "sarif"]
+        language: "ru"
+        executive_summary_required: true
+        technical_details_required: true
+        remediation_guidance_required: true
+        cvss_scoring: "cvss31"
+        mitre_mapping_required: true
+
+  # === PERMISSIVE — для коммерческих заказчиков, внутренние пентесты ===
+  - id: permissive
+    name: "Permissive RoE — Внутренние пентесты, коммерческие заказчики"
+    version: "2.0"
+    description: "Расширенные права для полноценного пентеста с эксплуатацией (без пост-эксплуатации). Требует полного согласования."
+    legal_basis:
+      - "Договор на проведение пентеста"
+      - "Scope Receipt"
+      - "NDA"
+      - "Правила взаимодействия (Rules of Engagement)"
+    authorization:
+      required_documents:
+        - "Договор на пентест"
+        - "Scope Receipt"
+        - "NDA"
+        - "Согласование с владельцем инфраструктуры"
+      scope_receipt:
+        required: true
+        format: "json|pdf"
+        fields:
+          - "customer_legal_entity"
+          - "customer_authorized_representative"
+          - "target_systems"
+          - "ip_ranges"
+          - "domains"
+          - "excluded_paths"
+          - "testing_window_start"
+          - "testing_window_end"
+          - "emergency_contact"
+          - "authorized_signature"
+          - "signature_date"
+      validity_days: 90
+    allowed_phases:
+      - "reconnaissance"
+      - "scanning"
+      - "enumeration"
+      - "vulnerability_assessment"
+      - "exploitation"
+      - "analysis"
+      - "reporting"
+    forbidden_phases:
+      - "post_exploitation"
+      - "privilege_escalation"
+      - "lateral_movement"
+      - "persistence"
+      - "exfiltration"
+      - "denial_of_service"
+      - "social_engineering"
+      - "physical_access"
+    tool_gates:
+      nmap:
+        allowed: true
+        allowed_flags:
+          - "-sS"
+          - "-sV"
+          - "-O"
+          - "-A"
+          - "--script=vuln,exploit"
+          - "-T3"
+          - "-T4"
+        forbidden_flags:
+          - "-T5"
+          - "--script=dos"
+          - "--script=brute"
+        max_parallelism: 100
+      nuclei:
+        allowed: true
+        severity_filter: ["info", "low", "medium", "high", "critical"]
+        exclude_tags:
+          - "dos"
+        max_rate: 50
+      ffuf:
+        allowed: true
+        max_rate: 100
+        max_concurrent: 20
+        wordlists: ["all"]
+      sqlmap:
+        allowed: true
+        max_level: 2
+        max_risk: 2
+        allowed_techniques: ["BEUSTQ"]
+        forbidden_techniques: ["U"]  # Union query может быть шумным
+        options:
+          - "--batch"
+          - "--random-agent"
+          - "--threads=5"
+      msfconsole:
+        allowed: true
+        allowed_modules:
+          - "exploit/*"
+          - "auxiliary/scanner/*"
+          - "post/*"
+        forbidden_modules:
+          - "exploit/windows/smb/ms17_010_eternalblue"
+          - "auxiliary/dos/*"
+          - "post/windows/manage/*"
+        restrictions:
+          - "no_persistence"
+          - "no_lateral_movement"
+          - "cleanup_after"
+      hydra:
+        allowed: true
+        max_tasks: 4
+        wordlists: ["rockyou.txt", "common.txt"]
+        services: ["http-post-form", "ssh", "ftp", "smb"]
+        restrictions:
+          - "no_lockout_risk"
+          - "max_3_attempts_per_account"
+    evidence_requirements:
+      screenshot_required: true
+      curl_command_required: true
+      raw_request_required: true
+      raw_response_required: true
+      poc_required: true
+      timestamp_required: true
+    data_handling:
+      encrypt_at_rest: true
+      pii_redaction: true
+      retention_days: 180
+    kill_switch:
+      enabled: true
+      triggers:
+        - "detection_risk_exceeded"
+        - "scope_violation"
+        - "unauthorized_access"
+        - "critical_impact"
+        - "manual_abort"
+      action: "immediate_abort_cleanup_notify"
+
+  # === BUGBOUNTY — для багбаунти-программ (HackerOne, Bugcrowd, Яндекс, PT, Solar) ===
+  - id: bugbounty
+    name: "Bug Bounty RoE — HackerOne, Bugcrowd, Яндекс Багбаунти, PT, Solar Dozor"
+    version: "2.0"
+    description: "Правила для участия в багбаунти-программах. Только recon + scan + analyze + PoC. Никакой эксплуатации за пределами PoC."
+    legal_basis:
+      - "Условия багбаунти-программы (Policy)"
+      - "Scope Receipt от платформы"
+      - "Safe Harbor provisioins"
+    authorization:
+      required_documents:
+        - "Scope из программы (импорт)"
+        - "Принятие условий программы"
+      scope_receipt:
+        required: true
+        format: "platform_import"
+        auto_import: true
+        platforms:
+          - "hackerone"
+          - "bugcrowd"
+          - "intigriti"
+          - "yeswehack"
+          - "yandex_bugbounty"
+          - "pt_bugbounty"
+          - "solar_dozor"
+    allowed_phases:
+      - "reconnaissance"
+      - "scanning"
+      - "enumeration"
+      - "vulnerability_assessment"
+      - "proof_of_concept"
+      - "analysis"
+      - "reporting"
+    forbidden_phases:
+      - "exploitation"
+      - "post_exploitation"
+      - "privilege_escalation"
+      - "lateral_movement"
+      - "persistence"
+      - "exfiltration"
+      - "denial_of_service"
+      - "social_engineering"
+      - "physical_access"
+      - "automated_scanning_on_production"
+      - "mass_scanning"
+    tool_gates:
+      nmap:
+        allowed: false
+        reason: "Network scanning typically prohibited in bug bounty"
+      nuclei:
+        allowed: true
+        severity_filter: ["info", "low", "medium", "high", "critical"]
+        exclude_tags:
+          - "dos"
+          - "fuzz"
+          - "intrusive"
+          - "mass"
+        max_rate: 10
+        restrictions:
+          - "no_automated_scanning_without_permission"
+          - "respect_rate_limits"
+      ffuf:
+        allowed: true
+        max_rate: 20
+        max_concurrent: 10
+        restrictions:
+          - "respect_robots_txt"
+          - "no_aggressive_crawling"
+      sqlmap:
+        allowed: false
+        reason: "Active exploitation forbidden in bug bounty"
+      burpsuite:
+        allowed: true
+        mode: "manual"
+        restrictions:
+          - "no_intruder_on_production"
+          - "no_automated_scanning"
+    evidence_requirements:
+      screenshot_required: true
+      curl_command_required: true
+      raw_request_required: true
+      raw_response_required: true
+      poc_required: true
+      video_poc_allowed: true
+      impact_demonstration_required: true
+      timestamp_required: true
+    data_handling:
+      encrypt_at_rest: true
+      pii_redaction: true
+      retention_days: 365
+      platform_submission_format: true
+    kill_switch:
+      enabled: true
+      triggers:
+        - "out_of_scope_access"
+        - "rate_limit_exceeded"
+        - "waf_block"
+        - "program_suspension"
+        - "manual_abort"
+      action: "immediate_abort"
+    compliance:
+      platform_sync:
+        enabled: true
+        platforms:
+          - "hackerone"
+          - "bugcrowd"
+      auto_submit: false
+      duplicate_check: true
+
+  # === CRIMEA_GOV — специфический для госорганов Крыма ===
+  - id: crimea_gov
+    name: "Crimea Gov RoE — Госорганы Республики Крым"
+    version: "2.0"
+    description: "Специализированный RoE для госорганов РК с учётом региональных нормативных актов"
+    extends: "strict"
+    legal_basis:
+      - "152-ФЗ «О персональных данных»"
+      - "187-ФЗ «О безопасности КИИ»"
+      - "Закон РК «Об информатизации Республики Крым»"
+      - "Постановление Совета министров РК об ИБ"
+      - "Методические рекомендации Минцифры РК"
+    authorization:
+      required_documents:
+        - "Договор/Контракт с госорганом РК"
+        - "Scope Receipt (форма Минцифры РК)"
+        - "Согласование с Минцифры РК"
+        - "Уведомление ФСТЭК (если КИИ)"
+        - "Допуск к гостайне (если ГС/КИИ кат. 1-2)"
+        - "NDA с персоналом"
+      scope_receipt:
+        required: true
+        format: "mincyfry_rk_form"
+        fields:
+          - "gosorgan_name"
+          - "system_name"
+          - "gis_class"  # класс ГИС: 1-3
+          - "kii_category"  # категория КИИ: 1-3 или "не КИИ"
+          - "pd_class"  # класс ПДн: 1-4
+          - "ip_ranges"
+          - "domains"
+          - "excluded_subsystems"
+          - "testing_schedule"
+          - "emergency_contacts"
+          - "authorized_official_fio"
+          - "authorized_official_position"
+          - "signature_date"
+          - "seal_required": true
+    tool_gates:
+      nmap:
+        allowed_flags:
+          - "-sS"
+          - "-sV"
+          - "--script=vuln"
+          - "-T2"
+        max_parallelism: 20
+      nuclei:
+        max_rate: 5
+      ffuf:
+        max_rate: 10
+    data_handling:
+      retention_days: 180
+      storage_location: "RU_only"
+      encryption: "GOST_R_34.12-2015_Kuznyechik"
+    compliance:
+      reporting:
+        final_report_formats: ["pdf", "html", "json"]
+        required_sections:
+          - "executive_summary"
+          - "methodology_gost_57580"
+          - "findings_cvss31"
+          - "mitre_attck_mapping"
+          - "gost_r_57580_compliance"
+          - "fstec_requirements_mapping"
+          - "remediation_plan"
+          - "retest_schedule"
+        language: "ru"
+        digital_signature: true
+        seal_required: true
+      audit_log:
+        format: "jsonl"
+        storage: "append_only_ru"
+        integrity_verification: "gost_r_34.11-2012_streebog"
+
+# Метаданные шаблонов
+metadata:
+  created: "2026-07-12"
+  version: "2.0"
+  author: "Crimea Security Framework v2"
+  based_on: ["T3MP3ST RoE", "HexStrike AI Safety Gates", "Russian Legal Framework"]
+  review_cycle_days: 90
+  next_review: "2026-10-10"

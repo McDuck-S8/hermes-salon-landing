@@ -1,0 +1,10 @@
+PS D:\Portable_Soft\hermes> wsl ps aux | grep telegram_bot
+grep : Имя "grep" не распознано как имя командлета, функции, файла сценария или выполняемой программы. Проверьте правильность
+написания имени, а также наличие и правильность пути, после чего повторите попытку.
+строка:1 знак:14
++ wsl ps aux | grep telegram_bot
++              ~~~~
+    + CategoryInfo          : ObjectNotFound: (grep:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS D:\Portable_Soft\hermes>

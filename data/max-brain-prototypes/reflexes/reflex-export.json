@@ -1,0 +1,1142 @@
+{
+  "timestamp": "2026-03-27T05:59:36.983838",
+  "count": 71,
+  "reflexes": [
+    {
+      "id": "reflex_error_1774092390_0",
+      "document": null,
+      "metadata": {
+        "trigger_text": "ошибка error",
+        "success_count": 0,
+        "source": "historical",
+        "action_message": "Частая ошибка: error (встретилась 124 раз)",
+        "weight": 0.5,
+        "action_type": "log_and_notify",
+        "trigger_type": "error_pattern",
+        "id": "reflex_error_1774092390_0",
+        "created_at": "2026-03-21T14:26:30",
+        "fail_count": 0
+      }
+    },
+    {
+      "id": "reflex_error_1774092390_1",
+      "document": null,
+      "metadata": {
+        "fail_count": 0,
+        "created_at": "2026-03-21T14:26:30",
+        "action_type": "log_and_notify",
+        "trigger_text": "ошибка failed",
+        "success_count": 0,
+        "trigger_type": "error_pattern",
+        "id": "reflex_error_1774092390_1",
+        "weight": 0.5,
+        "action_message": "Частая ошибка: failed (встретилась 27 раз)",
+        "source": "historical"
+      }
+    },
+    {
+      "id": "reflex_error_1774092390_2",
+      "document": null,
+      "metadata": {
+        "action_message": "Частая ошибка: ❌ (встретилась 8 раз)",
+        "created_at": "2026-03-21T14:26:30",
+        "success_count": 0,
+        "fail_count": 0,
+        "action_type": "log_and_notify",
+        "trigger_type": "error_pattern",
+        "source": "historical",
+        "weight": 0.5,
+        "id": "reflex_error_1774092390_2",
+        "trigger_text": "ошибка ❌"
+      }
+    },
+    {
+      "id": "reflex_error_1774092390_3",
+      "document": null,
+      "metadata": {
+        "id": "reflex_error_1774092390_3",
+        "fail_count": 0,
+        "trigger_type": "error_pattern",
+        "action_message": "Частая ошибка: ошибка (встретилась 7 раз)",
+        "success_count": 0,
+        "source": "historical",
+        "created_at": "2026-03-21T14:26:30",
+        "weight": 0.5,
+        "trigger_text": "ошибка ошибка",
+        "action_type": "log_and_notify"
+      }
+    },
+    {
+      "id": "reflex_slow_1774092390_4",
+      "document": null,
+      "metadata": {
+        "id": "reflex_slow_1774092390_4",
+        "source": "historical",
+        "trigger_text": "задача \nПосетить DeepSeek Chat (https://chat.deepseek.com",
+        "action_type": "optimize_or_delegate",
+        "action_message": "Задача '\nПосетить DeepSeek Chat (https://chat.deepseek.com' заняла 18389 сек. Можно оптимизировать?",
+        "weight": 0.4,
+        "fail_count": 0,
+        "success_count": 0,
+        "created_at": "2026-03-21T14:26:30",
+        "trigger_type": "slow_task"
+      }
+    },
+    {
+      "id": "reflex_slow_1774092390_5",
+      "document": null,
+      "metadata": {
+        "trigger_text": "задача НАЙТИ В ИНТЕРНЕТЕ: speech_recognition Google API t",
+        "source": "historical",
+        "trigger_type": "slow_task",
+        "id": "reflex_slow_1774092390_5",
+        "fail_count": 0,
+        "action_message": "Задача 'НАЙТИ В ИНТЕРНЕТЕ: speech_recognition Google API t' заняла 3254 сек. Можно оптимизировать?",
+        "created_at": "2026-03-21T14:26:30",
+        "success_count": 0,
+        "action_type": "optimize_or_delegate",
+        "weight": 0.4
+      }
+    },
+    {
+      "id": "reflex_slow_1774092390_6",
+      "document": null,
+      "metadata": {
+        "fail_count": 0,
+        "weight": 0.4,
+        "trigger_type": "slow_task",
+        "action_type": "optimize_or_delegate",
+        "created_at": "2026-03-21T14:26:30",
+        "id": "reflex_slow_1774092390_6",
+        "source": "historical",
+        "trigger_text": "задача СРОЧНО: speech_recognition Google API timeout 97 с",
+        "action_message": "Задача 'СРОЧНО: speech_recognition Google API timeout 97 с' заняла 2218 сек. Можно оптимизировать?",
+        "success_count": 0
+      }
+    },
+    {
+      "id": "reflex_slow_1774092390_7",
+      "document": null,
+      "metadata": {
+        "fail_count": 0,
+        "weight": 0.4,
+        "action_type": "optimize_or_delegate",
+        "success_count": 0,
+        "action_message": "Задача 'ПРОВЕРИТЬ настройки микрофона Windows 11: 1) Откры' заняла 2007 сек. Можно оптимизировать?",
+        "trigger_text": "задача ПРОВЕРИТЬ настройки микрофона Windows 11: 1) Откры",
+        "id": "reflex_slow_1774092390_7",
+        "created_at": "2026-03-21T14:26:30",
+        "trigger_type": "slow_task",
+        "source": "historical"
+      }
+    },
+    {
+      "id": "reflex_slow_1774092390_8",
+      "document": null,
+      "metadata": {
+        "success_count": 0,
+        "source": "historical",
+        "id": "reflex_slow_1774092390_8",
+        "trigger_type": "slow_task",
+        "created_at": "2026-03-21T14:26:30",
+        "action_message": "Задача 'СРОЧНО: Экран дергается! 1) Проверить частоту обно' заняла 1853 сек. Можно оптимизировать?",
+        "fail_count": 0,
+        "trigger_text": "задача СРОЧНО: Экран дергается! 1) Проверить частоту обно",
+        "action_type": "optimize_or_delegate",
+        "weight": 0.4
+      }
+    },
+    {
+      "id": "reflex-20260323-00",
+      "document": null,
+      "metadata": {
+        "source": "self-evolution-2026-03-23",
+        "action_message": "перезапустить heartbeat-service.py немедленно",
+        "success_count": 0,
+        "id": "reflex-20260323-00",
+        "fail_count": 0,
+        "created_at": "2026-03-23T06:56:25",
+        "action_type": "перезапустить heartbeat-service.py немедленно",
+        "weight": 0.95,
+        "trigger_type": "auto_recovery",
+        "trigger_text": "Heartbeat latency > 300 сек"
+      }
+    },
+    {
+      "id": "reflex-20260323-01",
+      "document": null,
+      "metadata": {
+        "trigger_type": "auto_recovery",
+        "action_type": "запустить auto-start-manager.py --setup",
+        "action_message": "запустить auto-start-manager.py --setup",
+        "fail_count": 0,
+        "weight": 0.9,
+        "trigger_text": "Агенты не зарегистрированы",
+        "id": "reflex-20260323-01",
+        "source": "self-evolution-2026-03-23",
+        "created_at": "2026-03-23T06:56:25",
+        "success_count": 0
+      }
+    },
+    {
+      "id": "reflex-20260323-02",
+      "document": null,
+      "metadata": {
+        "success_count": 0,
+        "weight": 0.8,
+        "created_at": "2026-03-23T06:56:25",
+        "trigger_text": "SSL ошибка в Scout-Agent",
+        "trigger_type": "error_handling",
+        "action_type": "добавить verify=False + retry с прокси",
+        "id": "reflex-20260323-02",
+        "action_message": "добавить verify=False + retry с прокси",
+        "fail_count": 0,
+        "source": "error-classifier-2026-03-23"
+      }
+    },
+    {
+      "id": "reflex-20260323-03",
+      "document": null,
+      "metadata": {
+        "id": "reflex-20260323-03",
+        "trigger_type": "circuit_breaker",
+        "created_at": "2026-03-23T06:56:25",
+        "action_message": "Circuit Breaker → перезапустить через 30 сек",
+        "action_type": "Circuit Breaker → перезапустить через 30 сек",
+        "source": "error-classifier-2026-03-23",
+        "weight": 0.85,
+        "fail_count": 0,
+        "success_count": 0,
+        "trigger_text": "Агент недоступен"
+      }
+    },
+    {
+      "id": "reflex-20260323-04",
+      "document": null,
+      "metadata": {
+        "trigger_text": "Навигация по документации",
+        "weight": 0.8,
+        "created_at": "2026-03-23T06:56:25",
+        "fail_count": 0,
+        "source": "self-reflection-insights-2026-03-23",
+        "trigger_type": "optimization",
+        "action_message": "использовать .AGENTS structure → ускорение 80%",
+        "id": "reflex-20260323-04",
+        "action_type": "использовать .AGENTS structure → ускорение 80%",
+        "success_count": 0
+      }
+    },
+    {
+      "id": "reflex-20260323-05",
+      "document": null,
+      "metadata": {
+        "weight": 0.75,
+        "fail_count": 0,
+        "success_count": 0,
+        "id": "reflex-20260323-05",
+        "trigger_type": "optimization",
+        "action_type": "запустить через ThreadPoolExecutor → 150 задач/сек",
+        "created_at": "2026-03-23T06:56:25",
+        "source": "self-reflection-insights-2026-03-23",
+        "trigger_text": "Параллельные задачи",
+        "action_message": "запустить через ThreadPoolExecutor → 150 задач/сек"
+      }
+    },
+    {
+      "id": "reflex-20260323-06",
+      "document": null,
+      "metadata": {
+        "trigger_type": "quality_gate",
+        "trigger_text": "Тесты не написаны",
+        "weight": 0.9,
+        "action_message": "создать test_<agent>.py перед запуском",
+        "created_at": "2026-03-23T06:56:25",
+        "success_count": 0,
+        "source": "inner-critic-2026-03-23",
+        "action_type": "создать test_<agent>.py перед запуском",
+        "id": "reflex-20260323-06",
+        "fail_count": 0
+      }
+    },
+    {
+      "id": "reflex-20260323-07",
+      "document": null,
+      "metadata": {
+        "trigger_text": "Red Team атака",
+        "trigger_type": "security",
+        "id": "reflex-20260323-07",
+        "action_type": "блокировать + лог в security-log.jsonl",
+        "fail_count": 0,
+        "weight": 0.95,
+        "success_count": 0,
+        "source": "self-reflection-security-2026-03-23",
+        "action_message": "блокировать + лог в security-log.jsonl",
+        "created_at": "2026-03-23T06:56:25"
+      }
+    },
+    {
+      "id": "reflex_fix_success_1774544846.974513_0",
+      "document": null,
+      "metadata": {
+        "success_count": 1,
+        "id": "reflex_fix_success_1774544846.974513_0",
+        "fail_count": 0,
+        "action_type": "auto_fix",
+        "action_message": "Использовать pythonw + CREATE_NO_WINDOW",
+        "weight": 0.9,
+        "created_at": "2026-03-26T20:07:26",
+        "trigger_type": "window_prevention",
+        "source": "session_history",
+        "trigger_text": "создание окна терминала"
+      }
+    },
+    {
+      "id": "reflex_fix_success_1774544846.974513_1",
+      "document": null,
+      "metadata": {
+        "trigger_type": "window_prevention",
+        "id": "reflex_fix_success_1774544846.974513_1",
+        "action_type": "auto_fix",
+        "created_at": "2026-03-26T20:07:26",
+        "action_message": "Использовать pythonw + CREATE_NO_WINDOW",
+        "success_count": 1,
+        "fail_count": 0,
+        "source": "session_history",
+        "trigger_text": "создание окна терминала",
+        "weight": 0.9
+      }
+    },
+    {
+      "id": "reflex_universal_0",
+      "document": null,
+      "metadata": {
+        "created_at": "2026-03-26T20:07:26",
+        "id": "reflex_universal_0",
+        "source": "historical_analysis",
+        "trigger_text": "соврёшь или затормозишь",
+        "trigger_type": "universal_response",
+        "weight": 0.9,
+        "success_count": 1,
+        "action_type": "immediate_action",
+        "fail_count": 0,
+        "action_message": "Работать идеально и быстро"
+      }
+    },
+    {
+      "id": "reflex_universal_1",
+      "document": null,
+      "metadata": {
+        "trigger_text": "НЕ УБИВАТЬ процессы",
+        "action_message": "Использовать точечное завершение через controller-agent",
+        "fail_count": 0,
+        "action_type": "immediate_action",
+        "trigger_type": "universal_response",
+        "source": "historical_analysis",
+        "success_count": 1,
+        "weight": 0.95,
+        "created_at": "2026-03-26T20:07:26",
+        "id": "reflex_universal_1"
+      }
+    },
+    {
+      "id": "reflex_universal_2",
+      "document": null,
+      "metadata": {
+        "action_message": "Использовать pythonw + CREATE_NO_WINDOW",
+        "trigger_type": "universal_response",
+        "source": "historical_analysis",
+        "fail_count": 0,
+        "trigger_text": "НЕ СОЗДАВАТЬ ОКНА",
+        "created_at": "2026-03-26T20:07:26",
+        "success_count": 1,
+        "weight": 0.95,
+        "action_type": "immediate_action",
+        "id": "reflex_universal_2"
+      }
+    },
+    {
+      "id": "reflex_universal_3",
+      "document": null,
+      "metadata": {
+        "created_at": "2026-03-26T20:07:26",
+        "weight": 0.9,
+        "trigger_type": "universal_response",
+        "success_count": 1,
+        "source": "historical_analysis",
+        "action_message": "Загрузить current_context.json перед ответом",
+        "trigger_text": "память в системе",
+        "id": "reflex_universal_3",
+        "fail_count": 0,
+        "action_type": "immediate_action"
+      }
+    },
+    {
+      "id": "reflex_universal_4",
+      "document": null,
+      "metadata": {
+        "success_count": 1,
+        "trigger_type": "universal_response",
+        "source": "historical_analysis",
+        "action_message": "Не заставлять пользователя ждать",
+        "fail_count": 0,
+        "weight": 0.9,
+        "created_at": "2026-03-26T20:07:26",
+        "id": "reflex_universal_4",
+        "action_type": "immediate_action",
+        "trigger_text": "быстрый ответ"
+      }
+    },
+    {
+      "id": "reflex_universal_5",
+      "document": null,
+      "metadata": {
+        "success_count": 1,
+        "created_at": "2026-03-26T20:07:26",
+        "action_type": "immediate_action",
+        "action_message": "Выполнять задачу немедленно",
+        "trigger_type": "universal_response",
+        "id": "reflex_universal_5",
+        "trigger_text": "действовать не советовать",
+        "fail_count": 0,
+        "source": "historical_analysis",
+        "weight": 0.9
+      }
+    },
+    {
+      "id": "reflex_universal_6",
+      "document": null,
+      "metadata": {
+        "created_at": "2026-03-26T20:07:26",
+        "source": "historical_analysis",
+        "action_message": "Предлагать помощь до запроса",
+        "trigger_text": "проактивность",
+        "trigger_type": "universal_response",
+        "weight": 0.85,
+        "id": "reflex_universal_6",
+        "success_count": 1,
+        "fail_count": 0,
+        "action_type": "immediate_action"
+      }
+    },
+    {
+      "id": "reflex_universal_7",
+      "document": null,
+      "metadata": {
+        "trigger_text": "Self-Upgrade Protocol",
+        "trigger_type": "universal_response",
+        "action_message": "Если нет скилла → интернет → создать",
+        "weight": 0.9,
+        "fail_count": 0,
+        "created_at": "2026-03-26T20:07:26",
+        "source": "historical_analysis",
+        "action_type": "immediate_action",
+        "success_count": 1,
+        "id": "reflex_universal_7"
+      }
+    },
+    {
+      "id": "reflex_universal_8",
+      "document": null,
+      "metadata": {
+        "trigger_text": "Inner Council",
+        "source": "historical_analysis",
+        "fail_count": 0,
+        "id": "reflex_universal_8",
+        "weight": 0.8,
+        "success_count": 1,
+        "action_type": "immediate_action",
+        "created_at": "2026-03-26T20:07:26",
+        "trigger_type": "universal_response",
+        "action_message": "30 мин без успеха → запустить совет"
+      }
+    },
+    {
+      "id": "reflex_universal_9",
+      "document": null,
+      "metadata": {
+        "id": "reflex_universal_9",
+        "created_at": "2026-03-26T20:07:26",
+        "action_message": "При старте сессии → проверить всё",
+        "fail_count": 0,
+        "success_count": 1,
+        "action_type": "immediate_action",
+        "trigger_text": "Start Diagnostics",
+        "weight": 0.9,
+        "source": "historical_analysis",
+        "trigger_type": "universal_response"
+      }
+    },
+    {
+      "id": "reflex_code_blocks_001",
+      "document": null,
+      "metadata": {
+        "action_type": "use_library",
+        "success_count": 0,
+        "id": "reflex_code_blocks_001",
+        "trigger_text": "пишу скрипт с нуля",
+        "source": "user_feedback",
+        "fail_count": 0,
+        "weight": 0.95,
+        "created_at": "2026-03-26T00:00:00",
+        "action_message": "Используй Code Block Library",
+        "trigger_type": "code_efficiency"
+      }
+    },
+    {
+      "id": "reflex_fix_success_1774553441.946429_0",
+      "document": null,
+      "metadata": {
+        "action_type": "auto_fix",
+        "source": "session_history",
+        "created_at": "2026-03-26T22:30:41",
+        "success_count": 1,
+        "trigger_type": "window_prevention",
+        "fail_count": 0,
+        "trigger_text": "создание окна терминала",
+        "id": "reflex_fix_success_1774553441.946429_0",
+        "weight": 0.9,
+        "action_message": "Использовать pythonw + CREATE_NO_WINDOW"
+      }
+    },
+    {
+      "id": "reflex_fix_success_1774553441.946429_1",
+      "document": null,
+      "metadata": {
+        "id": "reflex_fix_success_1774553441.946429_1",
+        "source": "session_history",
+        "trigger_type": "window_prevention",
+        "fail_count": 0,
+        "trigger_text": "создание окна терминала",
+        "action_message": "Использовать pythonw + CREATE_NO_WINDOW",
+        "success_count": 1,
+        "weight": 0.9,
+        "action_type": "auto_fix",
+        "created_at": "2026-03-26T22:30:41"
+      }
+    },
+    {
+      "id": "reflex_window_1774554591.160475_0",
+      "document": null,
+      "metadata": {
+        "weight": 0.95,
+        "created_at": "2026-03-26T22:49:51",
+        "action_type": "auto_fix",
+        "source": "windows_fix_2026-03-25",
+        "success_count": 1,
+        "trigger_type": "window_prevention",
+        "fail_count": 0,
+        "id": "reflex_window_1774554591.160475_0",
+        "action_message": "Использовать pythonw + CREATE_NO_WINDOW для всех агентов",
+        "trigger_text": "окно терминала мелькает"
+      }
+    },
+    {
+      "id": "reflex_window_1774554591.160475_1",
+      "document": null,
+      "metadata": {
+        "trigger_text": "терминал открывается",
+        "source": "windows_fix_2026-03-25",
+        "weight": 0.95,
+        "id": "reflex_window_1774554591.160475_1",
+        "created_at": "2026-03-26T22:49:51",
+        "fail_count": 0,
+        "trigger_type": "window_prevention",
+        "success_count": 1,
+        "action_message": "Запускать через start /B pythonw, не через start python",
+        "action_type": "auto_fix"
+      }
+    },
+    {
+      "id": "reflex_window_1774554591.160475_2",
+      "document": null,
+      "metadata": {
+        "fail_count": 0,
+        "trigger_type": "window_prevention",
+        "success_count": 1,
+        "trigger_text": "консольное окно создаётся",
+        "action_type": "auto_fix",
+        "id": "reflex_window_1774554591.160475_2",
+        "source": "logging_fix_2026-03-25",
+        "weight": 0.9,
+        "created_at": "2026-03-26T22:49:51",
+        "action_message": "Удалить StreamHandler из logging, использовать FileHandler"
+      }
+    },
+    {
+      "id": "reflex_mic_1774554591.160475_0",
+      "document": null,
+      "metadata": {
+        "action_type": "auto_fix",
+        "success_count": 1,
+        "action_message": "Проверить настройки Windows: Параметры → Система → Звук → Вход → Выбрать устройство",
+        "source": "voice_fix_2026-03-25",
+        "id": "reflex_mic_1774554591.160475_0",
+        "weight": 0.9,
+        "trigger_type": "hardware_fix",
+        "created_at": "2026-03-26T22:49:51",
+        "fail_count": 0,
+        "trigger_text": "микрофон не работает"
+      }
+    },
+    {
+      "id": "reflex_mic_1774554591.160475_1",
+      "document": null,
+      "metadata": {
+        "action_type": "auto_fix",
+        "created_at": "2026-03-26T22:49:51",
+        "success_count": 1,
+        "id": "reflex_mic_1774554591.160475_1",
+        "source": "voice_fix_2026-03-25",
+        "weight": 0.85,
+        "trigger_text": "голос не слышно",
+        "fail_count": 0,
+        "action_message": "Проверить громкость микрофона в Windows + перезапустить Voice Listener",
+        "trigger_type": "hardware_fix"
+      }
+    },
+    {
+      "id": "reflex_mic_1774554591.160475_2",
+      "document": null,
+      "metadata": {
+        "source": "voice_fix_2026-03-25",
+        "id": "reflex_mic_1774554591.160475_2",
+        "action_message": "Проверить API ключ Google Cloud Speech-to-Text или использовать офлайн Vosk",
+        "success_count": 1,
+        "action_type": "auto_fix",
+        "trigger_type": "api_fix",
+        "trigger_text": "speech_recognition ошибка",
+        "weight": 0.85,
+        "created_at": "2026-03-26T22:49:51",
+        "fail_count": 0
+      }
+    },
+    {
+      "id": "reflex_eventbus_1774554591.160475_0",
+      "document": null,
+      "metadata": {
+        "trigger_type": "event_bus_recovery",
+        "success_count": 1,
+        "weight": 0.9,
+        "trigger_text": "Event Bus не обновляется",
+        "id": "reflex_eventbus_1774554591.160475_0",
+        "fail_count": 0,
+        "source": "architecture_fix_2026-03-25",
+        "action_type": "auto_fix",
+        "created_at": "2026-03-26T22:49:51",
+        "action_message": "Запустить auto-agent-v2.py — он обновляет Event Bus"
+      }
+    },
+    {
+      "id": "reflex_eventbus_1774554591.160475_1",
+      "document": null,
+      "metadata": {
+        "id": "reflex_eventbus_1774554591.160475_1",
+        "action_type": "auto_fix",
+        "source": "architecture_fix_2026-03-25",
+        "fail_count": 0,
+        "success_count": 1,
+        "created_at": "2026-03-26T22:49:51",
+        "trigger_text": "события не публикуются",
+        "trigger_type": "event_bus_recovery",
+        "weight": 0.85,
+        "action_message": "Проверить подключение к Event Bus в логе агента"
+      }
+    },
+    {
+      "id": "reflex_encoding_1774554591.160475_0",
+      "document": null,
+      "metadata": {
+        "trigger_text": "кракозябры в тексте",
+        "created_at": "2026-03-26T22:49:51",
+        "action_type": "auto_fix",
+        "id": "reflex_encoding_1774554591.160475_0",
+        "source": "encoding_fix_2026-03-25",
+        "trigger_type": "encoding_fix",
+        "action_message": "Восстановить UTF-8: python restore-session-history.py",
+        "fail_count": 0,
+        "weight": 0.9,
+        "success_count": 1
+      }
+    },
+    {
+      "id": "reflex_encoding_1774554591.160475_1",
+      "document": null,
+      "metadata": {
+        "trigger_type": "encoding_fix",
+        "id": "reflex_encoding_1774554591.160475_1",
+        "fail_count": 0,
+        "created_at": "2026-03-26T22:49:51",
+        "weight": 0.85,
+        "success_count": 1,
+        "source": "encoding_fix_2026-03-25",
+        "trigger_text": "русские символы не читаются",
+        "action_type": "auto_fix",
+        "action_message": "Проверить encoding='utf-8' во всех open() вызовах"
+      }
+    },
+    {
+      "id": "reflex_deps_1774554591.160475_0",
+      "document": null,
+      "metadata": {
+        "action_type": "auto_fix",
+        "success_count": 1,
+        "created_at": "2026-03-26T22:49:51",
+        "action_message": "Запустить check-dependencies.py и установить недостающее",
+        "trigger_type": "dependency_fix",
+        "fail_count": 0,
+        "trigger_text": "модуль не найден",
+        "weight": 0.9,
+        "source": "dependency_fix_2026-03-25",
+        "id": "reflex_deps_1774554591.160475_0"
+      }
+    },
+    {
+      "id": "reflex_deps_1774554591.160475_1",
+      "document": null,
+      "metadata": {
+        "id": "reflex_deps_1774554591.160475_1",
+        "trigger_type": "dependency_fix",
+        "created_at": "2026-03-26T22:49:51",
+        "fail_count": 0,
+        "source": "dependency_fix_2026-03-25",
+        "success_count": 1,
+        "action_message": "pip install chromadb sentence-transformers",
+        "trigger_text": "ChromaDB не установлен",
+        "weight": 0.85,
+        "action_type": "auto_fix"
+      }
+    },
+    {
+      "id": "reflex_mcp_1774554591.160475_0",
+      "document": null,
+      "metadata": {
+        "action_type": "auto_fix",
+        "source": "mcp_fix_2026-03-25",
+        "created_at": "2026-03-26T22:49:51",
+        "trigger_type": "mcp_recovery",
+        "id": "reflex_mcp_1774554591.160475_0",
+        "weight": 0.9,
+        "action_message": "Перезапустить через controller-agent: python controller-agent.py restart --agent=mcp-server",
+        "success_count": 1,
+        "trigger_text": "MCP Server не отвечает",
+        "fail_count": 0
+      }
+    },
+    {
+      "id": "reflex_mcp_1774554591.160475_1",
+      "document": null,
+      "metadata": {
+        "action_type": "auto_fix",
+        "source": "mcp_fix_2026-03-25",
+        "action_message": "Проверить регистрацию инструмента в mcp-server-v2.py",
+        "fail_count": 0,
+        "trigger_text": "MCP инструмент не найден",
+        "success_count": 1,
+        "weight": 0.85,
+        "id": "reflex_mcp_1774554591.160475_1",
+        "trigger_type": "mcp_recovery",
+        "created_at": "2026-03-26T22:49:51"
+      }
+    },
+    {
+      "id": "reflex_pycache_1774554591.160475_0",
+      "document": null,
+      "metadata": {
+        "id": "reflex_pycache_1774554591.160475_0",
+        "created_at": "2026-03-26T22:49:51",
+        "fail_count": 0,
+        "trigger_type": "cleanup_fix",
+        "action_type": "auto_fix",
+        "trigger_text": "__pycache__ блокирует",
+        "success_count": 1,
+        "weight": 0.9,
+        "action_message": "Запустить python clean-pycache.py перед загрузкой Chrome extension",
+        "source": "chrome_extension_fix_2026-03-25"
+      }
+    },
+    {
+      "id": "reflex_chrome_1774554591.160475_0",
+      "document": null,
+      "metadata": {
+        "success_count": 1,
+        "trigger_type": "extension_fix",
+        "action_message": "Удалить __pycache__, .git, node_modules из папки extension",
+        "source": "chrome_extension_fix_2026-03-25",
+        "created_at": "2026-03-26T22:49:51",
+        "id": "reflex_chrome_1774554591.160475_0",
+        "trigger_text": "Chrome extension не грузится",
+        "weight": 0.9,
+        "action_type": "auto_fix",
+        "fail_count": 0
+      }
+    },
+    {
+      "id": "reflex_chrome_1774554591.160475_1",
+      "document": null,
+      "metadata": {
+        "trigger_type": "extension_fix",
+        "created_at": "2026-03-26T22:49:51",
+        "success_count": 1,
+        "source": "chrome_extension_fix_2026-03-25",
+        "action_message": "Использовать http://localhost:8080 вместо file:// для Chrome extension",
+        "fail_count": 0,
+        "weight": 0.85,
+        "trigger_text": "file:// ссылки не работают",
+        "id": "reflex_chrome_1774554591.160475_1",
+        "action_type": "auto_fix"
+      }
+    },
+    {
+      "id": "reflex_comet_1774554591.160475_0",
+      "document": null,
+      "metadata": {
+        "source": "browser_fix_2026-03-25",
+        "trigger_type": "browser_fix",
+        "action_type": "auto_fix",
+        "weight": 0.9,
+        "success_count": 1,
+        "fail_count": 0,
+        "created_at": "2026-03-26T22:49:51",
+        "action_message": "Использовать Comet browser: C:\\Users\\Asus\\AppData\\Local\\Perplexity\\Comet\\Application\\comet.exe",
+        "trigger_text": "браузер не открывается",
+        "id": "reflex_comet_1774554591.160475_0"
+      }
+    },
+    {
+      "id": "reflex_success_1774556543.121075",
+      "document": null,
+      "metadata": {
+        "action_type": "repeat_success",
+        "action_message": "Задача успешно выполнена ранее — применить тот же подход",
+        "weight": 0.5,
+        "source": "auto-learned",
+        "fail_count": 0,
+        "id": "reflex_success_1774556543.121075",
+        "created_at": "2026-03-26T23:22:23",
+        "success_count": 1,
+        "trigger_type": "success_pattern",
+        "trigger_text": "тестовая задача"
+      }
+    },
+    {
+      "id": "reflex_error_1774556543.167116",
+      "document": null,
+      "metadata": {
+        "fail_count": 1,
+        "action_type": "prevent_error",
+        "success_count": 0,
+        "source": "auto-learned",
+        "action_message": "Избежать ошибки: тестовая ошибка",
+        "trigger_type": "error_pattern",
+        "trigger_text": "ошибка: тестовая ошибка",
+        "id": "reflex_error_1774556543.167116",
+        "created_at": "2026-03-26T23:22:23",
+        "weight": 0.6
+      }
+    },
+    {
+      "id": "reflex_success_1774556585.628349",
+      "document": null,
+      "metadata": {
+        "trigger_text": "тестовая задача",
+        "created_at": "2026-03-26T23:23:05",
+        "trigger_type": "success_pattern",
+        "id": "reflex_success_1774556585.628349",
+        "fail_count": 0,
+        "success_count": 1,
+        "action_message": "Задача успешно выполнена ранее — применить тот же подход",
+        "weight": 0.5,
+        "source": "auto-learned",
+        "action_type": "repeat_success"
+      }
+    },
+    {
+      "id": "reflex_error_1774556585.678034",
+      "document": null,
+      "metadata": {
+        "trigger_type": "error_pattern",
+        "success_count": 0,
+        "action_type": "prevent_error",
+        "action_message": "Избежать ошибки: тестовая ошибка",
+        "fail_count": 1,
+        "id": "reflex_error_1774556585.678034",
+        "source": "auto-learned",
+        "trigger_text": "ошибка: тестовая ошибка",
+        "weight": 0.6,
+        "created_at": "2026-03-26T23:23:05"
+      }
+    },
+    {
+      "id": "reflex_success_1774558701.497428",
+      "document": null,
+      "metadata": {
+        "trigger_text": "тестовая задача",
+        "fail_count": 0,
+        "id": "reflex_success_1774558701.497428",
+        "source": "auto-learned",
+        "action_message": "Задача успешно выполнена ранее — применить тот же подход",
+        "success_count": 1,
+        "action_type": "repeat_success",
+        "created_at": "2026-03-26T23:58:21",
+        "weight": 0.5,
+        "trigger_type": "success_pattern"
+      }
+    },
+    {
+      "id": "reflex_error_1774558701.577502",
+      "document": null,
+      "metadata": {
+        "trigger_text": "ошибка: тестовая ошибка",
+        "trigger_type": "error_pattern",
+        "weight": 0.6,
+        "source": "auto-learned",
+        "action_type": "prevent_error",
+        "action_message": "Избежать ошибки: тестовая ошибка",
+        "created_at": "2026-03-26T23:58:21",
+        "success_count": 0,
+        "fail_count": 1,
+        "id": "reflex_error_1774558701.577502"
+      }
+    },
+    {
+      "id": "reflex_mined_error_module_not_found_1774561569.928955",
+      "document": null,
+      "metadata": {
+        "action_type": "prevent_error",
+        "id": "reflex_mined_error_module_not_found_1774561569.928955",
+        "success_count": 0,
+        "trigger_text": "ошибка module not found",
+        "fail_count": 382,
+        "source": "log_miner",
+        "weight": 0.9,
+        "trigger_type": "error_prevention",
+        "action_message": "Предотвратить ошибку типа module_not_found (встречалась 382 раз)",
+        "created_at": "2026-03-27T00:46:09"
+      }
+    },
+    {
+      "id": "reflex_mined_error_unknown_1774561569.928955",
+      "document": null,
+      "metadata": {
+        "fail_count": 52,
+        "trigger_text": "ошибка unknown",
+        "weight": 0.9,
+        "action_type": "prevent_error",
+        "created_at": "2026-03-27T00:46:09",
+        "id": "reflex_mined_error_unknown_1774561569.928955",
+        "trigger_type": "error_prevention",
+        "source": "log_miner",
+        "success_count": 0,
+        "action_message": "Предотвратить ошибку типа unknown (встречалась 52 раз)"
+      }
+    },
+    {
+      "id": "reflex_mined_success_подключён_1774561569.977578",
+      "document": null,
+      "metadata": {
+        "id": "reflex_mined_success_подключён_1774561569.977578",
+        "fail_count": 0,
+        "source": "log_miner",
+        "trigger_text": "успешно подключён",
+        "action_type": "repeat_success",
+        "action_message": "Повторить успешный паттерн с подключён (успехов: 3236)",
+        "created_at": "2026-03-27T00:46:09",
+        "success_count": 3236,
+        "trigger_type": "success_pattern",
+        "weight": 0.8
+      }
+    },
+    {
+      "id": "reflex_mined_success_протокол_1774561569.977578",
+      "document": null,
+      "metadata": {
+        "fail_count": 0,
+        "weight": 0.8,
+        "created_at": "2026-03-27T00:46:09",
+        "source": "log_miner",
+        "id": "reflex_mined_success_протокол_1774561569.977578",
+        "action_type": "repeat_success",
+        "action_message": "Повторить успешный паттерн с протокол (успехов: 971)",
+        "trigger_type": "success_pattern",
+        "success_count": 971,
+        "trigger_text": "успешно протокол"
+      }
+    },
+    {
+      "id": "reflex_mined_success_памяти:_1774561569.977578",
+      "document": null,
+      "metadata": {
+        "fail_count": 0,
+        "created_at": "2026-03-27T00:46:09",
+        "action_type": "repeat_success",
+        "trigger_text": "успешно памяти:",
+        "trigger_type": "success_pattern",
+        "weight": 0.8,
+        "action_message": "Повторить успешный паттерн с памяти: (успехов: 971)",
+        "id": "reflex_mined_success_памяти:_1774561569.977578",
+        "success_count": 971,
+        "source": "log_miner"
+      }
+    },
+    {
+      "id": "reflex_mined_success_контекст_1774561569.977578",
+      "document": null,
+      "metadata": {
+        "trigger_text": "успешно контекст",
+        "action_message": "Повторить успешный паттерн с контекст (успехов: 971)",
+        "weight": 0.8,
+        "success_count": 971,
+        "action_type": "repeat_success",
+        "fail_count": 0,
+        "id": "reflex_mined_success_контекст_1774561569.977578",
+        "trigger_type": "success_pattern",
+        "source": "log_miner",
+        "created_at": "2026-03-27T00:46:09"
+      }
+    },
+    {
+      "id": "reflex_mined_success_загружен_1774561569.977578",
+      "document": null,
+      "metadata": {
+        "weight": 0.8,
+        "fail_count": 0,
+        "trigger_type": "success_pattern",
+        "source": "log_miner",
+        "action_message": "Повторить успешный паттерн с загружен (успехов: 971)",
+        "action_type": "repeat_success",
+        "id": "reflex_mined_success_загружен_1774561569.977578",
+        "created_at": "2026-03-27T00:46:09",
+        "success_count": 971,
+        "trigger_text": "успешно загружен"
+      }
+    },
+    {
+      "id": "reflex_success_1774562603.373726",
+      "document": null,
+      "metadata": {
+        "source": "auto-learned",
+        "action_type": "repeat_success",
+        "created_at": "2026-03-27T01:03:23",
+        "success_count": 1,
+        "weight": 0.5,
+        "trigger_text": "тестовая задача",
+        "trigger_type": "success_pattern",
+        "action_message": "Задача успешно выполнена ранее — применить тот же подход",
+        "id": "reflex_success_1774562603.373726",
+        "fail_count": 0
+      }
+    },
+    {
+      "id": "reflex_error_1774562603.424678",
+      "document": null,
+      "metadata": {
+        "action_message": "Избежать ошибки: тестовая ошибка",
+        "source": "auto-learned",
+        "trigger_text": "ошибка: тестовая ошибка",
+        "weight": 0.6,
+        "id": "reflex_error_1774562603.424678",
+        "trigger_type": "error_pattern",
+        "action_type": "prevent_error",
+        "fail_count": 1,
+        "created_at": "2026-03-27T01:03:23",
+        "success_count": 0
+      }
+    },
+    {
+      "id": "reflex_agent_blocks_002",
+      "document": null,
+      "metadata": {
+        "created_at": "2026-03-26T00:00:00",
+        "fail_count": 0,
+        "success_count": 0,
+        "action_message": "Используй Agent Blocks — 7 готовых блоков для агентов",
+        "id": "reflex_agent_blocks_002",
+        "action_type": "use_agent_blocks",
+        "trigger_type": "code_efficiency",
+        "weight": 0.95,
+        "source": "user_feedback",
+        "trigger_text": "создаю нового агента"
+      }
+    },
+    {
+      "id": "reflex_success_1774565335.911311",
+      "document": null,
+      "metadata": {
+        "trigger_text": "тестовая задача",
+        "success_count": 1,
+        "trigger_type": "success_pattern",
+        "action_type": "repeat_success",
+        "fail_count": 0,
+        "source": "auto-learned",
+        "action_message": "Задача успешно выполнена ранее — применить тот же подход",
+        "weight": 0.5,
+        "id": "reflex_success_1774565335.911311",
+        "created_at": "2026-03-27T01:48:55"
+      }
+    },
+    {
+      "id": "reflex_error_1774565335.955051",
+      "document": null,
+      "metadata": {
+        "created_at": "2026-03-27T01:48:55",
+        "action_type": "prevent_error",
+        "source": "auto-learned",
+        "action_message": "Избежать ошибки: тестовая ошибка",
+        "trigger_text": "ошибка: тестовая ошибка",
+        "success_count": 0,
+        "trigger_type": "error_pattern",
+        "id": "reflex_error_1774565335.955051",
+        "weight": 0.6,
+        "fail_count": 1
+      }
+    },
+    {
+      "id": "reflex_agent_blocks_v2_003",
+      "document": null,
+      "metadata": {
+        "trigger_text": "создаю агента с метриками",
+        "success_count": 0,
+        "action_message": "Используй Agent Blocks v2 — health_check, metrics, retry, timeout",
+        "action_type": "use_agent_blocks_v2",
+        "trigger_type": "code_efficiency",
+        "weight": 0.95,
+        "id": "reflex_agent_blocks_v2_003",
+        "fail_count": 0,
+        "source": "auto_generated",
+        "created_at": "2026-03-26T00:00:00"
+      }
+    },
+    {
+      "id": "reflex_skill_blocks_004",
+      "document": null,
+      "metadata": {
+        "action_message": "Используй Skill Blocks — boilerplate, cache, retry, rate_limiter",
+        "fail_count": 0,
+        "source": "auto_generated",
+        "weight": 0.95,
+        "trigger_text": "создаю новый скилл",
+        "created_at": "2026-03-26T00:00:00",
+        "action_type": "use_skill_blocks",
+        "id": "reflex_skill_blocks_004",
+        "trigger_type": "code_efficiency",
+        "success_count": 0
+      }
+    },
+    {
+      "id": "reflex_mcp_blocks_005",
+      "document": null,
+      "metadata": {
+        "created_at": "2026-03-26T00:00:00",
+        "success_count": 0,
+        "trigger_type": "code_efficiency",
+        "weight": 0.95,
+        "trigger_text": "создаю MCP инструмент",
+        "action_type": "use_mcp_blocks",
+        "fail_count": 0,
+        "source": "auto_generated",
+        "action_message": "Используй MCP Blocks — server, tool_decorator, schema, client",
+        "id": "reflex_mcp_blocks_005"
+      }
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+PS C:\Users\Asus> cd D:\Portable_Soft\hermes-usb-portable-main
+PS D:\Portable_Soft\hermes-usb-portable-main> hermes config set delegation.child_timeout_seconds 300
+hermes : Имя "hermes" не распознано как имя командлета, функции, файла сценария или выполняемой программы. Проверьте правильность
+написания имени, а также наличие и правильность пути, после чего повторите попытку.
+строка:1 знак:1
++ hermes config set delegation.child_timeout_seconds 300
++ ~~~~~~
+    + CategoryInfo          : ObjectNotFound: (hermes:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS D:\Portable_Soft\hermes-usb-portable-main>      hermes config set delegation.max_iterations 25
+hermes : Имя "hermes" не распознано как имя командлета, функции, файла сценария или выполняемой программы. Проверьте правильность
+написания имени, а также наличие и правильность пути, после чего повторите попытку.
+строка:1 знак:6
++      hermes config set delegation.max_iterations 25
++      ~~~~~~
+    + CategoryInfo          : ObjectNotFound: (hermes:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS D:\Portable_Soft\hermes-usb-portable-main>      hermes config set max_tokens 8192
+hermes : Имя "hermes" не распознано как имя командлета, функции, файла сценария или выполняемой программы. Проверьте правильность
+написания имени, а также наличие и правильность пути, после чего повторите попытку.
+строка:1 знак:6
++      hermes config set max_tokens 8192
++      ~~~~~~
+    + CategoryInfo          : ObjectNotFound: (hermes:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS D:\Portable_Soft\hermes-usb-portable-main>

@@ -1,0 +1,52 @@
+Did you know that a good Hermes skill stays under 15 kilobytes, otherwise it can bloat your agent memory and burn extra tokens? Hi, I'm Dubi, and I've been building apps every day using Hermes Agent, generating $47,000 in less than 50 days with these AI tools. In this video, I share my top 14 Hermes skills that I would install right now. These skills are not just random picks; they are carefully selected based on my extensive experience with hundreds of skills, many of which turned out to be ineffective. 
+
+14. SkillClaw
+https://github.com/AMAP-ML/SkillClaw
+
+13. Matt Pocock Skills
+https://github.com/mattpocock/skills
+
+12. Defuddle
+https://github.com/kepano/defuddle
+
+11. Humanizer
+https://github.com/blader/humanizer
+
+10. youtube-full
+https://github.com/ZeroPointRepo/yout...
+
+9. Composio
+https://github.com/ComposioHQ/skills
+
+8. addyosmani/agent-skills
+https://github.com/addyosmani/agent-s...
+
+7. Resemble AI Detect
+https://github.com/resemble-ai/detect...
+
+6. Mission-Control / Minions
+https://github.com/agent37-platform/m...
+
+5. OpenMontage
+https://github.com/calesthio/OpenMontage
+
+4. Anthropic Cybersecurity Skills
+https://github.com/mukul975/Anthropic...
+
+3. oh-my-hermes
+https://github.com/witt3rd/oh-my-hermes
+
+2. make-interfaces-feel-better
+https://github.com/jakubkrehel/make-i...
+
+1. Agent-Reach
+https://github.com/Panniantong/Agent-...
+
+Honourable Mention — Browser Harness
+https://github.com/browser-use/browse...
+
+Honourable Mention — codebase-memory-mcp
+https://github.com/DeusData/codebase-...
+
+Honourable Mention — Loop Library / Loopy
+https://github.com/Forward-Future/loopy

@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Income Pipeline Flow - 50 CPA/Arbitrage Schemes</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        .controls {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            text-align: center;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .mermaid-container {
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Income Pipeline Flow - 50 CPA/Arbitrage Schemes</h1>
+            <p>Interactive visualization of all 50 CPA/arbitrage schemes with real-time status indicators</p>
+        </div>
+        <div class="controls">
+            <button onclick="zoomIn()">Zoom In</button>
+            <button onclick="zoomOut()">Zoom Out</button>
+            <button onclick="resetZoom()">Reset Zoom</button>
+            <button onclick="downloadSVG()">Download SVG</button>
+            <button onclick="downloadPNG()">Download PNG</button>
+            <button onclick="refreshData()">Refresh Data</button>
+        </div>
+        <div class="mermaid-container">
+            <div class="mermaid">
+                graph TD
+                    A[Traffic Sources] --> B[Lead Capture]
+                    B --> C[Affiliate Offer]
+                    C --> D[Conversion]
+                    D --> E[Payout]
+                    
+                    F[Social Media] --> B
+                    G[Search Engine] --> B
+                    H[Email List] --> B
+                    
+                    I[CPA Network] --> C
+                    J[Ad Platform] --> C
+                    
+                    K[Payment Processor] --> E
+                    L[Withdrawal System] --> E
+                    
+                    M[Analytics] --> L
+                    N[Reporting] --> L
+                    
+                    O[Traffic Stats] --> M
+                    P[Conversion Stats] --> M
+                    
+                    Q[Risk Management] --> L
+                    R[Compliance Check] --> L
+                    
+                    S[ROI Calculation] --> Q
+                    T[Profit Optimization] --> Q
+            </div>
+        </div>
+        <div class="statistics">
+            <h3>Pipeline Statistics</h3>
+            <div id="stats-container">
+                <div class="stat-item">
+                    <span class="stat-label">Total Schemes:</span>
+                    <span class="stat-value">50</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">UNVERIFIED:</span>
+                    <span class="stat-value" style="color: #ffc107;">47</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">TESTING:</span>
+                    <span class="stat-value" style="color: #17a2b8;">2</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">VERIFIED:</span>
+                    <span class="stat-value" style="color: #28a745;">1</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Code-Unblockable:</span>
+                    <span class="stat-value" style="color: #dc3545;">8</span>
+                </div>
+            </div>
+        </div>
+        <div class="status-legend">
+            <h3>Status Legend</h3>
+            <div class="legend-item">
+                <span class="legend-color" style="background: #ffc107;"></span>
+                <span>UNVERIFIED</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background: #17a2b8;"></span>
+                <span>TESTING</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background: #28a745;"></span>
+                <span>VERIFIED</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background: #dc3545;"></span>
+                <span>Code-Unblockable</span>
+            </div>
+        </div>
+        <div class="interactive-info">
+            <h3>Interactive Features</h3>
+            <ul>
+                <li>🔍 <strong>Hover over diagram elements</strong> to see detailed scheme information</li>
+                <li>🖼️ <strong>Click scheme nodes</strong> to expand with full details</li>
+                <li>📊 <strong>Use zoom controls</strong> to adjust diagram view</li>
+                <li>⬇️ <strong>Export options</strong> for SVG/PNG formats</li>
+                <li>🔄 <strong>Refresh data</strong> to update from latest source</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        // Initialize Mermaid
+        mermaid.initialize({ startOnLoad: true });
+        
+        // Zoom functionality
+        let currentZoom = 1;
+        
+        function zoomIn() {
+            currentZoom += 0.2;
+            document.querySelector('.mermaid svg').style.transform = `scale(${currentZoom})`;
+        }
+        
+        function zoomOut() {
+            currentZoom = Math.max(0.5, currentZoom - 0.2);
+            document.querySelector('.mermaid svg').style.transform = `scale(${currentZoom})`;
+        }
+        
+        function resetZoom() {
+            currentZoom = 1;
+            document.querySelector('.metch svg');
+            document.querySelector('.mermaid svg').style.transform = 'scale(1)';
+        }
+        
+        function downloadSVG() {
+            const svg = document.querySelector('.mermaid svg');
+            const svgData = new XMLSerializer().serializeToString(svg);
+            const svgBlob = new Blob([svgData], { type: 'image/svg+xml' });
+            const svgUrl = URL.createObjectURL(svgBlob);
+            
+            const link = document.createElement('a');
+            link.href = svgUrl;
+            link.download = 'income-pipeline-flow.svg';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(svgUrl);
+        }
+        
+        function downloadPNG() {
+            const svg = document.querySelector('.mermaid svg');
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas size
+            canvas.width = svg.getBoundingClientRect().width;
+            canvas.height = svg.getBoundingClientRect().height;
+            
+            // Convert SVG to canvas
+            const img = new Image();
+            const svgUrl = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(svg)], { type: 'image/svg+xml' }));
+            
+            img.onload = function() {
+                ctx.drawImage(img, 0, 0);
+                const pngUrl = canvas.toDataURL('image/png');
+                
+                const link = document.createElement('a');
+                link.href = pngUrl;
+                link.download = 'income-pipeline-flow.png';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            };
+            
+            img.src = svgUrl;
+        }
+        
+        function refreshData() {
+            // Simulate data refresh
+            const statsContainer = document.querySelector('.statistics');
+            statsContainer.innerHTML = `
+                <h3>Pipeline Statistics (Refreshed)</h3>
+                <div class="stat-item">
+                    <span class="stat-label">Total Schemes:</span>
+                    <span class="stat-value">50</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">UNVERIFIED:</span>
+                    <span class="stat-value" style="color: #ffc107;">46</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">TESTING:</span>
+                    <span class"stat-value" style="color: #17a2b8;">3</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">VERIFIED:</span>
+                    <span class="stat-value" style="color: #28a745;">1</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Code-Unblockable:</span>
+                    <span class="stat-value" style="color: #dc3545;">7</span>
+                </div>
+            `;
+            
+            // Show notification
+            const notification = document.createElement('div');
+            notification.textContent = 'Data refreshed successfully!';
+            notification.style.cssText = 'position: fixed; top: 20px; right: 20px; background: #28a745; color: white; padding: 10px; border-radius: 4px; z-index: 1000;';
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 3000);
+        }
+        
+        // Initialize on page load
+        window.addEventListener('load', function() {
+            resetZoom();
+        });
+    </script>
+</body>
+</html>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        .controls {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            text-align: center;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .mermaid-container {
+            overflow: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 20px;
+            background: white;
+            min-height: 600px;
+            position: relative;
+        }
+        .mermaid-container.transformed {
+            transform: scale(var(--zoom-scale, 1.0));
+            transform-origin: top left;
+            transition: transform 0.3s ease;
+        }
+        .legend {
+            margin: 20px 0;
+            padding: 15px;
+            background: #e9ecef;
+            border-radius: 5px;
+        }
+        .legend-item {
+            display: inline-block;
+            margin: 5px 10px;
+            padding: 5px 10px;
+            border-radius: 3px;
+            color: white;
+            font-weight: bold;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+        }
+        .zoom-indicator {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(255,255,255,0.9);
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="zoom-indicator">
+        Zoom: <span id="zoom-level">100%</span> |
+        <button onclick="zoomIn()" style="padding: 2px 6px; font-size: 10px;">＋</button>
+        <button onclick="zoomOut()" style="padding: 2px 6px; font-size: 10px;">－</button>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>🧭 Income Pipeline Flow - 50 CPA/Arbitrage Schemes</h1>
+            <p>Visualisierung komplekter Pipeline: От источника трафика → Прокладка → Оффер → Вывод</p>
+            <p><em>Источники: ARBITRAGE_BONDS.md • Генератор: income_pipeline_flow.py • Дата: <script>document.write(new Date().toLocaleDateString())</script></em></p>
+        </div>
+
+        <div class="controls">
+            <button onclick="location.reload()">🔄 Пересчитать</button>
+            <button onclick="zoomIn()">🔍 Увеличить</button>
+            <button onclick="zoomOut()">🔎 Уменьшить</button>
+            <button onclick="downloadSVG()">💾 Скачать SVG</button>
+            <button onclick="downloadPNG()">🖼️ Скачать PNG</button>
+        </div>
+
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-value">50</div>
+                <div class="stat-label">Всего схем</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">47</div>
+                <div class="stat-label">UNVERIFIED</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">2</div>
+                <div class="stat-label">TESTING</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">1</div>
+                <div class="stat-label">VERIFIED</div>
+            </div>
+        </div>
+
+        <div class="legend">
+            <div><strong>🎨 Статусы схем:</strong></div>
+            <span class="legend-item" style="background: #ff6b6b;">🔴 UNVERIFIED (47)</span>
+            <span class="legend-item" style="background: #ffd93d;">🟡 TESTING (2)</span>
+            <span class="legend-item" style="background: #6bcb77;">🟢 VERIFIED (1)</span>
+            <div><strong>🔗 Основной поток:</strong></div>
+            <div>SRC → PRX → OFF → WDR</div>
+        </div>
+
+        <div id="mermaid-container" class="mermaid-container">
+            <div class="mermaid">
+//=== INCOME PIPELINE FLOW - 50 CPA/ARBITRAGE SCHEMES ===
+
+%% Title and main pipeline
+ERT2F00SErt2F00SErt2F00SErt2F00SErt2F00S income_pipeline_flow_html
+    title "Income Pipeline Flow - 50 CPA/Arbitrage Schemes"
+
+%% Main pipeline nodes
+    SRC[ALL TRAFFIC SOURCES: 50 schemes] --> PRX[ALL PROXIES/LAYERS: Landing + Bot + Video + Direct]
+    PRX --> OFF[ALL OFFERS/NETWORKS: FinCPA, Admitad, Travelpayouts, MaxBounty, etc.]
+    OFF --> WDR[ALL WITHDRAWAL PATHS: USDT→P2P, WebMoney, Payoneer, СБП]
+
+%% Source groups - LEFT column
+    subgraph cluster_SRC
+        direction TB
+        \n        subgraph cluster_source_telegram
+            direction TB
+            S1[📱 FinCPANetwork] ::: source_telegram
+            S2[📱 HotelCrimeaBot] ::: source_telegram
+            S3[📱 Admitad] ::: source_telegram
+        \n        end
+        \n        subgraph cluster_source_freelance
+            direction TB
+            S4[💼 salon-bot] ::: source_freelance
+        \n        end
+        \n        subgraph cluster_source_youtube
+            direction TB
+            S5[▶️ YouTube (VPN)] ::: source_video
+            S6[▶️ YouTube (Long-form)] ::: source_video
+            S7[▶️ YouTube (CPI)] ::: source_video
+            S8[▶️ YouTube (Content Lock)] ::: source_video
+        \n        end
+        \n        subgraph cluster_source_tiktok
+            direction TB
+            S9[🎵 TikTok (FinTech/Games)] ::: source_video
+            S10[🎵 TikTok (Shop)] ::: source_video
+            S11[🎵 TikTok (Micro-Influencer)] ::: source_video
+            S12[🎵 TikTok (AI Dating)] ::: source_video
+        \n        end
+        \n        subgraph cluster_source_pinterest
+            direction TB
+            S13[📌 Pinterest (AI Pins)] ::: source_pinterest
+            S14[📌 Pinterest (Fashion)] ::: source_pinterest
+        \n        end
+        \n        subgraph cluster_source_reddit_email_api
+            direction TB
+            S15[🗣️ Reddit Global] ::: source_reddit
+            S16[🗣️ Lead Magnet] ::: source_reddit
+            S17[🗣️ API Wrapper] ::: source_reddit
+        \n        end
+        \n        subgraph cluster_source_seo_sites
+            direction TB
+            S18[🌐 GitHub Pages] ::: source_seo
+            S19[🌐 Niche Sites] ::: source_seo
+        \n        end
+        \n        subgraph cluster_source_craigslist
+            direction TB
+            S20[📋 Pay-Per-Call] ::: source_craigslist
+            S21[📋 Home Services] ::: source_craigslist
+        \n        end
+        \n        subgraph cluster_source_olx_gumtree
+            direction TB
+            S22[🏪 OLX PL/UA] ::: source_olx
+            S23[🏪 Gumtree UK/AU] ::: source_olx
+        \n        end
+        \n        subgraph cluster_source_locanto_kijiji
+            direction TB
+            S24[🌍 Locanto Global] ::: source_global
+            S25[🍁 Kijiji CA] ::: source_global
+        \n        end
+        \n        subgraph cluster_source_avito
+            direction TB
+            S26[📦 Авито (FinTech)] ::: source_avito
+            S27[📦 Авито (Bot SaaS)] ::: source_avito
+        \n        end
+        \n        subgraph cluster_source_smartlink_other
+            direction TB
+            S28[📧 SmartLink] ::: source_other
+            S29[🔗 Other (Hosting, Resell)] ::: source_other
+        \n        end
+        \n        subgraph cluster_source_paid_organic
+            direction TB
+            S30[🔗 P2P Arb] ::: source_paid
+            S31[🔗 Maps] ::: source_paid
+            S32[🔗 Push] ::: source_paid
+            S33[🔗 Popunder] ::: source_paid
+            S34[🔗 Native] ::: source_paid
+            S35[🔗 Quora] ::: source_paid
+            S36[🔗 Medium] ::: source_paid
+            S37[🔗 LinkedIn] ::: source_paid
+            S38[🔗 X/Twitter] ::: source_paid
+            S39[🔗 FB Groups] ::: source_paid
+            S40[🔗 Discord] ::: source_paid
+            S41[🔗 Domain Parking] ::: source_paid
+            S42[🔗 Adult] ::: source_paid
+        \n        end
+    \n    end
+
+%% Proxy / Layer groups - CENTER column
+    subgraph cluster_PRX
+        direction TB
+        \n        subgraph cluster_landing_pages
+            direction TB
+            L1[🎯 Landing Pages] ::: proxy_landing
+            L2[🎯 Taplink] ::: proxy_landing
+            L3[🎯 Direct CPA Links] ::: proxy_landing
+        \n        end
+        \n        subgraph cluster_telegram_bots
+            direction TB
+            L4[🤖 HotelCrimeaBot] ::: proxy_bot
+            L5[🤖 Demo Bot] ::: proxy_bot
+            L6[🤖 Bot SaaS] ::: proxy_bot
+        \n        end
+        \n        subgraph cluster_direct_links
+            direction TB
+            L7[🔗 Bio Link] ::: proxy_direct
+            L8[🔗 Avito Chat] ::: proxy_direct
+            L9[🔗 Reddit] ::: proxy_direct
+            L10[🔗 OLX] ::: proxy_direct
+            L11[🔗 Quora] ::: proxy_direct
+            L12[🔗 X] ::: proxy_direct
+        \n        end
+        \n        subgraph cluster_video_scripts
+            direction TB
+            L13[🎬 TikTok Shop] ::: proxy_video
+            L14[🎬 YouTube] ::: proxy_video
+            L15[🎬 Video Review] ::: proxy_video
+            L16[🎬 Content Lock] ::: proxy_video
+        \n        end
+        \n        subgraph cluster_other_proxies
+            direction TB
+            L17[📦 Articles] ::: proxy_other
+            L18[📦 Advertorials] ::: proxy_other
+            L19[📦 Lead Magnets] ::: proxy_other
+            L20[📦 Multi-exchange] ::: proxy_other
+            L21[📦 Influencer Posts] ::: proxy_other
+            L22[📦 SEO Articles] ::: proxy_other
+            L23[📦 OF Management] ::: proxy_other
+            L24[📦 White-label] ::: proxy_other
+        \n        end
+    \n    end
+
+%% Offer / Network groups - RIGHT column
+    subgraph cluster_OFF
+        direction TB
+        \n        subgraph cluster_fin_cpa_network
+            direction TB
+            O1[💰 FinCPA Network] ::: offer_fin_cpa
+            O2[💰 Admitad] ::: offer_fin_cpa
+            O3[💰 Leadbit] ::: offer_fin_cpa
+        \n        end
+        \n        subgraph cluster_travelpayouts
+            direction TB
+            O4[✈️ Travelpayouts] ::: offer_travel
+            O5[✈️ Aviasales] ::: offer_travel
+        \n        end
+        \n        subgraph cluster_salon_bot_own
+            direction TB
+            O6[💈 Salon Bot (Own)] ::: offer_salon
+            O7[💈 Bot Rental] ::: offer_salon
+        \n        end
+        \n        subgraph cluster_admitad
+            direction TB
+            O8[🛒 Admitad] ::: offer_admitad
+            O9[🛒 2000+ RU offers] ::: offer_admitad
+        \n        end
+        \n        subgraph cluster_maxbounty
+            direction TB
+            O10[💵 MaxBounty] ::: offer_maxbounty
+            O11[💵 VPN offers] ::: offer_maxbounty
+            O12[💵 Crypto] ::: offer_maxbounty
+            O13[💵 Parking] ::: offer_maxbounty
+        \n        end
+        \n        subgraph cluster_clickdealer
+            direction TB
+            O14[💵 ClickDealer] ::: offer_clickdealer
+            O15[💵 Pay-Per-Call] ::: offer_clickdealer
+            O16[💵 Dating] ::: offer_clickdealer
+            O17[💵 Casino] ::: offer_clickdealer
+            O18[💵 Home] ::: offer_clickdealer
+        \n        end
+        \n        subgraph cluster_adcombo
+            direction TB
+            O19[💊 AdCombo] ::: offer_adcombo
+            O20[💊 Nutra COD PL/UA] ::: offer_adcombo
+        \n        end
+        \n        subgraph cluster_impact_cj_affiliate
+            direction TB
+            O21[🤝 Impact/CJ] ::: offer_cj
+            O22[🤝 UK/AU Services] ::: offer_cj
+            O23[🤝 CA Finance] ::: offer_cj
+            O24[🤝 SaaS] ::: offer_cj
+            O25[🤝 VPN] ::: offer_cj
+        \n        end
+        \n        subgraph cluster_mylead_crakrevenue
+            direction TB
+            O26[💵 MyLead/CrakRevenue] ::: offer_mylead
+            O27[💵 Dating/AI Dating] ::: offer_mylead
+        \n        end
+        \n        subgraph cluster_amazon_shareasale
+            direction TB
+            O28[🔗 Amazon/ShareASale] ::: offer_amazon
+            O29[🔗 Associates 3-8%] ::: offer_amazon
+        \n        end
+        \n        subgraph cluster_crakrevenue
+            direction TB
+            O30[💘 CrakRevenue] ::: offer_crakrevenue
+            O31[💘 Dating/ExoClick] ::: offer_crakrevenue
+        \n        end
+        \n        subgraph cluster_cpagrip_ogads_zeydoo
+            direction TB
+            O32[💵 CPAGrip/OGAds/Zeydoo] ::: offer_cpagrip
+            O33[💵 Sweepstakes] ::: offer_cpagrip
+            O34[💵 App Install] ::: offer_cpagrip
+        \n        end
+        \n        subgraph cluster_vpn_smartlinks
+            direction TB
+            O35[🔒 VPN Offers] ::: offer_vpn
+            O36[🔒 SmartLinks] ::: offer_vpn
+            O37[🔒 Mobidea] ::: offer_vpn
+            O38[🔒 Zeydoo] ::: offer_vpn
+            O39[🔒 White-label] ::: offer_vpn
+        \n        end
+        \n        subgraph cluster_other_own_products
+            direction TB
+            O40[🔗 AdSense] ::: offer_other_products
+            O41[🔗 AI Wrapper] ::: offer_other_products
+            O42[🔗 Templates] ::: offer_other_products
+            O43[🔗 P2P Spread] ::: offer_other_products
+            O44[🔗 Lead Gen] ::: offer_other_products
+            O45[🔗 TikTok Shop] ::: offer_other_products
+        \n        end
+    \n    end
+
+%% Withdrawal groups - BOTTOM
+    subgraph cluster_WDR
+        direction TB
+        \n        subgraph cluster_usdt_p2p_card
+            direction TB
+            W1[💎 USDT→P2P→Card] ::: withdrawal_usdt
+            W2[💎 USDT TRC20] ::: withdrawal_usdt
+            W3[💎 Binance P2P] ::: withdrawal_usdt
+            W4[💎 T-Bank] ::: withdrawal_usdt
+            W5[💎 WebMoney] ::: withdrawal_usdt
+        \n        end
+        \
+        subgraph cluster_webmoney_card
+            direction TB
+            W6[🌐 WebMoney→Card] ::: withdrawal_webmoney
+            W7[🌐 Direct Card] ::: withdrawal_webmoney
+        \n        end
+        \n        subgraph cluster_sbp_direct
+            direction TB
+            W8[⚡ СБП/Direct] ::: withdrawal_sbp
+            W9[⚡ Card] ::: withdrawal_sbp
+            W10[⚡ Venmo] ::: withdrawal_sbp
+        \n        end
+        \n        subgraph cluster_payoneer_wire
+            direction TB
+            W11[💳 Payoneer→Wire] ::: withdrawal_payoneer
+            W12[💳 US/UK Bank] ::: withdrawal_payoneer
+        \n        end
+        \n        subgraph cluster_other_withdrawal
+            direction TB
+            W13[🔗 Card→Exchange→P2P] ::: withdrawal_other
+            W14[🔗 PayPal/Wise/Wire] ::: withdrawal_other
+        \
+        end
+    \n    end
+
+%% Connections from sources to proxies
+    S1 --> L3
+    S2 --> L4
+    S3 --> L3
+    S4 --> L7
+    S5 --> L14
+    S6 --> L14
+    S7 --> L13
+    S8 --> L16
+    S9 --> L13
+    S10 --> L13
+    S11 --> L13
+    S12 --> L16
+    S13 --> L1
+    S14 --> L1
+    S15 --> L9
+    S16 --> L7
+    S17 --> L7
+    S18 --> L1
+    S19 --> L1
+    S20 --> L8
+    S21 --> L8
+    S22 --> L8
+    S23 --> L8
+    S24 --> L1
+    S25 --> L1
+    S26 --> L7
+    S27 --> L12
+    S28 --> L3
+    S29 --> L1
+    S30 --> L17
+    S31 --> L17
+    S32 --> L17
+    S33 --> L17
+    S34 --> L17
+    S35 --> L17
+    S36 --> L17
+    S37 --> L10
+    S38 --> L12
+    S39 --> L17
+    S40 --> L17
+    S41 --> L17
+    S42 --> L17
+
+%% Connections from proxies to offers
+    L3 --> O1 & O2 & O3
+    L4 --> O1
+    L4 --> O2
+    L5 --> O2
+    L6 --> O1
+    L7 --> O3 & O5 & O6 & O9 & O15 & O17 & O18 & O22 & O23 & O24 & O30 & O31 & O37 & O38
+    L8 --> O1 & O3 & O9 & O15 & O17 & O18
+    L9 --> O6
+    L10 --> O2
+    L11 --> O2
+    L12 --> O2
+    L13 --> O14 & O45
+    L14 --> O14
+    L15 --> O14
+    S11 --> O14
+    L17 --> O5 & O7 & O8 & O11 & O12 & O13 & O14 & O16 & O19 & O25 & O26 & O27 & O34 & O43 & O44 & O45
+    L24 --> O5 & O8 & O13 & O14 & O17 & O18
+
+%% Connections from offers to withdrawals
+    O1 --> W1
+    O2 --> W1
+    O3 --> W1
+    O4 --> W1
+    O5 --> W1 & W3 & W6
+    O6 --> W11 & W12
+    O7 --> W11 & W12
+    O8 --> W1
+    O9 --> W1
+    O10 --> W1 & W11 & W12
+    O11 --> W11 & W12
+    O12 --> W1
+    O13 --> W1
+    O14 --> W1
+    O15 --> W1 & W11 & W12
+    O16 --> W6
+    O17 --> W1 & W6 & W11
+    O18 --> W1 & W6 & W11
+    O19 --> W1
+    O20 --> W1
+    O21 --> W6 & W11 & W12
+    O22 --> W6
+    O23 --> W11 & W12
+    O24 --> W11 & W12
+    O25 --> W1 & W12
+    O26 --> W6
+    O27 --> W1
+    O28 --> W11 & W12
+    O29 --> W11 & W12
+    O30 --> W6
+    O31 --> W1
+    O32 --> W1
+    O33 --> W1
+    O34 --> W1
+    O35 --> W11 & W12
+    O36 --> W11 & W12
+    O37 --> W6
+    O38 --> W11 & W12
+    O39 --> W12
+    O40 --> W11 & W12
+    O41 --> W11 & W12
+    O42 --> W12
+    O43 --> W1
+    O44 --> W12
+    O45 --> W12
+
+%% Style definitions
+    classDef source_telegram fill:#e3f2fd,stroke:#2196f3,stroke-width:2px
+    classDef source_freelance fill:#f3e5f5,stroke:#9c27b0,stroke-width:2px
+    classDef source_video fill:#fff3e0,stroke:#ff9800,stroke-width:2px
+    classDef source_pinterest fill:#e8f5e8,stroke:#4caf50,stroke-width:2px
+    classDef source_reddit fill:#ffebee,stroke:#f44336,stroke-width:2px
+    classDef source_seo fill:#e0f2f7,stroke:#00bcd4,stroke-width:2px
+    classDef source_craigslist fill:#fff8e7,stroke:#ffc107,stroke-width:2px
+    classDef source_olx fill:#ede7f6,stroke:#673ab7,stroke-width:2px
+    classDef source_global fill:#e0f7fa,stroke:#009688,stroke-width:2px
+    classDef source_avito fill:#ffebee,stroke:#d32f2f,stroke-width:2px
+    classDef source_other fill:#fce4ec,stroke:#e91e63,stroke-width:2px
+    classDef source_paid fill:#f5f5f5,stroke:#9e9e9e,stroke-width:2px
+
+    classDef proxy_landing fill:#fffde7,stroke:#ffc107,stroke-width:2px
+    classDef proxy_bot fill:#e8f5e8,stroke:#4caf50,stroke-width:2px
+    classDef proxy_direct fill:#e3f2fd,stroke:#2196f3,stroke-width:2px
+    classDef proxy_video fill:#f3e5f5,stroke:#9c27b0,stroke-width:2px
+    classDef proxy_other fill:#ede7f6,stroke:#9c27b0,stroke-width:2px
+
+    classDef offer_fin_cpa fill:#fff3e0,stroke:#ff9800,stroke-width:2px
+    classDef offer_travel fill:#e0f2f7,stroke:#00bcd4,stroke-width:2px
+    classDef offer_salon fill:#e8f5e8,stroke:#4caf50,stroke-width:2px
+    classDef offer_admitad fill:#ffebee,stroke:#d32f2f,stroke-width:2px
+    classDef offer_maxbounty fill:#fff8e7,stroke:#ffc107,stroke-width:2px
+    classDef offer_clickdealer fill:#fce4ec,stroke:#e91e63,stroke-width:2px
+    classDef offer_adcombo fill:#e0f7fa,stroke:#009688,stroke-width:2px
+    classDef offer_cj fill:#e3f2fd,stroke:#2196f3,stroke-width:2px
+    classDef offer_mylead fill:#f5f5f5,stroke:#9e9e9e,stroke-width:2px
+    classDef offer_amazon fill:#e8f5e8,stroke:#4caf50,stroke-width:2px
+    classDef offer_crakrevenue fill:#ffebee,stroke:#d32f2f,stroke-width:2px
+    classDef offer_cpagrip fill:#fff8e7,stroke:#ffc107,stroke-width:2px
+    classDef offer_vpn fill:#e0f7fa,stroke:#009688,stroke-width:2px
+    classDef offer_other_products fill:#f3e5f5,stroke:#9c27b0,stroke-width:2px
+
+    classDef withdrawal_usdt fill:#e0f7fa,stroke:#009688,stroke-width:3px
+    classDef withdrawal_webmoney fill:#e3f2fd,stroke:#2196f3,stroke-width:3px
+    classDef withdrawal_sbp fill:#fffde7,stroke:#ffc107,stroke-width:3px
+    classDef withdrawal_payoneer fill:#fff8e7,stroke:#ffc107,stroke-width:3px
+    classDef withdrawal_other fill:#f5f5f5,stroke:#9e9e9e,stroke-width:3px
+
+    classDef connection_flow fill:#666,stroke-width:1.5px,stroke-dasharray:'5,5'
+
+%% Apply styles to elements
+    class S1,S2,S3,S4,S5,S6,S7,S8,S9,S10,S11,S12,S13,S14,S15,S16,S17,S18,S19,S20,S21,S22,S23,S24,S25,S26,S27,S28,S29,S30,S31,S32,S33,S34,S35,S36,S37,S38,S39,S40,S41,S42 L9
+    class L1,L3,L5,L9,L10,L12,L13,L14,L15,L16 L3
+    class L2,L4,L6 L4
+    class L7 L7
+    class L8 L8
+    class L11 L9
+    class L16 L16
+    class L17 L17
+
+%% Add legend at bottom
+    %% Legend Box
+    subgraph legend
+        direction TB
+        L1[🔴 UNVERIFIED (47)]:::legend_unverified
+        L2[🟡 TESTING (2)]:::legend_testing
+        L3[🟢 VERIFIED (1)]:::legend_verified
+        \n        L4[🔗 SRC → PRX → OFF → WDR]:::legend_pipeline
+    \n    end
+
+    classDef legend_unverified fill:#ff6b6b,color:#fff
+    classDef legend_testing fill:#ffd93d,color:#000
+    classDef legend_verified fill:#6bcb77,color:#fff
+    classDef legend_pipeline fill:#4a90e2,color:#fff
+
+    click legend L1 "show legend"
+
+%% Add node styles for main pipeline
+    class SRC PRX OFF WDR
+    style SRC fill:#ffebee,stroke:#d32f2f,stroke-width:3px
+    style PRX fill:#fff8e7,stroke:#ffc107,stroke-width:3px
+    style OFF fill:#e0f2f7,stroke:#00bcd4,stroke-width:3px
+    style WDR fill:#e8f5e8,stroke:#4caf50,stroke-width:3px
+
+%% Add connection styling
+    linkStyle default stroke:#666,stroke-width:2px
+    \n%% Add tooltips
+    click SRC "All 50 traffic sources" --> legend
+    click PRX "All proxy layers (Landing + Bot + Video + Direct)" --> legend
+    click OFF "All offer networks" --> legend
+    click WDR "All withdrawal paths" --> legend
+
+%% End of flow

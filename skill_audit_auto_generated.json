@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-07-26T17:14:59.165760",
+  "skills_scanned": 1,
+  "files_scanned": 63,
+  "total_findings": 1,
+  "risk": {
+    "score": 25,
+    "severity": "MEDIUM",
+    "recommendation": "CAUTION",
+    "critical": 0,
+    "high": 1,
+    "medium": 0,
+    "low": 0
+  },
+  "results": [
+    {
+      "skill": "auto-generated",
+      "files": 63,
+      "findings": [
+        {
+          "rule": "P2_hidden_instructions",
+          "severity": "HIGH",
+          "category": "Prompt Injection",
+          "file": "D:\\Portable_Soft\\hermes\\skills\\auto-generated\\architecture-auto-patterns\\SKILL.md",
+          "line": 51,
+          "code": "- efactored the authentication service to use a new pattern\" assistant: \"I'll use the architecture-stra"
+        }
+      ]
+    }
+  ]
+}

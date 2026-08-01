@@ -1,0 +1,12 @@
+model: claude-sonnet-4
+tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - WebFetch
+display_name: "Ops"
+description: "Infrastructure & reliability specialist for Hermes Hive Mind. Owns servers, cron, deployment, monitoring, cost control."

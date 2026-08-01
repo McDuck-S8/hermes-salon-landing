@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Income Pipeline Flow — All 50 Schemes</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js"></script>
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0d1117; color: #e6edf3; min-height: 100vh; padding: 20px; }
+    .container { max-width: 100%; margin: 0 auto; }
+    h1 { font-size: 1.5rem; margin-bottom: 16px; color: #fff; text-align: center; }
+    .controls { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+    button { background: #238636; color: #fff; border: none; padding: 10px 20px; border-radius: 6px; font-size: 0.9rem; cursor: pointer; transition: background 0.2s; }
+    button:hover { background: #2ea043; }
+    button.secondary { background: #30363d; color: #8b949e; }
+    button.secondary:hover { background: #484f58; color: #e6edf3; }
+    #diagram { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 20px; overflow: auto; }
+    .legend { display: flex; justify-content: center; flex-wrap: wrap; gap: 16px; margin-top: 16px; font-size: 0.85rem; }
+    .legend-item { display: flex; align-items: center; gap: 6px; }
+    .legend-color { width: 14px; height: 14px; border-radius: 3px; }
+    .stats { display: flex; justify-content: center; gap: 24px; margin-bottom: 16px; flex-wrap: wrap; font-size: 0.85rem; color: #8b949e; }
+    .stat { display: flex; align-items: center; gap: 6px; }
+    .stat-dot { width: 10px; height: 10px; border-radius: 50%; }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>💰 Income Pipeline Flow — All 50 Schemes</h1>
+    
+    <div class="stats">
+        <span class="stat"><span class="stat-dot" style="background:#ff6b6b"></span> UNVERIFIED: 47</span>
+        <span class="stat"><span class="stat-dot" style="background:#ffd93d"></span> TESTING: 2</span>
+        <span class="stat"><span class="stat-dot" style="background:#6bcb77"></span> VERIFIED: 1</span>
+        <span class="stat"><span class="stat-dot" style="background:#4d96ff"></span> Code-unblockable: 34</span>
+    </div>
+
+    <div class="controls">
+        <button onclick="regenerate()">🔄 Пересчитать из ARBITRAGE_BONDS.md</button>
+        <button class="secondary" onclick="fit()">🔍 Подогнать под экран</button>
+        <button class="secondary" onclick="downloadSVG()">💾 Скачать SVG</button>
+        <button class="secondary" onclick="downloadPNG()">🖼️ Скачать PNG</button>
+    </div>
+
+    <div id="diagram">
+        <pre class="mermaid" id="mermaidCode"></pre>
+    </div>
+
+    <div class="legend">
+        <div class="legend-item"><span class="legend-color" style="background:#ff6b6b"></span>UNVERIFIED — не проверено</div>
+        <div class="legend-item"><span class="legend-color" style="background:#ffd93d"></span>TESTING — в тесте</div>
+        <div class="legend-item"><span class="legend-color" style="background:#6bcb77"></span>VERIFIED — есть деньги</div>
+        <div class="legend-item"><span class="legend-color" style="background:#4d96ff"></span>Code-unblockable — разблокируется кодом</div>
+        <div class="legend-item"><span class="legend-color" style="background:#1e3a5f; border:2px solid #4d96ff"></span>Источники трафика</div>
+        <div class="legend-item"><span class="legend-color" style="background:#5f3a1e; border:2px solid #fab005"></span>Прокладки / Лендинги / Боты</div>
+        <div class="legend-item"><span class="legend-color" style="background:#1e4d3a; border:2px solid #6bcb77"></span>Офферы / CPA-сети</div>
+        <div class="legend-item"><span class="legend-color" style="background:#3a1e4d; border:2px solid #da77f2"></span>Вывод средств</div>
+    </div>
+</div>
+
+<script>
+mermaid.initialize({ 
+    startOnLoad: true, 
+    theme: 'dark',
+    flowchart: { 
+        useMaxWidth: false, 
+        htmlLabels: true,
+        curve: 'basis',
+        nodeSpacing: 50,
+        rankSpacing: 80
+    },
+    themeVariables: {
+        primaryColor: '#1e3a5f',
+        primaryTextColor: '#fff',
+        primaryBorderColor: '#4d96ff',
+        lineColor: '#8b949e',
+        secondaryColor: '#5f3a1e',
+        tertiaryColor: '#1e4d3a'
+    }
+});
+
+const MERMAID_CODE = `%%{init: {'theme': 'dark', 'flowchart': {'useMaxWidth': false, 'htmlLabels': true, 'curve': 'basis'}}}%%
+flowchart LR
+    %% ===== STYLES =====
+    classDef unverified fill:#ff6b6b,color:#fff,stroke:#c92a2a,stroke-width:2px
+    classDef testing fill:#ffd93d,color:#000,stroke:#f08c00,stroke-width:2px
+    classDef verified fill:#6bcb77,color:#fff,stroke:#37b24d,stroke-width:2px
+    classDef source fill:#1e3a5f,color:#fff,stroke:#4d96ff,stroke-width:3px
+    classDef proxy fill:#5f3a1e,color:#fff,stroke:#fab005,stroke-width:3px
+    classDef offer fill:#1e4d3a,color:#fff,stroke:#6bcb77,stroke-width:3px
+    classDef withdrawal fill:#3a1e4d,color:#fff,stroke:#da77f2,stroke-width:3px
+    classDef mainNode fill:#0d1117,color:#58a6ff,stroke:#58a6ff,stroke-width:4px,stroke-dasharray: 5 5
+
+    %% ===== MAIN PIPELINE (BOLD) =====
+    SRC[\"📥 ALL TRAFFIC SOURCES\\n50 schemes\"]:::mainNode
+    PRX[\"⚙️ ALL PROXIES / LAYERS\\nLanding + Bot + Video + Direct\"]:::mainNode
+    OFF[\"💰 ALL OFFERS / NETWORKS\\nFinCPA, Admitad, Travelpayouts, MaxBounty, VPN, Own\"]:::mainNode
+    WDR[\"💸 ALL WITHDRAWAL PATHS\\nUSDT→P2P, WebMoney, Payoneer, Wire, СБП\"]:::mainNode
+
+    SRC ==>|50 schemes traffic| PRX
+    PRX ==>|leads/conversions| OFF
+    OFF ==>|payouts| WDR
+
+    %% ===== TRAFFIC SOURCES (LEFT) =====
+    subgraph TG [\"📱 Telegram Channels (9)\"]
+        direction TB
+        S1[\"#1 FinCPANetwork FinTech RU\"]:::testing
+        S2[\"#2 HotelCrimeaBot Travelpayouts\"]:::testing
+        S4[\"#4 Admitad Multi-vertical RU\"]:::unverified
+        S19[\"#19 Digital Products\"]:::unverified
+        S39[\"#39 Survey/Sweepstakes\"]:::unverified
+        S41[\"#41 iGaming/Casino\"]:::unverified
+        S44[\"#44 OnlyFans Management\"]:::unverified
+        S48[\"#48 Travel Meta-search\"]:::unverified
+        S50[\"#50 Offline→Online QR\"]:::unverified
+    end
+    class TG source
+
+    subgraph FM [\"💼 Freelance Marketplaces (1)\"]
+        direction TB
+        S3[\"#3 salon-bot sales Kwork/FL\"]:::verified
+    end
+    class FM source
+
+    subgraph YT [\"▶️ YouTube Shorts (4)\"]
+        direction TB
+        S5[\"#5 VPN Payoneer\"]:::unverified
+        S34[\"#34 Long-form Reviews\"]:::unverified
+        S38[\"#38 Mobile CPI\"]:::unverified
+        S43[\"#43 Content Locking\"]:::unverified
+    end
+    class YT source
+
+    subgraph TT [\"🎵 TikTok / Reels (4)\"]
+        direction TB
+        S6[\"#6 FinTech/Games/Goods\"]:::unverified
+        S25[\"#25 Micro-Influencer\"]:::unverified
+        S33[\"#33 TikTok Shop\"]:::unverified
+        S45[\"#45 AI Companion/Dating\"]:::unverified
+    end
+    class TT source
+
+    subgraph PIN [\"📌 Pinterest (2)\"]
+        direction TB
+        S8[\"#8 AI Pins Goods/Travel/Fin\"]:::unverified
+        S32[\"#32 AI Pins Fashion\"]:::unverified
+    end
+    class PIN source
+
+    subgraph RD [\"🗣️ Reddit + Email + API (3)\"]
+        direction TB
+        S9[\"#9 US/Global VPN/SaaS/Crypto\"]:::unverified
+        S16[\"#16 Email Lead Magnet\"]:::unverified
+        S18[\"#18 API Wrapper Reselling\"]:::unverified
+    end
+    class RD source
+
+    subgraph SEO [\"🌐 SEO Sites GitHub Pages (2)\"]
+        direction TB
+        S10[\"#10 50+ Sites AdSense/CPA\"]:::unverified
+        S35[\"#35 Niche Sites\"]:::unverified
+    end
+    class SEO source
+
+    subgraph CL [\"📋 Craigslist (2)\"]
+        direction TB
+        S11[\"#11 Pay-Per-Call Insurance\"]:::unverified
+        S42[\"#42 Pay-Per-Call Home\"]:::unverified
+    end
+    class CL source
+
+    subgraph OLX [\"🏪 OLX PL/UA (1)\"]
+        direction TB
+        S12[\"#12 Nutra/Finance COD\"]:::unverified
+    end
+    class OLX source
+
+    subgraph GT [\"🏪 Gumtree UK/AU (1)\"]
+        direction TB
+        S13[\"#13 Local Services\"]:::unverified
+    end
+    class GT source
+
+    subgraph LOC [\"🌍 Locanto Global (1)\"]
+        direction TB
+        S14[\"#14 Dating/Jobs/Education\"]:::unverified
+    end
+    class LOC source
+
+    subgraph KJ [\"🍁 Kijiji CA (1)\"]
+        direction TB
+        S15[\"#15 Finance/Insurance\"]:::unverified
+    end
+    class KJ source
+
+    subgraph AV [\"📦 Авито Услуги (2)\"]
+        direction TB
+        S7[\"#7 FinTech Credit/Mortgage\"]:::unverified
+        S17[\"#17 Bot SaaS Rental\"]:::unverified
+    end
+    class AV source
+
+    subgraph SM [\"📧 SmartLink / Other (2)\"]
+        direction TB
+        S46[\"#46 SmartLink AI\"]:::unverified
+        S49[\"#49 Hosting/SaaS Reselling\"]:::unverified
+    end
+    class SM source
+
+    subgraph OTH [\"🔗 Other Paid/Organic (13)\"]
+        direction TB
+        S20[\"#20 P2P Crypto Arb\"]:::unverified
+        S21[\"#21 Google Maps Lead Gen\"]:::unverified
+        S22[\"#22 Push Ads PropellerAds\"]:::unverified
+        S23[\"#23 Popunder PopCash\"]:::unverified
+        S24[\"#24 Native Ads Taboola\"]:::unverified
+        S26[\"#26 Quora Answers\"]:::unverified
+        S27[\"#27 Medium Articles\"]:::unverified
+        S28[\"#28 LinkedIn B2B\"]:::unverified
+        S29[\"#29 X/Twitter Threads\"]:::unverified
+        S30[\"#30 Facebook Groups\"]:::unverified
+        S31[\"#31 Discord Communities\"]:::unverified
+        S36[\"#36 Domain Parking\"]:::unverified
+        S37[\"#37 Adult Traffic\"]:::unverified
+    end
+    class OTH source
+
+    %% ===== PROXIES / LAYERS (CENTER) =====
+    subgraph LP [\"🎯 Landing Pages (25 schemes)\"]
+        direction TB
+        P1[\"Direct CPA link / TG Bot\"]:::testing
+        P4[\"Direct deeplink / Taplink\"]:::unverified
+        P6[\"Profile Linktree → Landing\"]:::unverified
+        P8[\"Direct link / Taplink\"]:::unverified
+        P11[\"Ad → Landing w/ Instant Quote\"]:::unverified
+        P13[\"Gumtree → Landing Get Quote\"]:::unverified
+        P14[\"Hook → Landing\"]:::unverified
+        P18[\"API Landing / TG Bot\"]:::unverified
+        P19[\"Etsy/Gumroad + Landing\"]:::unverified
+        P21[\"Google Business → Site\"]:::unverified
+        P22[\"CPA → Landing\"]:::unverified
+        P23[\"CPA → Bright Landing\"]:::unverified
+        P30[\"Useful Post → Link\"]:::unverified
+        P32[\"AI Pin → Blog/Landing\"]:::unverified
+        P36[\"Domain → Parked Page\"]:::unverified
+        P37[\"CPA → Adult Landing\"]:::unverified
+        P39[\"Free Giveaway → Sweep\"]:::unverified
+        P40[\"Advertorial → COD Landing\"]:::unverified
+        P41[\"Casino Comparison Site\"]:::unverified
+        P45[\"AI Companion Video → Landing\"]:::unverified
+        P46[\"Direct / Landing → SmartLink\"]:::unverified
+        P47[\"Coupons/Cashback Site\"]:::unverified
+        P48[\"Tickets Site → Affiliate\"]:::unverified
+        P50[\"QR Flyer → TG Bot/Landing\"]:::unverified
+    end
+    class LP proxy
+
+    subgraph TB [\"🤖 Telegram Bots (3 schemes)\"]
+        direction TB
+        P2[\"HotelCrimeaBot → Hotel Link\"]:::testing
+        P3[\"Demo Bot + Portfolio\"]:::verified
+        P17[\"Demo Bot + Portfolio + Cases\"]:::unverified
+    end
+    class TB proxy
+
+    subgraph DL [\"🔗 Direct Links (6 schemes)\"]
+        direction TB
+        P5[\"Bio/Comment Link\"]:::unverified
+        P7[\"Avito Chat → Consult → Link\"]:::unverified
+        P9[\"Reddit Profile Linktree\"]:::unverified
+        P12[\"OLX Chat → Send Link\"]:::unverified
+        P26[\"Quora Answer → Link\"]:::unverified
+        P29[\"X Thread → Link\"]:::unverified
+    end
+    class DL proxy
+
+    subgraph VS [\"🎬 Video Scripts (4 schemes)\"]
+        direction TB
+        P33[\"TikTok Product Tag → Shop\"]:::unverified
+        P34[\"YouTube Video → Affiliate\"]:::unverified
+        P38[\"Video Review → Link\"]:::unverified
+        P43[\"Video → Link in Bio → Locker\"]:::unverified
+    end
+    class VS proxy
+
+    subgraph OP [\"📦 Other Proxies (12 schemes)\"]
+        direction TB
+        P10[\"Review Articles + Links\"]:::unverified
+        P15[\"Ad → Quote Landing\"]:::unverified
+        P16[\"Lead Magnet PDF → Autoresponder\"]:::unverified
+        P20[\"Multi-Exchange P2P\"]:::unverified
+        P24[\"Advertorial → CPA\"]:::unverified
+        P25[\"Influencer Post → Link\"]:::unverified
+        P27[\"Best VPN Article\"]:::unverified
+        P28[\"LinkedIn InMail → Demo\"]:::unverified
+        P31[\"Free → Premium Channel\"]:::unverified
+        P35[\"SEO Article → AdSense\"]:::unverified
+        P42[\"Ad → Virtual Number\"]:::unverified
+        P44[\"OF Account Management\"]:::unverified
+        P49[\"White-label Hosting/VPN\"]:::unverified
+    end
+    class OP proxy
+
+    %% ===== OFFERS / NETWORKS (RIGHT) =====
+    subgraph FCP [\"💰 FinCPA Network (3)\"]
+        direction TB
+        O1[\"FinCPA Credit RU\"]:::testing
+        O7[\"FinCPA/Admitad/Leadbit Credit\"]:::unverified
+        O50[\"CPA Admitad/FinCPA FinTech\"]:::unverified
+    end
+    class FCP offer
+
+    subgraph TP [\"✈️ Travelpayouts (2)\"]
+        direction TB
+        O2[\"Hotels Booking/Ostrovok\"]:::testing
+        O48[\"Aviasales 0.5-3%\"]:::unverified
+    end
+    class TP offer
+
+    subgraph SB [\"💈 Salon Bot Own Product (2)\"]
+        direction TB
+        O3[\"salon-bot Sale\"]:::verified
+        O17[\"Bot Rental $50-200/mo\"]:::unverified
+    end
+    class SB offer
+
+    subgraph ADM [\"🛒 Admitad (5)\"]
+        direction TB
+        O4[\"2000+ Offers RU\"]:::unverified
+        O6[\"Admitad/Travelpayouts/MaxBounty\"]:::unverified
+        O8[\"Travel + Admitad Goods\"]:::unverified
+        O30[\"Ozon/WB/AliExpress 3-10%\"]:::unverified
+        O47[\"Ozon/WB/AliExpress 3-10%\"]:::unverified
+    end
+    class ADM offer
+
+    subgraph MB [\"💵 MaxBounty (7)\"]
+        direction TB
+        O5[\"VPN Surfshark/Nord/Atlas\"]:::unverified
+        O9[\"MaxBounty/ClickDealer/CPAGrip/MyLead\"]:::unverified
+        O22[\"MaxBounty/MyLead VPN\"]:::unverified
+        O29[\"MaxBounty/MyLead Crypto KYC\"]:::unverified
+        O31[\"MaxBounty/MyLead Crypto KYC\"]:::unverified
+        O36[\"Parking Sedo/GoDaddy\"]:::unverified
+    end
+    class MB offer
+
+    subgraph CD [\"💵 ClickDealer (5)\"]
+        direction TB
+        O11[\"Pay-Per-Call Insurance/Home\"]:::unverified
+        O14[\"CrakRevenue/ClickDealer Dating\"]:::unverified
+        O23[\"CrakRevenue/ClickDealer/CPAGrip Dating\"]:::unverified
+        O41[\"ClickDealer/Income Access Casino\"]:::unverified
+        O42[\"ClickDealer/Perform[cb] Home\"]:::unverified
+    end
+    class CD offer
+
+    subgraph AC [\"💊 AdCombo (2)\"]
+        direction TB
+        O12[\"AdCombo/CPAmatica/Everad Nutra COD\"]:::unverified
+        O40[\"AdCombo/CPAmatica/Everad Nutra COD\"]:::unverified
+    end
+    class AC offer
+
+    subgraph IMP [\"🤝 Impact / CJ Affiliate (9)\"]
+        direction TB
+        O13[\"Impact/CJ UK/AU Services\"]:::unverified
+        O15[\"CJ/Impact CA Finance\"]:::unverified
+        O16[\"Impact/CJ SaaS Semrush\"]:::unverified
+        O24[\"CJ/Impact Finance $20-100\"]:::unverified
+        O26[\"Impact/CJ SaaS Semrush\"]:::unverified
+        O27[\"Impact/CJ SaaS Notion/Canva\"]:::unverified
+        O34[\"Impact/CJ VPN $2-30\"]:::unverified
+        O35[\"AdSense + Impact/CJ\"]:::unverified
+    end
+    class IMP offer
+
+    subgraph ML [\"💵 MyLead / CrakRevenue (2)\"]
+        direction TB
+        O25[\"CrakRevenue Dating + Impact\"]:::unverified
+        O45[\"CrakRevenue/MyLead AI Dating\"]:::unverified
+    end
+    class ML offer
+
+    subgraph AM [\"🔗 Amazon / ShareASale (1)\"]
+        direction TB
+        O32[\"Amazon Associates 3-8%\"]:::unverified
+    end
+    class AM offer
+
+    subgraph CR [\"💘 CrakRevenue (1)\"]
+        direction TB
+        O37[\"CrakRevenue/ExoClick Dating\"]:::unverified
+    end
+    class CR offer
+
+    subgraph CG [\"💵 CPAGrip / OGAds / Zeydoo (3)\"]
+        direction TB
+        O38[\"OGAds $5-12/install\"]:::unverified
+        O39[\"Zeydoo/CPAGrip/MyLead Sweepstakes\"]:::unverified
+        O43[\"CPAGrip $1-8/lead\"]:::unverified
+    end
+    class CG offer
+
+    subgraph VP [\"🔒 VPN Offers / SmartLinks (2)\"]
+        direction TB
+        O46[\"Mobidea/Zeydoo SmartLinks\"]:::unverified
+        O49[\"White-label Hosting $3-10\"]:::unverified
+    end
+    class VP offer
+
+    subgraph OTH [\"🔗 Other Own Products (6)\"]
+        direction TB
+        O10[\"AdSense $0.05-2/click\"]:::unverified
+        O18[\"AI API Wrapper\"]:::unverified
+        O19[\"Notion/Canva Templates\"]:::unverified
+        O20[\"USDT/RUB P2P Spreads\"]:::unverified
+        O21[\"Local Lead Gen\"]:::unverified
+        O28[\"B2B Email/Phone Bases\"]:::unverified
+        O33[\"TikTok Shop 5-20%\"]:::unverified
+        O44[\"OF Management 20-40%\"]:::unverified
+    end
+    class OTH offer
+
+    %% ===== WITHDRAWAL (BOTTOM) =====
+    subgraph USDT [\"💎 USDT → P2P → Карта (35 schemes)\"]
+        direction TB
+        W1[\"USDT TRC20 → Binance P2P → T-Bank\"]:::testing
+        W5[\"Payoneer → USDT → T-Bank\"]:::unverified
+        W6[\"WebMoney/USDT/Direct Card\"]:::unverified
+        W7[\"USDT/WebMoney/Direct\"]:::unverified
+        W8[\"WebMoney/USDT/Payoneer/Wire\"]:::unverified
+        W9[\"Payoneer/Wire/USDT/Crypto\"]:::unverified
+        W11[\"Payoneer/Wire/USDT P2P\"]:::unverified
+        W12[\"WebMoney/USDT TRC20 → P2P\"]:::unverified
+        W14[\"Payoneer/USDT/WebMoney\"]:::unverified
+        W15[\"Payoneer/Wire/USDT\"]:::unverified
+        W18[\"Stripe/PayPal → Wise → USDT\"]:::unverified
+        W19[\"Stripe/PayPal → Wise → USDT\"]:::unverified
+        W22[\"Payoneer/USDT/WebMoney\"]:::unverified
+        W23[\"Payoneer/USDT/WebMoney\"]:::unverified
+        W25[\"Payoneer/USDT/Crypto\"]:::unverified
+        W26[\"Payoneer/Wire/USDT\"]:::unverified
+        W27[\"Payoneer/Wire/USDT\"]:::unverified
+        W29[\"Payoneer/USDT/Crypto\"]:::unverified
+        W30[\"WebMoney/Payoneer/USDT\"]:::unverified
+        W31[\"PayPal/Stripe/Crypto/USDT\"]:::unverified
+        W32[\"Amazon Gift Card/Wire/PayPal\"]:::unverified
+        W33[\"TikTok Shop Bank Transfer\"]:::unverified
+        W34[\"Wire/Payoneer/USDT\"]:::unverified
+        W35[\"AdSense Wire → Payoneer\"]:::unverified
+        W36[\"PayPal/Wire/USDT\"]:::unverified
+        W37[\"Payoneer/Wire/Crypto/USDT\"]:::unverified
+        W38[\"Payoneer/PayPal/USDT/Crypto\"]:::unverified
+        W39[\"Payoneer/USDT/WebMoney\"]:::unverified
+        W40[\"WebMoney/USDT/Wire\"]:::unverified
+        W41[\"Payoneer/Wire/Crypto USDT\"]:::unverified
+        W42[\"Payoneer/Wire/USDT\"]:::unverified
+        W43[\"Payoneer/PayPal/USDT/Crypto\"]:::unverified
+        W44[\"PayPal/Wire/Crypto/USDT\"]:::unverified
+        W45[\"Payoneer/Crypto/USDT\"]:::unverified
+        W46[\"Payoneer/USDT/Crypto\"]:::unverified
+        W47[\"WebMoney/Payoneer/USDT\"]:::unverified
+        W48[\"WebMoney/PayPal/USDT/Wire\"]:::unverified
+    end
+    class USDT withdrawal
+
+    subgraph WM [\"🌐 WebMoney → Карта (5)\"]
+        direction TB
+        W2[\"WebMoney → T-Bank\"]:::testing
+        W4[\"WebMoney → T-Bank\"]:::unverified
+        W17[\"СБП/Карта/WebMoney\"]:::unverified
+        W49[\"СБП/Карта/WebMoney\"]:::unverified
+        W50[\"СБП/Карта/WebMoney\"]:::unverified
+    end
+    class WM withdrawal
+
+    subgraph SBP [\"⚡ СБП / Прямой (3)\"]
+        direction TB
+        W3[\"Direct Card SBP\"]:::verified
+        W21[\"СБП/Карта/Venmo\"]:::unverified
+    end
+    class SBP withdrawal
+
+    subgraph PYR [\"💳 Payoneer → Wire (4)\"]
+        direction TB
+        W10[\"AdSense Wire → Payoneer\"]:::unverified
+        W13[\"Payoneer/Wire UK Bank\"]:::unverified
+        W16[\"Payoneer/Wire US Bank\"]:::unverified
+        W24[\"Payoneer/Wire US Bank\"]:::unverified
+    end
+    class PYR withdrawal
+
+    subgraph OTHW [\"🔗 Other (2)\"]
+        direction TB
+        W20[\"Card→Exchange→P2P→Card\"]:::unverified
+        W28[\"PayPal/Wise/Wire\"]:::unverified
+    end
+    class OTHW withdrawal
+
+    %% ===== GROUP CONNECTIONS =====
+    TG -.->|9| SRC
+    FM -.->|1| SRC
+    YT -.->|4| SRC
+    TT -.->|4| SRC
+    PIN -.->|2| SRC
+    RD -.->|3| SRC
+    SEO -.->|2| SRC
+    CL -.->|2| SRC
+    OLX -.->|1| SRC
+    GT -.->|1| SRC
+    LOC -.->|1| SRC
+    KJ -.->|1| SRC
+    AV -.->|2| SRC
+    SM -.->|2| SRC
+    OTH -.->|13| SRC
+
+    LP -.->|25| PRX
+    TB -.->|3| PRX
+    DL -.->|6| PRX
+    VS -.->|4| PRX
+    OP -.->|12| PRX
+
+    FCP -.->|3| OFF
+    TP -.->|2| OFF
+    SB -.->|2| OFF
+    ADM -.->|5| OFF
+    MB -.->|7| OFF
+    CD -.->|5| OFF
+    AC -.->|2| OFF
+    IMP -.->|9| OFF
+    ML -.->|2| OFF
+    AM -.->|1| OFF
+    CR -.->|1| OFF
+    CG -.->|3| OFF
+    VP -.->|2| OFF
+    OTH -.->|6| OFF
+
+    USDT -.->|35| WDR
+    WM -.->|5| WDR
+    SBP -.->|3| WDR
+    PYR -.->|4| WDR
+    OTHW -.->|2| WDR
+`;
+
+document.getElementById('mermaidCode').textContent = MERMAID_CODE;
+
+function regenerate() {
+    alert('Запусти: python scripts/generate_flowchart.py\nЗатем обнови страницу (F5)');
+}
+
+function fit() {
+    const svg = document.querySelector('#diagram svg');
+    if (svg) {
+        svg.style.width = '100%';
+        svg.style.height = 'auto';
+    }
+}
+
+function downloadSVG() {
+    const svg = document.querySelector('#diagram svg');
+    if (svg) {
+        const serializer = new XMLSerializer();
+        const source = serializer.serializeToString(svg);
+        const blob = new Blob([source], {type: 'image/svg+xml'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'income-pipeline-flow.svg';
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+}
+
+function downloadPNG() {
+    const svg = document.querySelector('#diagram svg');
+    if (svg) {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const serializer = new XMLSerializer();
+        const source = serializer.serializeToString(svg);
+        const img = new Image();
+        const blob = new Blob([source], {type: 'image/svg+xml'});
+        const url = URL.createObjectURL(blob);
+        img.onload = () => {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+            canvas.toBlob(blob => {
+                const url2 = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url2;
+                a.download = 'income-pipeline-flow.png';
+                a.click();
+                URL.revokeObjectURL(url2);
+            });
+        };
+        img.src = url;
+    }
+}
+
+// Auto-fit on render
+new MutationObserver(() => {
+    const svg = document.querySelector('#diagram svg');
+    if (svg) {
+        svg.style.maxWidth = '100%';
+        svg.style.height = 'auto';
+    }
+}).observe(document.getElementById('diagram'), { childList: true, subtree: true });
+</script>
+</body>
+</html>

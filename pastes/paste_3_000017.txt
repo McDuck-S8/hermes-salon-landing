@@ -1,0 +1,24 @@
+Ты видишь hermes_bootstrap.py. Он загружает систему, но не делает первый автономный шаг. Исправь.
+
+Добавь в функцию boot() после шага 4 (tool catalog) новый шаг:
+
+    # 5. Autonomous First Action
+    try:
+        from goal_queue import get_highest_priority_goal
+        goal = get_highest_priority_goal()
+        if goal and goal.get('status') == 'ready':
+            # Выполнить первое действие цели
+            from goal_executor import execute_goal
+            result = execute_goal(goal)
+            results.append(f"autonomous_action: EXECUTED goal {goal.get('id')} — {result.get('status')}")
+        else:
+            # Создать corrective goal если нет ready-целей
+            from goal_queue import create_goal
+            new_goal = create_goal("system_health_check", priority=10)
+            results.append(f"autonomous_action: CREATED corrective goal {new_goal.get('id')}")
+    except Exception as e:
+        results.append(f"autonomous_action: FAILED — {e}")
+
+После этого шага — return results.
+
+Затем перезапусти Hermes и покажи лог boot'а. Там должна быть строка "autonomous_action: EXECUTED" или "autonomous_action: CREATED".

@@ -1,0 +1,6 @@
+�� You: Проверка связи, ты не осуществишь?
+⚙️ JARVIS thinking...
+
+�� You: Какая погода в Кирму?
+⚙️ JARVIS thinking...
+�� JARVIS: I'm having trouble with my language processor, Sir. error code: 1010
