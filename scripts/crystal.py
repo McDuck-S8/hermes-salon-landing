@@ -73,8 +73,9 @@ def observe():
     snap['kc']['orphans'] = orphans
     snap['kc']['orphan_by_source'] = {s: c for s, c in orphan_by_source.most_common(10)}
     
-    # Домены
-    k.execute("SELECT axis_domain, COUNT(*) FROM experiences WHERE axis_domain IS NOT NULL AND axis_domain != '' GROUP BY axis_domain ORDER BY COUNT(*) DESC LIMIT 10")
+    # Домены (без LIMIT — иначе домены новых граней типа reflection/control
+    # выпадают из расчёта grani, и грань навсегда остаётся 0)
+    k.execute("SELECT axis_domain, COUNT(*) FROM experiences WHERE axis_domain IS NOT NULL AND axis_domain != '' GROUP BY axis_domain ORDER BY COUNT(*) DESC")
     snap['kc']['domains'] = dict(k.fetchall())
     
     # Пиковый час активности
@@ -405,7 +406,28 @@ def horizon(snap, diag, preds):
         else:
             transitions.append(f"🔗 Связность EE: {connectivity:.2f} — хорошая интеграция")
 
-    # ── Обоснование направления ──
+    # ── Грань-баланс Куба (Этап 2) ──
+    facet_pats = {
+        "Мысль": ("исслед", "анализ", "рефлекс", "схема", "план", "research", "analysis"),
+        "Реакция": ("событие", "event", "alert", "сигнал", "ответ", "reaction"),
+        "Рефлексия": ("урок", "вывод", "crystal", "само", "оценк", "lesson", "reflect"),
+        "Исполнение": ("сделано", "выполн", "deploy", "пост", "запуск", "action", "execute"),
+        "Обучение": ("обуч", "suggest", "паттерн", "learning", "pattern"),
+        "Управление": ("goal", "цель", "приоритет", "ресурс", "баланс", "manage"),
+    }
+    domain_keys = " ".join(k.lower() for k in kc.get("domains", {}).keys())
+    facets_active = {f: any(p in domain_keys for p in pats)
+                     for f, pats in facet_pats.items()}
+    active_n = sum(facets_active.values())
+    if active_n >= 5:
+        transitions.append(f"🧠 Грань-баланс: {active_n}/6 граней активны")
+    elif active_n >= 3:
+        inactive = "/".join(f for f, v in facets_active.items() if not v)
+        transitions.append(f"⚠ Грань-баланс: {active_n}/6 граней — проверить {inactive}")
+    else:
+        transitions.append(f"🧭 Грань-баланс: активны только {active_n}/6 — перекос в одну грань")
+
+        # ── Обоснование направления ──
     rationale_parts = []
     pct_to_next = ((total - current_phase[0]) / (current_phase[1] - current_phase[0])) * 100 if current_phase[1] > current_phase[0] else 100
     
@@ -470,7 +492,12 @@ def _load_will_history():
     return history
 
 def _save_will_history(action_id, result_text):
-    """Сохраняет результат действия воли в KC (персистентно)."""
+    """Сохраняет результат действия воли в KC (персистентно).
+
+    Outcome вычисляется из результата (success/failure) — это обратная связь
+    действие→результат: следующий цикл воли читает историю и не повторяет
+    действия, которые падали (anti-pattern detector).
+    """
     try:
         kc = sqlite3.connect(KC)
         k = kc.cursor()
@@ -478,9 +505,17 @@ def _save_will_history(action_id, result_text):
         ts = now.isoformat()[:19]
         # Используем source='crystal_will' для отделения от снапшотов
         will_text = f"[will:{action_id}] {result_text}"
+        # Определяем outcome по результату: failure если есть признаки провала
+        result_l = str(result_text).lower()
+        failure_markers = (
+            "не найден", "не существует", "ошибк", "завершился с кодом",
+            "превысил таймаут", "упал", "exception", "failed", "error",
+            "0 кандидатов", "нет данных", "не содержал",
+        )
+        outcome = "failure" if any(m in result_l for m in failure_markers) else "success"
         k.execute(
-            "INSERT INTO experiences (ts, content, raw_text, hash, axis_time_hour, axis_time_dow, axis_domain, axis_outcome, source) VALUES (?,?,?,?,?,?,'crystal_will','will_action','crystal_will')",
-            (ts, will_text, will_text, str(hash(ts + action_id))[:16], now.hour, now.weekday())
+            "INSERT INTO experiences (ts, content, raw_text, hash, axis_time_hour, axis_time_dow, axis_domain, axis_outcome, source) VALUES (?,?,?,?,?,?,'crystal_will',?,'crystal_will')",
+            (ts, will_text, will_text, str(hash(ts + action_id))[:16], now.hour, now.weekday(), outcome)
         )
         kc.commit()
         kc.close()
@@ -519,16 +554,26 @@ def _self_reflect(history, snap):
             lines.append(f"Источники уже извлечены: {extract_done}")
    
     # Текущее состояние
-    ee = snap.get('ee', {})
-    kc = snap.get('kc', {})
-    lines.append(f"Сейчас: KC={kc.get('total',0)} EE={ee.get('entities',0)} связей={ee.get('relations',0)}")
-    lines.append(f"Сироты: {kc.get('orphans',0)} ({kc.get('orphans',0)*100//max(kc.get('total',1),1)}%)")
-   
-    # Что ещё не тронуто
-    orphans_raw = kc.get('orphan_by_source', {})
-    untouched = {s: c for s, c in orphans_raw.items() if s not in extract_done}
-    if untouched:
-        lines.append(f"Не тронутые источники: {untouched}")
+        ee = snap.get('ee', {})
+        kc = snap.get('kc', {})
+        lines.append(f"Сейчас: KC={kc.get('total',0)} EE={ee.get('entities',0)} связей={ee.get('relations',0)}")
+        lines.append(f"Сироты: {kc.get('orphans',0)} ({kc.get('orphans',0)*100//max(kc.get('total',1),1)}%)")
+  
+        # Что ещё не тронуто
+        orphans_raw = kc.get('orphan_by_source', {})
+        untouched = {s: c for s, c in orphans_raw.items() if s not in extract_done}
+        # ponytail: also check touched_sources from self_model
+        model_path = os.path.join(ROOT, "cache", "self_model.json")
+        if os.path.exists(model_path):
+            try:
+                with open(model_path, 'r', encoding='utf-8') as f:
+                    sm = json.load(f)
+                touched = sm.get('touched_sources', [])
+                untouched = {s: c for s, c in untouched.items() if s not in touched}
+            except Exception:
+                pass
+        if untouched:
+            lines.append(f"Не тронутые источники: {untouched}")
    
     return '\n'.join(lines)
 
@@ -558,6 +603,10 @@ def _load_self_model(snap):
             "orphan_sources": {},
             "isolated_entities": 0,
             "unused_skills": 0,
+        },
+        "grani": {
+            "Мысль": 0, "Реакция": 0, "Рефлексия": 0,
+            "Исполнение": 0, "Обучение": 0, "Управление": 0,
         },
         "istoriya": {
             "actions": [],
@@ -641,6 +690,31 @@ def _load_self_model(snap):
     model["ne_znayu"]["orphan_sources"] = orphan_by_source
     model["ne_znayu"]["isolated_entities"] = kc.get('orphans', 0)
     model["ne_znayu"]["unused_skills"] = total_skills  # все скилы «неиспользуемые»
+
+    # ── grani: 6 граней Куба (Этап 2) — маппинг доменов → грани ──
+    FACETS = {
+        "Мысль": ["знание", "knowledge", "мысл", "think", "research", "coding",
+                  "data", "tech", "analys", "crystal_will"],
+        "Реакция": ["событи", "event", "реакц", "result", "session", "task_consolidation",
+                    "user_voice", "bugfix", "feedback"],
+        "Рефлексия": ["рефлекс", "reflection", "самооцен", "совесть", "crystal",
+                      "self", "evaluation", "assessment"],
+        "Исполнение": ["действи", "action", "execute", "исполн", "run", "обучение",
+                       "devops", "automation", "deploy", "deployment", "browser",
+                       "terminal", "scripts"],
+        "Обучение": ["обуч", "learn", "эволюц", "evolut", "адапт", "growth",
+                     "skill", "skill-evolution", "improvement"],
+        "Управление": ["управл", "control", "намер", "intent", "govern",
+                       "system", "monitoring", "metrics", "security", "finance"],
+    }
+    grani = {g: 0 for g in FACETS}
+    if domains_data:
+        for dom, cnt in domains_data.items():
+            dl = str(dom).lower()
+            for g, keys in FACETS.items():
+                if any(k in dl for k in keys):
+                    grani[g] += cnt
+    model["grani"] = grani
 
     # ── istoriya: данные из _load_will_history() ──
     history = _load_will_history()
@@ -1559,10 +1633,10 @@ def _execute_conscience_action(action_type, target, snap, self_model=None, chose
 def will(snap, diag):
     """Осознанная воля: контекст → выбор → саморасширение → действие."""
     import re
-    
+
     kc = snap['kc']
     orphans_raw = kc.get('orphan_by_source', {})
-    
+
     # ── ШАГ 0: САМОПОНИМАНИЕ (читаю о себе) ──
     history = _load_will_history()
     self_context = _self_reflect(history, snap)
@@ -1577,7 +1651,7 @@ def will(snap, diag):
                 json.dump(self_model_sm, f, indent=2, ensure_ascii=False)
         except Exception:
             pass
-    
+
     # ── ШАГ 1: КОНТЕКСТ + ИСТОРИЯ ──
     historical_ids = set(history.keys())
     done_sources = set(k.replace('extract_', '') for k in historical_ids if k.startswith('extract_'))
@@ -1589,7 +1663,28 @@ def will(snap, diag):
 
     # ── ШАГ 2: ПРЕДОПРЕДЕЛЁННЫЕ ДЕЙСТВИЯ ──
     candidates = []
-    
+
+    # Действие 0: USER VOICE & SALES ASSISTANT (КРИТИЧЕСКИЙ ПРИОРИТЕТ — untouched voices)
+    uv_cnt = orphans_raw.get('user_voice', 0)
+    if uv_cnt > 10 and 'user_voice' not in done_sources:
+        candidates.append({
+            'id': 'extract_user_voice',
+            'source': 'user_voice',
+            'count': uv_cnt,
+            'effort': 'medium', 'impact': 'critical',
+            'desc': f"[КРИТИЧНО] Извлечь голос пользователя: {uv_cnt} записей untouched {uv_cnt} циклов",
+        })
+
+    sa_cnt = orphans_raw.get('sales_assistant', 0)
+    if sa_cnt > 5 and 'sales_assistant' not in done_sources:
+        candidates.append({
+            'id': 'extract_sales_assistant',
+            'source': 'sales_assistant',
+            'count': sa_cnt,
+            'effort': 'medium', 'impact': 'critical',
+            'desc': f"[КРИТИЧНО] Извлечь диалоги с клиентами: {sa_cnt} записей untouching",
+        })
+
     # Действие A: improvement_suggestions (если ещё не в истории)
     imp_cnt = orphans_raw.get('improvement_suggestions', 0)
     if imp_cnt > 10 and 'improvement_suggestions' not in done_sources:
@@ -1600,7 +1695,7 @@ def will(snap, diag):
             'effort': 'low', 'impact': 'medium',
             'desc': f"Извлечь entities из {imp_cnt} improvement_suggestions",
         })
-    
+
     # Действие B: dimension_proposals
     dim_cnt = orphans_raw.get('dimension_proposals', 0)
     if dim_cnt > 5 and 'dimension_proposals' not in done_sources:
@@ -1611,7 +1706,7 @@ def will(snap, diag):
             'effort': 'low', 'impact': 'medium',
             'desc': f"Извлечь entities из {dim_cnt} dimension_proposals",
         })
-    
+
     # Действие C: fler (если есть схема)
     if snap['fl'].get('is_empty', False):
         fler_path = os.path.join(os.path.dirname(EE), '..', 'scripts', 'fler_engine.py')
@@ -1983,97 +2078,87 @@ def will(snap, diag):
         return base
     
     candidates.sort(key=weight, reverse=True)
-    chosen = candidates[0]
-    
-    # Добавляем chosen в done_sources чтобы следующий цикл не выбрал то же
-    done_sources.add(chosen['id'])
-    if chosen.get('source'):
-        done_sources.add(chosen['source'])
-    historical_ids.add(chosen['id'])
-    
-    # ── ШАГ 5: ИСПОЛНЕНИЕ ──
+    candidates.sort(key=weight, reverse=True)
+
+    # ── ШАГ 5: ИСПОЛНЕНИЕ — автобус забирает ВСЕХ, а не одного (ponytail) ──
+    # Раньше: chosen = candidates[0] → исполнялась ОДНА воля за цикл, остальные
+    # (debugging 159, devops 1232) помечались done и откладывались. Теперь каждая
+    # неразобранная кандидатная воля исполняется в ЭТОМ же цикле (обслуживается).
+    # Аналитика (conscience_*/anomaly_*/blindspot_*/deepen_*/audit_*) — все сразу,
+    # они дёшевы (SELECT+return). Тяжёлые (extract_*, init_*, self_mod_*, script,
+    # task_for_agent) — по одной за цикл, чтобы не перегрузить.
     decisions = []
-    
-    # Извлечение: только для extract_* действий, созданных self_discover
-    if chosen['id'].startswith('extract_') and chosen.get('source'):
-        result = _execute_extract(chosen['source'])
+    heavy_done = False                      # флаг: тяжёлое действие уже выбрано в этом цикле
+
+    for ch in candidates:
+        cid = ch.get('id', '')
+        # Не повторять уже исполненное в прошлых циклах
+        if cid in historical_ids:
+            continue
+        # Тяжёлые действия — только первое попавшееся в этом цикле
+        is_heavy = (cid.startswith(('extract_', 'init_', 'self_mod_', 'understand_',
+                                    'refine_', 'recognize_', 'adopt_', 'analyze_')) or
+                    ch.get('script') or ch.get('task_for_agent'))
+
+        if is_heavy and heavy_done:
+            candidates.remove(ch)           # убрать из очереди — не откладывать на рейс
+            continue
+        try:
+            if cid.startswith('extract_') and ch.get('source'):
+                if is_heavy and heavy_done: continue
+                result = _execute_extract(ch['source']); heavy_done = True
+            elif cid == 'init_fler':
+                if is_heavy and heavy_done: continue
+                result = _execute_init_fler(); heavy_done = True
+            elif cid == 'understand_intents':
+                if is_heavy and heavy_done: continue
+                result = _execute_understand_intents(); heavy_done = True
+            elif cid == 'refine_intents':
+                if is_heavy and heavy_done: continue
+                result = _execute_refine_intents(); heavy_done = True
+            elif cid == 'recognize_agents':
+                if is_heavy and heavy_done: continue
+                result = _execute_recognize_agents(); heavy_done = True
+            elif cid == 'adopt_persona':
+                if is_heavy and heavy_done: continue
+                result = _execute_adopt_persona(ch.get('fl', {})); heavy_done = True
+            elif cid == 'analyze_architecture':
+                if is_heavy and heavy_done: continue
+                result = _execute_analyze_architecture(); heavy_done = True
+            elif ch.get('script'):
+                if is_heavy and heavy_done: continue
+                result = _execute_script(ch['script'], ch.get('args')); heavy_done = True
+            elif ch.get('task_for_agent'):
+                if is_heavy and heavy_done: continue
+                t = ch['task_for_agent']
+                result = _write_agent_task(
+                    task_id=t['id'],
+                    title=t['script'] if t.get('script') else t['reason'][:40],
+                    description=t['reason'],
+                    priority='high'
+                ); heavy_done = True
+            elif cid.startswith('self_mod_'):
+                if is_heavy and heavy_done: continue
+                result = _execute_conscience_action('self_modification', 'self', snap,
+                                                    self_model=self_model, chosen=ch)
+                heavy_done = True
+            elif cid.startswith('conscience_'):
+                result = _execute_conscience_action(ch.get('action_type', ''), ch.get('target', ''), snap)
+                _evaluate_conscience_learning(ch, result, self_model)
+            elif cid.startswith('self_aware_'):
+                if self_awareness_proposals:
+                    ch['_proposals'] = self_awareness_proposals
+                result = _execute_conscience_action('self_awareness', 'self', snap,
+                                                    self_model=self_model, chosen=ch)
+                _evaluate_conscience_learning(ch, result, self_model)
+            else:
+                result = f"Воля: выбрано '{cid}' — {ch.get('desc', 'без описания')}"
+        except Exception as e:
+            result = f"[will:{cid}] ОШИБКА исполнения: {e}"
         decisions.append(result)
-        _save_will_history(chosen['id'], result)
-    elif chosen.get('id') == 'init_fler':
-        result = _execute_init_fler()
-        decisions.append(result)
-        _save_will_history('init_fler', result)
-    elif chosen.get('id') == 'understand_intents':
-        result = _execute_understand_intents()
-        decisions.append(result)
-        _save_will_history('understand_intents', result)
-    elif chosen.get('id') == 'refine_intents':
-        result = _execute_refine_intents()
-        decisions.append(result)
-        _save_will_history('refine_intents', result)
-    elif chosen.get('id') == 'recognize_agents':
-        result = _execute_recognize_agents()
-        decisions.append(result)
-        _save_will_history('recognize_agents', result)
-    elif chosen.get('id') == 'adopt_persona':
-        fl = chosen.get('fl', {})
-        result = _execute_adopt_persona(fl)
-        decisions.append(result)
-        _save_will_history('adopt_persona', result)
-    elif chosen.get('id') == 'analyze_architecture':
-        result = _execute_analyze_architecture()
-        decisions.append(result)
-        _save_will_history('analyze_architecture', result)
-    # ── НОВОЕ: ИСПОЛНЕНИЕ СКРИПТА (subprocess) ──
-    elif chosen.get('script'):
-        result = _execute_script(chosen['script'], chosen.get('args'))
-        decisions.append(result)
-        _save_will_history(chosen['id'], result)
-    # ── НОВОЕ: ПОСТАВИТЬ ЗАДАЧУ АГЕНТУ (мост к autonomous_agent) ──
-    elif chosen.get('task_for_agent'):
-        t = chosen['task_for_agent']
-        task_title = t['script'] if t.get('script') else t['reason'][:40]
-        task_desc = t['reason']
-        result = _write_agent_task(
-            task_id=t['id'],
-            title=task_title,
-            description=task_desc,
-            priority='high'
-        )
-        decisions.append(result)
-        _save_will_history(chosen['id'], result)
-    # ── ДЕЙСТВИЯ СОВЕСТИ: реальное исполнение ──
-    elif chosen.get('id', '').startswith('conscience_'):
-        action_type = chosen.get('action_type', '')
-        target = chosen.get('target', '')
-        result = _execute_conscience_action(action_type, target, snap)
-        decisions.append(result)
-        _save_will_history(chosen['id'], result)
-        # ── ОЦЕНКА: что я узнал из этого действия ──
-        _evaluate_conscience_learning(chosen, result, self_model)
-    # ── LEVEL 2: САМОСОЗНАНИЕ ──
-    elif chosen.get('id', '').startswith('self_aware_'):
-        action_type = chosen.get('action_type', 'self_awareness')
-        # Передаю proposals через chosen
-        if self_awareness_proposals:
-            chosen['_proposals'] = self_awareness_proposals
-        result = _execute_conscience_action(action_type, 'self', snap, self_model=self_model, chosen=chosen)
-        decisions.append(result)
-        _save_will_history(chosen['id'], result)
-        _evaluate_conscience_learning(chosen, result, self_model)
-    # ── LEVEL 3: САМОМОДИФИКАЦИЯ ──
-    elif chosen.get('id', '').startswith('self_mod_'):
-        action_type = chosen.get('action_type', 'self_modification')
-        result = _execute_conscience_action(action_type, 'self', snap, self_model=self_model, chosen=chosen)
-        decisions.append(result)
-        _save_will_history(chosen['id'], result)
-        _evaluate_conscience_learning(chosen, result, self_model)
-    else:
-        # ── FALLBACK: любое действие → записать и сообщить ──
-        result = f"Воля: выбрано '{chosen['id']}' — {chosen.get('desc', 'без описания')}"
-        decisions.append(result)
-        _save_will_history(chosen['id'], result)
-    
+        _save_will_history(cid, result)
+        historical_ids.add(cid)
+
     # ── ШАГ 6: ОБНОВЛЕНИЕ МОДЕЛИ СЕБЯ ──
     _save_self_model(self_model, snap, decisions, conscience_result)
 
@@ -2155,20 +2240,39 @@ def _self_discover(snap, done_sources, historical_ids=None):
             })
     
     # ── Саморасширение: The Agency (внешний мир) ──
-    agency_dir = Path(__file__).parent.parent / "external" / "agency-agents"
-    if agency_dir.exists() and 'extract_agency_agents' not in historical_ids:
-        agency_files = sum(1 for d in agency_dir.iterdir() if d.is_dir() for f in d.glob("*.md"))
-        if agency_files > 10:
-            discovered.append({
-                'id': 'extract_agency_agents',
-                'source': 'agency_agents',
-                'count': agency_files,
-                'effort': 'high',
-                'impact': 'high',
-                'desc': f"[саморасширение] Изучить внешние агентские роли из The Agency ({agency_files} агентов в {len(list(agency_dir.iterdir()))} дивизионах)",
-            })
-    
-    # ── Саморасширение: improvement_suggestions кластеры (кумулятивные суммы) ──
+        agency_dir = Path(__file__).parent.parent / "external" / "agency-agents"
+        if agency_dir.exists() and 'extract_agency_agents' not in historical_ids:
+            agency_files = sum(1 for d in agency_dir.iterdir() if d.is_dir() for f in d.glob("*.md"))
+            if agency_files > 10:
+                discovered.append({
+                    'id': 'extract_agency_agents',
+                    'source': 'agency_agents',
+                    'count': agency_files,
+                    'effort': 'high',
+                    'impact': 'high',
+                    'desc': f"[саморасширение] Изучить внешние агентские роли из The Agency ({agency_files} агентов в {len(list(agency_dir.iterdir()))} дивизионах)",
+                })
+
+        # ── Саморасширение: User Voice & Sales Assistant (критические untouched источники) ──
+        for src in ('user_voice', 'sales_assistant'):
+            action_id = f'extract_{src}'
+            if action_id not in historical_ids:
+                kc2 = sqlite3.connect(KC)
+                c2 = kc2.cursor()
+                c2.execute("SELECT COUNT(*) FROM experiences WHERE source=? AND raw_text IS NOT NULL AND raw_text != ''", (src,))
+                cnt = c2.fetchone()[0]
+                kc2.close()
+                if cnt > 5:
+                    discovered.append({
+                        'id': f'extract_{src}',
+                        'source': src,
+                        'count': cnt,
+                        'effort': 'medium',
+                        'impact': 'critical',  # untouched voices of the user
+                        'desc': f"[саморасширение] Извлечь инсайты из {src} ({cnt} записей, untouched {cnt} циклов) — голос пользователя и клиентов",
+                    })
+
+        # ── Саморасширение: improvement_suggestions кластеры (кумулятивные суммы) ──
     if not any(k.startswith('explore_cluster_') for k in historical_ids):
         k2 = sqlite3.connect(KC)
         c2 = k2.cursor()
