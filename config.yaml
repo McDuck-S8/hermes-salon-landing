@@ -1,5 +1,5 @@
 model:
-  default: mimo-v2.5-free
+  default: deepseek-v4-flash-free
   provider: opencode-zen
   base_url: https://opencode.ai/zen/v1
   api_mode: chat_completions
@@ -21,7 +21,7 @@ providers:
     name: qwen-free
 fallback_providers: []
 toolsets:
-- hermes-cli
+  - hermes-cli
 agent:
   max_turns: 60
   gateway_timeout: 1800
@@ -316,9 +316,9 @@ display:
   runtime_footer:
     enabled: false
     fields:
-    - model
-    - context_pct
-    - cwd
+      - model
+      - context_pct
+      - cwd
   copy_shortcut: auto
   background_process_notifications: all
   busy_ack_detail: true
@@ -434,86 +434,86 @@ skills:
   write_approval: false
   creation_nudge_interval: 15
   disabled:
-  - across-auto-patterns
-  - action-auto-patterns
-  - actions-auto-patterns
-  - advanced-analytics-auto-patterns
-  - agency-agents-auto-patterns
-  - agent-auto-patterns
-  - ai-content-factory-auto-patterns
-  - analysis-auto-patterns
-  - architecture-auto-patterns
-  - automation-auto-patterns
-  - b2b-sales-auto-patterns
-  - behavioral-psychology-auto-patterns
-  - browser-auto-patterns
-  - bugfix-auto-patterns
-  - coding-auto-patterns
-  - command-auto-skill
-  - communication-auto-patterns
-  - debugging-auto-patterns
-  - design-auto-patterns
-  - devops-auto-patterns
-  - documentation-auto-patterns
-  - domain_failure_pattern-auto-skill
-  - fix-command-skill
-  - fix-domain_failure_pattern-skill
-  - fix-log_network_connect-skill
-  - fix-log_network_httpx-skill
-  - fix-log_tool_error-skill
-  - fix-log_unknown-skill
-  - log-Updater-auto-skill
-  - log-__main__-auto-skill
-  - log-adapter-auto-skill
-  - log-api_error-auto-skill
-  - log-api_provider-auto-skill
-  - log-asyncio-auto-skill
-  - log-base-auto-skill
-  - log-cronjob_tools-auto-skill
-  - log-ext-auto-skill
-  - log-log_artifact-auto-skill
-  - log-network_connect-auto-skill
-  - log-network_httpx-auto-skill
-  - log-network_read-auto-skill
-  - log-run-auto-skill
-  - log-scheduler-auto-skill
-  - log-scheduler_provider-auto-skill
-  - log-streamable_http-auto-skill
-  - log-telegram_error-auto-skill
-  - log-tool_error-auto-skill
-  - log-traceback-auto-skill
-  - log-unknown-auto-skill
-  - log-vision_tools-auto-skill
-  - log_tool_error-auto-skill
-  - log_unknown-auto-skill
-  - malicious_skill
-  - mcp_clean_skill
-  - mcp_mismatched_skill
-  - mcp_overprivileged_skill
-  - mcp_poisoned_tool
-  - mcp_underdeclared_skill
-  - research-auto-patterns
-  - safe_skill
-  - sdi1_mismatch
-  - sdi2_inappropriate
-  - sdi3_scope_creep
-  - sdi4_divergence
-  - sdi_clean
-  - security-auto-patterns
-  - sqp1_clean
-  - sqp1_vague_triggers
-  - sqp2_clean
-  - sqp2_missing_warnings
-  - sqp3_clean
-  - sqp3_locale_forcing
-  - ssd1_semantic_injection
-  - ssd2_novel_phrasing
-  - ssd3_nl_exfiltration
-  - ssd4_narrative_deception
-  - ssd_clean
-  - testing-auto-patterns
-  - tools-auto-patterns
-  - unknown-auto-skill
+    - across-auto-patterns
+    - action-auto-patterns
+    - actions-auto-patterns
+    - advanced-analytics-auto-patterns
+    - agency-agents-auto-patterns
+    - agent-auto-patterns
+    - ai-content-factory-auto-patterns
+    - analysis-auto-patterns
+    - architecture-auto-patterns
+    - automation-auto-patterns
+    - b2b-sales-auto-patterns
+    - behavioral-psychology-auto-patterns
+    - browser-auto-patterns
+    - bugfix-auto-patterns
+    - coding-auto-patterns
+    - command-auto-skill
+    - communication-auto-patterns
+    - debugging-auto-patterns
+    - design-auto-patterns
+    - devops-auto-patterns
+    - documentation-auto-patterns
+    - domain_failure_pattern-auto-skill
+    - fix-command-skill
+    - fix-domain_failure_pattern-skill
+    - fix-log_network_connect-skill
+    - fix-log_network_httpx-skill
+    - fix-log_tool_error-skill
+    - fix-log_unknown-skill
+    - log-Updater-auto-skill
+    - log-__main__-auto-skill
+    - log-adapter-auto-skill
+    - log-api_error-auto-skill
+    - log-api_provider-auto-skill
+    - log-asyncio-auto-skill
+    - log-base-auto-skill
+    - log-cronjob_tools-auto-skill
+    - log-ext-auto-skill
+    - log-log_artifact-auto-skill
+    - log-network_connect-auto-skill
+    - log-network_httpx-auto-skill
+    - log-network_read-auto-skill
+    - log-run-auto-skill
+    - log-scheduler-auto-skill
+    - log-scheduler_provider-auto-skill
+    - log-streamable_http-auto-skill
+    - log-telegram_error-auto-skill
+    - log-tool_error-auto-skill
+    - log-traceback-auto-skill
+    - log-unknown-auto-skill
+    - log-vision_tools-auto-skill
+    - log_tool_error-auto-skill
+    - log_unknown-auto-skill
+    - malicious_skill
+    - mcp_clean_skill
+    - mcp_mismatched_skill
+    - mcp_overprivileged_skill
+    - mcp_poisoned_tool
+    - mcp_underdeclared_skill
+    - research-auto-patterns
+    - safe_skill
+    - sdi1_mismatch
+    - sdi2_inappropriate
+    - sdi3_scope_creep
+    - sdi4_divergence
+    - sdi_clean
+    - security-auto-patterns
+    - sqp1_clean
+    - sqp1_vague_triggers
+    - sqp2_clean
+    - sqp2_missing_warnings
+    - sqp3_clean
+    - sqp3_locale_forcing
+    - ssd1_semantic_injection
+    - ssd2_novel_phrasing
+    - ssd3_nl_exfiltration
+    - ssd4_narrative_deception
+    - ssd_clean
+    - testing-auto-patterns
+    - tools-auto-patterns
+    - unknown-auto-skill
 curator:
   enabled: true
   interval_hours: 168
@@ -552,11 +552,11 @@ discord:
     speech_gain: 1.0
     ack_enabled: true
     ack_phrases:
-    - Let me look into that.
-    - One moment.
-    - Checking on that now.
-    - Give me a sec.
-    - On it.
+      - Let me look into that.
+      - One moment.
+      - Checking on that now.
+      - Give me a sec.
+      - On it.
 telegram:
   reactions: false
   allowed_chats: ''
@@ -578,20 +578,20 @@ approvals:
   mcp_reload_confirm: true
   destructive_slash_confirm: false
 command_allowlist:
-- script execution via heredoc
-- script execution via -e/-c flag
-- delete in root path
-- command parser limit or malformed executable payload
-- recursive delete
-- find -delete
-- overwrite system file via redirection
-- pipe remote content to shell
-- SQL DROP
+  - script execution via heredoc
+  - script execution via -e/-c flag
+  - delete in root path
+  - command parser limit or malformed executable payload
+  - recursive delete
+  - find -delete
+  - overwrite system file via redirection
+  - pipe remote content to shell
+  - SQL DROP
 hooks:
   on_session_start:
-  - command: python D:/Portable_Soft/hermes/memory_system/boot.py
+    - command: python D:/Portable_Soft/hermes/memory_system/boot.py
   pre_llm_call:
-  - command: python D:/Portable_Soft/hermes/memory_system/inject_learnings.py
+    - command: python D:/Portable_Soft/hermes/memory_system/inject_learnings.py
 hooks_auto_accept: true
 security:
   allow_private_urls: false
@@ -695,29 +695,29 @@ group_sessions_per_user: true
 llm_analyst:
   auto_rotate: true
   free_models:
-  - model: deepseek-v4-flash-free
-    priority: 1
-    provider: opencode
-  - model: deepseek-v4-flash-free
-    priority: 2
-    provider: opencode
-  - model: mimo-v2.5-free
-    priority: 3
-    provider: opencode
-  - model: qwen3.6-plus
-    priority: 4
-    provider: opencode
-  - model: qwen3.5-plus
-    priority: 5
-    provider: opencode
+    - model: deepseek-v4-flash-free
+      priority: 1
+      provider: opencode
+    - model: deepseek-v4-flash-free
+      priority: 2
+      provider: opencode
+    - model: mimo-v2.5-free
+      priority: 3
+      provider: opencode
+    - model: qwen3.6-plus
+      priority: 4
+      provider: opencode
+    - model: qwen3.5-plus
+      priority: 5
+      provider: opencode
   max_issues_per_batch: 10
   max_retries_per_model: 2
   poll_interval_seconds: 30
   rotate_on:
-  - timeout
-  - error
-  - rate_limit
-  - empty_response
+    - timeout
+    - error
+    - rate_limit
+    - empty_response
   free_models[0]:
     model: deepseek-v4-flash-free
 mcp_servers:
@@ -736,103 +736,103 @@ mcp_servers:
   stitch:
     command: node
     args:
-    - D:/Portable_Soft/hermes/stitch-mcp-server/dist/index.js
+      - D:/Portable_Soft/hermes/stitch-mcp-server/dist/index.js
     env:
       STITCH_API_KEY: AQ.Ab8RN6LMnrMQiYFdbHUfYpWimpHl5BXsA_CR_CBR_7FF5xXaBQ
     enabled: true
 platform_toolsets:
   cli:
-  - browser
-  - clarify
-  - code_execution
-  - context_engine
-  - cronjob
-  - delegation
-  - fabric
-  - file
-  - image_gen
-  - memory
-  - moa
-  - session_search
-  - skills
-  - terminal
-  - todo
-  - tts
-  - video
-  - video_gen
-  - vision
-  - web
-  - web-search-plus
-  - x_search
+    - browser
+    - clarify
+    - code_execution
+    - context_engine
+    - cronjob
+    - delegation
+    - fabric
+    - file
+    - image_gen
+    - memory
+    - moa
+    - session_search
+    - skills
+    - terminal
+    - todo
+    - tts
+    - video
+    - video_gen
+    - vision
+    - web
+    - web-search-plus
+    - x_search
   discord:
-  - hermes-discord
+    - hermes-discord
   google_chat:
-  - hermes-google_chat
+    - hermes-google_chat
   homeassistant:
-  - hermes-homeassistant
+    - hermes-homeassistant
   qqbot:
-  - hermes-qqbot
+    - hermes-qqbot
   signal:
-  - hermes-signal
+    - hermes-signal
   slack:
-  - hermes-slack
+    - hermes-slack
   teams:
-  - hermes-teams
+    - hermes-teams
   telegram:
-  - browser
-  - clarify
-  - code_execution
-  - context_engine
-  - cronjob
-  - delegation
-  - fabric
-  - file
-  - image_gen
-  - memory
-  - moa
-  - session_search
-  - skills
-  - terminal
-  - todo
-  - tts
-  - video
-  - video_gen
-  - vision
-  - web
-  - web-search-plus
-  - x_search
+    - browser
+    - clarify
+    - code_execution
+    - context_engine
+    - cronjob
+    - delegation
+    - fabric
+    - file
+    - image_gen
+    - memory
+    - moa
+    - session_search
+    - skills
+    - terminal
+    - todo
+    - tts
+    - video
+    - video_gen
+    - vision
+    - web
+    - web-search-plus
+    - x_search
   whatsapp:
-  - hermes-whatsapp
+    - hermes-whatsapp
   yuanbao:
-  - hermes-yuanbao
+    - hermes-yuanbao
 plugins:
   disabled: []
   enabled:
-  - google_meet
-  - hermes-lcm
-  - icarus
-  - nous
-  - opencode-zen-provider
-  - qwen-oauth-provider
-  - teams_pipeline
-  - web-brave-free
-  - web-ddgs
-  - web-parallel
-  - web-search-plus
-  - web-searxng
+    - google_meet
+    - hermes-lcm
+    - icarus
+    - nous
+    - opencode-zen-provider
+    - qwen-oauth-provider
+    - teams_pipeline
+    - web-brave-free
+    - web-ddgs
+    - web-parallel
+    - web-search-plus
+    - web-searxng
 session_reset:
   at_hour: 4
   idle_minutes: 1440
   mode: both
 known_plugin_toolsets:
   cli:
-  - fabric
-  - spotify
-  - web-search-plus
+    - fabric
+    - spotify
+    - web-search-plus
   telegram:
-  - fabric
-  - spotify
-  - web-search-plus
+    - fabric
+    - spotify
+    - web-search-plus
 mcp:
   servers:
     browserclaw:
