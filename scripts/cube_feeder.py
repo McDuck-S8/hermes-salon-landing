@@ -463,6 +463,19 @@ def extract_knowledge_patterns():
         for row in rows:
             domain = row["axis_domain"] if isinstance(row, dict) else row[0]
             cnt = row["cnt"] if isinstance(row, dict) else row[2]
+            # Спамить recurring_failure только если домен НЕ разобран успешным
+            # диагнозом за последние 72ч (иначе design писал 31/33/34 одно и то же).
+            # ponytail: инлайн-подзапрос, лишняя функция не нужна.
+            conn = kc.get_db()
+            resolved = conn.execute(
+                "SELECT 1 FROM experiences WHERE axis_domain=? AND source IN "
+                "('diagnosis','reflection') AND axis_outcome='success' "
+                "AND ts >= datetime('now','-3 days') LIMIT 1",
+                (domain,)
+            ).fetchone()
+            conn.close()
+            if resolved:
+                continue
             entries.append({
                 "text": f"[recurring_failure] Domain '{domain}' has {cnt} failures — needs investigation",
                 "tools": [],
