@@ -44,16 +44,18 @@ def get_session_bridge_context() -> str:
     """Load last session state from session_bridge."""
     sys.path.insert(0, str(HERMES_HOME / "scripts"))
     try:
-        from session_bridge import load
-        state = load()
+        from session_bridge import load_bridge
+        state = load_bridge()
     except Exception:
         return ""
 
-    if not state.get("last_session_end"):
+    if not state.get("last_session_end") and not state.get("last_session_ts"):
         return ""
 
     lines = []
-    lines.append(f"Last session: {state['last_session_end']}")
+    # ponytail: bridge stores last_session_ts, not last_session_end
+    last_ts = state.get("last_session_end") or state.get("last_session_ts")
+    lines.append(f"Last session: {last_ts}")
     if state.get("last_task"):
         lines.append(f"Last task: {state['last_task']}")
     if state.get("focus"):
@@ -196,8 +198,8 @@ def build_context(user_message: str = "") -> str:
 
     # 1. Session bridge
     bridge = get_session_bridge_context()
-    if bridge:
-        sections.append(("Previous Session", bridge))
+    # ponytail: required section — always present, fallback text instead of skipping
+    sections.append(("Previous Session", bridge or "No previous session data"))
 
     # 2. Recent decisions
     decisions = get_recent_decisions_context()
@@ -211,23 +213,20 @@ def build_context(user_message: str = "") -> str:
 
     # 4. Active goals
     goals = get_active_goals_context()
-    if goals:
-        sections.append(("Active Goals", goals))
+    sections.append(("Active Goals", goals or "No active goals"))
 
     # 5. Action weights (learning feedback)
     weights = get_action_weights_context()
     if weights:
         sections.append(("Learning Feedback", weights))
 
-    # 6. Knowledge graph (graphify)
+    # 6. Knowledge graph (graphify) — required section
     graph = get_knowledge_graph_context()
-    if graph:
-        sections.append(("Knowledge Graph", graph))
+    sections.append(("Knowledge Graph", graph or "No knowledge graph available"))
 
-    # 7. Tool catalog summary (WP-1)
+    # 7. Tool catalog summary (WP-1) — required section
     tool_summary = get_tool_catalog_context()
-    if tool_summary:
-        sections.append(("Available Tools", tool_summary))
+    sections.append(("Available Tools", tool_summary or "Tool catalog unavailable"))
 
     # 8. Feedback store status (WP-3)
     feedback = get_feedback_store_context()

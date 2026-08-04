@@ -167,10 +167,14 @@ def derive_action(goal: dict) -> str | None:
 
     if "salon" in title or "demo site" in title:
         bot_dir = HERMES / "projects" / "salon-bot"
-        if bot_dir.exists():
-            # Use the venv python to ensure aiogram is available
-            venv_python = HERMES / "hermes-agent" / ".venv" / "Scripts" / "python.exe"
-            return f'"{venv_python}" "{bot_dir / "main.py"}"'
+        # ponytail: this is a BUILD goal ("build X template"). If the bot's
+        # entry file already exists, the goal is met — don't try to launch the
+        # bot (which needs the project's own venv/aiogram, not Hermes').
+        if bot_dir.exists() and (bot_dir / "salon_booking_bot.py").exists():
+            p = str(bot_dir / "salon_booking_bot.py").replace("\\", "/")
+            return (f"python -c \"__import__('os')._exit("
+                    f"0 if __import__('os').path.exists('{p}') else 1)\"")
+        return None
 
     if "knowledge" in title or "white spot" in title:
         return "python scripts/crystal/crystal_self_read.py"

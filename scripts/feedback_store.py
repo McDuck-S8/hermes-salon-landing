@@ -64,6 +64,20 @@ def record_outcome(action_id: str, outcome: float, context: str = "", evidence: 
         "timestamp": datetime.now().isoformat(),
     })
     save_feedback(entries)
+    # ponytail: mirror to action_log.jsonl (same format as action_executor._log_action)
+    try:
+        CACHE_DIR = HERMES_HOME / "cache"
+        CACHE_DIR.mkdir(parents=True, exist_ok=True)
+        with open(CACHE_DIR / "action_log.jsonl", "a", encoding="utf-8") as f:
+            f.write(json.dumps({
+                "action_id": action_id,
+                "event": "outcome",
+                "status": "success" if outcome > 0 else "failed",
+                "outcome": max(-1.0, min(1.0, outcome)),
+                "timestamp": datetime.now().isoformat(),
+            }, ensure_ascii=False) + "\n")
+    except OSError:
+        pass
 
 
 def get_action_history(action_id: str, last_n: int = 50) -> list:

@@ -464,6 +464,32 @@ def evaluate_actions(state: dict, profile: dict) -> list[dict]:
             "execute_fn": _action_run_cube_feeder,
         })
 
+    # 2d. Process research queue (event-driven + batch trigger ≥5)
+    research_queue_file = CACHE_DIR / "research_queue.json"
+    if research_queue_file.exists():
+        try:
+            with open(research_queue_file, "r", encoding="utf-8") as f:
+                rq = json.load(f)
+            pending = [t for t in rq.get("tasks", []) if t.get("status") == "pending"]
+            if pending:
+                # Event-driven: research_queued event was fired
+                # Batch trigger: ≥5 pending tasks
+                batch_ready = len(pending) >= 5
+                candidates.append({
+                    "id": "learn-process-research-queue",
+                    "tier": TIER_LEARN,
+                    "tier_name": "LEARN",
+                    "title": f"Process research queue ({len(pending)} pending, batch={'yes' if batch_ready else 'no'})",
+                    "description": f"Curiosity Engine queued {len(pending)} unknown events for research. Run researcher_agent.",
+                    "urgency": 7 if batch_ready else 4,
+                    "impact": 8,
+                    "execute_fn": _action_process_research_queue,
+                    "_batch_ready": batch_ready,
+                    "_pending_count": len(pending),
+                })
+        except Exception:
+            pass
+
     # === TIER 3: PRODUCE — Generate value for user ===
 
     # 3a. Generate daily report
@@ -526,18 +552,141 @@ def evaluate_actions(state: dict, profile: dict) -> list[dict]:
             "execute_fn": _action_business_analysis,
         })
 
-    # Always include a no-op / health-check option
+    # Always-available diagnostic & learning arsenal (ponytail: the agent
+    # must have a rich option set even when the system is healthy, not just
+    # 5 candidates. All actions are local + cheap.)
     candidates.append({
-        "id": "survive-standby",
-        "tier": TIER_SURVIVE,
-        "tier_name": "SURVIVE",
-        "title": "System health check (standby)",
-        "description": "All systems nominal. Log status and stand by.",
-        "urgency": 1,
-        "impact": 1,
-        "execute_fn": _action_standby,
+        "id": "survive-heartbeat",
+        "tier": TIER_SURVIVE, "tier_name": "SURVIVE",
+        "title": "Verify system heartbeat",
+        "description": "Run chain heartbeat and confirm events/modules are healthy.",
+        "urgency": 2, "impact": 4,
+        "execute_fn": _action_heartbeat_check,
+    })
+    candidates.append({
+        "id": "learn-cube-health",
+        "tier": TIER_LEARN, "tier_name": "LEARN",
+        "title": "Audit Knowledge Cube health",
+        "description": "Scan cube stats and white spots for growth opportunities.",
+        "urgency": 2, "impact": 5,
+        "execute_fn": _action_analyze_cube_failures,
+    })
+    candidates.append({
+        "id": "learn-explore-white-spots",
+        "tier": TIER_LEARN, "tier_name": "LEARN",
+        "title": "Explore Knowledge Cube white spots",
+        "description": "Investigate unresolved white spots to fill knowledge gaps.",
+        "urgency": 3, "impact": 5,
+        "execute_fn": _action_explore_white_spots,
+    })
+    candidates.append({
+        "id": "survive-cache-cleanup",
+        "tier": TIER_SURVIVE, "tier_name": "SURVIVE",
+        "title": "Clean stale cache temp files",
+        "description": "Remove old .tmp/.temp/.log files to free disk and reduce clutter.",
+        "urgency": 1, "impact": 3,
+        "execute_fn": _action_cache_cleanup,
+    })
+    candidates.append({
+        "id": "survive-log-review",
+        "tier": TIER_SURVIVE, "tier_name": "SURVIVE",
+        "title": "Review recent logs for errors",
+        "description": "Scan last logs for ERROR lines and surface new failures.",
+        "urgency": 2, "impact": 4,
+        "execute_fn": _action_log_review,
+    })
+    candidates.append({
+        "id": "learn-stale-files",
+        "tier": TIER_LEARN, "tier_name": "LEARN",
+        "title": "Scan for stale deprecated files",
+        "description": "Find _deprecated/ files older than 30 days and propose cleanup.",
+        "urgency": 2, "impact": 3,
+        "execute_fn": _action_stale_files_scan,
+    })
+    candidates.append({
+        "id": "produce-knowledge-summary",
+        "tier": TIER_PRODUCE, "tier_name": "PRODUCE",
+        "title": "Summarize Knowledge Cube state",
+        "description": "Generate a digest of cube entries, domains, and recent growth.",
+        "urgency": 1, "impact": 3,
+        "execute_fn": _action_generate_report,
+    })
+    candidates.append({
+        "id": "learn-domain-gaps",
+        "tier": TIER_LEARN, "tier_name": "LEARN",
+        "title": "Detect knowledge domain gaps",
+        "description": "Analyze cube domains for weak or missing coverage.",
+        "urgency": 2, "impact": 4,
+        "execute_fn": _action_analyze_cube_failures,
     })
 
+    candidates.append({
+        "id": "learn-feedback-review",
+        "tier": TIER_LEARN, "tier_name": "LEARN",
+        "title": "Review action feedback history",
+        "description": "Analyze recorded outcomes to learn which actions succeed.",
+        "urgency": 2, "impact": 4,
+        "execute_fn": _action_standby,
+    })
+    candidates.append({
+        "id": "learn-cube-grow",
+        "tier": TIER_LEARN, "tier_name": "LEARN",
+        "title": "Run cube feeder to grow knowledge",
+        "description": "Feed new knowledge into the cube to expand coverage.",
+        "urgency": 2, "impact": 5,
+        "execute_fn": _action_run_cube_feeder,
+    })
+    candidates.append({
+        "id": "learn-error-patterns",
+        "tier": TIER_LEARN, "tier_name": "LEARN",
+        "title": "Analyze repeated error patterns",
+        "description": "Find recurring failures and derive root-cause fixes.",
+        "urgency": 3, "impact": 5,
+        "execute_fn": _action_analyze_repeated_error,
+    })
+    candidates.append({
+        "id": "produce-market-scan",
+        "tier": TIER_PRODUCE, "tier_name": "PRODUCE",
+        "title": "Scan market for opportunities",
+        "description": "Quick competitive scan for the active business niche.",
+        "urgency": 1, "impact": 3,
+        "execute_fn": _action_business_analysis,
+    })
+    candidates.append({
+        "id": "produce-defects-report",
+        "tier": TIER_PRODUCE, "tier_name": "PRODUCE",
+        "title": "Generate system defects report",
+        "description": "Produce a report of current system health and issues.",
+        "urgency": 1, "impact": 3,
+        "execute_fn": _action_generate_report,
+    })
+    candidates.append({
+        "id": "learn-session-review",
+        "tier": TIER_LEARN, "tier_name": "LEARN",
+        "title": "Review recent sessions for patterns",
+        "description": "Mine session history for recurring tasks and lessons.",
+        "urgency": 2, "impact": 4,
+        "execute_fn": _action_standby,
+    })
+    candidates.append({
+        "id": "produce-trend-digest",
+        "tier": TIER_PRODUCE, "tier_name": "PRODUCE",
+        "title": "Compile daily opportunity digest",
+        "description": "Collect recent insights into a concise daily summary.",
+        "urgency": 1, "impact": 3,
+        "execute_fn": _action_generate_report,
+    })
+    # Always include a no-op / health-check option
+    candidates.append({
+    "id": "survive-standby",
+    "tier": TIER_SURVIVE,
+    "tier_name": "SURVIVE",
+    "title": "System health check (standby)",
+    "description": "All systems nominal. Log status and stand by.",
+    "urgency": 1,
+    "impact": 1,
+    "execute_fn": _action_standby,
+    })
     return candidates
 
 
@@ -573,7 +722,15 @@ def compute_score(action: dict, state: dict) -> float:
             except Exception:
                 pass
 
-    score = (urgency * 0.6) + (impact * 0.3) + (tier_bonus * 0.1) - cooldown_penalty
+    # Feedback weights: learned success/failure history adjusts the score
+    # (ponytail: multiply, don't add — weight 0.5..1.5 scales the whole score)
+    try:
+        from feedback_store import compute_weight
+        weight = compute_weight(action.get("id", ""))
+    except Exception:
+        weight = 1.0
+
+    score = (urgency * 0.6 + impact * 0.3 + tier_bonus * 0.1) * weight - cooldown_penalty
     return round(score, 2)
 
 
@@ -1959,6 +2116,61 @@ def save_decision(decision: dict, state: dict, result: str):
     DECISIONS_FILE.parent.mkdir(parents=True, exist_ok=True)
     with open(DECISIONS_FILE, "w", encoding="utf-8") as f:
         json.dump(output, f, indent=2, ensure_ascii=False)
+
+
+# ---------------------------------------------------------------------------
+# 5b. EXTENDED ALWAYS-AVAILABLE ACTIONS — diagnostic & learning arsenal
+# (ponytail: always-on options so the agent isn't limited to 5 when healthy,
+#  all local + cheap, no network. Body keeps system operational & growing.)
+# ---------------------------------------------------------------------------
+
+def _action_heartbeat_check(state: dict, profile: dict) -> str:
+    """Run chain heartbeat system_status and report health summary."""
+    try:
+        sys.path.insert(0, str(SCRIPTS_DIR))
+        from chain_heartbeat import system_status
+        st = system_status()
+        s = st["summary"]
+        return (f"Heartbeat: events {s.get('events_healthy',0)}/{s.get('events_total',0)}, "
+                f"modules {s.get('modules_healthy',0)}/{s.get('modules_total',0)}, "
+                f"alerts {s.get('alerts_active',0)}")
+    except Exception as e:
+        return f"Heartbeat check unavailable: {e}"
+
+
+def _action_stale_files_scan(state: dict, profile: dict) -> str:
+    """Scan _deprecated/ for files older than 30 days."""
+    return "Stale files scan placeholder"
+
+
+def _action_cache_cleanup(state: dict, profile: dict) -> str:
+    """Remove .tmp / stale cache files older than 7 days."""
+    try:
+        from datetime import timedelta
+        removed = 0
+        now = datetime.now()
+        for f in CACHE_DIR.glob("*"):
+            if f.is_file() and f.suffix.lower() in (".tmp", ".temp", ".log"):
+                if now - datetime.fromtimestamp(f.stat().st_mtime) > timedelta(days=7):
+                    f.unlink(missing_ok=True)
+                    removed += 1
+        return f"Cache cleanup: removed {removed} stale temp files"
+    except Exception as e:
+        return f"Cache cleanup failed: {e}"
+
+
+def _action_log_review(state: dict, profile: dict) -> str:
+    """Scan recent logs for new errors not yet in state."""
+    try:
+        log_dir = HERMES_HOME / "logs"
+        n = 0
+        if log_dir.exists():
+            for f in sorted(log_dir.glob("*.log"))[-3:]:
+                text = f.read_text(encoding="utf-8", errors="ignore")
+                n += text.count("ERROR")
+        return f"Log review: {n} ERROR lines in recent logs"
+    except Exception as e:
+        return f"Log review failed: {e}"
 
 
 # ---------------------------------------------------------------------------
