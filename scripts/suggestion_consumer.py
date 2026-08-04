@@ -170,7 +170,7 @@ def record_fix(issue_type, fix_description, fix_type, target, suggestion):
 # Main consumer loop
 # ---------------------------------------------------------------------------
 
-def consume(n=1):
+def consume(n=10):
     """
     Pick top-n unprocessed suggestions, generate fixes, record them.
     Returns dict with stats.
@@ -245,7 +245,7 @@ def consume(n=1):
 
 def main():
     """Entry point — consume 1 suggestion per call."""
-    result = consume(n=1)
+    result = consume(n=10)
     print(f"[suggestion_consumer] Applied: {result['applied']}, "
           f"Skipped: {result['skipped']}, Duplicates: {result.get('duplicates', 0)}, "
           f"Total processed: {result['total_processed']}")
