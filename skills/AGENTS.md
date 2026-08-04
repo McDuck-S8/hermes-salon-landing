@@ -27,14 +27,14 @@ Skills are curated and versioned. Managed via the skill-forge system.
 ## Child DOX Index
 | Category | Contents |
 |---|---|
-| `automation/` | Browser, session analysis, telegram digest |
-| `creative/` | Design, art, video, music generation |
-| `devops/` | Kanban, system ops, webhooks, **chain-heartbeat** (event-driven monitoring) |
+| `automation/` | Browser, session analysis, telegram digest, **subagent-orchestration** |
+| `creative/` | Design, art, video, music generation, **remotion-video** |
+| `context-engineering/` | Context window management: **filesystem-context** (tool-output offloading), **context-optimization** (masking, KV-cache, compaction) |
+| `devops/` | Kanban, system ops, webhooks, **chain-heartbeat**, **maintenance-scanner** |
 | `finance/` | Earning with AI, Excel, stocks |
 | `github/` | PR workflow, issues, code review |
 | `lavra-agent-*` | Review and analysis agents (30+) |
 | `research/` | ArXiv, patterns, wiki |
 | `self-improvement/` | Dream memory, evolution, verification |
-| `software-development/` | TDD, debugging, plans |
+| `software-development/` | TDD, debugging, plans, **impeccable** (дизайн/аудит UI), **beads** (трекер задач) |
 | `superpowers/` | Process skills: brainstorming, subagent-driven-development, writing-plans, using-superpowers |
-| `auto-generated/` | Session-learned patterns |
