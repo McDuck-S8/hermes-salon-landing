@@ -24,7 +24,7 @@ This directory contains the main operational scripts. Most are standalone Python
 - **Telegram**: `telegram_bridge.py`, `tg_client.py` — Telegram integration
 - **Utilities**: `utilities/` — helper scripts, fixes, launchers
 - **Archive**: `_archive/` — deprecated scripts, keep for reference
-- **Proactive DOER**: `proactive_doer.py` — autonomous cron-run fix executor; cleans stale locks, repairs broken JSON, restarts failed jobs, clears stale cache. Runs every 15 min.
+- **Proactive DOER**: `proactive_doer.py` — autonomous cron-run fix executor; cleans stale locks, repairs broken JSON, restarts failed jobs, clears stale cache. Runs every 15 min. Этап 3: `check_feelings()` считывает `compute_feelings()` (байесовские чувства граней), при harmony<0.3/restart>0.4 пишет `cache/rebalance_note.json` (маячок). Шаг 2 решений: `_top_facet()` определяет перегруженную грань (по self_model grani), счётчик `overload_runs` в state, при 3+ подряд — алерт «ПЕРЕГРУЗКА». Шаг 3 режимов: `current_phase()` (night 22–07 / day), `is_phase_expected()` — перегрузка грани, ожидаемой для фазы (ночь=Обучение/Рефлексия, день=Исполнение/Реакция), сбрасывает счётчик и не эскалирует.
 
 ## Verification
 - Run `python scripts/health_check.py` to verify system health
@@ -33,7 +33,7 @@ This directory contains the main operational scripts. Most are standalone Python
 ## Child DOX Index
 | File/Dir | Purpose |
 |---|---|
-| `chain_heartbeat.py` | 5-level event-driven system monitoring (events → modules → pipelines → services → JSON) |
+| `chain_heartbeat.py` | 5-level event-driven system monitoring (events → modules → pipelines → services → JSON). `compute_feelings()` — Байес-чувства граней (`harmony`/`tension`/`intensity`/`stagnation`/`refinement`/`restart`), пишутся в `system_status()["feelings"]` |
 | `kc_rag.py` | Primary Knowledge Cube data entry via `upsert()` — fires `knowledge_added` event |
 | `self_improvement_loop.py` | Suggestion generation loop — fires `new_suggestions_ready` event |
 | `suggestion_consumer.py` | Consumes and applies improvement suggestions |
@@ -52,3 +52,5 @@ This directory contains the main operational scripts. Most are standalone Python
 | `skill_indexer.py` | Self-improvement: indexes all SKILL.md files into Knowledge Cube (source `skill-indexer`) |
 | `latent_domain_detector.py` | Self-improvement: detects latent domains + logical gaps, `--seed` inserts knowledge-gap seeds (source `latent-domain-detector`) |
 | `skill_evolution_v2.py` | Self-improvement: read-only audit of installed skills, usage events, KC state (cron 4am) |
+| `crystal.py` | Crystal v-prefix анализ самосознания: `_load_self_model` пишет `grani` — распределение Куба по 6 граням (Мысль/Реакция/Рефлексия/Исполнение/Обучение/Управление), маппинг доменов → грани. Запуск: `python scripts/crystal.py --iterative 3` (cron). НЕ конфликтовать с пакетом `crystal/` (v3 CrystalEngine) — это отдельный модуль. **ШАГ 5 исполняет ВСЕ кандидатные воли за цикл**, не одну: аналитика (anomaly_/blindspot_/deepen_/audit_/analyze) — сразу все; тяжёлые (extract_, self_mod_, init_, script, task_for_agent) — по одной за цикл (флаг `heavy_done`). Не менять на `chosen=candidates[0]` — это оставляло backlog аномалий навсегда (2026-08-04). Вернёт пробег ~4x медленнее (20с→83с), это цена разбора всего backlog. |
+| `boot.py` | Session restore: `cube_state()` читает Knowledge Cube при старте (total/domains/last_24h), Step 5.3 boot |
