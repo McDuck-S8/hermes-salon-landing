@@ -19,7 +19,9 @@ providers:
     api_key: dummy-key
     default_model: qwen3.7-max
     name: qwen-free
-fallback_providers: []
+fallback_providers:
+- provider: opencode-zen
+  model: nemotron-3-ultra-free
 toolsets:
   - hermes-cli
 agent:
