@@ -1630,6 +1630,59 @@ def _execute_conscience_action(action_type, target, snap, self_model=None, chose
         return f"Совесть→действие: {action_type} (target={target})"
 
 
+def _match_skill(cid, self_model):
+    """Сопоставляет действие воли с подходящим скиллом из каталога.
+
+    Ищет по ключевым словам cid в категориях скиллов self_model['umeyu']['skills'].
+    Подходящий скилл регистрируется в 'used_in_will' (persist для _save_self_model),
+    чтобы воля реально использовала скиллы, а не только знала их.
+    Возвращает имя скилла или None.
+    """
+    skills = self_model.get('umeyu', {}).get('skills', {})
+    by_cat = skills.get('by_category', {}) or {}
+    used = skills.get('used_in_will', [])
+    cl = (cid or '').lower()
+    # Маппинг ключевых слов действия → подходящая категория скиллов
+    hints = [
+        ('extract_user_voice', ['user_voice', 'audience', 'communication', 'sales']),
+        ('extract_sales', ['sales', 'outreach']),
+        ('extract_source', ['file_ops', 'data', 'research']),
+        ('analyze_architecture', ['architecture', 'devops', 'self-improvement']),
+        ('recognize_agents', ['entity', 'autonomous']),
+        ('adopt_persona', ['persona', 'personalities']),
+        ('understand_intents', ['user', 'communication', 'human-source']),
+        ('self_mod', ['self', 'crystal', 'conscious']),
+        ('conscience', ['crystal', 'self-improvement', 'ethical']),
+        ('self_aware', ['crystal', 'self', 'awareness']),
+        ('init_fler', ['fler', 'emotion']),
+        ('script', ['software', 'coding', 'terminal', 'automation']),
+        ('task_for_agent', ['subagent', 'delegation', 'orchestration']),
+    ]
+    chosen = None
+    for prefix, cats in hints:
+        if cid.startswith(prefix):
+            for cat in cats:
+                for key in by_cat:
+                    if cat in key.lower():
+                        chosen = key
+                        break
+                if chosen:
+                    break
+            if chosen:
+                break
+    if not chosen and by_cat:
+        # fallback: любая категория, семантически близкая к cid
+        for key in by_cat:
+            if cl and any(tok in key for tok in cl.split('_')):
+                chosen = key
+                break
+    if chosen and chosen not in used:
+        used.append(chosen)
+        skills['used_in_will'] = used
+        skills['unused_count'] = max(0, skills.get('total', 0) - len(used))
+    return chosen
+
+
 def will(snap, diag):
     """Осознанная воля: контекст → выбор → саморасширение → действие."""
     import re
@@ -2095,6 +2148,10 @@ def will(snap, diag):
         # Не повторять уже исполненное в прошлых циклах
         if cid in historical_ids:
             continue
+        # Использование скилла: если есть подходящий из каталога — воля его использует
+        skill_used = _match_skill(cid, self_model)
+        if skill_used:
+            ch['_skill_used'] = skill_used
         # Тяжёлые действия — только первое попавшееся в этом цикле
         is_heavy = (cid.startswith(('extract_', 'init_', 'self_mod_', 'understand_',
                                     'refine_', 'recognize_', 'adopt_', 'analyze_')) or
@@ -2156,6 +2213,8 @@ def will(snap, diag):
         except Exception as e:
             result = f"[will:{cid}] ОШИБКА исполнения: {e}"
         decisions.append(result)
+        if ch.get('_skill_used'):
+            result = f"{result} | скилл: {ch['_skill_used']}"
         _save_will_history(cid, result)
         historical_ids.add(cid)
 
