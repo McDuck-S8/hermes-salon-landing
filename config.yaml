@@ -406,7 +406,7 @@ memory:
   write_approval: false
   memory_char_limit: 2200
   user_char_limit: 1375
-  provider: ''
+  provider: kc_insights
   flush_min_turns: 6
   nudge_interval: 10
 delegation:
