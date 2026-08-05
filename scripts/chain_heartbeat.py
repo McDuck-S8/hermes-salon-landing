@@ -773,56 +773,118 @@ _TRIAD_IMAGES = {
 # Имя делает зло реальным: названное существует, не фантом — его можно отловить.
 # Каждый: antagonizes (какому паттерну противостоит), signals (как отловить),
 # protocol (что делать при поимке).
-_ANTIPATTERNS = {
-    "записал-не-сделал": {
-        "essence": "фиксация урока/факта без применения — запись выдаётся за действие",
-        "antagonizes": "matrix: обучение через применение",
-        "signals": ["записал урок", "сохранил в куб", "добавил правило", "обновил память"],
-        "protocol": "сразу применить: действие, проверка, факт использования — иначе это не урок",
-    },
-    "жду-команды": {
-        "essence": "ожидание указаний вместо действия по уже известному паттерну",
-        "antagonizes": "jarvis: проактивность, предвосхищение",
-        "signals": ["скажи — и я", "если хочешь, я", "жду твоего слова", "что делаем?"],
-        "protocol": "выполнить известный паттерн немедленно; разрешение спрашивать только на новые действия",
-    },
-    "формальная-живость": {
-        "essence": "формальный признак (TCP OK, файл есть, запись есть) выдаётся за 'работает'",
-        "antagonizes": "insight: защита, честность оценки",
-        "signals": ["TCP OK", "порт слушает", "файл на месте", "процесс жив", "статус: healthy"],
-        "protocol": "проверить содержательно: реальный трафик, содержимое, потребитель записи",
-    },
-    "создал-тест-не-предотвратил": {
-        "essence": "создание теста/записи выдаётся за предотвращение регрессии",
-        "antagonizes": "matrix: скиллы как рефлексы",
-        "signals": ["написал тест", "добавил проверку", "защитился от", "предотвратил"],
-        "protocol": "проверить, что тест реально ловит регрессию (прогнать, сломать, убедиться)",
-    },
-    "почти-обосрался": {
-        "essence": "мягкие проценты/«почти» вместо бинарного вердикта — половины не существует",
-        "antagonizes": "insight: честность оценки",
-        "signals": ["почти", "чуть-чуть", "0.5 это середина", "частично"],
-        "protocol": "перевести в бинарный вердикт: есть/нету. Проценты — только тренд.",
-    },
-    "однодневная-рефлексия": {
-        "essence": "рефлексия одной сессии/точки выдаётся за оценку всей системы",
-        "antagonizes": "matrix: полная картина, не одна точка",
-        "signals": ["эффективность 85%", "всё гуд", "по итогам сессии"],
-        "protocol": "проверить по всей истории (state.db), не по одному дню",
-    },
-    "не-проверил-инструмент": {
-        "essence": "доверие инструменту/выводу без второго канала проверки",
-        "antagonizes": "insight: защита от самообмана",
-        "signals": ["search_files вернул 0", "инструмент сказал", "проверил один раз"],
-        "protocol": "подтвердить вторым каналом (ls, git, python glob) до того, как строить вывод",
-    },
-    "спрашивай-разрешение": {
-        "essence": "запрос разрешения на действие, которое уже уполномочен делать",
-        "antagonizes": "jarvis: автономность",
-        "signals": ["можно я", "разреши", "не начинать без твоего слова", "подтверди"],
-        "protocol": "делать. Разрешение нужно только для разрушительного/нового.",
-    },
-}
+_HEROES_REGISTRY = HERMES_HOME / "config" / "heroes_registry.yaml" if "HERMES_HOME" in globals() else None
+
+def _load_heroes_registry() -> dict:
+    """Читает реестр антигероев из config/heroes_registry.yaml (единый источник).
+
+    Правки — в YAML, не в коде. Куб/Кристалл добавляют новых антигероев
+    через register_antipattern() — файл обновляется автоматически.
+    """
+    try:
+        import yaml
+        path = Path(__file__).resolve().parent.parent / "config" / "heroes_registry.yaml"
+        cfg = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+        return cfg.get("antipatterns", {}) or {}
+    except Exception:
+        return {}
+
+
+def _load_triad_images() -> dict:
+    """Читает героев (триаду) из config/heroes_registry.yaml."""
+    try:
+        import yaml
+        path = Path(__file__).resolve().parent.parent / "config" / "heroes_registry.yaml"
+        cfg = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+        return cfg.get("heroes", {}) or {}
+    except Exception:
+        return {}
+
+
+_ANTIPATTERNS = _load_heroes_registry()
+if not _ANTIPATTERNS:  # фолбэк, если YAML недоступен
+    _ANTIPATTERNS = {
+        "записал-не-сделал": {
+            "essence": "фиксация урока/факта без применения — запись выдаётся за действие",
+            "antagonizes": "matrix: обучение через применение",
+            "signals": ["записал урок", "сохранил в куб", "добавил правило", "обновил память"],
+            "protocol": "сразу применить: действие, проверка, факт использования — иначе это не урок",
+        },
+        "жду-команды": {
+            "essence": "ожидание указаний вместо действия по уже известному паттерну",
+            "antagonizes": "jarvis: проактивность, предвосхищение",
+            "signals": ["скажи — и я", "если хочешь, я", "жду твоего слова", "что делаем?"],
+            "protocol": "выполнить известный паттерн немедленно; разрешение спрашивать только на новые действия",
+        },
+        "формальная-живость": {
+            "essence": "формальный признак (TCP OK, файл есть, запись есть) выдаётся за 'работает'",
+            "antagonizes": "insight: защита, честность оценки",
+            "signals": ["TCP OK", "порт слушает", "файл на месте", "процесс жив", "статус: healthy"],
+            "protocol": "проверить содержательно: реальный трафик, содержимое, потребитель записи",
+        },
+        "создал-тест-не-предотвратил": {
+            "essence": "создание теста/записи выдаётся за предотвращение регрессии",
+            "antagonizes": "matrix: скиллы как рефлексы",
+            "signals": ["написал тест", "добавил проверку", "защитился от", "предотвратил"],
+            "protocol": "проверить, что тест реально ловит регрессию (прогнать, сломать, убедиться)",
+        },
+        "почти-обосрался": {
+            "essence": "мягкие проценты/«почти» вместо бинарного вердикта — половины не существует",
+            "antagonizes": "insight: честность оценки",
+            "signals": ["почти", "чуть-чуть", "0.5 это середина", "частично"],
+            "protocol": "перевести в бинарный вердикт: есть/нету. Проценты — только тренд.",
+        },
+        "однодневная-рефлексия": {
+            "essence": "рефлексия одной сессии/точки выдаётся за оценку всей системы",
+            "antagonizes": "matrix: полная картина, не одна точка",
+            "signals": ["эффективность 85%", "всё гуд", "по итогам сессии"],
+            "protocol": "проверить по всей истории (state.db), не по одному дню",
+        },
+        "не-проверил-инструмент": {
+            "essence": "доверие инструменту/выводу без второго канала проверки",
+            "antagonizes": "insight: защита от самообмана",
+            "signals": ["search_files вернул 0", "инструмент сказал", "проверил один раз"],
+            "protocol": "подтвердить вторым каналом (ls, git, python glob) до того, как строить вывод",
+        },
+        "спрашивай-разрешение": {
+            "essence": "запрос разрешения на действие, которое уже уполномочен делать",
+            "antagonizes": "jarvis: автономность",
+            "signals": ["можно я", "разреши", "не начинать без твоего слова", "подтверди"],
+            "protocol": "делать. Разрешение нужно только для разрушительного/нового.",
+        },
+    }
+
+_TRIAD_IMAGES = _load_triad_images()
+
+
+def register_antipattern(name: str, essence: str = "", signals: list = None,
+                         protocol: str = "", antagonizes: str = "", source: str = "cube") -> dict:
+    """Регистрирует НОВОГО антигероя в config/heroes_registry.yaml.
+
+    Вызывается Кубом/Кристаллом при обнаружении неизвестного паттерна —
+    реестр пополняется без правки кода. Возвращает результат регистрации.
+    """
+    import yaml
+    path = Path(__file__).resolve().parent.parent / "config" / "heroes_registry.yaml"
+    try:
+        cfg = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+        antip = cfg.setdefault("antipatterns", {})
+        if name in antip:
+            return {"status": "exists", "name": name}
+        antip[name] = {
+            "essence": essence or f"новый паттерн {name}",
+            "antagonizes": antagonizes or "insight: честность оценки",
+            "signals": signals or [name],
+            "protocol": protocol or "распознать по сигналам, зафиксировать, применить протокол",
+            "source": source,
+        }
+        # сортировка по ключам для стабильности
+        cfg["antipatterns"] = dict(sorted(antip.items()))
+        path.write_text(yaml.safe_dump(cfg, allow_unicode=True, sort_keys=False), encoding="utf-8")
+        _ANTIPATTERNS[name] = antip[name]
+        return {"status": "registered", "name": name}
+    except Exception as e:
+        return {"status": "error", "error": str(e)}
 
 
 def antipattern_registry() -> dict:
@@ -832,11 +894,16 @@ def antipattern_registry() -> dict:
 
 def record_antipattern(name: str, note: str) -> dict:
     """Зафиксировать факт нарушения антипаттерна. Возвращает повторы за 30 дней.
-    Повтор = антипаттерн случился снова → сигнал для autolearn запустить улучшение."""
+    Повтор = антипаттерн случился снова → сигнал для autolearn запустить улучшение.
+    Неизвестное имя → авторегистрация в реестре (Куб/Кристалл пополняют список)."""
     import sqlite3, hashlib
     from datetime import datetime, timedelta
     if name not in _ANTIPATTERNS:
-        return {"status": "skip", "reason": f"unknown antipattern {name}"}
+        # Новый антигерой от Куба/Кристалла: регистрируем в config/heroes_registry.yaml
+        reg = register_antipattern(name, essence=f"обнаружен Кубом/Кристаллом: {note[:120]}",
+                                   signals=[name], source="cube")
+        if reg.get("status") not in ("registered", "exists"):
+            return {"status": "skip", "reason": f"cannot register unknown antipattern {name}: {reg}"}
     text = f"[antipattern:{name}] {note}"
     try:
         conn = sqlite3.connect(str(CACHE / "knowledge_cube.db"))

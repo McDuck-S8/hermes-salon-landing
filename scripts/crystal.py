@@ -296,7 +296,44 @@ def diagnose(snap):
             'area': 'fabric_empty',
             'msg': "Fabric пуст"
         })
-    
+
+    # Реестр героев: домены KC с повторяющимися ОТКЛОНЕНИЯМИ (deviate>=3) →
+    # кандидаты в антигерои. Кристалл пополняет config/heroes_registry.yaml
+    # без правки кода. Условие: реальные отклонения, не любые повторы.
+    try:
+        import sys as _sys
+        _sys.path.insert(0, str(Path(__file__).resolve().parent))
+        from chain_heartbeat import register_antipattern, antipattern_registry
+        known = set(antipattern_registry().keys())
+        _k = sqlite3.connect(KC)
+        rows = _k.execute(
+            "SELECT axis_domain, COUNT(*) FROM experiences "
+            "WHERE axis_domain IS NOT NULL AND axis_domain != '' "
+            "AND axis_domain NOT LIKE 'antipattern:%' "
+            "AND axis_domain NOT LIKE 'triad:%' "
+            "AND axis_outcome = 'deviate' "
+            "GROUP BY axis_domain HAVING COUNT(*) >= 3 "
+            "ORDER BY COUNT(*) DESC LIMIT 10"
+        ).fetchall()
+        _k.close()
+        for domain, cnt in rows:
+            if domain in known or domain.startswith("triad:"):
+                continue
+            reg = register_antipattern(
+                name=domain,
+                essence=f"обнаружен Кристаллом: домен '{domain}' повторяется {cnt} раз в KC с отклонениями",
+                signals=[domain],
+                source="crystal",
+            )
+            if reg.get("status") == "registered":
+                diag['tensions'].append({
+                    'severity': 'low',
+                    'area': 'new_antipattern',
+                    'msg': f"Новый антигерой зарегистрирован: {domain} ({cnt} записей)"
+                })
+    except Exception:
+        pass
+
     return diag
 
 
