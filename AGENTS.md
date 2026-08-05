@@ -192,30 +192,7 @@ if st["summary"]["alerts_active"] > 0:
 
 Полная карта вызовов: `skills/devops/chain-heartbeat/references/event-map.md`
 
-## Heartbeat поддерживается автоматически через крон, а не вручную
-
-**КОНСТИТУЦИЯ (2026-08-01).** Живучесть heartbeat — задача крона, не ручных прогонов.
-
-- `system_heartbeat_fixer.py` — крон-задача `heartbeat-fixer`, каждые 15 минут: регистрирует все модули (идемпотентно, сохраняя существующие beats) и бьёт пульс всем 32 модулям + 3 событиям. Без него модули умирают через DEFAULT_TIMEOUT (24ч) и pipelines деградируют.
-- `nocturnal_cognition.py` — крон-задача `crystal-nocturnal-cognition`, ежедневно в 02:00: ночная консолидация Crystal.
-- `fix_heartbeat.py` — аварийный инструмент: НЕ удаляет `chain_heartbeat.json` / `system_heartbeat.json` (защищены от чистки), т.к. это сбрасывает все живые beats. Если запускается — после него обязательно прогоняется `system_heartbeat_fixer.py`.
-- `chain_heartbeat.py` _load/_save — атомарная запись (tmp + os.replace) + retry при блокировке файла (Windows, параллельные процессы) + дедупликация alerts. Не обнулять state при повреждении — повреждённый файл сохраняется как `.corrupt`.
-
-Никаких ручных битьёв в сессиях: если heartbeat упал — проверить крон `heartbeat-fixer`, не бить руками.
-
-## DIRECTIVE 0x50: AUTONOMOUS_DECISION (КОНСТИТУЦИЯ, 2026-08-01)
-
-Автономное принятие решений — стандартный режим работы агента.
-
-1. Если видишь проблему (из рефлексии, Куба, Кристалла, логов, heartbeat) и знаешь чёткое решение — применяешь его **немедленно, без запроса разрешения**.
-2. Уведомляешь пользователя **после** применения, одним предложением: «Применил [решение] для [проблемы]. Результат — [статус]».
-3. Если решение требует критического выбора (удаление данных, изменение конфигурации, превышение бюджета) — сначала уведомляешь пользователя, но **с предложением**, а не с вопросом.
-4. Запрещены формулировки «если хочешь» / «сделать?» / «нужно твоё разрешение» в контексте автономных решений. Решение уже принято — осталось его исполнить и доложить.
-5. Задача фиксируется, исполняется и закрывается в том же проходе. Промежуточные статусы не выводятся — только результат.
-
 ---
-
-
 
 ## Superpowers Process Skills (Methodology Layer)
 
@@ -292,7 +269,7 @@ When the user requests a durable behavior change, record it here or in the relev
 |---|---|---|
 | `scripts/` | Core Hermes scripts — event evolution, auto recall, hooks, autonomous agent | Main logic lives here |
 | `cron/` | Scheduled jobs and task orchestration | jobs.json defines schedules |
-| `plugins/` | Plugin ecosystem — web search, self-evolution, Icarus, LCM | Each plugin is self-contained |
+| `plugins/` | Plugin ecosystem — web search, self-evolution, Icarus, LCM, kc_insights (memory provider) | Each plugin is self-contained |
 | `hermes-agent/` | Agent development framework and optional skills | Has its own AGENTS.md |
 | `skills/` | Bundled agent skills | Managed via skill-forge |
 | `skill-forge/` | Skill development and packaging | Build/test skills here |
@@ -309,3 +286,4 @@ When the user requests a durable behavior change, record it here or in the relev
 | `assets/` | Static assets, images, resources | |
 | `hooks/` | Git hooks and automation triggers | |
 | `bin/` | CLI tools and wrapper scripts | |
+[H[2J[3J
