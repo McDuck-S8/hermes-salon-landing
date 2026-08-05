@@ -18,12 +18,51 @@ ES="/d/Portable_Soft/Everything-1.5.0.1408a.x64/es.exe"
 
 NEVER use `find`, `ls -R`, `grep -r`, or `search_files` for locating files by name. es.exe queries the Everything index — instant. `find`/`ls` scan disk — slow, often times out on Windows.
 
+## BEFORE proposing ANY tool from the web / video / article — es.exe FIRST
+
+User correction (2026-08-02):
+1. Run es.exe on the tool name:
+   ```bash
+   ES="/d/Portable_Soft/Everything-1.5.0.1408a.x64/es.exe"
+   "$ES" book-to-skill
+   ```
+2. Also check `skills/`, `scripts/`, `skill-catalog`, and `.env` for the name.
+3. Only if NOT found locally: say so and propose adding it. If found: use what we have, never pitch it as new.
+
+This also applies to "research" tools from videos (last30days, book-to-skill, impeccable, hubble, Mole, quill were ALL already local). You must KNOW your own toolchain before bringing outside knowledge about it. For any such check, es.exe is the tool — that's the repeated rule the user keeps correcting.
+
+## last30days (installed, v3.18.4) — ops quick-ref
+
+`skills/automation/last30days/`. Keys must be **explicitly `export`ed** to the engine — `source .env` is NOT enough. `lib/http.py` shadows stdlib `http`, so run doctor as `python -m lib.doctor` from `scripts/`, never `python scripts/lib/doctor.py`. Full recipe: `references/last30days-ops.md`.
+
 ## How to Use This Catalog
 
 When you receive a task:
 1. Read this catalog
 2. Find the best tool/skill for the job
 3. Use it — don't just chat about it
+
+## SKILL INDEX — полный каталог скиллов (MANDATORY перед задачей)
+
+**Ссылка:** `references/skill-index.md` — 430 ценных скиллов, сгруппированных по категориям.
+
+**Правило (2026-08-05):** 329 из 547 скиллов НИКОГДА не открывались — потребитель не знал о запасе.
+Перед любой задачей: открой `references/skill-index.md`, найди категорию задачи, проверь есть ли готовый скилл.
+Нет скилла — только тогда делай вручную. Есть — грузи через skill_view и следуй ему.
+
+**Известные неиспользуемые ценные скиллы (примеры):**
+- `data-analyst` / `data-toolkit` — анализ данных
+- `pdf` / `docx` / `xlsx` / `powerpoint` / `office-cli` — офисные документы
+- `github-issues` / `github-code-review` / `github-pr-workflow` — GitHub
+- `lavra-*` (30+ штук) — ревью кода, план, research
+- `v2ray-proxy-troubleshooting` — диагностика прокси (актуально!)
+- `skill_usage_analyzer` — анализ неиспользуемых скиллов (сам никогда не запускался)
+
+## Auto-проверка скиллов (каждые 14 дней)
+
+skill_usage_analyzer.py анализирует какие скиллы не используются и почему.
+Правило: если скилл не открывался 14+ дней — он либо не нужен, либо о нём не знают.
+Триггер: maintenance-scanner / ручная проверка при boot.
 
 ---
 

@@ -15,7 +15,7 @@ from dataclasses import dataclass, asdict
 from collections import defaultdict
 
 HERMES_HOME = Path(os.environ.get("HERMES_HOME", "D:/Portable_Soft/hermes"))
-SKILLS_DIR = HERMES_HOME / ".claude" / "skills"
+SKILLS_DIR = HERMES_HOME / "skills"
 FEEDBACK_DB = HERMES_HOME / "cache" / "feedback_store.db"
 KC_DB = HERMES_HOME / "cache" / "knowledge_cube.db"
 SUGGESTIONS_DB = HERMES_HOME / "cache" / "improvement_suggestions.json"
