@@ -47,18 +47,30 @@ def test_save_is_atomic_and_state_survives():
 
 
 def test_load_recovers_on_corrupt_state():
-    """Corrupt file is preserved as .corrupt, not silently zeroed."""
-    corrupt = STATE_FILE.with_suffix(".corrupt")
-    if corrupt.exists():
-        corrupt.unlink()
-    STATE_FILE.write_text("{not valid json", encoding="utf-8")
-    from chain_heartbeat import _load
-    state = _load()
-    assert state.get("beats") == {}, "must return fresh empty structure"
-    assert corrupt.exists(), "corrupt file not preserved"
-    # restore valid state
-    beat("core")
-    assert json.loads(STATE_FILE.read_text(encoding="utf-8"))["beats"].get("core")
+    """Corrupt file is preserved as .corrupt, not silently zeroed.
+    Uses a temp STATE_FILE: the live file is written by the gateway
+    process (PID 14724) every few seconds, which races this test."""
+    import chain_heartbeat
+    import tempfile
+    tmp = Path(tempfile.mkdtemp()) / "chain_heartbeat.json"
+    orig = chain_heartbeat.STATE_FILE
+    chain_heartbeat.STATE_FILE = tmp
+    try:
+        corrupt = tmp.with_suffix(".corrupt")
+        if corrupt.exists():
+            corrupt.unlink()
+        tmp.write_text("{not valid json", encoding="utf-8")
+        from chain_heartbeat import _load
+        state = _load()
+        assert state.get("beats") == {}, "must return fresh empty structure"
+        assert corrupt.exists(), "corrupt file not preserved"
+        # restore valid state
+        beat("core")
+        assert json.loads(tmp.read_text(encoding="utf-8"))["beats"].get("core")
+    finally:
+        chain_heartbeat.STATE_FILE = orig
+        import shutil
+        shutil.rmtree(tmp.parent, ignore_errors=True)
 
 
 def test_alert_dedup():
@@ -80,18 +92,29 @@ def test_alert_dedup():
 
 
 def test_fixer_beats_all_modules_and_events():
-    """system_heartbeat_fixer.py beats every registered module + tracked event."""
-    register_all_modules()
-    for m in MODULES:
-        beat(m)
-    for ename in EVENTS:
-        if EVENTS[ename].get("expected_interval_s") is not None:
-            event_beat(ename)
-    st = system_status()
-    s = st["summary"]
-    assert s["events_healthy"] == s["events_total"], f"events {s['events_healthy']}/{s['events_total']}"
-    assert s["modules_healthy"] == s["modules_total"], f"modules {s['modules_healthy']}/{s['modules_total']}"
-    assert s["pipelines_healthy"] == s["pipelines_total"], f"pipelines {s['pipelines_healthy']}/{s['pipelines_total']}"
+    """system_heartbeat_fixer.py beats every registered module + tracked event.
+    Uses a temp STATE_FILE: the live file is written by the gateway
+    process every few seconds, which races this test (same reason as
+    test_load_recovers_on_corrupt_state)."""
+    import chain_heartbeat
+    import tempfile
+    tmp = Path(tempfile.mkdtemp()) / "chain_heartbeat.json"
+    orig = chain_heartbeat.STATE_FILE
+    chain_heartbeat.STATE_FILE = tmp
+    try:
+        register_all_modules()
+        for m in MODULES:
+            beat(m)
+        for ename in EVENTS:
+            if EVENTS[ename].get("expected_interval_s") is not None:
+                event_beat(ename)
+        st = system_status()
+        s = st["summary"]
+        assert s["events_healthy"] == s["events_total"], f"events {s['events_healthy']}/{s['events_total']}"
+        assert s["modules_healthy"] == s["modules_total"], f"modules {s['modules_healthy']}/{s['modules_total']}"
+        assert s["pipelines_healthy"] == s["pipelines_total"], f"pipelines {s['pipelines_healthy']}/{s['pipelines_total']}"
+    finally:
+        chain_heartbeat.STATE_FILE = orig
 
 
 def test_fix_heartbeat_protects_state_files():
