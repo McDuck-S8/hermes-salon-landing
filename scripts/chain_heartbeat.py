@@ -656,6 +656,15 @@ def system_status() -> dict:
         triad = compute_triad()
     except Exception:
         triad = {}
+    # Триггер «В поле зрения»: записанные, но не обработанные сбои
+    try:
+        for w in in_view_guard():
+            state.setdefault("alerts", []).append(
+                {"level": 2, "source": "in_view", "alert": w,
+                 "ts": now.isoformat()})
+    except Exception:
+        pass
+
     report = {
         "timestamp": now.isoformat(),
         "feelings": feelings,
@@ -1142,6 +1151,42 @@ def compute_triad(days: int = 30) -> dict:
 
 
 # ── Self-check for syscheck.py ──
+# ── В поле зрения: молчаливая деградация ──
+def in_view_guard(days: int = 7) -> list:
+    """Триггер защиты «В поле зрения»: сбои, ЗАПИСАННЫЕ, но не ОБРАБОТАННЫЕ.
+
+    Рефлексия всей истории (2026-08-05): 67 сессий со сбоями компрессии
+    лежат в state.db, но system_status их не видел, события не бились —
+    молчаливая деградация. Данные были, взгляда не было.
+    """
+    try:
+        import sqlite3
+        db = globals().get("_IN_VIEW_DB", CACHE.parent / "state.db")
+        con = sqlite3.connect(str(db), timeout=5)
+        cutoff = time.time() - days * 86400
+        rows = con.execute(
+            """SELECT compression_failure_error, compression_ineffective_count,
+                      compression_fallback_streak, COUNT(*) c
+               FROM sessions
+               WHERE (compression_failure_error IS NOT NULL
+                      OR compression_ineffective_count > 0
+                      OR compression_fallback_streak > 0)
+                 AND started_at > ?
+               GROUP BY compression_failure_error,
+                        compression_ineffective_count,
+                        compression_fallback_streak""",
+            (cutoff,)).fetchall()
+        con.close()
+        out = []
+        for err, ineff, fallback, c in rows:
+            if c >= 3:  # порог: 3+ однотипных сбоя = паттерн, не случайность
+                brief = (err or f"ineffective={ineff}")[:100]
+                out.append(f"КОМПРЕССИЯ: {c} сбоев за {days}д — {brief}")
+        return out
+    except Exception as e:
+        return [f"in_view_guard: {e}"]
+
+
 def self_check(verbose: bool = True) -> dict:
     """Run complete system check. Returns dict with is_healthy and critical_alerts."""
     st = system_status()
