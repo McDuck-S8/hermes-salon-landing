@@ -21,12 +21,23 @@ class TestScenarioFork:
         signs = {b["sign"] for b in r["branches"]}
         assert signs == {"good", "bad", "stasis"}
 
-    def test_no_history_all_equal(self):
-        # неизвестный паттерн: нет истории → ветки равновероятны (0.5),
-        # но ОБЯЗАНЫ быть просчитаны — незнание ≠ отсутствие исхода
-        r = self.fork("никогда-не-было", "тест")
+    def test_no_history_neutral(self):
+        # неизвестный паттерн + нейтральный контекст: нет данных → 0.5
+        r = self.fork("никогда-не-было", "просто текст без маркеров")
         for b in r["branches"]:
             assert abs(b["p"] - 0.5) < 0.01
+
+    def test_no_history_context_prior(self):
+        # неизвестный паттерн + качественный контекст: не измеримое → априор.
+        # «наверняка» сдвигает good вверх; «рискованно» — вниз.
+        pos = self.fork("новый-паттерн", "подход наверняка сработает, точно получится")
+        assert pos["p_good"] > 0.5
+        assert pos["p_bad"] < 0.5
+        assert pos["branches"][0]["sign"] == "good"
+        neg = self.fork("новый-паттерн", "дело рискованное, опасно, вряд ли выйдет")
+        assert neg["p_bad"] > 0.5
+        assert neg["p_good"] < 0.5
+        assert neg["branches"][0]["sign"] == "bad"
 
     def test_probabilities_in_range(self):
         # вероятности всегда [0..1]

@@ -695,10 +695,48 @@ _FEELINGS_PRIOR = 0.5
 _FEELINGS_GAIN = 0.9  # насколько наблюдение двигает априор к 0/1
 
 
-def _bayes(observed: float):
-    """Априор 0.5 → постерий на основе наблюдения [0..1]."""
+_VERBAL_PRIORS = {
+    "наверняка": 0.9, "почти наверняка": 0.9, "точно": 0.95,
+    "вероятно": 0.7, "скорее всего": 0.7, "похоже": 0.6,
+    "не знаю": 0.5, "возможно": 0.5, "может быть": 0.5, "50/50": 0.5,
+    "вряд ли": 0.3, "маловероятно": 0.25, "нет": 0.1, "вряд": 0.3,
+    "рискованно": 0.35, "опасно": 0.3, "тревожно": 0.4,
+}
+
+
+def _verbal_to_prior(text: str) -> float:
+    """Не измеримое → априор: качественная оценка переводится в вероятность.
+
+    Байес для не измеримого: когда частот нет, берём априор из слов
+    контекста («почти наверняка» → 0.9, «вряд ли» → 0.3). Слабые сигналы
+    складываются: каждый найденный маркер сдвигает от 0.5 к своей оценке."""
+    if not text:
+        return 0.5
+    low = text.lower()
+    found = [(word, p) for word, p in _VERBAL_PRIORS.items() if word in low]
+    if not found:
+        return 0.5
+    # несколько сигналов: последовательное Байес-обновление от 0.5
+    p = 0.5
+    for _word, pv in found[:5]:
+        p = 0.5 + 0.6 * (pv - 0.5)  # мягкое обновление, не рывок
+    return round(max(0.0, min(1.0, p)), 3)
+
+
+def _bayes(observed: float = None, prior: float = 0.5, text: str = ""):
+    """Байес: априор → постериор.
+
+    observed  — измеримое наблюдение [0..1] (частоты из Куба). None = нет данных.
+    prior     — априорная вероятность (незнание = 0.5).
+    text      — качественная оценка («не измеримое»): слово контекста
+                переводится в априор, если observed нет.
+    """
+    if observed is None:
+        # Не измеримое: априор из слов контекста, иначе честное «не знаю»
+        prior = _verbal_to_prior(text) if text else prior
+        return round(prior, 3)
     o = max(0.0, min(1.0, observed))
-    return round(_FEELINGS_PRIOR + _FEELINGS_GAIN * (o - _FEELINGS_PRIOR), 3)
+    return round(prior + _FEELINGS_GAIN * (o - prior), 3)
 
 
 def compute_feelings(facets: dict = None, alerts: list = None) -> dict:
@@ -1172,10 +1210,12 @@ def scenario_fork(pattern: str, context: str = "", days: int = 30) -> dict:
 
     total = conform + deviate
     if total == 0:
-        # Нет истории → все ветки равновероятны, но обязаны быть просчитаны
-        p_good = round(_bayes(0.5), 3)
-        p_bad = round(_bayes(0.5), 3)
-        p_stasis = round(_bayes(0.5), 3)
+        # Нет истории → априор из контекста («не измеримое»): слова решают.
+        # Слова оценивают ОДНУ шкалу — вероятность успеха. Зло = зеркало:
+        # bad = 1 − good (если успех маловероятен, провал вероятен).
+        p_good = _bayes(None, text=context)
+        p_bad = round(1.0 - p_good, 3)
+        p_stasis = 0.5
     else:
         # Добро: доля соответствий. Зло: доля отклонений. Статус-кво: не действовать.
         p_good = round(_bayes(conform / total), 3)
