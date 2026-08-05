@@ -1912,7 +1912,38 @@ def will(snap, diag):
             if cr and cr.get('learning_direction'):
                 all_learning.extend(cr['learning_direction'])
             conscience_result = cr  # последний для сохранения
-        
+
+        # Замыкание цикла: контрольные рекомендации RSA (домен control)
+        # читаются волей и превращаются в conscience-действия через тот же
+        # LEARNING_TO_ACTION. Раньше рекомендации писались в Куб и никем не
+        # исполнялись (producer→producer). Теперь они входят в поток воли.
+        try:
+            kc_rec = sqlite3.connect(KC)
+            krec = kc_rec.cursor()
+            krec.execute("SELECT content FROM experiences WHERE axis_domain='control' AND source='recursive-self-analysis' ORDER BY id DESC LIMIT 5")
+            for (rec_text,) in krec.fetchall():
+                rt = (rec_text or '').lower()
+                if 'классифицировать unknown' in rt or 'классифицировать неизвестн' in rt:
+                    all_learning.append("научиться классифицировать неструктурированные данные")
+                elif 'углубить домен' in rt:
+                    all_learning.append("выучить распознавание паттернов для этого типа данных")
+                elif 'снизить failure' in rt:
+                    all_learning.append("выучить распознавание паттернов для этого типа данных")
+                # Специфичная рекомендация с данными выборки → целевое действие
+                # по домену из текста (blindspot_<домен>), если тот ещё не исполнен
+                dm = re.search(r"\[(?:наследие|девопс|исследование|кодинг|данные|система|сессия|навык)\|", rt)
+                if dm:
+                    facet = dm.group(0).strip('[]|').lower()
+                    dom_map = {'наследие': 'legacy', 'девопс': 'devops', 'исследование': 'research',
+                               'кодинг': 'coding', 'данные': 'data', 'система': 'system',
+                               'сессия': 'session', 'навык': 'skill'}
+                    dom = dom_map.get(facet)
+                    if dom:
+                        all_learning.append(f"исследовать слепое пятно домен '{dom}'")
+            kc_rec.close()
+        except Exception:
+            pass
+
         # Маппинг learning_direction → реальные действия
         LEARNING_TO_ACTION = {
             "выучить распознавание паттернов для этого типа данных": {
