@@ -1,0 +1,35 @@
+# Skill File Hygiene — единый эталон оформления авто-созданных скиллов
+# ЕДИНЫЙ ИСТОЧНИК ПРАВИЛ для товарищей #1 (background_review) и #2 (self_improvement_loop).
+# Правки вносятся ЗДЕСЬ — код не трогается (принцип: правки в одном файле, 2026-08-05).
+# Человеко-читаемая версия: skills/AGENTS.md -> "Skill File Hygiene".
+
+# Маркеры скелета: если любой из них есть в SKILL.md — скилл считается пустышкой
+# и НЕ создаётся (антипаттерн «записал-не-сделал»).
+skeleton_markers:
+  - "TODO"
+  - "TBD"
+  - "FIXME"
+  - "placeholder"
+  - "PLACEHOLDER"
+  - "pass\n"
+  - "# Arrange"
+  - "# Act"
+  - "- [ ]"
+  - "[ ]"
+
+# Имя скилла: lowercase, только [a-z0-9_-], max длина
+name:
+  max_length: 64
+  allowed_chars: "a-z0-9_-"
+
+# Frontmatter: обязательные поля
+required_frontmatter:
+  - "name:"
+  - "description:"
+  - "trigger:"
+
+# Категория для автогенерированных скиллов
+auto_category: "auto-generated"
+
+# Порог повторения паттерна для создания скилла
+create_threshold: 3

@@ -539,14 +539,37 @@ def _get_existing_skills():
 # Skill file hygiene (2026-08-05, user: "научи правильно оформлять файлы")
 # ---------------------------------------------------------------------------
 # Правила для АВТО-СОЗДАННЫХ скиллов (товарищи #1/#2 — background_review,
-# self_improvement_loop). Эти же правила закреплены в skills/AGENTS.md.
+# self_improvement_loop). ЕДИНЫЙ ИСТОЧНИК: config/skill_hygiene.yaml.
+# Правки — в YAML, не в коде (принцип пользователя: «кодить так, чтобы
+# правки вносить в одном файле», 2026-08-05).
 #
 # ЗАПРЕЩЕНО создавать скилл-скелет: TODO-заглушки, `pass` в теле,
 # пустые чекбоксы [ ] — это антипаттерн «записал-не-сделал» (запись
 # выдаётся за действие). Скилл без реального содержания НЕ создаётся.
 
-_SKELETON_MARKERS = ("TODO", "TBD", "FIXME", "placeholder", "PLACEHOLDER",
-                     "pass\n", "# Arrange", "# Act", "- [ ]", "[ ]")
+_HYGIENE_CONFIG = HERMES_HOME / "config" / "skill_hygiene.yaml"
+
+
+def _load_hygiene_config() -> dict:
+    """Читает config/skill_hygiene.yaml. При ошибке — пустой dict."""
+    try:
+        import yaml
+        return yaml.safe_load(_HYGIENE_CONFIG.read_text(encoding="utf-8")) or {}
+    except Exception:
+        return {}
+
+
+def _load_skeleton_markers() -> tuple:
+    """Маркеры скелета из конфига (не из кода). Фолбэк — дефолтные."""
+    cfg = _load_hygiene_config()
+    markers = cfg.get("skeleton_markers")
+    if isinstance(markers, list) and markers:
+        return tuple(str(m) for m in markers)
+    return ("TODO", "TBD", "FIXME", "placeholder", "PLACEHOLDER",
+            "pass\n", "# Arrange", "# Act", "- [ ]", "[ ]")
+
+
+_SKELETON_MARKERS = _load_skeleton_markers()
 
 
 def _is_skeleton(md: str) -> bool:
@@ -559,9 +582,13 @@ def _is_skeleton(md: str) -> bool:
 
 def _valid_skill_name(name: str) -> str:
     """Нормализует имя скилла: lowercase, только [a-z0-9_-], без пробелов."""
-    safe = re.sub(r"[^a-z0-9_\-]+", "-", name.lower()).strip("-")
-    if len(safe) > 64:
-        safe = safe[:64].rstrip("-")
+    cfg = _load_hygiene_config()
+    name_cfg = cfg.get("name", {}) or {}
+    max_len = int(name_cfg.get("max_length", 64))
+    allowed = str(name_cfg.get("allowed_chars", "[a-z0-9_-]"))
+    safe = re.sub(rf"[^{allowed}]+", "-", name.lower()).strip("-")
+    if len(safe) > max_len:
+        safe = safe[:max_len].rstrip("-")
     return safe or "auto-skill"
 
 
