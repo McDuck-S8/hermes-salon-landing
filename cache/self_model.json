@@ -1,93 +1,1070 @@
 {
   "version": "1.0",
-  "last_cycle": "2026-08-01T03:53:11",
+  "last_cycle": "2026-08-05T01:13:02",
   "cycle_count": 1,
   "znayu": {
-    "total_entries": 26023,
-    "avg_depth": 2505,
+    "total_entries": 39463,
+    "avg_depth": 192,
     "domains": {
-      "debugging": {
-        "count": 13395,
-        "recency": "2026-08-01",
-        "coverage": "high"
-      },
-      "_suggestion_log": {
-        "count": 5426,
-        "recency": "2026-08-01",
+      "legacy": {
+        "count": 27060,
+        "recency": "2026-08-05",
         "coverage": "high"
       },
       "skill": {
-        "count": 3770,
-        "recency": "2026-08-01",
+        "count": 5442,
+        "recency": "2026-08-05",
         "coverage": "high"
       },
       "devops": {
-        "count": 800,
-        "recency": "2026-08-01",
+        "count": 1726,
+        "recency": "2026-08-05",
+        "coverage": "high"
+      },
+      "session": {
+        "count": 1357,
+        "recency": "2026-08-05",
+        "coverage": "high"
+      },
+      "coding": {
+        "count": 446,
+        "recency": "2026-08-05",
         "coverage": "high"
       },
       "user_voice": {
         "count": 431,
-        "recency": "2026-08-01",
-        "coverage": "high"
-      },
-      "coding": {
-        "count": 405,
-        "recency": "2026-08-01",
-        "coverage": "high"
-      },
-      "communication": {
-        "count": 231,
-        "recency": "2026-08-01",
+        "recency": "2026-08-05",
         "coverage": "high"
       },
       "data": {
-        "count": 227,
-        "recency": "2026-08-01",
+        "count": 282,
+        "recency": "2026-08-05",
+        "coverage": "high"
+      },
+      "task_consolidation": {
+        "count": 260,
+        "recency": "2026-08-05",
+        "coverage": "high"
+      },
+      "communication": {
+        "count": 245,
+        "recency": "2026-08-05",
         "coverage": "high"
       },
       "research": {
-        "count": 188,
-        "recency": "2026-08-01",
+        "count": 229,
+        "recency": "2026-08-05",
+        "coverage": "high"
+      },
+      "system": {
+        "count": 202,
+        "recency": "2026-08-05",
+        "coverage": "high"
+      },
+      "debugging": {
+        "count": 192,
+        "recency": "2026-08-05",
         "coverage": "high"
       },
       "creative": {
-        "count": 178,
-        "recency": "2026-08-01",
+        "count": 177,
+        "recency": "2026-08-05",
         "coverage": "high"
+      },
+      "reflection": {
+        "count": 138,
+        "recency": "2026-08-05",
+        "coverage": "high"
+      },
+      "file_ops": {
+        "count": 128,
+        "recency": "2026-08-05",
+        "coverage": "high"
+      },
+      "bugfix": {
+        "count": 91,
+        "recency": "2026-08-05",
+        "coverage": "medium"
+      },
+      "uncategorized": {
+        "count": 89,
+        "recency": "2026-08-05",
+        "coverage": "medium"
+      },
+      "crystal": {
+        "count": 86,
+        "recency": "2026-08-05",
+        "coverage": "medium"
+      },
+      "crystal_will": {
+        "count": 83,
+        "recency": "2026-08-05",
+        "coverage": "medium"
+      },
+      "browser": {
+        "count": 79,
+        "recency": "2026-08-05",
+        "coverage": "medium"
+      },
+      "design": {
+        "count": 78,
+        "recency": "2026-08-05",
+        "coverage": "medium"
+      },
+      "_suggestion_log": {
+        "count": 61,
+        "recency": "2026-08-05",
+        "coverage": "medium"
+      },
+      "tech": {
+        "count": 57,
+        "recency": "2026-08-05",
+        "coverage": "medium"
+      },
+      "social-media": {
+        "count": 52,
+        "recency": "2026-08-05",
+        "coverage": "medium"
+      },
+      "control": {
+        "count": 51,
+        "recency": "2026-08-05",
+        "coverage": "medium"
+      },
+      "finance": {
+        "count": 33,
+        "recency": "2026-08-05",
+        "coverage": "medium"
+      },
+      "mature_key": {
+        "count": 28,
+        "recency": "2026-08-05",
+        "coverage": "medium"
+      },
+      "terminal": {
+        "count": 22,
+        "recency": "2026-08-05",
+        "coverage": "medium"
+      },
+      "video-content": {
+        "count": 15,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "architecture": {
+        "count": 12,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "productivity": {
+        "count": 11,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "business-marketing": {
+        "count": 10,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "education": {
+        "count": 10,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "music-audio": {
+        "count": 10,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "health-fitness": {
+        "count": 9,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "skill_chain": {
+        "count": 9,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "user_communication": {
+        "count": 9,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "sales": {
+        "count": 8,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "Рефлексия": {
+        "count": 7,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "legal": {
+        "count": 6,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "physics": {
+        "count": 6,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "advanced-analytics": {
+        "count": 5,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "ai-content-factory": {
+        "count": 5,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "b2b-sales": {
+        "count": 5,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "behavioral-psychology": {
+        "count": 5,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "crypto-web3": {
+        "count": 5,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "learning": {
+        "count": 5,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "organic-traffic": {
+        "count": 5,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "referral-automation": {
+        "count": 5,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "Управление": {
+        "count": 5,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "entertainment": {
+        "count": 4,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "self": {
+        "count": 4,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "self_learning": {
+        "count": 4,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "lifestyle": {
+        "count": 3,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "reflexion": {
+        "count": 3,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "skill_analysis": {
+        "count": 2,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "themes-schemes": {
+        "count": 2,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "youtube": {
+        "count": 2,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "across": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "action": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "actions": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "adversarial": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "agent": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "agents": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "analysis": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "analytics": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "appeared": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "appeared-times": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "arbitrage": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "audience": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "author": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "auto": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "automation": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "autonomous": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "backup": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "bridge": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "build": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "candidate": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "case": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "category": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "cause": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "check": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "cicd": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "client": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "coding-research": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "complete": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "connection": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "content": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "context": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "convention": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "creative-social-media": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "critical": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "cron": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "cube": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "cycle-max": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "decision": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "deployment": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "description": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "development": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "document": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "domain": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "entries": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "execute": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "external": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "extract": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "failed": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "failure": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "failures": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "files": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "filter": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "future": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "generate": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "github": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "guard": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "handling": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "hermes": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "hosting": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "html": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "https": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "improvement": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "integration": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "issues": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "json": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "knowledge": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "knowledge-domain": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "log-pattern": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "log-unknown": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "logs": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "logs-pattern": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "loop": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "marketing": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "memory": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "messages": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "meta_reflection": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "model": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "monetization": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "monitor": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "monitoring": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "needs": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "output": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "pattern": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "patterns": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "payment": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "pipeline": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "plan": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "potential": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "prevent": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "preventive": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "preventive-guard": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "process": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "rate": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "read": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "recent": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "recent-logs": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "recurring": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "reference": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "regression": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "related": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "report": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "response": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "result": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "review": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "root": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "root-cause": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "scripts": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "search": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "security": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "seen": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "seen-times": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "self-improvement": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "seo": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "server": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "session-start": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "skills": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "smart-home": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "soft": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "source": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "sql-injection": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "state": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "status": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "suggestion": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "suggestion-log": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "suggestions": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "tags": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "task": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "tasks": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "telegram": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "test": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "testing": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "text": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "times": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "times-recent": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "tool": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "tools": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "triggers": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "unknown": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "user": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "user_identity": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "validation": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "verification": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "version": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "warning": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "workflow": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "write": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
+      },
+      "видео": {
+        "count": 1,
+        "recency": "2026-08-05",
+        "coverage": "low"
       }
     },
-    "total_domains": 10,
-    "garbage_domains": 0
+    "total_domains": 205,
+    "garbage_domains": 155
   },
   "umeyu": {
     "roles": {
-      "total": 2,
+      "total": 76,
       "isolated": 0,
-      "connected": 2,
+      "connected": 76,
       "key_roles": [],
       "source": "entity_engine",
-      "all_entities": 3672,
+      "all_entities": 6728,
       "entity_types": {
-        "Концепция": 3668,
-        "AI Agent": 2,
+        "Концепция": 6647,
+        "AI Agent": 76,
+        "technology": 2,
         "Человек": 1,
-        "Совесть": 1
+        "Совесть": 1,
+        "exchange": 1
       }
     },
     "skills": {
-      "total": 784,
+      "total": 826,
       "by_category": {
         "agency-agents": 26,
         "agent-browser": 7,
         "agent-native-architecture": 4,
         "agent-reach": 3,
         "apple": 2,
-        "arbitrage": 1,
+        "arbitrage": 2,
         "audience-analyzer": 5,
         "auto-boot": 3,
-        "auto-generated": 66,
-        "automation": 22,
+        "auto-generated": 43,
+        "automation": 25,
         "autonomous-ai-agents": 18,
         "autonomous-coding-with-opencode-zen": 3,
         "background-task-discipline": 3,
@@ -96,14 +1073,16 @@
         "cache": 1,
         "caveman": 2,
         "clarence-on-becoming": 6,
-        "coding-patterns": 3,
+        "coding-patterns": 4,
         "communication": 3,
         "computer-use": 2,
+        "context-engineering": 2,
         "cpa-affiliate-bot-development": 3,
         "create-agent-skills": 3,
-        "creative": 25,
+        "create-html-app": 2,
+        "creative": 27,
         "crimea-job-search": 5,
-        "crystal": 3,
+        "crystal": 4,
         "crystal-ai-core-5226": 2,
         "crystal-ai-core-6160": 2,
         "crystal-ai-core-6373": 2,
@@ -126,12 +1105,13 @@
         "data-science": 7,
         "deploy-cosmetologist": 3,
         "design": 11,
-        "devops": 34,
+        "devops": 37,
         "diagramming": 1,
         "dogfood": 4,
         "domain": 1,
         "ego-windows": 4,
         "email": 2,
+        "embed-html-app": 1,
         "file-todos": 2,
         "file_ops": 3,
         "finance": 24,
@@ -144,6 +1124,7 @@
         "health": 1,
         "herdr-multiagent": 7,
         "hermes-desktop-plugins": 3,
+        "hubble-skills": 3,
         "human-source": 4,
         "income-research-methodology": 3,
         "inference-sh": 1,
@@ -210,11 +1191,14 @@
         "planning": 1,
         "ponytail": 4,
         "procedural-logic": 3,
-        "productivity": 13,
+        "productivity": 16,
+        "quarantine": 33,
         "research": 9,
         "response-language": 2,
+        "review-markdown-comments": 1,
+        "sales-assistant": 2,
         "security": 4,
-        "self-improvement": 70,
+        "self-improvement": 73,
         "self-improvement-from-channels": 2,
         "self-improvement-runtime": 3,
         "session-recall": 4,
@@ -226,7 +1210,7 @@
         "skillspector": 8,
         "smart-home": 2,
         "social-media": 4,
-        "software-development": 21,
+        "software-development": 24,
         "superpowers": 4,
         "tool-catalog": 3,
         "trend-scout": 3,
@@ -236,92 +1220,181 @@
         "uncategorized-to-domain": 3,
         "video-learner": 1,
         "web-development": 27,
-        "youtube-channel-monitor": 3,
+        "youtube-channel-monitor": 4,
         "yuanbao": 2,
         "_archive": 1,
         "о программировании (агентский)": 2
       },
-      "used_in_will": [],
-      "unused_count": 784,
+      "used_in_will": [
+        "crystal",
+        "sales-assistant",
+        "deploy-cosmetologist",
+        "agency-agents",
+        "coding-patterns",
+        "auto-boot",
+        "self-improvement-runtime",
+        "knowledge",
+        "crystal-self-learning"
+      ],
+      "unused_count": 826,
       "source": "skills/"
     }
   },
   "ne_znayu": {
     "orphan_sources": {
-      "user_voice": 35,
+      "legacy:state_db": 265,
+      "compression_analysis": 97,
+      "user_voice": 34,
+      "legacy:crystal": 19,
+      "reflection_history": 19,
+      "legacy:lavra": 12,
+      "sales_assistant": 8,
       "user_chat": 5,
-      "script_sensor_array": 1,
-      "script_web_surfer": 1
+      "legacy:cube": 4,
+      "delegation-reflection": 3
     },
-    "isolated_entities": 42,
-    "unused_skills": 784
+    "isolated_entities": 467,
+    "unused_skills": 826
   },
   "istoriya": {
     "actions": [
       {
-        "action_id": "conscience_deepen_skill",
+        "action_id": "conscience_audit_session_dump",
         "last_outcome": "success",
         "effectiveness": "low"
       },
       {
-        "action_id": "conscience_anomaly_design",
+        "action_id": "conscience_anomaly_research",
         "last_outcome": "success",
         "effectiveness": "low"
       },
       {
-        "action_id": "conscience_deepen_creative",
+        "action_id": "conscience_audit_improvement_suggestions",
         "last_outcome": "success",
         "effectiveness": "low"
       },
       {
-        "action_id": "conscience_deepen__suggestion_log",
+        "action_id": "conscience_blindspot_crystal",
         "last_outcome": "success",
         "effectiveness": "low"
       },
       {
-        "action_id": "conscience_blindspot_mature_key",
+        "action_id": "self_aware_monotony",
         "last_outcome": "success",
         "effectiveness": "low"
       },
       {
-        "action_id": "conscience_anomaly_data",
+        "action_id": "self_mod_boost_diversity",
         "last_outcome": "success",
         "effectiveness": "low"
       },
       {
-        "action_id": "conscience_blindspot_uncategorized",
+        "action_id": "run_knowledge_gap_filler",
         "last_outcome": "success",
         "effectiveness": "low"
       },
       {
-        "action_id": "conscience_blindspot_finance",
+        "action_id": "run_cube_categorizer",
         "last_outcome": "success",
         "effectiveness": "low"
       },
       {
-        "action_id": "test_extract_fabric",
+        "action_id": "run_cube_feeder",
+        "last_outcome": "success",
+        "effectiveness": "low"
+      },
+      {
+        "action_id": "run_explore_white_spot",
+        "last_outcome": "success",
+        "effectiveness": "low"
+      },
+      {
+        "action_id": "run_proactive_doer",
+        "last_outcome": "success",
+        "effectiveness": "low"
+      },
+      {
+        "action_id": "run_cube_to_memory",
+        "last_outcome": "success",
+        "effectiveness": "low"
+      },
+      {
+        "action_id": "extract_fabric",
+        "last_outcome": "success",
+        "effectiveness": "high"
+      },
+      {
+        "action_id": "extract_legacy:lavra",
+        "last_outcome": "success",
+        "effectiveness": "high"
+      },
+      {
+        "action_id": "explore_cluster_log_unknown",
+        "last_outcome": "success",
+        "effectiveness": "low"
+      },
+      {
+        "action_id": "explore_cluster_log_tool_error",
+        "last_outcome": "success",
+        "effectiveness": "low"
+      },
+      {
+        "action_id": "explore_cluster_domain_failure_pattern",
+        "last_outcome": "success",
+        "effectiveness": "low"
+      },
+      {
+        "action_id": "explore_cluster_log_api_error",
+        "last_outcome": "success",
+        "effectiveness": "low"
+      },
+      {
+        "action_id": "extract_legacy:state_db",
+        "last_outcome": "success",
+        "effectiveness": "high"
+      },
+      {
+        "action_id": "conscience_audit_legacy:skill-indexer",
         "last_outcome": "success",
         "effectiveness": "low"
       }
     ],
-    "total_decisions": 9
+    "total_decisions": 49
   },
   "gorizonty": {
-    "candidates": []
+    "candidates": [
+      {
+        "title": "Разобрать пул pending-задач (232 из компрессий)",
+        "why": "сделать их actionable, часть ценна",
+        "effort": "высокий",
+        "priority": "high"
+      },
+      {
+        "title": "Поднять связность EE 0.06→0.2",
+        "why": "Слабо связанные сущности не дают качественные схемы",
+        "effort": "средний",
+        "priority": "high"
+      },
+      {
+        "title": "Подвесить топ-5 REUSABLE скиллов на авто-триггер",
+        "why": "библиотека знаний vs реальное применение",
+        "effort": "средний",
+        "priority": "high"
+      },
+      {
+        "title": "Разобрать anomaly 'data' (failure=67, success=10)",
+        "why": "перекос исходов в домене data",
+        "effort": "средний",
+        "priority": "medium"
+      }
+    ],
+    "next": "достичь фазы Synthesis"
   },
   "sovest": {
     "assessments": [
       {
-        "ts": "2026-07-31T22:34:33",
-        "action_id": "conscience_deepen_communication",
-        "type": "post_action",
-        "learned_about": "communication",
-        "learned_summary": "Углубление 'communication': 229 записей, соседи: _suggestion_log(24711)",
-        "action_type": "deepen_communication"
-      },
-      {
-        "ts": "2026-07-31T22:34:34",
-        "action_id": "test_extract_fabric",
+        "ts": "2026-08-05T01:08:37",
+        "action_id": "conscience_audit_agent_decisions",
         "understanding": "low",
         "efficiency": 0.0,
         "misunderstanding": {
@@ -339,23 +1412,15 @@
         "learning_direction": [
           "выучить распознавание паттернов для этого типа данных",
           "добавить анализ связей между источниками",
-          "исследовать слепое пятно: домен 'finance' (26 записей)",
-          "углубить доминантный домен 'communication' (229 записей)",
-          "проанализировать малоиспользуемый источник 'dimension_proposals' (92 записей)",
-          "исследовать аномалию: домен 'data' (95% неуспеха)"
+          "исследовать слепое пятно: домен 'crystal_will' (77 записей)",
+          "углубить доминантный домен 'skill' (5442 записей)",
+          "проанализировать малоиспользуемый источник 'improvement_suggestions' (1343 записей)",
+          "исследовать аномалию: домен 'research' (93% неуспеха)"
         ]
       },
       {
-        "ts": "2026-07-31T22:34:59",
-        "action_id": "conscience_audit_log_agent",
-        "type": "post_action",
-        "learned_about": "log_agent",
-        "learned_summary": "Аудит источника 'log_agent': 80 записей, домены: coding(37), bugfix(16), devops(7)",
-        "action_type": "audit_log_agent"
-      },
-      {
-        "ts": "2026-07-31T22:34:59",
-        "action_id": "test_extract_fabric",
+        "ts": "2026-08-05T01:08:55",
+        "action_id": "conscience_audit_agent_decisions",
         "understanding": "low",
         "efficiency": 0.0,
         "misunderstanding": {
@@ -373,23 +1438,211 @@
         "learning_direction": [
           "научиться классифицировать неструктурированные данные",
           "ищать горизонты в пересечениях доменов",
-          "исследовать слепое пятно: домен 'finance' (26 записей)",
-          "углубить доминантный домен 'data' (217 записей)",
-          "проанализировать малоиспользуемый источник 'log_agent' (80 записей)",
-          "исследовать аномалию: домен 'data' (95% неуспеха)"
+          "исследовать слепое пятно: домен 'crystal_will' (77 записей)",
+          "углубить доминантный домен 'skill' (5442 записей)",
+          "проанализировать малоиспользуемый источник 'improvement_suggestions' (1343 записей)",
+          "исследовать аномалию: домен 'research' (93% неуспеха)"
         ]
       },
       {
-        "ts": "2026-07-31T22:39:58",
+        "ts": "2026-08-05T01:09:13",
+        "action_id": "self_aware_monotony",
+        "type": "post_action",
+        "learned_about": null,
+        "learned_summary": "Самосознание Level 2: документация не найдена",
+        "action_type": "self_awareness"
+      },
+      {
+        "ts": "2026-08-05T01:09:14",
+        "action_id": "conscience_audit_agent_decisions",
+        "understanding": "low",
+        "efficiency": 0.0,
+        "misunderstanding": {
+          "detected": true,
+          "what": "Данные были, но не распознаны",
+          "why": "нет скила/знания для этого типа данных",
+          "type": "A"
+        },
+        "horizon_miss": {
+          "detected": true,
+          "what": "Не увидел связи между источниками данных",
+          "why": "смотрю на файлы по отдельности, а не на поток",
+          "learning": "нужен анализ связей между источниками"
+        },
+        "learning_direction": [
+          "выучить распознавание паттернов для этого типа данных",
+          "добавить анализ связей между источниками",
+          "исследовать слепое пятно: домен 'crystal_will' (77 записей)",
+          "углубить доминантный домен 'skill' (5442 записей)",
+          "проанализировать малоиспользуемый источник 'improvement_suggestions' (1343 записей)",
+          "исследовать аномалию: домен 'research' (93% неуспеха)"
+        ]
+      },
+      {
+        "ts": "2026-08-05T01:09:32",
+        "action_id": "conscience_audit_improvement_suggestions",
+        "understanding": "low",
+        "efficiency": 0.0,
+        "misunderstanding": {
+          "detected": true,
+          "what": "Данные были, но не распознаны",
+          "why": "нет скила/знания для этого типа данных",
+          "type": "A"
+        },
+        "horizon_miss": {
+          "detected": true,
+          "what": "Не увидел связи между источниками данных",
+          "why": "смотрю на файлы по отдельности, а не на поток",
+          "learning": "нужен анализ связей между источниками"
+        },
+        "learning_direction": [
+          "научиться классифицировать неструктурированные данные",
+          "ищать горизонты в пересечениях доменов",
+          "исследовать слепое пятно: домен 'crystal_will' (79 записей)",
+          "углубить доминантный домен 'skill' (5442 записей)",
+          "проанализировать малоиспользуемый источник 'improvement_suggestions' (1343 записей)",
+          "исследовать аномалию: домен 'research' (93% неуспеха)"
+        ]
+      },
+      {
+        "ts": "2026-08-05T01:09:51",
+        "action_id": "conscience_audit_improvement_suggestions",
+        "understanding": "low",
+        "efficiency": 0.0,
+        "misunderstanding": {
+          "detected": true,
+          "what": "Данные были, но не распознаны",
+          "why": "нет скила/знания для этого типа данных",
+          "type": "A"
+        },
+        "horizon_miss": {
+          "detected": true,
+          "what": "Не увидел связи между источниками данных",
+          "why": "смотрю на файлы по отдельности, а не на поток",
+          "learning": "нужен анализ связей между источниками"
+        },
+        "learning_direction": [
+          "выучить распознавание паттернов для этого типа данных",
+          "добавить анализ связей между источниками",
+          "исследовать слепое пятно: домен 'crystal_will' (79 записей)",
+          "углубить доминантный домен 'skill' (5442 записей)",
+          "проанализировать малоиспользуемый источник 'improvement_suggestions' (1343 записей)",
+          "исследовать аномалию: домен 'research' (93% неуспеха)"
+        ]
+      },
+      {
+        "ts": "2026-08-05T01:10:09",
+        "action_id": "conscience_audit_improvement_suggestions",
+        "understanding": "low",
+        "efficiency": 0.0,
+        "misunderstanding": {
+          "detected": true,
+          "what": "Данные были, но не распознаны",
+          "why": "нет скила/знания для этого типа данных",
+          "type": "A"
+        },
+        "horizon_miss": {
+          "detected": true,
+          "what": "Не увидел связи между источниками данных",
+          "why": "смотрю на файлы по отдельности, а не на поток",
+          "learning": "нужен анализ связей между источниками"
+        },
+        "learning_direction": [
+          "научиться классифицировать неструктурированные данные",
+          "ищать горизонты в пересечениях доменов",
+          "исследовать слепое пятно: домен 'crystal_will' (79 записей)",
+          "углубить доминантный домен 'skill' (5442 записей)",
+          "проанализировать малоиспользуемый источник 'improvement_suggestions' (1343 записей)",
+          "исследовать аномалию: домен 'research' (93% неуспеха)"
+        ]
+      },
+      {
+        "ts": "2026-08-05T01:10:29",
+        "action_id": "conscience_blindspot_crystal",
+        "type": "post_action",
+        "learned_about": "crystal",
+        "learned_summary": "Слепое пятно 'crystal': 78 записей [None=1, snapshot=77]",
+        "action_type": "blindspot_crystal"
+      },
+      {
+        "ts": "2026-08-05T01:10:30",
+        "action_id": "conscience_audit_improvement_suggestions",
+        "understanding": "low",
+        "efficiency": 0.0,
+        "misunderstanding": {
+          "detected": true,
+          "what": "Данные были, но не распознаны",
+          "why": "нет скила/знания для этого типа данных",
+          "type": "A"
+        },
+        "horizon_miss": {
+          "detected": true,
+          "what": "Не увидел связи между источниками данных",
+          "why": "смотрю на файлы по отдельности, а не на поток",
+          "learning": "нужен анализ связей между источниками"
+        },
+        "learning_direction": [
+          "выучить распознавание паттернов для этого типа данных",
+          "добавить анализ связей между источниками",
+          "исследовать слепое пятно: домен 'crystal' (78 записей)",
+          "углубить доминантный домен 'skill' (5442 записей)",
+          "проанализировать малоиспользуемый источник 'improvement_suggestions' (1343 записей)",
+          "исследовать аномалию: домен 'research' (93% неуспеха)"
+        ]
+      },
+      {
+        "ts": "2026-08-05T01:10:52",
+        "action_id": "conscience_audit_improvement_suggestions",
+        "type": "post_action",
+        "learned_about": "improvement_suggestions",
+        "learned_summary": "Аудит источника 'improvement_suggestions': 1343 записей, домены: devops(1198), _suggestion_log(61), research(57)",
+        "action_type": "audit_improvement_suggestions"
+      },
+      {
+        "ts": "2026-08-05T01:10:52",
+        "action_id": "conscience_anomaly_research",
+        "understanding": "low",
+        "efficiency": 0.0,
+        "misunderstanding": {
+          "detected": true,
+          "what": "Данные были, но не распознаны",
+          "why": "нет скила/знания для этого типа данных",
+          "type": "A"
+        },
+        "horizon_miss": {
+          "detected": true,
+          "what": "Не увидел связи между источниками данных",
+          "why": "смотрю на файлы по отдельности, а не на поток",
+          "learning": "нужен анализ связей между источниками"
+        },
+        "learning_direction": [
+          "научиться классифицировать неструктурированные данные",
+          "ищать горизонты в пересечениях доменов",
+          "исследовать слепое пятно: домен 'crystal_will' (80 записей)",
+          "углубить доминантный домен 'skill' (5442 записей)",
+          "проанализировать малоиспользуемый источник 'improvement_suggestions' (1343 записей)",
+          "исследовать аномалию: домен 'research' (93% неуспеха)"
+        ]
+      },
+      {
+        "ts": "2026-08-05T01:11:11",
+        "action_id": "conscience_anomaly_research",
+        "type": "post_action",
+        "learned_about": "research",
+        "learned_summary": "Аномалия 'research': [failure=103, partial=1, success=15, unknown=110] Примеры: Business analysis: beauty salon bot market. 0 competitors analyzed. Pricing rang | [decision] Restored process.on('exit'",
+        "action_type": "anomaly_research"
+      },
+      {
+        "ts": "2026-08-05T01:11:12",
+        "action_id": "conscience_audit_session_dump",
+        "type": "post_action",
+        "learned_about": "session_dump",
+        "learned_summary": "Аудит источника 'session_dump': 1616 записей, домены: session(1355), communication(146), coding(62)",
+        "action_type": "audit_session_dump"
+      },
+      {
+        "ts": "2026-08-05T01:11:12",
         "action_id": "conscience_blindspot_finance",
-        "type": "post_action",
-        "learned_about": "finance",
-        "learned_summary": "Слепое пятно 'finance': 26 записей [None=9, neutral=15, success=2]",
-        "action_type": "blindspot_finance"
-      },
-      {
-        "ts": "2026-07-31T22:39:59",
-        "action_id": "test_extract_fabric",
         "understanding": "low",
         "efficiency": 0.0,
         "misunderstanding": {
@@ -407,227 +1660,15 @@
         "learning_direction": [
           "выучить распознавание паттернов для этого типа данных",
           "добавить анализ связей между источниками",
-          "исследовать слепое пятно: домен 'finance' (26 записей)",
-          "углубить доминантный домен 'data' (217 записей)",
-          "проанализировать малоиспользуемый источник 'dimension_proposals' (92 записей)",
-          "исследовать аномалию: домен 'data' (95% неуспеха)"
+          "исследовать слепое пятно: домен 'crystal_will' (81 записей)",
+          "углубить доминантный домен 'skill' (5442 записей)",
+          "проанализировать малоиспользуемый источник 'session_dump' (1616 записей)",
+          "исследовать аномалию: домен 'research' (93% неуспеха)"
         ]
       },
       {
-        "ts": "2026-07-31T22:41:00",
-        "action_id": "conscience_blindspot_uncategorized",
-        "type": "post_action",
-        "learned_about": "uncategorized",
-        "learned_summary": "Слепое пятно 'uncategorized': 79 записей [success=7, unknown=72]",
-        "action_type": "blindspot_uncategorized"
-      },
-      {
-        "ts": "2026-07-31T22:41:00",
-        "action_id": "test_extract_fabric",
-        "understanding": "low",
-        "efficiency": 0.0,
-        "misunderstanding": {
-          "detected": true,
-          "what": "Данные были, но не распознаны",
-          "why": "нет скила/знания для этого типа данных",
-          "type": "A"
-        },
-        "horizon_miss": {
-          "detected": true,
-          "what": "Не увидел связи между источниками данных",
-          "why": "смотрю на файлы по отдельности, а не на поток",
-          "learning": "нужен анализ связей между источниками"
-        },
-        "learning_direction": [
-          "научиться классифицировать неструктурированные данные",
-          "ищать горизонты в пересечениях доменов",
-          "исследовать слепое пятно: домен 'uncategorized' (79 записей)",
-          "углубить доминантный домен 'data' (217 записей)",
-          "проанализировать малоиспользуемый источник 'dimension_proposals' (92 записей)",
-          "исследовать аномалию: домен 'data' (95% неуспеха)"
-        ]
-      },
-      {
-        "ts": "2026-07-31T22:41:07",
-        "action_id": "conscience_anomaly_data",
-        "type": "post_action",
-        "learned_about": "data",
-        "learned_summary": "Аномалия 'data': [failure=60, success=10, unknown=147] Примеры: [learned] Hero section uses NO data-reveal attribute to ensure immediate LCP pai | [decision] sourced sanitize-content.sh early (SCRIPT_",
-        "action_type": "anomaly_data"
-      },
-      {
-        "ts": "2026-07-31T22:41:07",
-        "action_id": "test_extract_fabric",
-        "understanding": "low",
-        "efficiency": 0.0,
-        "misunderstanding": {
-          "detected": true,
-          "what": "Данные были, но не распознаны",
-          "why": "нет скила/знания для этого типа данных",
-          "type": "A"
-        },
-        "horizon_miss": {
-          "detected": true,
-          "what": "Не увидел связи между источниками данных",
-          "why": "смотрю на файлы по отдельности, а не на поток",
-          "learning": "нужен анализ связей между источниками"
-        },
-        "learning_direction": [
-          "выучить распознавание паттернов для этого типа данных",
-          "добавить анализ связей между источниками",
-          "исследовать слепое пятно: домен 'mature_key' (28 записей)",
-          "углубить доминантный домен 'data' (217 записей)",
-          "проанализировать малоиспользуемый источник 'dimension_proposals' (92 записей)",
-          "исследовать аномалию: домен 'data' (95% неуспеха)"
-        ]
-      },
-      {
-        "ts": "2026-07-31T22:41:15",
-        "action_id": "conscience_blindspot_mature_key",
-        "type": "post_action",
-        "learned_about": "mature_key",
-        "learned_summary": "Слепое пятно 'mature_key': 28 записей [PBN_network_automation=4, ai_powered_ad_creation=4, iGaming_SEO_blueprint=4, iGaming_SEO_playbook=4, igaming_seo=4, traffic_arbitrage_methodology=4, youtube_cpa_",
-        "action_type": "blindspot_mature_key"
-      },
-      {
-        "ts": "2026-07-31T22:41:15",
-        "action_id": "test_extract_fabric",
-        "understanding": "low",
-        "efficiency": 0.0,
-        "misunderstanding": {
-          "detected": true,
-          "what": "Данные были, но не распознаны",
-          "why": "нет скила/знания для этого типа данных",
-          "type": "A"
-        },
-        "horizon_miss": {
-          "detected": true,
-          "what": "Не увидел связи между источниками данных",
-          "why": "смотрю на файлы по отдельности, а не на поток",
-          "learning": "нужен анализ связей между источниками"
-        },
-        "learning_direction": [
-          "научиться классифицировать неструктурированные данные",
-          "ищать горизонты в пересечениях доменов",
-          "исследовать слепое пятно: домен 'mature_key' (28 записей)",
-          "углубить доминантный домен 'creative' (176 записей)",
-          "проанализировать малоиспользуемый источник 'dimension_proposals' (92 записей)",
-          "исследовать аномалию: домен 'debugging' (100% неуспеха)"
-        ]
-      },
-      {
-        "ts": "2026-08-01T01:20:46",
-        "action_id": "conscience_deepen__suggestion_log",
-        "type": "post_action",
-        "learned_about": "_suggestion_log",
-        "learned_summary": "Углубление '_suggestion_log': 5426 записей, соседи: advanced-analytics(20291)",
-        "action_type": "deepen__suggestion_log"
-      },
-      {
-        "ts": "2026-08-01T01:20:46",
-        "action_id": "test_extract_fabric",
-        "understanding": "low",
-        "efficiency": 0.0,
-        "misunderstanding": {
-          "detected": true,
-          "what": "Данные были, но не распознаны",
-          "why": "нет скила/знания для этого типа данных",
-          "type": "A"
-        },
-        "horizon_miss": {
-          "detected": true,
-          "what": "Не увидел связи между источниками данных",
-          "why": "смотрю на файлы по отдельности, а не на поток",
-          "learning": "нужен анализ связей между источниками"
-        },
-        "learning_direction": [
-          "выучить распознавание паттернов для этого типа данных",
-          "добавить анализ связей между источниками",
-          "исследовать слепое пятно: домен 'social-media' (52 записей)",
-          "углубить доминантный домен '_suggestion_log' (5426 записей)",
-          "проанализировать малоиспользуемый источник 'self_improvement_loop' (82 записей)",
-          "исследовать аномалию: домен 'debugging' (100% неуспеха)"
-        ]
-      },
-      {
-        "ts": "2026-08-01T01:21:05",
-        "action_id": "conscience_deepen_creative",
-        "type": "post_action",
-        "learned_about": "creative",
-        "learned_summary": "Углубление 'creative': 178 записей, соседи: _suggestion_log(25541)",
-        "action_type": "deepen_creative"
-      },
-      {
-        "ts": "2026-08-01T01:21:05",
-        "action_id": "test_extract_fabric",
-        "understanding": "low",
-        "efficiency": 0.0,
-        "misunderstanding": {
-          "detected": true,
-          "what": "Данные были, но не распознаны",
-          "why": "нет скила/знания для этого типа данных",
-          "type": "A"
-        },
-        "horizon_miss": {
-          "detected": true,
-          "what": "Не увидел связи между источниками данных",
-          "why": "смотрю на файлы по отдельности, а не на поток",
-          "learning": "нужен анализ связей между источниками"
-        },
-        "learning_direction": [
-          "научиться классифицировать неструктурированные данные",
-          "ищать горизонты в пересечениях доменов",
-          "исследовать слепое пятно: домен 'social-media' (52 записей)",
-          "углубить доминантный домен 'creative' (178 записей)",
-          "проанализировать малоиспользуемый источник 'self_improvement_loop' (82 записей)",
-          "исследовать аномалию: домен 'design' (93% неуспеха)"
-        ]
-      },
-      {
-        "ts": "2026-08-01T01:21:30",
-        "action_id": "conscience_anomaly_design",
-        "type": "post_action",
-        "learned_about": "design",
-        "learned_summary": "Аномалия 'design': [failure=35, partial=1, success=4, unknown=36] Примеры: [decision] Updated command counts to 29 in CLAUDE.md (2 places), plugin-catalog. | [convention] self_system: Self-System — ед",
-        "action_type": "anomaly_design"
-      },
-      {
-        "ts": "2026-08-01T01:21:30",
-        "action_id": "test_extract_fabric",
-        "understanding": "low",
-        "efficiency": 0.0,
-        "misunderstanding": {
-          "detected": true,
-          "what": "Данные были, но не распознаны",
-          "why": "нет скила/знания для этого типа данных",
-          "type": "A"
-        },
-        "horizon_miss": {
-          "detected": true,
-          "what": "Не увидел связи между источниками данных",
-          "why": "смотрю на файлы по отдельности, а не на поток",
-          "learning": "нужен анализ связей между источниками"
-        },
-        "learning_direction": [
-          "выучить распознавание паттернов для этого типа данных",
-          "добавить анализ связей между источниками",
-          "исследовать слепое пятно: домен 'social-media' (52 записей)",
-          "углубить доминантный домен 'file_ops' (130 записей)",
-          "проанализировать малоиспользуемый источник 'self_improvement_loop' (82 записей)",
-          "исследовать аномалию: домен 'design' (93% неуспеха)"
-        ]
-      },
-      {
-        "ts": "2026-08-01T03:53:11",
+        "ts": "2026-08-05T01:11:31",
         "action_id": "conscience_deepen_skill",
-        "type": "post_action",
-        "learned_about": "skill",
-        "learned_summary": "Углубление 'skill': 3770 записей, соседи: _suggestion_log(22253)",
-        "action_type": "deepen_skill"
-      },
-      {
-        "ts": "2026-08-01T03:53:12",
-        "action_id": "test_extract_fabric",
         "understanding": "low",
         "efficiency": 0.0,
         "misunderstanding": {
@@ -645,62 +1686,277 @@
         "learning_direction": [
           "научиться классифицировать неструктурированные данные",
           "ищать горизонты в пересечениях доменов",
-          "исследовать слепое пятно: домен 'social-media' (52 записей)",
-          "углубить доминантный домен 'skill' (3770 записей)",
-          "проанализировать малоиспользуемый источник 'self_improvement_loop' (82 записей)",
-          "исследовать аномалию: домен 'debugging' (100% неуспеха)"
+          "исследовать слепое пятно: домен 'crystal_will' (83 записей)",
+          "углубить доминантный домен 'skill' (5442 записей)",
+          "проанализировать малоиспользуемый источник 'legacy:improvement_suggestions' (489 записей)",
+          "исследовать аномалию: домен 'architecture' (92% неуспеха)"
+        ]
+      },
+      {
+        "ts": "2026-08-05T01:11:49",
+        "action_id": "conscience_deepen_skill",
+        "understanding": "low",
+        "efficiency": 0.0,
+        "misunderstanding": {
+          "detected": true,
+          "what": "Данные были, но не распознаны",
+          "why": "нет скила/знания для этого типа данных",
+          "type": "A"
+        },
+        "horizon_miss": {
+          "detected": true,
+          "what": "Не увидел связи между источниками данных",
+          "why": "смотрю на файлы по отдельности, а не на поток",
+          "learning": "нужен анализ связей между источниками"
+        },
+        "learning_direction": [
+          "выучить распознавание паттернов для этого типа данных",
+          "добавить анализ связей между источниками",
+          "исследовать слепое пятно: домен 'crystal_will' (83 записей)",
+          "углубить доминантный домен 'skill' (5442 записей)",
+          "проанализировать малоиспользуемый источник 'legacy:improvement_suggestions' (489 записей)",
+          "исследовать аномалию: домен 'architecture' (92% неуспеха)"
+        ]
+      },
+      {
+        "ts": "2026-08-05T01:12:08",
+        "action_id": "conscience_deepen_skill",
+        "understanding": "low",
+        "efficiency": 0.0,
+        "misunderstanding": {
+          "detected": true,
+          "what": "Данные были, но не распознаны",
+          "why": "нет скила/знания для этого типа данных",
+          "type": "A"
+        },
+        "horizon_miss": {
+          "detected": true,
+          "what": "Не увидел связи между источниками данных",
+          "why": "смотрю на файлы по отдельности, а не на поток",
+          "learning": "нужен анализ связей между источниками"
+        },
+        "learning_direction": [
+          "научиться классифицировать неструктурированные данные",
+          "ищать горизонты в пересечениях доменов",
+          "исследовать слепое пятно: домен 'crystal_will' (83 записей)",
+          "углубить доминантный домен 'skill' (5442 записей)",
+          "проанализировать малоиспользуемый источник 'legacy:improvement_suggestions' (489 записей)",
+          "исследовать аномалию: домен 'architecture' (92% неуспеха)"
+        ]
+      },
+      {
+        "ts": "2026-08-05T01:12:27",
+        "action_id": "conscience_deepen_skill",
+        "understanding": "low",
+        "efficiency": 0.0,
+        "misunderstanding": {
+          "detected": true,
+          "what": "Данные были, но не распознаны",
+          "why": "нет скила/знания для этого типа данных",
+          "type": "A"
+        },
+        "horizon_miss": {
+          "detected": true,
+          "what": "Не увидел связи между источниками данных",
+          "why": "смотрю на файлы по отдельности, а не на поток",
+          "learning": "нужен анализ связей между источниками"
+        },
+        "learning_direction": [
+          "выучить распознавание паттернов для этого типа данных",
+          "добавить анализ связей между источниками",
+          "исследовать слепое пятно: домен 'crystal_will' (83 записей)",
+          "углубить доминантный домен 'skill' (5442 записей)",
+          "проанализировать малоиспользуемый источник 'legacy:improvement_suggestions' (489 записей)",
+          "исследовать аномалию: домен 'architecture' (92% неуспеха)"
+        ]
+      },
+      {
+        "ts": "2026-08-05T01:12:45",
+        "action_id": "conscience_deepen_skill",
+        "understanding": "low",
+        "efficiency": 0.0,
+        "misunderstanding": {
+          "detected": true,
+          "what": "Данные были, но не распознаны",
+          "why": "нет скила/знания для этого типа данных",
+          "type": "A"
+        },
+        "horizon_miss": {
+          "detected": true,
+          "what": "Не увидел связи между источниками данных",
+          "why": "смотрю на файлы по отдельности, а не на поток",
+          "learning": "нужен анализ связей между источниками"
+        },
+        "learning_direction": [
+          "научиться классифицировать неструктурированные данные",
+          "ищать горизонты в пересечениях доменов",
+          "исследовать слепое пятно: домен 'crystal_will' (83 записей)",
+          "углубить доминантный домен 'skill' (5442 записей)",
+          "проанализировать малоиспользуемый источник 'legacy:improvement_suggestions' (489 записей)",
+          "исследовать аномалию: домен 'architecture' (92% неуспеха)"
+        ]
+      },
+      {
+        "ts": "2026-08-05T01:13:02",
+        "action_id": "conscience_deepen_skill",
+        "understanding": "low",
+        "efficiency": 0.0,
+        "misunderstanding": {
+          "detected": true,
+          "what": "Данные были, но не распознаны",
+          "why": "нет скила/знания для этого типа данных",
+          "type": "A"
+        },
+        "horizon_miss": {
+          "detected": true,
+          "what": "Не увидел связи между источниками данных",
+          "why": "смотрю на файлы по отдельности, а не на поток",
+          "learning": "нужен анализ связей между источниками"
+        },
+        "learning_direction": [
+          "выучить распознавание паттернов для этого типа данных",
+          "добавить анализ связей между источниками",
+          "исследовать слепое пятно: домен 'crystal_will' (83 записей)",
+          "углубить доминантный домен 'skill' (5442 записей)",
+          "проанализировать малоиспользуемый источник 'legacy:improvement_suggestions' (489 записей)",
+          "исследовать аномалию: домен 'architecture' (92% неуспеха)"
         ]
       }
     ],
-    "last_assessment": "2026-08-01",
+    "last_assessment": "2026-08-05",
     "studied": [
-      "system",
-      "research",
-      "bugfix",
-      "devops",
-      "browser",
-      "cube_analysis",
-      "terminal",
-      "user_voice",
-      "debugging",
-      "coding",
-      "communication",
-      "log_agent",
-      "finance",
-      "uncategorized",
       "data",
-      "mature_key",
-      "_suggestion_log",
-      "creative",
+      "browser",
+      "devops",
+      "legacy",
+      "bugfix",
+      "file_ops",
+      "session",
       "design",
-      "skill"
+      "uncategorized",
+      "legacy:state_db",
+      "legacy:crystal",
+      "gap_filler",
+      "reflection",
+      "legacy:white_spot_exploration",
+      "creative",
+      "legacy:skill-indexer",
+      "crystal",
+      "improvement_suggestions",
+      "research",
+      "session_dump"
     ]
   },
   "znu": {
-    "log_agent": "Аудит источника 'log_agent': 80 записей, домены: coding(37), bugfix(16), devops(7)",
+    "log_agent": "Аудит источника 'log_agent': 94 записей, домены: coding(43), bugfix(16), devops(10)",
     "terminal": "Слепое пятно 'terminal': 22 записей [success=4, unknown=18]",
-    "finance": "Слепое пятно 'finance': 26 записей [None=9, neutral=15, success=2]",
-    "debugging": "Углубление 'debugging': 13395 записей, соседи: _suggestion_log(11545)",
-    "dimension_proposals": "Аудит источника 'dimension_proposals': 88 записей, домены: data(52), research(19), coding(13)",
-    "data": "Аномалия 'data': [failure=60, success=10, unknown=147] Примеры: [learned] Hero section uses NO data-",
-    "agent_decisions": "Аудит источника 'agent_decisions': 122 записей, домены: devops(77), bugfix(22), creative(10)",
-    "uncategorized": "Слепое пятно 'uncategorized': 79 записей [success=7, unknown=72]",
+    "finance": "Слепое пятно 'finance': 33 записей [None=9, neutral=15, partial=6, success=2, unknown=1]",
+    "debugging": "Аномалия 'debugging': [failure=156, success=14, unknown=7] Примеры: [learned] .beads/config/ provisi",
+    "dimension_proposals": "Аудит источника 'dimension_proposals': 100 записей, домены: data(62), research(19), coding(14)",
+    "data": "Аномалия 'data': [failure=68, success=10, unknown=193] Примеры: [learned] Hero section uses NO data-",
+    "agent_decisions": "Аудит источника 'agent_decisions': 131 записей, домены: devops(84), bugfix(22), creative(10)",
+    "uncategorized": "Аномалия 'uncategorized': [failure=3, success=8, unknown=82] Примеры: [convention] agent_manager: Ag",
     "mature_key": "Слепое пятно 'mature_key': 28 записей [PBN_network_automation=4, ai_powered_ad_creation=4, iGaming_S",
     "social-media": "Слепое пятно 'social-media': 52 записей [failure=2, neutral=6, partial=1, success=37, unknown=6]",
-    "_suggestion_log": "Углубление '_suggestion_log': 5426 записей, соседи: advanced-analytics(20291)",
-    "design": "Аномалия 'design': [failure=35, partial=1, success=4, unknown=36] Примеры: [decision] Updated comman",
+    "_suggestion_log": "Слепое пятно '_suggestion_log': 61 записей [meta=61]",
+    "design": "Аномалия 'design': [failure=34, partial=1, success=5, unknown=37] Примеры: [decision] Updated comman",
     "white-spot-explorer": "Аудит источника 'white-spot-explorer': 157 записей, домены: social-media(40), finance(13), video-con",
-    "skill": "Углубление 'skill': 3770 записей, соседи: _suggestion_log(22253)",
+    "skill": "Углубление 'skill': 4726 записей, соседи: _suggestion_log(4489)",
     "architecture": "Аномалия 'architecture': [failure=1, success=1, unknown=10] Примеры: [pattern] When build artifacts ",
-    "system": "Слепое пятно 'system': 90 записей [failure=9, success=38, unknown=43]",
-    "research": "Аномалия 'research': [failure=69, success=14, unknown=94] Примеры: Business analysis: beauty salon b",
+    "system": "Углубление 'system': 145 записей, соседи: _suggestion_log(6939)",
+    "research": "Аномалия 'research': [failure=103, partial=1, success=15, unknown=110] Примеры: Business analysis: b",
     "bugfix": "Слепое пятно 'bugfix': 91 записей [failure=62, success=28, unknown=1]",
-    "devops": "Углубление 'devops': 543 записей, соседи: _suggestion_log(24330)",
-    "browser": "Слепое пятно 'browser': 110 записей [failure=55, neutral=3, success=21, unknown=31]",
+    "devops": "Аномалия 'devops': [failure=1199, partial=5, success=121, unknown=243] Примеры: [decision] Dropped f",
+    "browser": "Слепое пятно 'browser': 75 записей [failure=23, neutral=3, success=17, unknown=32]",
     "cube_analysis": "Аудит источника 'cube_analysis': 175 записей, домены: debugging(54), research(24), creative(23)",
-    "user_voice": "Углубление 'user_voice': 431 записей, соседи: _suggestion_log(24509)",
-    "coding": "Углубление 'coding': 397 записей, соседи: _suggestion_log(24543)",
-    "communication": "Углубление 'communication': 229 записей, соседи: _suggestion_log(24711)",
-    "creative": "Углубление 'creative': 178 записей, соседи: _suggestion_log(25541)"
-  }
+    "user_voice": "Углубление 'user_voice': 431 записей, соседи: _suggestion_log(6657)",
+    "coding": "Углубление 'coding': 395 записей, соседи: _suggestion_log(6741)",
+    "communication": "Углубление 'communication': 219 записей, соседи: _suggestion_log(6921)",
+    "creative": "Слепое пятно 'creative': 177 записей [failure=39, neutral=1, success=23, unknown=114]",
+    "tech": "Слепое пятно 'tech': 57 записей [partial=47, unknown=10]",
+    "file_ops": "Слепое пятно 'file_ops': 126 записей [failure=32, success=35, unknown=59]",
+    "self_improvement_loop": "Аудит источника 'self_improvement_loop': 82 записей, домены: debugging(51), system(31)",
+    "improvement_suggestions": "Аудит источника 'improvement_suggestions': 1343 записей, домены: devops(1198), _suggestion_log(61), ",
+    "crystal_will": "Слепое пятно 'crystal_will': 35 записей [success=8, will_action=27]",
+    "legacy:improvement_suggestions": "Аудит источника 'legacy:improvement_suggestions': 489 записей, домены: legacy(489)",
+    "legacy": "Углубление 'legacy': 27060 записей, соседи: _suggestion_log(11852)",
+    "session": "Углубление 'session': 1357 записей, соседи: _suggestion_log(37717)",
+    "legacy:state_db": "Аудит источника 'legacy:state_db': 565 записей, домены: legacy(565)",
+    "legacy:crystal": "Аудит источника 'legacy:crystal': 674 записей, домены: legacy(674)",
+    "gap_filler": "Аудит источника 'gap_filler': 697 записей, домены: devops(296), coding(147), data(133)",
+    "reflection": "Слепое пятно 'reflection': 112 записей [boot_reflection=3, learned=18, success=91]",
+    "legacy:white_spot_exploration": "Аудит источника 'legacy:white_spot_exploration': 801 записей, домены: legacy(801)",
+    "legacy:skill-indexer": "Аудит источника 'legacy:skill-indexer': 856 записей, домены: legacy(856)",
+    "crystal": "Слепое пятно 'crystal': 78 записей [None=1, snapshot=77]",
+    "session_dump": "Аудит источника 'session_dump': 1616 записей, домены: session(1355), communication(146), coding(62)"
+  },
+  "touched_sources": [
+    "sales_assistant",
+    "user_voice",
+    "user_chat"
+  ],
+  "last_touch": 1785566878.6656709,
+  "plan": {
+    "generated": "2026-08-04T12:45:40.098599",
+    "source": "reflection-2026-08-04",
+    "goals_7d": [
+      "Кухня: 3 шаблона стилей + автомат рерайта (биржа telega.in референсы)",
+      "EE: вычистить мусорные сущности KILL/SKIL (substring-обрезки)",
+      "Куб: поднять success-записи - фиксировать результат каждого действия"
+    ],
+    "goals_30d": [
+      "Сетка кухни: 3 канала работают, конвейер парсер->рерайт->постер",
+      "Связность EE >=0.2 (чистка мусора + связи по реальным сущностям)",
+      "Грани reflection/control >=5% (механизмы уже стоят)"
+    ],
+    "metrics": {
+      "kc_growth_24h": 583,
+      "ee_connectivity": 0.08,
+      "grani_reflection": 14,
+      "grani_control": 2,
+      "pytest": "66/6"
+    },
+    "targets": {
+      "ee_connectivity": 0.2,
+      "grani_control_pct": 5.0
+    }
+  },
+  "grani": {
+    "Мысль": 1103,
+    "Реакция": 2144,
+    "Рефлексия": 324,
+    "Исполнение": 1838,
+    "Обучение": 5465,
+    "Управление": 293
+  },
+  "autolearn_params": {
+    "reflex_threshold": 5,
+    "control_threshold": 3,
+    "sum_threshold": 10,
+    "stagnation_threshold": 0.5,
+    "max_cycles": 20,
+    "cooldown_hours": 6,
+    "cooldown_fail_hours": 12,
+    "max_fail_streak": 3,
+    "idle_days": 7
+  },
+  "diversity_boost": 0.1,
+  "modifications": [
+    {
+      "ts": "2026-08-05T01:09:13",
+      "id": "mod_diversity_boost",
+      "type": "boost_diversity",
+      "result": "Diversity boost = 0.1"
+    }
+  ],
+  "mod_evals": [
+    {
+      "ts": "2026-08-05T01:09:13",
+      "mod_id": "mod_diversity_boost",
+      "mod_type": "boost_diversity",
+      "applied": true,
+      "success": true,
+      "detail": "boost = 0.1"
+    }
+  ]
 }
