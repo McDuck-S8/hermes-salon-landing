@@ -80,7 +80,10 @@ MODULES = [
     # Background cron modules
     "proactive_doer", "proactive_executor", "self_healing_monitor",
     "autonomous_agent", "pipeline_cron", "knowledge_gap_filler",
-    "anomaly_detector", "result_producer", "event_trigger",
+    "result_producer", "event_trigger",
+    # Missing modules - add to heartbeat
+    "researcher_agent", "curiosity_engine", "event_processor",
+    "entity_linking_pipeline", "sales_assistant", "alert_janitor",
 ]
 
 # ── Level 3: Pipelines ──
@@ -105,7 +108,7 @@ EXTERNAL_SERVICES = {
     "browseros": {"host": "127.0.0.1", "port": 9003, "timeout_s": 5},
     "browserclaw": {"host": "127.0.0.1", "port": 9010, "timeout_s": 5},
     "deepseek_local": {"host": "127.0.0.1", "port": 9655, "timeout_s": 5},
-    "telegram_api": {"host": "api.telegram.org", "port": 443, "timeout_s": 10},
+    "telegram_api": {"host": "api.telegram.org", "port": 443, "timeout_s": 10, "proxy": "socks5h://127.0.0.1:10806"},
     "openrouter_api": {"host": "openrouter.ai", "port": 443, "timeout_s": 10},
 }
 
@@ -187,17 +190,23 @@ def register(name: str, type: str = "module", pipeline: str = None):
 
 def register_all_modules():
     """Register all known components. Call once at startup."""
+    state = _load()
+    state.setdefault("registered", {})
     for m in MODULES:
-        register(m, type="module")
+        state["registered"][m] = {"type": "module", "pipeline": None, "registered_at": time.time()}
     for e in EVENTS:
-        register(e, type="event")
+        state["registered"][e] = {"type": "event", "pipeline": EVENTS[e].get("pipeline"), "registered_at": time.time()}
     for p in PIPELINES:
-        register(p, type="pipeline")
+        state["registered"][p] = {"type": "pipeline", "pipeline": None, "registered_at": time.time()}
+    # knowledge_pipeline is both a module AND a pipeline - ensure it's registered as module
+    if "knowledge_pipeline" not in state["registered"] or state["registered"]["knowledge_pipeline"].get("type") != "module":
+        state["registered"]["knowledge_pipeline"] = {"type": "module", "pipeline": "knowledge_pipeline", "registered_at": time.time()}
+    _save(state)
 
 # ── Heartbeat (Levels 1-4) ──
 def beat(name: str, latency_ms: float = None, status: str = None):
     """Record a heartbeat from `name`. Optionally with latency and explicit status.
-    
+
     Args:
         name: Component name
         latency_ms: Optional response latency in ms
@@ -214,7 +223,16 @@ def beat(name: str, latency_ms: float = None, status: str = None):
     # Auto-register if not known
     state.setdefault("registered", {})
     if name not in state["registered"]:
-        state["registered"][name] = {"type": "unknown", "registered_at": now}
+        # Determine correct type
+        if name in MODULES:
+            comp_type = "module"
+        elif name in EVENTS:
+            comp_type = "event"
+        elif name in PIPELINES:
+            comp_type = "pipeline"
+        else:
+            comp_type = "unknown"
+        state["registered"][name] = {"type": comp_type, "registered_at": now}
     state["beats"][name] = entry
     _save(state)
 
@@ -238,6 +256,46 @@ def event_beat(event_name: str):
 
     # Auto-cleanup: alert removed if this event was DOWN but now HEALTHY
     _cleanup_alerts(1, [event_name])
+
+    # EVENT-DRIVEN TRIGGERS (DIRECTIVE 0x52): auto-spawn handlers for specific events
+    if event_name == "research_queued":
+        _trigger_researcher_agent()
+    elif event_name == "knowledge_added":
+        _maybe_trigger_curiosity_scan()
+
+def _trigger_researcher_agent():
+    """Spawn researcher_agent to process pending queue (batch trigger ≥5)."""
+    try:
+        import subprocess, os
+        # Non-blocking: fire and forget, researcher_agent handles batch logic internally
+        script = os.path.join(os.path.dirname(__file__), "researcher_agent.py")
+        subprocess.Popen(
+            [sys.executable, script, "--batch", "--limit", "5"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            start_new_session=True
+        )
+    except Exception:
+        pass  # Never block heartbeat on trigger failure
+
+def _maybe_trigger_curiosity_scan():
+    """Optionally trigger curiosity scan on knowledge growth (throttled)."""
+    try:
+        import subprocess, os, json, time
+        state = _load()
+        last_scan = state.get("last_curiosity_scan", 0)
+        if time.time() - last_scan > 300:  # 5 min throttle
+            script = os.path.join(os.path.dirname(__file__), "curiosity_engine.py")
+            subprocess.Popen(
+                [sys.executable, script],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+                start_new_session=True
+            )
+            state["last_curiosity_scan"] = time.time()
+            _save(state)
+    except Exception:
+        pass
 
 # ── Check events (Level 1) ──
 def check_events() -> list:
@@ -300,21 +358,26 @@ def check_modules() -> list:
     orphans = []
     
     for name, reg in state.get("registered", {}).items():
-        if reg.get("type") not in ("module", "unknown"):
-            continue
-        last = state["beats"].get(name, {}).get("last", 0)
-        elapsed = now - last
-        if elapsed >= DEFAULT_TIMEOUT:
-            alerts.append({
-                "level": 2,
-                "name": name,
-                "status": "SILENT",
-                "elapsed_s": round(elapsed),
-                "type": "module_silent",
-                "alert": f"Module '{name}' silent for {elapsed/3600:.0f}h (>{DEFAULT_TIMEOUT/3600:.0f}h)",
-            })
-        elif last == 0:
-            orphans.append(name)
+            if reg.get("type") not in ("module", "unknown"):
+                continue
+            # Внешние сервисы (уровень 4) не должны алертить как «модули» (уровень 2):
+            # их живость проверяет ping_external в system_status(). Фикс 2026-08-03.
+            if name in EXTERNAL_SERVICES:
+                continue
+            last = state["beats"].get(name, {}).get("last", 0)
+            if last == 0:
+                orphans.append(name)
+                continue
+            elapsed = now - last
+            if elapsed >= DEFAULT_TIMEOUT:
+                alerts.append({
+                    "level": 2,
+                    "name": name,
+                    "status": "SILENT",
+                    "elapsed_s": round(elapsed),
+                    "type": "module_silent",
+                    "alert": f"Module '{name}' silent for {elapsed/3600:.0f}h (>{DEFAULT_TIMEOUT/3600:.0f}h)",
+                })
     
     if orphans:
         alerts.append({
@@ -403,11 +466,20 @@ def check_pipelines() -> dict:
     return result
 
 # ── External services ping (Level 4) ──
-def _tcp_ping(host: str, port: int, timeout_s: float = 5) -> tuple:
+def _tcp_ping(host: str, port: int, timeout_s: float = 5, proxy: str = None) -> tuple:
     """Returns (success: bool, latency_ms: float)."""
     start = time.time()
     try:
-        s = socket.create_connection((host, port), timeout=timeout_s)
+        if proxy:
+            import socks
+            from urllib.parse import urlparse
+            p = urlparse(proxy)  # socks5h://host:port
+            s = socks.socksocket()
+            s.set_proxy(socks.SOCKS5, p.hostname, p.port)
+            s.settimeout(timeout_s)
+            s.connect((host, port))
+        else:
+            s = socket.create_connection((host, port), timeout=timeout_s)
         s.close()
         latency = round((time.time() - start) * 1000, 1)
         return True, latency
@@ -420,7 +492,7 @@ def ping_external(name: str) -> dict:
     if not svc:
         return {"status": "UNKNOWN", "error": f"No config for '{name}'"}
     
-    success, latency = _tcp_ping(svc["host"], svc["port"], svc.get("timeout_s", 5))
+    success, latency = _tcp_ping(svc["host"], svc["port"], svc.get("timeout_s", 5), svc.get("proxy"))
     
     result = {"host": svc["host"], "port": svc["port"]}
     if success:
@@ -572,8 +644,23 @@ def system_status() -> dict:
     
     events_healthy = sum(1 for e in events.values() if e["status"] == "HEALTHY")
     events_total = sum(1 for e in events.values() if e["status"] != "MONITOR")
+    try:
+        feelings = compute_feelings(alerts=state.get("alerts", []))
+    except Exception:
+        feelings = {}
+    try:
+        rmetrics = reflex_metrics()
+    except Exception:
+        rmetrics = {"reflex_active": None, "control_active": None, "reflex_pct": None, "control_pct": None}
+    try:
+        triad = compute_triad()
+    except Exception:
+        triad = {}
     report = {
         "timestamp": now.isoformat(),
+        "feelings": feelings,
+        "reflex_metrics": rmetrics,
+        "triad": triad,
         "levels": {
             "events": events,
             "modules": modules,
@@ -591,6 +678,8 @@ def system_status() -> dict:
             "services_healthy": sum(1 for s in external.values() if s.get("status") == "HEALTHY"),
             "services_total": len(external),
             "alerts_active": len(state.get("alerts", [])),
+            "reflex_active": rmetrics.get("reflex_active"),
+            "control_active": rmetrics.get("control_active"),
         },
     }
     
@@ -600,6 +689,173 @@ def system_status() -> dict:
         json.dump(report, f, indent=2)
     
     return report
+
+# ── Feelings (Байес) — интерпретация состояния граней Куба (Этап 2, «чувства») ──
+_FEELINGS_PRIOR = 0.5
+_FEELINGS_GAIN = 0.9  # насколько наблюдение двигает априор к 0/1
+
+
+def _bayes(observed: float):
+    """Априор 0.5 → постерий на основе наблюдения [0..1]."""
+    o = max(0.0, min(1.0, observed))
+    return round(_FEELINGS_PRIOR + _FEELINGS_GAIN * (o - _FEELINGS_PRIOR), 3)
+
+
+def compute_feelings(facets: dict = None, alerts: list = None) -> dict:
+    """Чувства как байесовские вероятности от состояния граней + алертов."""
+    if facets is None:
+        try:
+            f = CACHE / "self_model.json"
+            facets = json.loads(f.read_text(encoding="utf-8")).get("grani", {})
+        except Exception:
+            facets = {}
+    alerts = alerts or []
+    if not facets:  # данных о гранях нет → нейтраль, а не ложная апатия/застой
+        return {k: _bayes(0.5) for k in (
+            "harmony", "tension", "intensity", "stagnation",
+            "refinement", "restart")}
+    total = sum(facets.values()) or 0
+
+    # равномерность: насколько грани близки; 0 = одна доминирует
+    if total > 0:
+        spread = max(facets.values()) - (min(facets.values()) if facets else 0)
+        uniformity = 1.0 - (spread / total) if total else 0.0
+        dom_share = max(facets.values()) / total
+    else:
+        uniformity, dom_share = 0.0, 0.0
+    intensity = min(1.0, total / 500)  # общая активность (норм к 500 записей)
+    ref = facets.get("Рефлексия", 0) / total if total else 0
+    stagnation = 1.0 - intensity  # «застылость» = мало общей активности
+
+    return {
+        "harmony": _bayes(uniformity - dom_share * 0.5),
+        "tension": _bayes(min(1.0, dom_share + len(alerts) * 0.1)),
+        "intensity": _bayes(intensity),
+        "stagnation": _bayes(stagnation),
+        "refinement": _bayes(ref),
+        "restart": _bayes(1.0 if dom_share > 0.4 else 0.0),
+    }
+
+
+def reflex_metrics() -> dict:
+    """Метрики рефлекс-гейта: активны ли грани Рефлексия/Управление (>=5% от общей активности).
+
+    Возвращает reflex_active / control_active — флаги для system_status и boot-гейта.
+    """
+    try:
+        f = CACHE / "self_model.json"
+        facets = json.loads(f.read_text(encoding="utf-8")).get("grani", {})
+    except Exception:
+        facets = {}
+    total = sum(facets.values()) or 0
+    reflex = facets.get("Рефлексия", 0) / total if total else 0
+    control = facets.get("Управление", 0) / total if total else 0
+    return {
+        "reflex_active": reflex >= 0.05,
+        "control_active": control >= 0.05,
+        "reflex_pct": round(reflex * 100, 1),
+        "control_pct": round(control * 100, 1),
+    }
+
+
+# ── Triad conformance (Байес по трём образам) — соответствие эталону (2026-08-05) ──
+# Каждый факт соответствия/отклонения пишется в Куб (axis_domain='triad:<образ>',
+# axis_outcome='conform'/'deviate'). P(соответствие) = Байес(conform/(conform+deviate)).
+# Нет фактов → 0.5 (нейтраль, как чувства). Дедуп по content — урок preventive_tests.
+_TRIAD_IMAGES = {
+    "jarvis":  "проактивность, предвосхищение (что делать)",
+    "matrix":  "скиллы как рефлексы, обучение на ошибках (как делать)",
+    "insight": "защита, этика, средства vs цели (зачем/ответственность)",
+}
+
+
+def record_triad_fact(image: str, conforms: bool, note: str) -> dict:
+    """Штатная запись факта по образу. conforms=True → соответствие, False → отклонение."""
+    import sqlite3, hashlib
+    from datetime import datetime
+    if image not in _TRIAD_IMAGES:
+        return {"status": "skip", "reason": f"unknown image {image}"}
+    outcome = "conform" if conforms else "deviate"
+    text = f"[triad:{image}:{outcome}] {note}"
+    try:
+        conn = sqlite3.connect(str(CACHE / "knowledge_cube.db"))
+        cur = conn.execute("SELECT COUNT(*) FROM experiences WHERE content=?", [text])
+        if cur.fetchone()[0] > 0:
+            conn.close()
+            return {"status": "dup", "image": image, "outcome": outcome}
+        h = hashlib.md5(text.encode()).hexdigest()[:16]
+        now = datetime.now()
+        conn.execute(
+            "INSERT INTO experiences (ts, content, raw_text, hash, axis_time_hour, axis_time_dow, axis_domain, axis_outcome, source) "
+            "VALUES (?,?,?,?,?,?,?,?,?)",
+            (now.isoformat(), text, text, h, now.hour, now.weekday(), f"triad:{image}", outcome, "triad"))
+        conn.commit()
+        conn.close()
+        return {"status": "added", "image": image, "outcome": outcome}
+    except Exception as e:
+        return {"status": "error", "error": str(e)}
+
+
+def compute_triad(days: int = 30) -> dict:
+    """P(соответствие образу) по фактам Куба за последние days дней.
+    observed = conform/(conform+deviate); фактов нет → 0.5. Возвращает числа, не слова.
+    """
+    import sqlite3
+    from datetime import datetime, timedelta
+    result = {}
+    try:
+        conn = sqlite3.connect(str(CACHE / "knowledge_cube.db"))
+        since = (datetime.now() - timedelta(days=days)).isoformat()
+        rows = conn.execute(
+            "SELECT axis_domain, axis_outcome, COUNT(*) FROM experiences "
+            "WHERE axis_domain LIKE 'triad:%' AND ts >= ? GROUP BY axis_domain, axis_outcome",
+            [since]).fetchall()
+        conn.close()
+        per = {}
+        for dom, outcome, cnt in rows:
+            img = dom.split(":", 1)[1]
+            per.setdefault(img, {"conform": 0, "deviate": 0})[outcome] = cnt
+        for img in _TRIAD_IMAGES:
+            c = per.get(img, {"conform": 0, "deviate": 0})
+            n = c["conform"] + c["deviate"]
+            observed = c["conform"] / n if n else 0.5
+            result[img] = {"p": _bayes(observed), "conform": c["conform"],
+                           "deviate": c["deviate"], "observed": round(observed, 3)}
+    except Exception as e:
+        for img in _TRIAD_IMAGES:
+            result[img] = {"p": _bayes(0.5), "conform": 0, "deviate": 0,
+                           "observed": 0.5, "error": str(e)}
+    return result
+
+
+# ── Self-check for syscheck.py ──
+def self_check(verbose: bool = True) -> dict:
+    """Run complete system check. Returns dict with is_healthy and critical_alerts."""
+    st = system_status()
+    s = st["summary"]
+    
+    # Critical if no events or modules are healthy
+    critical = (s["events_healthy"] == 0 or s["modules_healthy"] == 0)
+    # Also critical if KC is empty
+    kc_critical = s.get("events_healthy", 0) == 0 and s.get("modules_healthy", 0) == 0
+    
+    if verbose:
+        print(f"System Heartbeat — {st['timestamp'][:19]}")
+        print(f"  Events:   {s['events_healthy']}/{s['events_total']} healthy")
+        print(f"  Modules:  {s['modules_healthy']}/{s['modules_total']} healthy")
+        print(f"  Pipelines: {s['pipelines_healthy']}/{s['pipelines_total']} healthy")
+        print(f"  Services:  {s['services_healthy']}/{s['services_total']} healthy")
+        print(f"  Alerts:    {s['alerts_active']}")
+        if st.get("alerts"):
+            for a in st["alerts"][-5:]:
+                print(f"  ⚠ {a.get('alert', a)}")
+    
+    return {
+        "is_healthy": s["events_healthy"] > 0 and s["modules_healthy"] > 0 and s["pipelines_healthy"] > 0,
+        "critical_alerts": critical or kc_critical,
+        "summary": s,
+        "alerts": st.get("alerts", [])
+    }
 
 # ── CLI ──
 if __name__ == "__main__":
