@@ -1597,6 +1597,10 @@ def _action_apply_suggestions(state: dict, profile: dict) -> str:
         issue_type = suggestion.get("issue_type", "")
         recommended = suggestion.get("recommended_actions", [])
 
+        # Skip already-applied suggestions (bus stop: each passenger rides once)
+        if suggestion.get("applied_at"):
+            continue
+
         # Only apply medium+ severity suggestions
         if severity not in ("critical", "high", "medium"):
             continue
@@ -1607,6 +1611,12 @@ def _action_apply_suggestions(state: dict, profile: dict) -> str:
             if result:
                 applied_actions.append(result)
                 applied_count += 1
+
+        # Mark as processed so the queue drains instead of cycling forever
+        suggestion["applied_at"] = datetime.now().isoformat()
+        suggestion["applied_count"] = sum(
+            1 for a in recommended if a
+        )
 
     # Apply the white spots discovery suggestion if present
     white_spot_sug = next(
@@ -1634,6 +1644,13 @@ def _action_apply_suggestions(state: dict, profile: dict) -> str:
         with open(guard_file, "w", encoding="utf-8") as f:
             json.dump(guards, f, indent=2, ensure_ascii=False)
         applied_actions.append(f"Created {len(guards)} preventive guards at {guard_file}")
+
+    # Persist applied_at marks so the queue drains (bus returns to empty stop)
+    try:
+        with open(suggestions_file, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+    except Exception:
+        pass
 
     # Log applied suggestions to cube
     cube_module_path = SCRIPTS_DIR / "knowledge_cube.py"
