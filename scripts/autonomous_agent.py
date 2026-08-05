@@ -1591,6 +1591,9 @@ def _action_apply_suggestions(state: dict, profile: dict) -> str:
     suggestions = data.get("suggestions", [])
     applied_actions = []
     applied_count = 0
+    # Bus station: one action per route (issue_type+action), all passengers
+    # on that route ride together. No rickshaw per passenger.
+    seen_routes = set()
 
     for suggestion in suggestions:
         severity = suggestion.get("severity", "low")
@@ -1606,6 +1609,10 @@ def _action_apply_suggestions(state: dict, profile: dict) -> str:
             continue
 
         for action_text in recommended:
+            route = (issue_type, action_text.strip()[:60])
+            if route in seen_routes:
+                continue  # already on this bus run — don't duplicate the ride
+            seen_routes.add(route)
             # Actually implement each recommended action
             result = _apply_single_suggestion(suggestion, action_text)
             if result:
