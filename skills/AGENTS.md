@@ -20,6 +20,28 @@ Skills are curated and versioned. Managed via the skill-forge system.
 - **Auto-generated skills**: `auto-generated/` — patterns learned from sessions
 - **Lavra agents**: `lavra-agent-*` — review and analysis agents
 
+## Skill File Hygiene (обязательно для АВТО-СОЗДАННЫХ скиллов)
+
+Правила для автономных писателей (background_review, self_improvement_loop).
+Причина: 2026-08-05 пользователь — «научи товарищей правильно оформлять файлы».
+Скелеты с TODO-заглушками — антипаттерн «записал-не-сделал».
+
+1. **НЕ создавать скелеты**: никаких TODO/TBD/FIXME/`pass`/пустых `[ ]` чекбоксов.
+   Скилл без реального содержания НЕ создаётся вообще.
+2. **Валидное имя**: lowercase, только `[a-z0-9_-]`, ≤64 символа, без пробелов.
+   Нормализация: `_valid_skill_name()` в self_improvement_loop.
+3. **Frontmatter**: обязательные `name`, `description` (≤57 символов в первой
+   строке — видно в system prompt), `trigger`; `category: auto-generated`
+   для автогенерированных.
+4. **Структура**: SKILL.md (класс-левел) + `references/` для деталей сессии,
+   `templates/` для заготовок, `scripts/` для исполняемых помощников.
+5. **Обновление предпочтительнее создания**: сначала patch существующего
+   (loaded/umbrella), потом support file, только потом новый скилл.
+6. **Protected skills не трогать**: bundled, hub-installed, pinned,
+   user-owned (background_review уже кодирует это в промпте).
+7. **Создание через skill_manage** (когда доступен); из чистого Python —
+   через `_write_skill_file()` с валидацией, не голым `write_text`.
+
 ## Verification
 - Each skill should have a valid `SKILL.md`
 - Check `.usage.json` for usage stats
