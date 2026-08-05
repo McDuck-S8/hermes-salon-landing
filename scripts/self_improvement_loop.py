@@ -864,8 +864,33 @@ def store_suggestions(suggestions, recurring, cube_patterns, log_clusters):
 # Main
 # ---------------------------------------------------------------------------
 
+def _load_file_hygiene_rules() -> str:
+    """Читает эталон оформления скиллов из skills/AGENTS.md (обновляемый стандарт).
+
+    Единый источник правил для loop и review (вместо дублирования в коде):
+    если правила меняются — правка в skills/AGENTS.md, не в коде.
+    Возвращает текст секции "Skill File Hygiene" или пустую строку.
+    """
+    agents_md = HERMES_HOME / "skills" / "AGENTS.md"
+    try:
+        text = agents_md.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return ""
+    if "Skill File Hygiene" not in text:
+        return ""
+    section = text.split("## Skill File Hygiene", 1)[1]
+    section = section.split("\n## ", 1)[0]
+    return section.strip()
+
+
 def main():
     print(f"[{datetime.now().isoformat()}] Self-improvement loop starting...")
+
+    hygiene = _load_file_hygiene_rules()
+    if hygiene:
+        print(f"  File hygiene rules loaded: {len(hygiene.splitlines())} lines (skills/AGENTS.md)")
+    else:
+        print("  WARNING: skills/AGENTS.md 'Skill File Hygiene' section not found")
 
     fixes = load_verified_fixes()
     experiences = load_cube_experiences()
