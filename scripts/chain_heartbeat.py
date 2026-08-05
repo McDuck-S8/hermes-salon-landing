@@ -1132,6 +1132,100 @@ def self_check(verbose: bool = True) -> dict:
         "alerts": st.get("alerts", [])
     }
 
+
+def scenario_fork(pattern: str, context: str = "", days: int = 30) -> dict:
+    """Вариативность исходов из паттерна: ветки добра, зла и статус-кво.
+
+    Паттерн нейтрален (солнце — ни хорошо, ни плохо). Хорошо/плохо
+    присваивает КОНТЕКСТ. Из истории паттерна в Кубе (conform/deviate)
+    считаем вероятности веток Байесом (_bayes) — и просчитываем, что
+    будет, если действовать по-доброму, по-злому или не действовать.
+
+    Возвращает:
+      pattern   — имя паттерна
+      p_good    — вероятность благоприятного исхода при добром действии
+      p_bad     — вероятность неблагоприятного исхода при злом действии
+      p_stasis  — вероятность статус-кво (бездействие = тоже исход)
+      branches  — 3 ветки: what (что случится), p (вероятность), sign
+    """
+    import sqlite3
+    from datetime import datetime, timedelta
+
+    # 1. История паттерна в Кубе: conform vs deviate (контекст решает!)
+    conform = deviate = 0
+    try:
+        conn = sqlite3.connect(str(CACHE / "knowledge_cube.db"))
+        since = (datetime.now() - timedelta(days=days)).isoformat()
+        rows = conn.execute(
+            "SELECT axis_outcome, COUNT(*) FROM experiences "
+            "WHERE axis_domain IN (?, ?, ?) AND ts >= ? AND axis_outcome IS NOT NULL "
+            "GROUP BY axis_outcome",
+            [f"triad:{pattern}", f"hero:{pattern}", f"antipattern:{pattern}", since]).fetchall()
+        conn.close()
+        for outcome, cnt in rows:
+            if outcome == "conform":
+                conform = cnt
+            elif outcome == "deviate":
+                deviate = cnt
+    except Exception:
+        pass
+
+    total = conform + deviate
+    if total == 0:
+        # Нет истории → все ветки равновероятны, но обязаны быть просчитаны
+        p_good = round(_bayes(0.5), 3)
+        p_bad = round(_bayes(0.5), 3)
+        p_stasis = round(_bayes(0.5), 3)
+    else:
+        # Добро: доля соответствий. Зло: доля отклонений. Статус-кво: не действовать.
+        p_good = round(_bayes(conform / total), 3)
+        p_bad = round(_bayes(deviate / total), 3)
+        p_stasis = round(_bayes(max(0.0, 1.0 - (conform / total))), 3)
+
+    branches = [
+        {
+            "sign": "good",
+            "what": f"действовать по-доброму: применить '{pattern}' правильно → успех закрепляется (conform={conform})",
+            "p": p_good,
+        },
+        {
+            "sign": "bad",
+            "what": f"действовать по-злому: нарушить '{pattern}' → повтор ошибки, регрессия (deviate={deviate})",
+            "p": p_bad,
+        },
+        {
+            "sign": "stasis",
+            "what": f"не действовать: статус-кво — ничего не меняется, но и не растёт (бездействие = тоже исход)",
+            "p": p_stasis,
+        },
+    ]
+    # Сортировка: сначала наиболее вероятный исход — читается как «что скорее всего будет»
+    branches.sort(key=lambda b: b["p"], reverse=True)
+    return {
+        "pattern": pattern,
+        "context": context,
+        "p_good": p_good,
+        "p_bad": p_bad,
+        "p_stasis": p_stasis,
+        "branches": branches,
+    }
+
+
+def scenario_board(patterns: list, context: str = "") -> dict:
+    """Вариативность по НАБОРУ паттернов: общая карта исходов.
+
+    Используется, когда в ситуации срабатывают несколько героев/антигероев
+    сразу — просчитываем каждый, потом смотрим, какая ветка доминирует."""
+    forks = {p: scenario_fork(p, context) for p in patterns}
+    top = max(forks.values(), key=lambda f: f["branches"][0]["p"]) if forks else None
+    return {
+        "patterns": list(forks.keys()),
+        "forks": forks,
+        "most_likely": top["branches"][0]["what"] if top else None,
+        "most_likely_pattern": top["pattern"] if top else None,
+    }
+
+
 # ── CLI ──
 if __name__ == "__main__":
     import sys
