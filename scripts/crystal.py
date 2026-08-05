@@ -298,15 +298,18 @@ def diagnose(snap):
         })
 
     # Реестр героев: домены KC с повторяющимися ОТКЛОНЕНИЯМИ (deviate>=3) →
-    # кандидаты в антигерои. Кристалл пополняет config/heroes_registry.yaml
-    # без правки кода. Условие: реальные отклонения, не любые повторы.
+    # кандидаты в антигерои; с повторяющимися СООТВЕТСТВИЯМИ (conform>=3) →
+    # кандидаты в герои. Паттерн нейтрален — оценку даёт контекст
+    # (axis_outcome). Кристалл пополняет config/heroes_registry.yaml без
+    # правки кода. Условие: реальные отклонения/соответствия, не любые повторы.
     try:
         import sys as _sys
         _sys.path.insert(0, str(Path(__file__).resolve().parent))
-        from chain_heartbeat import register_antipattern, antipattern_registry
-        known = set(antipattern_registry().keys())
+        from chain_heartbeat import register_antipattern, register_hero, antipattern_registry, hero_registry
+        known_antip = set(antipattern_registry().keys())
+        known_heroes = set(hero_registry().keys())
         _k = sqlite3.connect(KC)
-        rows = _k.execute(
+        dev_rows = _k.execute(
             "SELECT axis_domain, COUNT(*) FROM experiences "
             "WHERE axis_domain IS NOT NULL AND axis_domain != '' "
             "AND axis_domain NOT LIKE 'antipattern:%' "
@@ -315,13 +318,22 @@ def diagnose(snap):
             "GROUP BY axis_domain HAVING COUNT(*) >= 3 "
             "ORDER BY COUNT(*) DESC LIMIT 10"
         ).fetchall()
+        conf_rows = _k.execute(
+            "SELECT axis_domain, COUNT(*) FROM experiences "
+            "WHERE axis_domain IS NOT NULL AND axis_domain != '' "
+            "AND axis_domain NOT LIKE 'antipattern:%' "
+            "AND axis_domain NOT LIKE 'triad:%' "
+            "AND axis_outcome = 'conform' "
+            "GROUP BY axis_domain HAVING COUNT(*) >= 3 "
+            "ORDER BY COUNT(*) DESC LIMIT 10"
+        ).fetchall()
         _k.close()
-        for domain, cnt in rows:
-            if domain in known or domain.startswith("triad:"):
+        for domain, cnt in dev_rows:
+            if domain in known_antip or domain.startswith("triad:"):
                 continue
             reg = register_antipattern(
                 name=domain,
-                essence=f"обнаружен Кристаллом: домен '{domain}' повторяется {cnt} раз в KC с отклонениями",
+                essence=f"обнаружен Кристаллом: домен '{domain}' повторяется {cnt} раз в KC как ОТКЛОНЕНИЕ",
                 signals=[domain],
                 source="crystal",
             )
@@ -329,7 +341,22 @@ def diagnose(snap):
                 diag['tensions'].append({
                     'severity': 'low',
                     'area': 'new_antipattern',
-                    'msg': f"Новый антигерой зарегистрирован: {domain} ({cnt} записей)"
+                    'msg': f"Новый антигерой зарегистрирован: {domain} ({cnt} отклонений)"
+                })
+        for domain, cnt in conf_rows:
+            if domain in known_heroes or domain.startswith("triad:"):
+                continue
+            reg = register_hero(
+                name=domain,
+                essence=f"обнаружен Кристаллом: домен '{domain}' повторяется {cnt} раз в KC как СООТВЕТСТВИЕ",
+                conform_signals=[domain],
+                source="crystal",
+            )
+            if reg.get("status") == "registered":
+                diag['tensions'].append({
+                    'severity': 'low',
+                    'area': 'new_hero',
+                    'msg': f"Новый герой зарегистрирован: {domain} ({cnt} соответствий)"
                 })
     except Exception:
         pass

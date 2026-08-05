@@ -892,6 +892,41 @@ def antipattern_registry() -> dict:
     return {k: dict(v) for k, v in _ANTIPATTERNS.items()}
 
 
+def hero_registry() -> dict:
+    """Реестр героев: имя → суть, сигналы соответствия/отклонения."""
+    return {k: dict(v) for k, v in _TRIAD_IMAGES.items()}
+
+
+def register_hero(name: str, essence: str = "", conform_signals: list = None,
+                  deviate_signals: list = None, source: str = "cube") -> dict:
+    """Регистрирует НОВОГО героя в config/heroes_registry.yaml.
+
+    Вызывается Кубом/Кристаллом при обнаружении повторяющегося
+    СООТВЕТСТВИЯ (conform) — герой добавляется без правки кода.
+    Паттерн нейтрален; статус «герой» присваивается по контексту
+    (axis_outcome=conform), «антигерой» — по deviate.
+    """
+    import yaml
+    path = Path(__file__).resolve().parent.parent / "config" / "heroes_registry.yaml"
+    try:
+        cfg = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+        heroes = cfg.setdefault("heroes", {})
+        if name in heroes:
+            return {"status": "exists", "name": name}
+        heroes[name] = {
+            "essence": essence or f"новый герой {name}",
+            "conform_signals": conform_signals or [name],
+            "deviate_signals": deviate_signals or [],
+            "source": source,
+        }
+        cfg["heroes"] = dict(sorted(heroes.items()))
+        path.write_text(yaml.safe_dump(cfg, allow_unicode=True, sort_keys=False), encoding="utf-8")
+        _TRIAD_IMAGES[name] = heroes[name]
+        return {"status": "registered", "name": name}
+    except Exception as e:
+        return {"status": "error", "error": str(e)}
+
+
 def record_antipattern(name: str, note: str) -> dict:
     """Зафиксировать факт нарушения антипаттерна. Возвращает повторы за 30 дней.
     Повтор = антипаттерн случился снова → сигнал для autolearn запустить улучшение.
@@ -947,12 +982,72 @@ def antipattern_stats(days: int = 30) -> dict:
         return {"error": str(e)}
 
 
+def record_hero(name: str, note: str) -> dict:
+    """Зафиксировать факт СООТВЕТСТВИЯ паттерну (conform — «герой сработал»).
+
+    Зеркало record_antipattern: паттерн нейтрален, исход присваивается
+    контекстом. Неизвестное имя → авторегистрация героя в реестре."""
+    import sqlite3, hashlib
+    from datetime import datetime, timedelta
+    if name not in _TRIAD_IMAGES and name not in _ANTIPATTERNS:
+        reg = register_hero(name, essence=f"обнаружен Кубом: {note[:120]}",
+                            conform_signals=[name], source="cube")
+        if reg.get("status") not in ("registered", "exists"):
+            return {"status": "skip", "reason": f"cannot register unknown hero {name}: {reg}"}
+    text = f"[hero:{name}] {note}"
+    try:
+        conn = sqlite3.connect(str(CACHE / "knowledge_cube.db"))
+        cur = conn.execute("SELECT COUNT(*) FROM experiences WHERE content=?", [text])
+        if cur.fetchone()[0] > 0:
+            since = (datetime.now() - timedelta(days=30)).isoformat()
+            cnt = conn.execute("SELECT COUNT(*) FROM experiences WHERE axis_domain=? AND ts >= ?",
+                               [f"hero:{name}", since]).fetchone()[0]
+            conn.close()
+            return {"status": "dup", "name": name, "repeats_30d": cnt}
+        h = hashlib.md5(text.encode()).hexdigest()[:16]
+        now = datetime.now()
+        conn.execute(
+            "INSERT INTO experiences (ts, content, raw_text, hash, axis_time_hour, axis_time_dow, axis_domain, axis_outcome, source) "
+            "VALUES (?,?,?,?,?,?,?,?,?)",
+            (now.isoformat(), text, text, h, now.hour, now.weekday(), f"hero:{name}", "conform", "hero"))
+        conn.commit()
+        since = (now - timedelta(days=30)).isoformat()
+        cnt = conn.execute("SELECT COUNT(*) FROM experiences WHERE axis_domain=? AND ts >= ?",
+                           [f"hero:{name}", since]).fetchone()[0]
+        conn.close()
+        return {"status": "added", "name": name, "repeats_30d": cnt}
+    except Exception as e:
+        return {"status": "error", "error": str(e)}
+
+
+def hero_stats(days: int = 30) -> dict:
+    """Сводка соответствий паттернам за период — «добро» по имени."""
+    import sqlite3
+    from datetime import datetime, timedelta
+    try:
+        conn = sqlite3.connect(str(CACHE / "knowledge_cube.db"))
+        since = (datetime.now() - timedelta(days=days)).isoformat()
+        rows = conn.execute(
+            "SELECT axis_domain, COUNT(*) FROM experiences "
+            "WHERE axis_domain LIKE 'hero:%' AND ts >= ? GROUP BY axis_domain",
+            [since]).fetchall()
+        conn.close()
+        return {d.split(":", 1)[1]: c for d, c in rows}
+    except Exception as e:
+        return {"error": str(e)}
+
+
 def record_triad_fact(image: str, conforms: bool, note: str) -> dict:
-    """Штатная запись факта по образу. conforms=True → соответствие, False → отклонение."""
+    """Штатная запись факта по образу. conforms=True → соответствие, False → отклонение.
+    Неизвестный образ → авторегистрация героя (Куб пополняет реестр)."""
     import sqlite3, hashlib
     from datetime import datetime
     if image not in _TRIAD_IMAGES:
-        return {"status": "skip", "reason": f"unknown image {image}"}
+        # Новый герой от Куба: регистрируем в config/heroes_registry.yaml
+        reg = register_hero(image, essence=f"обнаружен Кубом: {note[:120]}",
+                            conform_signals=[image], source="cube")
+        if reg.get("status") not in ("registered", "exists"):
+            return {"status": "skip", "reason": f"cannot register unknown image {image}: {reg}"}
     outcome = "conform" if conforms else "deviate"
     text = f"[triad:{image}:{outcome}] {note}"
     try:
