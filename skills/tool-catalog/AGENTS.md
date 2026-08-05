@@ -24,4 +24,5 @@ Managed by Hermes Agent. Self-contained skill with SKILL.md, references/, templa
 ## Child DOX Index
 | File/Dir | Purpose |
 |----------|---------|
-| `references/` | Reference materials (1 files) |
+| `references/` | Reference materials (2 files) |
+| `references/skill-index.md` | Полный индекс 430 ценных скиллов по категориям — читать ПЕРЕД задачей |
