@@ -70,7 +70,7 @@ def stagnation_score(db) -> float:
 
 
 def should_learn(metrics: dict, params: dict) -> tuple[bool, str]:
-    """Решение о запуске. metrics: reflex_pct, control_pct, stagnation, triad."""
+    """Решение о запуске. metrics: reflex_pct, control_pct, stagnation, triad, antipatterns."""
     r = metrics.get("reflex_pct", 0.0)
     c = metrics.get("control_pct", 0.0)
     stag = metrics.get("stagnation", 0.0)
@@ -88,6 +88,10 @@ def should_learn(metrics: dict, params: dict) -> tuple[bool, str]:
     for img, t in (metrics.get("triad") or {}).items():
         if isinstance(t, dict) and t.get("deviate", 0) > 0 and t.get("p", 0.5) < params.get("triad_threshold", 0.4):
             return True, f"triad {img} p={t['p']} < {params.get('triad_threshold', 0.4)} (deviate={t['deviate']})"
+    # Антипаттерны (2026-08-05): повтор «зла» 2+ раз за 30 дней = улучшение
+    for name, cnt in (metrics.get("antipatterns") or {}).items():
+        if cnt >= 2:
+            return True, f"antipattern '{name}' повторился {cnt} раз за 30д"
     return False, "в норме"
 
 
@@ -124,15 +128,18 @@ def check_and_trigger(metrics: dict | None = None) -> dict:
     gm = _grani(db)
     try:
         sys.path.insert(0, str(HERMES_HOME / "scripts"))
-        from chain_heartbeat import compute_triad
+        from chain_heartbeat import compute_triad, antipattern_stats
         triad = compute_triad()
+        antip = antipattern_stats()
     except Exception:
         triad = {}
+        antip = {}
     if metrics is None:
-        metrics = {**gm, "stagnation": stagnation_score(db), "triad": triad}
+        metrics = {**gm, "stagnation": stagnation_score(db), "triad": triad, "antipatterns": antip}
     else:
         metrics = {**gm, **metrics}
         metrics.setdefault("triad", triad)
+        metrics.setdefault("antipatterns", antip)
 
     # cooldown: не чаще чем раз в N часов (любая последняя запись; FAIL удваивает)
     try:

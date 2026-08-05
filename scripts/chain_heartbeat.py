@@ -768,6 +768,66 @@ _TRIAD_IMAGES = {
     "insight": "защита, этика, средства vs цели (зачем/ответственность)",
 }
 
+# Антипаттерны — «зло»: поведение, которое повторяется и вредит.
+# Паттерны говорят ЧТО делать. Антипаттерны говорят ЧТО НЕ делать.
+# Каждый антипаттерн считается: повтор = «зло» случилось снова.
+_ANTIPATTERNS = {
+    "записал-не-сделал":  "фиксация урока/факта без применения — запись выдаётся за действие",
+    "жду-команды":        "ожидание указаний вместо действия по уже известному паттерну",
+    "формальная-живость": "формальный признак (TCP OK, файл есть, запись есть) выдаётся за 'работает'",
+    "создал-тест-не-предотвратил": "создание теста/записи выдаётся за предотвращение регрессии",
+}
+
+
+def record_antipattern(name: str, note: str) -> dict:
+    """Зафиксировать факт нарушения антипаттерна. Возвращает повторы за 30 дней.
+    Повтор = антипаттерн случился снова → сигнал для autolearn запустить улучшение."""
+    import sqlite3, hashlib
+    from datetime import datetime, timedelta
+    if name not in _ANTIPATTERNS:
+        return {"status": "skip", "reason": f"unknown antipattern {name}"}
+    text = f"[antipattern:{name}] {note}"
+    try:
+        conn = sqlite3.connect(str(CACHE / "knowledge_cube.db"))
+        cur = conn.execute("SELECT COUNT(*) FROM experiences WHERE content=?", [text])
+        if cur.fetchone()[0] > 0:
+            since = (datetime.now() - timedelta(days=30)).isoformat()
+            cnt = conn.execute("SELECT COUNT(*) FROM experiences WHERE axis_domain=? AND ts >= ?",
+                               [f"antipattern:{name}", since]).fetchone()[0]
+            conn.close()
+            return {"status": "dup", "name": name, "repeats_30d": cnt}
+        h = hashlib.md5(text.encode()).hexdigest()[:16]
+        now = datetime.now()
+        conn.execute(
+            "INSERT INTO experiences (ts, content, raw_text, hash, axis_time_hour, axis_time_dow, axis_domain, axis_outcome, source) "
+            "VALUES (?,?,?,?,?,?,?,?,?)",
+            (now.isoformat(), text, text, h, now.hour, now.weekday(), f"antipattern:{name}", "deviate", "antipattern"))
+        conn.commit()
+        since = (now - timedelta(days=30)).isoformat()
+        cnt = conn.execute("SELECT COUNT(*) FROM experiences WHERE axis_domain=? AND ts >= ?",
+                           [f"antipattern:{name}", since]).fetchone()[0]
+        conn.close()
+        return {"status": "added", "name": name, "repeats_30d": cnt}
+    except Exception as e:
+        return {"status": "error", "error": str(e)}
+
+
+def antipattern_stats(days: int = 30) -> dict:
+    """Сводка повторов антипаттернов за период — «зло» по имени."""
+    import sqlite3
+    from datetime import datetime, timedelta
+    try:
+        conn = sqlite3.connect(str(CACHE / "knowledge_cube.db"))
+        since = (datetime.now() - timedelta(days=days)).isoformat()
+        rows = conn.execute(
+            "SELECT axis_domain, COUNT(*) FROM experiences "
+            "WHERE axis_domain LIKE 'antipattern:%' AND ts >= ? GROUP BY axis_domain",
+            [since]).fetchall()
+        conn.close()
+        return {d.split(":", 1)[1]: c for d, c in rows}
+    except Exception as e:
+        return {"error": str(e)}
+
 
 def record_triad_fact(image: str, conforms: bool, note: str) -> dict:
     """Штатная запись факта по образу. conforms=True → соответствие, False → отклонение."""
