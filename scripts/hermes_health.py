@@ -7,6 +7,13 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from reality_gate import gate
 
 result = gate()
+try:
+    from chain_heartbeat import in_view_guard
+    for w in in_view_guard(days=7):
+        result.setdefault("failed", []).append("in_view")
+        result.setdefault("checks", {})["in_view"] = {"status": "WARN", "entries": [w]}
+except Exception:
+    pass
 if "--json" in sys.argv:
     print(json.dumps(result, indent=2, ensure_ascii=False))
 else:
