@@ -857,9 +857,9 @@ def record_triad_fact(image: str, conforms: bool, note: str) -> dict:
 
 
 def compute_triad(days: int = 30) -> dict:
-    """P(соответствие образу) по фактам Куба за последние days дней.
-    observed = conform/(conform+deviate); фактов нет → 0.5. Возвращает числа, не слова.
-    """
+    """Соответствие образу: БИНАРНО (есть/нету), p — только тренд.
+    observed = conform/(conform+deviate); фактов нет → 0.5.
+    Вердикт: p >= 0.6 → 'есть', иначе → 'нету'. Половины не существует."""
     import sqlite3
     from datetime import datetime, timedelta
     result = {}
@@ -879,12 +879,14 @@ def compute_triad(days: int = 30) -> dict:
             c = per.get(img, {"conform": 0, "deviate": 0})
             n = c["conform"] + c["deviate"]
             observed = c["conform"] / n if n else 0.5
-            result[img] = {"p": _bayes(observed), "conform": c["conform"],
-                           "deviate": c["deviate"], "observed": round(observed, 3)}
+            p = _bayes(observed)
+            result[img] = {"p": p, "conform": c["conform"],
+                           "deviate": c["deviate"], "observed": round(observed, 3),
+                           "verdict": "есть" if p >= 0.6 else "нету"}
     except Exception as e:
         for img in _TRIAD_IMAGES:
             result[img] = {"p": _bayes(0.5), "conform": 0, "deviate": 0,
-                           "observed": 0.5, "error": str(e)}
+                           "observed": 0.5, "verdict": "нету", "error": str(e)}
     return result
 
 
