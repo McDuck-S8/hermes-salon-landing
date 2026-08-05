@@ -1763,7 +1763,12 @@ def _apply_single_suggestion(suggestion: dict, action_text: str) -> Optional[str
             "test_description": action_text,
             "created_at": datetime.now().isoformat(),
         }
-        tests.append(test_entry)
+        # Dedup + cap: the same suggestion rode 53107 identical "test" entries
+        # in 2 days because there was no limit and no duplicate check.
+        dup_key = (test_entry["issue_type"], test_entry["test_description"][:60])
+        if dup_key not in {(t.get("issue_type", ""), (t.get("test_description") or "")[:60]) for t in tests}:
+            tests.append(test_entry)
+        tests = tests[-50:]  # keep last 50, same as prevention_patterns
         with open(test_file, "w", encoding="utf-8") as f:
             json.dump(tests, f, indent=2, ensure_ascii=False)
         return f"Created test case: {issue_type}"
