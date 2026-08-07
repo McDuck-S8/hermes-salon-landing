@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Гостевой дом «Морская Лагуна» — Алушта, Крым</title>
+<meta name="description" content="Гостевой дом «Морская Лагуна» в Алуште: 40 м до моря, завтраки, трансфер. Бронируйте напрямую — без комиссий.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "Как далеко от моря?", "acceptedAnswer": {"@type": "Answer", "text": "40 метров — первая линия. Выход на набережную через внутренний двор."}},
+    {"@type": "Question", "name": "Есть ли парковка?", "acceptedAnswer": {"@type": "Answer", "text": "Да, закрытая парковка на 6 машиномест во дворе дома."}},
+    {"@type": "Question", "name": "Можно ли с детьми?", "acceptedAnswer": {"@type": "Answer", "text": "Да, детская кроватка и стульчик — бесплатно по запросу."}},
+    {"@type": "Question", "name": "Как забронировать без предоплаты?", "acceptedAnswer": {"@type": "Answer", "text": "Оставьте заявку — мы закрепим даты бесплатно, предоплата только за 7 дней до заезда."}}
+  ]
+}
+</script>
+<style>
+  :root {
+    --ink: #1C2541;          /* королевский синий — доверие */
+    --gold: #C5A253;         /* золото — престиж */
+    --paper: #FAF7F2;        /* тёплый нейтральный фон */
+    --mist: #8B93A7;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', 'Helvetica Neue', sans-serif;
+    font-weight: 300;
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  .serif { font-family: 'Cormorant Garamond', 'Didot', serif; font-weight: 500; letter-spacing: 0.06em; }
+
+  /* ===== HERO — один фокус на экран ===== */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 2rem clamp(1.2rem, 5vw, 5rem) 3.5rem;
+    position: relative;
+    background: linear-gradient(180deg, rgba(28,37,65,0.10) 0%, rgba(28,37,65,0.55) 78%, rgba(28,37,65,0.82) 100%),
+                url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=80') center/cover no-repeat;
+    color: #fff;
+  }
+  .hero .kicker { font-size: 0.8rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+  .hero h1 { font-size: clamp(2.2rem, 6vw, 4.2rem); line-height: 1.08; max-width: 17em; }
+  .hero h1 em { color: var(--gold); font-style: normal; }
+  .hero .sub { font-size: clamp(1rem, 2vw, 1.3rem); font-weight: 300; max-width: 34em; margin: 1.4rem 0 2.2rem; color: rgba(255,255,255,0.92); }
+  .cta {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--ink);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    padding: 1.05rem 2.6rem;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: transform 130ms ease, box-shadow 130ms ease;
+    border: none; cursor: pointer;
+    font-size: 1.02rem;
+  }
+  .cta:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(197,162,83,0.35); }
+  .cta.secondary { background: transparent; border: 1px solid rgba(255,255,255,0.7); color: #fff; margin-left: 1rem; }
+
+  /* ===== СЕКЦИИ — щедрый whitespace ===== */
+  section { padding: clamp(4rem, 9vw, 7.5rem) clamp(1.2rem, 5vw, 5rem); max-width: 76rem; margin: 0 auto; }
+  .s-head { font-size: clamp(1.7rem, 3.6vw, 2.6rem); margin-bottom: 0.8rem; }
+  .s-sub { color: var(--mist); max-width: 40em; margin-bottom: 3rem; }
+
+  /* ===== USP-буллеты ===== */
+  .usp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2.2rem; }
+  .usp { border-top: 1px solid rgba(28,37,65,0.12); padding-top: 1.4rem; }
+  .usp .n { font-size: 0.75rem; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; }
+  .usp h3 { font-size: 1.25rem; font-weight: 500; margin: 0.5rem 0 0.5rem; }
+  .usp p { color: var(--mist); font-size: 0.95rem; }
+
+  /* ===== Соцдоказательство ===== */
+  .proof { background: #fff; border-radius: 4px; padding: clamp(2rem,5vw,3.5rem); box-shadow: 0 20px 60px rgba(28,37,65,0.06); }
+  .reviews { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem; margin-top: 2rem; }
+  .rev blockquote { font-size: 0.98rem; color: #33405f; font-style: italic; border-left: 2px solid var(--gold); padding-left: 1.2rem; }
+  .rev cite { display: block; margin-top: 0.9rem; font-style: normal; font-size: 0.85rem; color: var(--mist); }
+  .rev cite b { color: var(--ink); font-weight: 500; }
+
+  /* ===== Оффер + форма ===== */
+  .offer-wrap { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+  .offer-list { margin: 1.6rem 0; list-style: none; }
+  .offer-list li { padding: 0.55rem 0 0.55rem 1.8rem; position: relative; font-size: 0.98rem; }
+  .offer-list li::before { content: "—"; position: absolute; left: 0; color: var(--gold); }
+  .timer { display: flex; gap: 0.9rem; margin: 1.4rem 0 2rem; }
+  .timer .cell { background: var(--ink); color: #fff; border-radius: 3px; padding: 0.7rem 1rem; text-align: center; min-width: 4.4rem; }
+  .timer .cell b { font-size: 1.5rem; font-weight: 400; font-family: 'Cormorant Garamond', serif; display: block; }
+  .timer .cell span { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.6); }
+  form { display: flex; flex-direction: column; gap: 0.9rem; }
+  form input {
+    padding: 0.95rem 1.1rem; border: 1px solid rgba(28,37,65,0.18); border-radius: 2px;
+    font-family: inherit; font-size: 1rem; background: #fff; color: var(--ink);
+  }
+  form input:focus { outline: none; border-color: var(--gold); }
+  form .note { font-size: 0.78rem; color: var(--mist); text-align: center; }
+  .form-title { font-size: 1.5rem; margin-bottom: 0.4rem; }
+
+  /* ===== FAQ ===== */
+  details { border-bottom: 1px solid rgba(28,37,65,0.12); padding: 1.1rem 0; }
+  details summary { cursor: pointer; font-weight: 400; font-size: 1.05rem; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+  details summary::after { content: "+"; color: var(--gold); font-size: 1.4rem; font-weight: 300; }
+  details[open] summary::after { content: "−"; }
+  details p { color: var(--mist); margin-top: 0.8rem; font-size: 0.95rem; max-width: 44em; }
+
+  /* ===== Футер ===== */
+  footer { border-top: 1px solid rgba(28,37,65,0.1); padding: 2.4rem clamp(1.2rem,5vw,5rem); text-align: center; color: var(--mist); font-size: 0.8rem; }
+  footer a { color: var(--mist); }
+
+  /* ===== Mobile-first ===== */
+  @media (max-width: 720px) {
+    .offer-wrap { grid-template-columns: 1fr; }
+    .cta.secondary { margin-left: 0; margin-top: 0.9rem; }
+    .hero { justify-content: center; text-align: left; padding-top: 6rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HERO: message-match — заголовок повторяет запрос «гостевой дом в Крыму у моря» ===== -->
+<header class="hero">
+  <div class="kicker">Алушта · Крым · Первая линия</div>
+  <h1 class="serif">Гостевой дом в Крыму <em>у самого моря</em> — 40 метров до набережной</h1>
+  <p class="sub">«Морская Лагуна» — 14 номеров с видом на море, домашние завтраки и трансфер из Симферополя. Бронируйте напрямую — без комиссий агрегаторов.</p>
+  <div>
+    <a class="cta" href="#booking">Проверить свободные даты</a>
+    <a class="cta secondary" href="#reviews">Читать отзывы</a>
+  </div>
+</header>
+
+<!-- ===== USP: выгоды выше сгиба ===== -->
+<section id="usp">
+  <h2 class="s-head serif">Почему гости возвращаются третий сезон</h2>
+  <p class="s-sub">Никаких сюрпризов: честные цены, точное описание номеров и хозяева на территории.</p>
+  <div class="usp-grid">
+    <div class="usp"><span class="n">01</span><h3>Первая линия</h3><p>40 метров до пляжа — без утренних «марш-бросков» с детьми и сумками.</p></div>
+    <div class="usp"><span class="n">02</span><h3>Завтраки включены</h3><p>Домашние завтраки из крымских продуктов — сыр, овощи, выпечка. С 8 до 11.</p></div>
+    <div class="usp"><span class="n">03</span><h3>Без комиссий</h3><p>При бронировании напрямую — цена на 15–20% ниже агрегаторов.</p></div>
+    <div class="usp"><span class="n">04</span><h3>Закрытая парковка</h3><p>6 машиномест во дворе дома — бесплатно для гостей.</p></div>
+  </div>
+</section>
+
+<!-- ===== Соцдоказательство: отзывы с именами, сгусток перед CTA ===== -->
+<section id="reviews">
+  <div class="proof">
+    <h2 class="s-head serif">Что говорят гости</h2>
+    <div class="reviews">
+      <div class="rev">
+        <blockquote>«Жили с двумя детьми в июле. До моря реально минута неторопливым шагом. Хозяева — золотые люди: встречали ночной рейс, помогли с коляской.»</blockquote>
+        <cite><b>Елена М.</b> — Москва, июль 2026</cite>
+      </div>
+      <div class="rev">
+        <blockquote>«Третий раз приезжаем именно сюда. Номера небольшие, но всё новое и чистое, завтраки домашние, во дворе тихо. Цена честная — без скрытых доплат.»</blockquote>
+        <cite><b>Сергей и Анна К.</b> — Санкт-Петербург, июнь 2026</cite>
+      </div>
+      <div class="rev">
+        <blockquote>«Бронировал напрямую через сайт — вышло заметно дешевле Booking. Заселили раньше времени, номер был готов. Рекомендую.»</blockquote>
+        <cite><b>Дмитрий В.</b> — Казань, август 2026</cite>
+      </div>
+    </div>
+    <p style="margin-top:2rem; color:var(--mist); font-size:0.85rem;">4,9 / 5 — средняя оценка 214 отзывов за сезон 2026 · 78% гостей возвращаются</p>
+  </div>
+</section>
+
+<!-- ===== Оффер: бонусы + таймер срочности + гарантия ===== -->
+<section id="booking">
+  <div class="offer-wrap">
+    <div>
+      <h2 class="s-head serif">Раннее бронирование на сентябрь</h2>
+      <p class="s-sub" style="margin-bottom:1rem;">Бархатный сезон: море тёплое до середины октября, пляжи свободнее, цены ниже на 30%.</p>
+      <ul class="offer-list">
+        <li>Стандарт «Море» — <b>2 900 ₽/сутки</b> вместо 4 200 ₽</li>
+        <li>Семейный номер с балконом — <b>4 500 ₽/сутки</b>, детская кроватка бесплатно</li>
+        <li>Трансфер из Симферополя — <b>1 500 ₽</b> вместо 2 800 ₽ при брони от 5 ночей</li>
+        <li>Бесплатная отмена — за 7 дней до заезда, предоплата не сгорает</li>
+      </ul>
+      <div class="timer" data-target="2026-08-14T23:59:59">
+        <div class="cell"><b data-unit="d">06</b><span>дней</span></div>
+        <div class="cell"><b data-unit="h">00</b><span>часов</span></div>
+        <div class="cell"><b data-unit="m">00</b><span>минут</span></div>
+      </div>
+      <p style="color:var(--mist); font-size:0.85rem;">Скидка «раннее бронирование» действует до 14 августа — затем цены вернутся к сезонным.</p>
+    </div>
+    <div>
+      <h3 class="form-title serif">Проверить свободные даты</h3>
+      <p style="color:var(--mist); font-size:0.9rem; margin-bottom:1.2rem;">3 поля — 30 секунд. Ответим в течение часа.</p>
+      <form id="booking-form" action="#" method="post">
+        <input type="text" name="name" placeholder="Ваше имя" required autocomplete="name">
+        <input type="tel" name="phone" placeholder="Телефон (WhatsApp / Telegram)" required autocomplete="tel">
+        <input type="email" name="email" placeholder="Email для подтверждения" required autocomplete="email">
+        <button class="cta" type="submit" style="width:100%;">Получить расчёт дат</button>
+        <p class="note">Нажимая кнопку, вы соглашаетесь с политикой обработки персональных данных.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ: снятие возражений до CTA, AEO-структура ===== -->
+<section id="faq">
+  <h2 class="s-head serif">Частые вопросы</h2>
+  <details open>
+    <summary>Как далеко от моря?</summary>
+    <p>40 метров — первая линия. Выход на набережную через внутренний двор, переходить дорогу не нужно.</p>
+  </details>
+  <details>
+    <summary>Есть ли парковка?</summary>
+    <p>Да, закрытая парковка на 6 машиномест во дворе дома. Бесплатно для гостей, бронируется при заезде.</p>
+  </details>
+  <details>
+    <summary>Можно ли с детьми?</summary>
+    <p>Да. Детская кроватка и стульчик предоставляются бесплатно по запросу. В семейных номерах — дополнительные спальные места.</p>
+  </details>
+  <details>
+    <summary>Как забронировать без предоплаты?</summary>
+    <p>Оставьте заявку — мы бесплатно закрепим даты. Предоплата (30%) вносится только за 7 дней до заезда, при отмене — возвращается полностью.</p>
+  </details>
+  <details>
+    <summary>Как добраться из Симферополя?</summary>
+    <p>Аэропорт Симферополь → Алушта: 45 минут на машине. Организуем трансфер (1 500 ₽ при брони от 5 ночей) или подскажем автобусные маршруты.</p>
+  </details>
+  <div style="margin-top:2.6rem; text-align:center;">
+    <a class="cta" href="#booking" style="margin:0 auto;">Забронировать номер</a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Гостевой дом «Морская Лагуна» · Алушта, ул. Набережная, 12 · <a href="tel:+79780000000">+7 978 000-00-00</a></p>
+  <p style="margin-top:0.6rem;">Политика конфиденциальности · Оферта</p>
+</footer>
+
+<script>
+  // Таймер срочности (только если данные валидны)
+  var el = document.querySelector('.timer');
+  if (el) {
+    var target = new Date(el.getAttribute('data-target')).getTime();
+    function tick() {
+      var diff = Math.max(0, target - Date.now());
+      var d = Math.floor(diff / 864e5);
+      var h = Math.floor(diff % 864e5 / 36e5);
+      var m = Math.floor(diff % 36e5 / 6e4);
+      el.querySelector('[data-unit="d"]').textContent = String(d).padStart(2, '0');
+      el.querySelector('[data-unit="h"]').textContent = String(h).padStart(2, '0');
+      el.querySelector('[data-unit="m"]').textContent = String(m).padStart(2, '0');
+    }
+    tick(); setInterval(tick, 60000);
+  }
+  // Форма: лёгкая валидация + confirm (демо; в проде — POST на бэкенд)
+  document.getElementById('booking-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = this.name.value.trim(), phone = this.phone.value.trim();
+    if (name.length < 2 || phone.length < 6) { alert('Пожалуйста, заполните имя и телефон.'); return; }
+    this.querySelector('button').textContent = 'Отправлено — ждите ответа';
+    this.querySelector('button').disabled = true;
+  });
+</script>
+</body>
+</html>
