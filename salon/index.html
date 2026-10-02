@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurum — Салон Премиум Красоты</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="#" class="logo">Aurum</a>
+            <nav class="nav">
+                <a href="#services">Услуги</a>
+                <a href="#gallery">Галерея</a>
+                <a href="#reviews">Отзывы</a>
+                <a href="#contact">Контакты</a>
+            </nav>
+            <a href="tel:+79991234567" class="header-phone">+7 (999) 123-45-67</a>
+            <button class="nav-toggle" aria-label="Меню"><span></span><span></span><span></span></button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <h1>Aurum</h1>
+            <p class="hero-subtitle">Салон Премиум Красоты</p>
+            <p class="hero-desc">Где элегантность встречает мастерство</p>
+            <div class="hero-cta">
+                <a href="#contact" class="btn btn-primary">Записаться онлайн</a>
+                <a href="tel:+79991234567" class="btn btn-outline">Позвонить</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <div class="container">
+            <h2>Наши услуги</h2>
+            <div class="services-grid">
+                <div class="service-card"><span class="icon">✂️</span><h3>Стрижка & Укладка</h3><p class="price">2 500 ₽</p><button class="btn btn-sm">Записаться</button></div>
+                <div class="service-card"><span class="icon">🎨</span><h3>Окрашивание</h3><p class="price">4 500 ₽</p><button class="btn btn-sm">Записаться</button></div>
+                <div class="service-card"><span class="icon">💅</span><h3>Маникюр</h3><p class="price">1 800 ₽</p><button class="btn btn-sm">Записаться</button></div>
+                <div class="service-card"><span class="icon">✨</span><h3>Косметология</h3><p class="price">5 000 ₽</p><button class="btn btn-sm">Записаться</button></div>
+                <div class="service-card"><span class="icon">💄</span><h3>Макияж</h3><p class="price">3 000 ₽</p><button class="btn btn-sm">Записаться</button></div>
+                <div class="service-card"><span class="icon">🧖</span><h3>Уход за лицом</h3><p class="price">3 500 ₽</p><button class="btn btn-sm">Записаться</button></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="gallery">
+        <div class="container">
+            <h2>Наша работа</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item" style="background: linear-gradient(135deg, #2a1a3e, #d4af37);"></div>
+                <div class="gallery-item" style="background: linear-gradient(135deg, #1a2a3e, #c9a832);"></div>
+                <div class="gallery-item" style="background: linear-gradient(135deg, #3e1a2a, #d4a737);"></div>
+                <div class="gallery-item" style="background: linear-gradient(135deg, #1a3e2a, #d4c037);"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="reviews" class="reviews">
+        <div class="container">
+            <h2>Отзывы клиентов</h2>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Лучший салон в городе! Вышла красивее, чем зашла."</p>
+                    <p class="author">— Анна К.</p>
+                </div>
+                <div class="review-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Профессиональный подход и уютная атмосфера."</p>
+                    <p class="author">— Мария С.</p>
+                </div>
+                <div class="review-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Ходжу уже год, всегда ухожу довольная!"</p>
+                    <p class="author">— Елена В.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Контакты</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-item"><span>📍</span><div><strong>Адрес</strong><br>ул. Пушкина, 15</div></div>
+                    <div class="contact-item"><span>📞</span><div><strong>Телефон</strong><br><a href="tel:+79991234567">+7 (999) 123-45-67</a></div></div>
+                    <div class="contact-item"><span>🕐</span><div><strong>Режим работы</strong><br>Пн-Сб: 9:00-20:00</div></div>
+                </div>
+                <form class="contact-form" onsubmit="event.preventDefault();alert('Спасибо! Мы свяжемся с вами.');this.reset();">
+                    <input type="text" placeholder="Ваше имя" required>
+                    <input type="tel" placeholder="Телефон" required>
+                    <button type="submit" class="btn btn-primary">Отправить</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer"><div class="container"><p>&copy; 2026 Aurum. Все права защищены.</p></div></footer>
+    <script src="js/main.js"></script>
+</body>
+</html>
